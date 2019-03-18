@@ -10,6 +10,8 @@ use App\Categoria;
 use App\Marca;
 use App\Unidad;
 use App\Ciudad;
+use App\Persona;
+use App\Proveedor;
 use Illuminate\Support\Facades\DB;
 
 
@@ -186,4 +188,55 @@ public function Unidad()
           );
         return redirect('Ciudad');
     }  
+    public function Proveedor()
+    {
+       $proveedores = DB::select('SELECT nombre_emp, nomb_fec, cod_prov,nombre_per,apel_per,obser_prov,estado_prov,fechaini_prov,fechafin_prov FROM proveedor
+        INNER JOIN empresa ON proveedor.id_emp= empresa.id_emp
+        INNER JOIN fecha_periodo ON proveedor.id_fec= fecha_periodo.id_fec
+        INNER JOIN persona ON proveedor.id_per= persona.id_per');
+       return view('admin.Proveedor.index',compact('proveedores'));
+    }
+    public function CargarProveedor()
+    {
+    $empresas = Empresa::get();
+    $fechas = Fecha_periodo::get();
+    $personas = Persona::get();
+    return view('admin.Proveedor.Crear',compact('empresas','fechas','personas'));
+    }
+
+    public function guardarProveedor(Request $request)
+    {
+      $proveedor = new Proveedor;
+      $proveedor->create($request->all());
+      return redirect('Proveedor');
+
+    }
+    public function premodificarProveedor(Request $request,$id)
+    {
+        $proveedor = Proveedor::where('id_prov',$id)->first();
+        $empresas = Empresa::get();
+        $fechas = Fecha_periodo::get();
+        $persona = Persona::get();
+        return view('admin.Proveedor.Modificar',compact('ciudad','empresas','fechas'));
+    }
+    public function modificarProveedor(Request $request,$id)
+    {
+
+      $id_emp  =  $request->input('id_emp');
+      $id_fec =  $request->input('id_fec');
+      $cod_prov =  $request->input('cod_prov');
+      $id_per =  $request->input('id_per');
+      $obser_prov =  $request->input('obser_prov');
+      $estado_prov =  $request->input('estado_prov');
+      $fechaini_prov =  $request->input('fechaini_prov');
+      $fechafin_prov =  $request->input('fechafin_prov');
+       DB::table('proveedor')
+            ->where('id_prov', $id)
+            ->update(['id_emp' => $id_emp,'id_fec' => $id_fec,'cod_prov' => $cod_prov, 'id_per' => $id_per,'obser_prov' => $obser_prov ,'estado_prov' => $estado_prov, 'fechaini_prov' => $fechaini_prov, 'fechafin_prov' => $fechafin_prov]
+          );
+       return redirect('Proveedor');
+
+    }
+
+
 }

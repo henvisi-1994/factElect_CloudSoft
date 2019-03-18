@@ -1,4 +1,3 @@
-@@ -0,0 +1,77 @@
 @extends('admin.layouts.app')
 @section('content')
  <div class="box box-primary">

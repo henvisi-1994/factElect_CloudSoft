@@ -19,27 +19,31 @@ Route::get('Categoria','AdminController@Categoria');
 Route::get('Marca','AdminController@Marca');
 Route::get('Unidad','AdminController@Unidad');
 Route::get('Ciudad','AdminController@Ciudad');
+Route::get('Proveedor','AdminController@Proveedor');
 Route::get('/admin', 'AdminController@inicio');
 //Añadir
 Route::get('addCategoria','AdminController@CargarCategoria');
 Route::get('addMarca','AdminController@CargarMarca');
 Route::get('addUnidad','AdminController@CargarUnidad');
 Route::get('addCiudad','AdminController@CargarCiudad');
+Route::get('addProveedor','AdminController@CargarProveedor');
 //Ruta Guardar
 Route::post('storeCategoria','AdminController@guardarCategoria');
 Route::post('storeMarca','AdminController@guardarMarca');
 Route::post('storeUnidad','AdminController@guardarUnidad');
 Route::post('storeCiudad','AdminController@guardarCiudad');
+Route::post('storeProveedor','AdminController@guardarProveedor');
 //Ruta Modificar
 Route::post('updateCategoria/{id}','AdminController@modificarCategoria');
 Route::post('updateMarca/{id}','AdminController@modificarMarca');
 Route::post('updateUnidad/{id}','AdminController@modificarUnidad');
 Route::post('updateCiudad/{id}','AdminController@modificarCiudad');
-
+Route::post('updateProveedor/{id}','AdminController@modificarProveedor');
 //Ruta Pre-Modificar
 Route::get('preupdateCategoria/{id}','AdminController@premodificarCategoria');
 Route::get('preupdateMarca/{id}','AdminController@premodificarMarca');
 Route::get('preupdateUnidad/{id}','AdminController@premodificarUnidad');
 Route::get('preupdateCiudad/{id}','AdminController@premodificarCiudad');
+Route::get('preupdateProveedor/{id}','AdminController@premodificarProveedor');
 
 
