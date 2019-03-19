@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.compras')
 @section('content')
  <div class="box box-primary">
             <div class="box-header with-border">
@@ -66,13 +66,7 @@
                   </select>
                 </div>
                  <div class="form-group">
-                  <label>Persona</label>
-                  <select class="form-control" name="id_per">
-                    <option value="none" selected="" disabled="">Selecione una Persona</option>
-                     @foreach($personas as $persona)
-                    <option value="{{$persona->id_per}}">{{$persona->nombre_per}} {{$persona->apel_per}}</option>
-                    @endforeach
-                  </select>
+                  <input type="hidden" name="id_per"  value= "{{$id_per}}" class="form-control" id="exampleInputEmail1">
                 </div>
               <!-- /.box-body -->
               <div class="box-footer">

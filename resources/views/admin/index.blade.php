@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.compras')
 @section('content')
   <section class="content-header">
       <h1>

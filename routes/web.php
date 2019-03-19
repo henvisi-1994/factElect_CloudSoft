@@ -22,13 +22,13 @@ Route::get('Ciudad','AdminController@Ciudad');
 Route::get('Proveedor','AdminController@Proveedor');
 Route::get('Persona', 'AdminController@Persona');
 Route::get('/admin', 'AdminController@inicio');
+Route::get('Compras','AdminController@Compras');
 //Añadir
 Route::get('addCategoria','AdminController@CargarCategoria');
 Route::get('addMarca','AdminController@CargarMarca');
 Route::get('addUnidad','AdminController@CargarUnidad');
 Route::get('addCiudad','AdminController@CargarCiudad');
-Route::get('addProveedor','AdminController@CargarProveedor');
-Route::get('addPersona','AdminController@CargarPersona');
+Route::get('addProveedor','AdminController@CargarPersona');
 //Ruta Guardar
 Route::post('storeCategoria','AdminController@guardarCategoria');
 Route::post('storeMarca','AdminController@guardarMarca');

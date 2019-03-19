@@ -354,6 +354,27 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
+     <div class="box">
+            <div class="box-header">
+              <center><h3 class="box-title">Compras</h3></center>
+            </div>
+            <div class="box-body">
+              <a class="btn btn-app" href="{{asset('Proveedor')}}">
+                <i class="fa fa-user"></i> Proveedor
+              </a>
+              <a class="btn btn-app" href="{{asset('Producto')}}">
+                <i class="fa fa-archive"></i> Producto
+              </a>
+              <a class="btn btn-app" href="{{asset('Categoria')}}">
+                <i class="fa fa-sitemap"></i> Categoria
+              </a>
+              <a class="btn btn-app" href="{{asset('Unidad')}}">
+                <i class="fa fa-puzzle-piece"></i> Unidad
+              </a>
+              <a class="btn btn-app" href="{{asset('Marca')}}" >
+                <i class="fa fa-tags"></i> Marca
+              </a>
+            </div>
    @yield('content')
     <!-- /.content -->
   </div>

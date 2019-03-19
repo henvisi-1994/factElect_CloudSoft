@@ -1,5 +1,5 @@
 
-@extends('admin.layouts.app')
+@extends('admin.layouts.compras')
 @section('content')
  <div class="box box-primary">
             <div class="box-header with-border">

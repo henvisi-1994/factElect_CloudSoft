@@ -23,6 +23,10 @@ class AdminController extends Controller
   {
   	return view('admin.index');
   }
+  public function Compras()
+  {
+    return view('admin.compras');
+  }
   
   public function Categoria()
   {
@@ -256,14 +260,18 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     $tipoContribuyentes = TipoContribuyente::get();
     $ciudades = Ciudad::get();
     $identificaciones = Identificaciones::get();
-    return view('admin.Persona.Crear',compact('tipoContribuyentes','ciudades','identificaciones'));
+    return view('admin.Persona.Proveedor',compact('tipoContribuyentes','ciudades','identificaciones'));
   }
     //Funcion Guardar Persona
     public function  guardarPersona(Request $request)
     {
         $persona= new Persona;
         $persona->create($request->all());
-        return redirect('addPersona');
+        $id_per = $persona->id_per;
+        $empresas = Empresa::get();
+        $fechas = Fecha_periodo::get();
+        $personas = Persona::get();
+        return view('admin.Proveedor.Crear',compact('empresas','fechas','personas','id_per'));
     }
       //Pre modificar Persona
     public function  premodificarPersona(Request $request,$id)

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.compras')
 @section('content')
  <div class="box">
             <div class="box-header">
@@ -6,6 +6,12 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+               <div class="card-body d-flex justify-content-between align-items-center">
+            <a class="btn btn-primary btn-sm" href="{{asset('addCiudad')}}">
+                Crear
+            </a>
+        </div>
+        <br>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
