@@ -77,7 +77,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                   <input type="text" class="form-control" name="fechaini_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>>
+                   <input type="text" class="form-control" name="fechaini_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
 
@@ -88,7 +88,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fecnac_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>>
+                  <input type="text" class="form-control" name="fecnac_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
 
@@ -100,7 +100,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fechafin_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>>>
+                  <input type="text" class="form-control" name="fechafin_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -126,7 +126,7 @@
                  </div>
                  <div class="form-group">
                   <label>Contribuyente</label>
-                  <select class="form-control" name="id_ident">
+                  <select class="form-control" name="id_contrib">
                     <option value="none" selected="" disabled="">Selecione un Contribuyente</option>
                      @foreach($tipoContribuyentes as $contribuyente)
                     <option value="{{$contribuyente->id_contrib}}">{{$contribuyente->nomb_contrib}}</option>

@@ -19,7 +19,7 @@
                  <div class="form-group">
                   <label>Estado</label>
                   <select class="form-control"name="estado_marca">
-                    <option value="none" selected="" disabled="">Selecione Estado</option>
+                    <option value="{{$marca->estado_marca}}"  selected="">Selecione Estado</option>
                     <option value="A">Activo</option>
                      <option value="P">Pendiente</option>
                      <option value="I">Inactivo</option>

@@ -7,7 +7,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" method="POST" action="/updatePersona">
+            <form role="form" method="POST" action="{{asset('updatePersona/'.$persona->id_per)}}">
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Documento Personal</label>
@@ -56,13 +56,13 @@
 
                  <div class="form-group">
                   <label>Direccion</label>
-                  <textarea class="form-control" rows="3"  name="direc_per" placeholder="Ingrese Direccion"></textarea>
-                  {{$persona->direc_per}}
+                  <textarea class="form-control" rows="3"  name="direc_per" placeholder="Ingrese Direccion">{{$persona->direc_per}}</textarea>
+                  
                 </div>
                  <div class="form-group">
                   <label>Estado</label>
                   <select class="form-control" name="estado_per" >
-                    <option value="none" selected="" disabled="">Selecione Estado</option>
+                    <option value="{{$persona->estado_per}}" selected="">Selecione Estado</option>
                     <option value="A">Activo</option>
                      <option value="P">Pendiente</option>
                      <option value="I">Inactivo</option>
@@ -75,7 +75,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                   <input type="text" class="form-control" name="fechaini_per" value="{{$persona->fechaini_per}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>>
+                   <input type="text" class="form-control" name="fechaini_per" value="{{$persona->fechaini_per}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
 
@@ -86,7 +86,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fecnac_per" value="{{$persona->fecnac_per}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>>
+                  <input type="text" class="form-control" name="fecnac_per" value="{{$persona->fecnac_per}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
 
@@ -98,14 +98,14 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fechafin_per" value="{{$persona->fechafin_per}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>>>
+                  <input type="text" class="form-control" name="fechafin_per" value="{{$persona->fechafin_per}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>
                 <div class="form-group">
                   <label>Ciudad</label>
                   <select class="form-control" name="id_ciu">
-                    <option value="none" selected="" disabled="">Selecione una Ciudad</option>
+                    <option value="{{$persona->id_ciu}}" selected="">Selecione una Ciudad</option>
                     @foreach($ciudades as $ciudad)
                     <option value="{{$ciudad->id_ciu}}">{{$ciudad->nomb_ciu}}</option>
                     @endforeach
@@ -114,7 +114,7 @@
                  <div class="form-group">
                   <label>Identificacion</label>
                   <select class="form-control" name="id_ident">
-                    <option value="none" selected="" disabled="">Selecione una Identificacion</option>
+                    <option value="{{$persona->id_ident}}" selected="">Selecione una Identificacion</option>
                      @foreach($identificaciones as $identificacion)
                     <option value="{{$identificacion->id_ident}}">{{$identificacion->sri_ident}}</option>
                     @endforeach
@@ -124,8 +124,8 @@
                  </div>
                  <div class="form-group">
                   <label>Contribuyente</label>
-                  <select class="form-control" name="id_ident">
-                    <option value="none" selected="" disabled="">Selecione un Contribuyente</option>
+                  <select class="form-control" name="id_contrib">
+                    <option value="{{$persona->id_contrib}}"  selected="">Selecione un Contribuyente</option>
                      @foreach($tipoContribuyentes as $contribuyente)
                     <option value="{{$contribuyente->id_contrib}}">{{$contribuyente->nomb_contrib}}</option>
                     @endforeach

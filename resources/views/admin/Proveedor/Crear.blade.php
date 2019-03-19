@@ -67,7 +67,7 @@
                 </div>
                  <div class="form-group">
                   <label>Persona</label>
-                  <select class="form-control" name="id_fec">
+                  <select class="form-control" name="id_per">
                     <option value="none" selected="" disabled="">Selecione una Persona</option>
                      @foreach($personas as $persona)
                     <option value="{{$persona->id_per}}">{{$persona->nombre_per}} {{$persona->apel_per}}</option>

@@ -10,7 +10,7 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Codigo</label>
-                  <input type="text" name="cod_prov" class="form-control" id="exampleInputEmail1" value="{{$proveedor->id_prov}}" placeholder="Ingrese Nombre">
+                  <input type="text" name="cod_prov" class="form-control" id="exampleInputEmail1" value="{{$proveedor->cod_prov}}" placeholder="Ingrese Nombre">
                 </div>
                  <div class="form-group">
                   <label>Observacion</label>
@@ -19,7 +19,7 @@
                  <div class="form-group">
                   <label>Estado</label>
                   <select class="form-control" name="estado_prov" >
-                    <option value="none" selected="" disabled="">Selecione Estado</option>
+                    <option value="{{$proveedor->estado_prov}}" selected="" >Selecione Estado</option>
                     <option value="A">Activo</option>
                      <option value="P">Pendiente</option>
                      <option value="I">Inactivo</option>
@@ -50,7 +50,7 @@
                 <div class="form-group">
                   <label>Empresa</label>
                   <select class="form-control" name="id_emp">
-                    <option value="none" selected="" disabled="">Selecione una Empresa</option>
+                    <option value="{{$proveedor->id_emp}}" selected="">Selecione una Empresa</option>
                     @foreach($empresas as $empresa)
                     <option value="{{$empresa->id_emp}}">{{$empresa->nombre_emp}}</option>
                     @endforeach
@@ -59,7 +59,7 @@
                  <div class="form-group">
                   <label>Periodo</label>
                   <select class="form-control" name="id_fec">
-                    <option value="none" selected="" disabled="">Selecione una Periodo</option>
+                    <option value="{{$proveedor->id_fec}}" selected="">Selecione una Periodo</option>
                      @foreach($fechas as $periodo)
                     <option value="{{$periodo->id_fec}}">{{$periodo->nomb_fec}}</option>
                     @endforeach
@@ -67,8 +67,8 @@
                 </div>
                  <div class="form-group">
                   <label>Persona</label>
-                  <select class="form-control" name="id_fec">
-                    <option value="none" selected="" disabled="">Selecione una Persona</option>
+                  <select class="form-control" name="id_per">
+                    <option value="{{$proveedor->id_per}}"  selected="">Selecione una Persona</option>
                      @foreach($personas as $persona)
                     <option value="{{$persona->id_per}}">{{$persona->nombre_per}} {{$persona->apel_per}}</option>
                     @endforeach

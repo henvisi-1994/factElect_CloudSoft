@@ -192,7 +192,7 @@ public function Unidad()
     }  
     public function Proveedor()
     {
-       $proveedores = DB::select('SELECT nombre_emp, nomb_fec, cod_prov,nombre_per,apel_per,obser_prov,estado_prov,fechaini_prov,fechafin_prov FROM proveedor
+       $proveedores = DB::select('SELECT id_prov ,nombre_emp, nomb_fec, cod_prov,nombre_per,apel_per,obser_prov,estado_prov,fechaini_prov,fechafin_prov FROM proveedor
         INNER JOIN empresa ON proveedor.id_emp= empresa.id_emp
         INNER JOIN fecha_periodo ON proveedor.id_fec= fecha_periodo.id_fec
         INNER JOIN persona ON proveedor.id_per= persona.id_per');
@@ -218,8 +218,8 @@ public function Unidad()
         $proveedor = Proveedor::where('id_prov',$id)->first();
         $empresas = Empresa::get();
         $fechas = Fecha_periodo::get();
-        $persona = Persona::get();
-        return view('admin.Proveedor.Modificar',compact('ciudad','empresas','fechas'));
+        $personas= Persona::get();
+        return view('admin.Proveedor.Modificar',compact('proveedor','empresas','fechas','personas'));
     }
     public function modificarProveedor(Request $request,$id)
     {

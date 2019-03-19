@@ -15,14 +15,9 @@
                   <th>Apellido</th>
                   <th>Direccion</th>
                   <th>Telefono1</th>
-                  <th>Telefono2</th>
                   <th>Celular1</th>
-                  <th>Celular2</th>
-                  <th>FechaNacimiento</th>
                   <th>Correo</th>
                   <th>Estado</th>
-                  <th>FechaInicial</th>
-                  <th>FechaFin</th>
                   <th>Contribuyente</th>
                   <th>Ciudad</th>
                   <th>Identificacion</th>
@@ -39,14 +34,9 @@
                   <td>{{$personas->apel_per}}</td>
                   <td>{{$personas->direc_per}}</td>
                   <td>{{$personas->fono1_per}}</td>
-                  <td>{{$personas->fono2_per}}</td>
                   <td>{{$personas->cel1_per}}</td>
-                  <td>{{$personas->cel2_per}}</td>
-                  <td>{{$personas->fecnac_per}}</td>
                   <td>{{$personas->correo_per}}</td>
                   <td>{{$personas->estado_per}}</td>
-                  <td>{{$personas->fechaini_per}}</td>
-                  <td>{{$personas->fechafin_per}}</td>
                   <td>{{$personas->nomb_contrib}}</td>
                   <td>{{$personas->nomb_ciu}}</td>
                   <td>{{$personas->sri_ident}}</td>
