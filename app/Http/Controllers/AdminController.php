@@ -307,5 +307,43 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             ->update(['id_contrib' => $id_contrib,'id_ident' => $id_ident,'id_ciu' => $id_ciu, 'doc_per' => $doc_per , 'organiz_per' => $organiz_per, 'nombre_per' => $nombre_per,'apel_per'=> $apel_per,'direc_per'=> $direc_per,'fono1_per'=> $fono1_per,'fono2_per'=> $fono2_per,'cel1_per'=> $cel1_per,'cel2_per'=> $cel2_per,'fecnac_per'=> $fecnac_per,'correo_per'=> $correo_per,'estado_per'=> $estado_per,'fechaini_per'=> $fechaini_per,'fechafin_per'=> $fechafin_per]
           );
         return redirect('Persona');
-    }  
+    }
+    public function TipoContribuyente()
+    {
+        $tiposContribuyentes = TipoContribuyente::get();
+        return view('admin.TipoContribuyente.index',compact('tiposContribuyentes'));
+    }
+    public function CargarTipoContribuyente()
+    {
+
+        return view('admin.TipoContribuyente.Crear');
+    }
+        //Guardar TipoContribuyente
+     public function  guardarTipoContribuyente(Request $request)
+    {
+        $tiposContribuyentes= new TipoContribuyente;
+        $tiposContribuyentes->create($request->all());
+        return redirect('addTipoContribuyente');
+    }
+    //Pre modificar Tipo Contribuyente
+    public function  premodificarTipoContribuyente(Request $request,$id)
+    {
+        $tiposContribuyentes= TipoContribuyente::where('id_contrib',$id)->first();
+        return view('admin.TipoContribuyente.Modificar',compact('tiposContribuyentes'));
+    }
+     //Modificar Tipo Contribuyente
+    public function  modificarTipoContribuyente(Request $request,$id)
+    {
+        $nomb_contrib= $request->input('nomb_contrib');
+        $obser_contrib= $request->input('obser_contrib');
+        $estado_contrib= $request->input('estado_contrib');
+        $fechaini_contrib= $request->input('fechaini_contrib');
+        $fechafin_contrib= $request->input('fechafin_contrib');
+        DB::table('tip_contrib')
+            ->where('id_contrib', $id)
+            ->update(['nomb_contrib' => $nomb_contrib, 'obser_contrib' => $obser_contrib , 'estado_contrib' => $estado_contrib, 'fechaini_contrib' => $fechaini_contrib,'fechafin_contrib'=> $fechafin_contrib]
+          );
+        return redirect('TipoContribuyente');
+    }
+
 }

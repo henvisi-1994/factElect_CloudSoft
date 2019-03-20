@@ -32,7 +32,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker" placeholder="aaaa-mm-yyyy" value = "{{$unidad->fechaini_unidad}}" name="fechaini_unidad">
+                  <input type="text" class="form-control" name="fechaini_unidad" value="{{$unidad->fechaini_unidad}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -43,7 +43,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker"  placeholder="aaaa-mm-yyyy" value = "{{$unidad->fechafin_unidad}}" name="fechafin_unidad">
+                  <input type="text" class="form-control" name="fechafin_unidad" value="{{$unidad->fechafin_unidad}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>

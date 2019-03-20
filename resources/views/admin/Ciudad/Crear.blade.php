@@ -32,7 +32,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" name="fechaini_ciu" id="datepicker" placeholder="aaaa-mm-yyyy">
+                  <input type="text" class="form-control" name="fechaini_ciu" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -43,7 +43,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker" name="fechafin_ciu" placeholder="aaaa-mm-yyyy">
+                  <input type="text" class="form-control" name="fechafin_ciu" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>

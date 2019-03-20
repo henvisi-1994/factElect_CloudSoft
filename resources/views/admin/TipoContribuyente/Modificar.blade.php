@@ -2,24 +2,24 @@
 @section('content')
  <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Añadir Unidad</h3>
+              <h3 class="box-title">Añadir Tipo de Contribuyente</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form"method="POST" action="/storeUnidad">
+            <form role="form" method="POST" action="{{asset('updateTipoContribuyente/'.$tiposContribuyentes->id_contrib)}}">
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nombre</label>
-                  <input type="text" name="nomb_unidad" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Nombre">
+                  <input type="text" class="form-control" id="exampleInputEmail1" value = "{{$tiposContribuyentes->nomb_contrib}}" placeholder="Ingrese Nombre " name="nomb_contrib" >
                 </div>
                  <div class="form-group">
                   <label>Observacion</label>
-                  <textarea class="form-control" rows="3" placeholder="Ingrese Observación" name="observ_unidad"></textarea>
+                  <textarea class="form-control" rows="3" placeholder="Ingrese Observación"name="obser_contrib">{{$tiposContribuyentes->obser_contrib}}</textarea>
                 </div>
                  <div class="form-group">
                   <label>Estado</label>
-                  <select class="form-control" name="estado_unidad">
-                    <option value="none" selected="" disabled="">Selecione Estado</option>
+                  <select class="form-control"name="estado_contrib">
+                    <option value="{{$tiposContribuyentes->estado_contrib}}"  selected="">Selecione Estado</option>
                     <option value="A">Activo</option>
                      <option value="P">Pendiente</option>
                      <option value="I">Inactivo</option>
@@ -32,7 +32,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fechaini_unidad" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
+                  <input type="text" class="form-control" name="fechaini_contrib" value="{{$tiposContribuyentes->fechaini_contrib}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -43,7 +43,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fechafin_unidad" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
+                  <input type="text" class="form-control" name="fechafin_contrib" value="{{$tiposContribuyentes->fechafin_contrib}}" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>
