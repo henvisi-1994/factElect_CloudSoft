@@ -127,7 +127,7 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                    <input class="form-control pull-right" id="datepicker" name="fechaing_prod" placeholder="aaaa-mm-yyyy" type="text">
+                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaing_prod" type="text">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -141,7 +141,7 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                    <input class="form-control pull-right" id="datepicker" name="fechaelab_prod" placeholder="aaaa-mm-yyyy" type="text">
+                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaelab_prod" type="text">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -155,7 +155,7 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                    <input class="form-control pull-right" id="datepicker" name="fechacad_prod" placeholder="aaaa-mm-yyyy" type="text">
+                     <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechacad_prod" type="text">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -242,7 +242,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control pull-right" id="datepicker" name="fechaini_prod" placeholder="aaaa-mm-yyyy" type="text">
+                <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaini_prod" type="text">
                 </input>
             </div>
             <!-- /.input group -->
@@ -256,7 +256,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control pull-right" id="datepicker" name="fechafin_prod" placeholder="aaaa-mm-yyyy" type="text">
+                <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechafin_prod" type="text">
                 </input>
             </div>
         </div>
