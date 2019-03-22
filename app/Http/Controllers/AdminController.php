@@ -12,6 +12,7 @@ use App\Unidad;
 use App\Ciudad;
 use App\Persona;
 use App\Proveedor;
+use App\Producto;
 use App\Identificaciones;
 use App\TipoContribuyente;
 use Illuminate\Support\Facades\DB;
