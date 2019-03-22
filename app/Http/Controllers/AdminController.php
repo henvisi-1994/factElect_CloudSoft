@@ -346,4 +346,44 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         return redirect('TipoContribuyente');
     }
 
+    //Funcion Identificaciones
+     public function Identificaciones()
+    {
+        $identificacion = Identificaciones::get();
+        return view('admin.Identificaciones.index',compact('identificacion'));
+    }
+    public function CargarIdentificaciones()
+    {
+
+        return view('admin.Identificaciones.Crear');
+    }
+        //Guardar Identificacion
+     public function  guardarIdentificacion(Request $request)
+    {
+        $identificacion= new Identificaciones;
+        $identificacion->create($request->all());
+        return redirect('addIdentificacion');
+    }
+    //Pre modificar Identificacion
+    public function  premodificarIdentificacion(Request $request,$id)
+    {
+        $identificacion= Identificaciones::where('id_ident',$id)->first();
+        return view('admin.Identificaciones.Modificar',compact('identificacion'));
+    }
+     //Modificar Tipo Identificacion
+    public function  modificarIdentificacion(Request $request,$id)
+    {
+        $sri_ident= $request->input('sri_ident');
+        $descrip_ident= $request->input('descrip_ident');
+        $observ_ident= $request->input('observ_ident');
+        $estado_ident= $request->input('estado_ident');
+        $fechaini_ident= $request->input('fechaini_ident');
+        $fechafin_ident= $request->input('fechafin_ident');
+        DB::table('identificacion')
+            ->where('id_ident', $id)
+            ->update(['sri_ident' => $sri_ident, 'descrip_ident' => $descrip_ident , 'observ_ident' => $observ_ident, 'estado_ident' => $estado_ident,'fechaini_ident'=> $fechaini_ident,'fechafin_ident'=> $fechafin_ident]
+          );
+        return redirect('Identificaciones');
+    }
+
 }
