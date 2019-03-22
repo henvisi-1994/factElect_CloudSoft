@@ -8,7 +8,7 @@
     </div>
     <!-- /.box-header -->
     <!-- form start -->
-    <form action="/storeMarca" method="POST" role="form">
+    <form action="/storeProducto" method="POST" enctype="multipart/form-data" role="form">
         <div class="box-body">
             <div class="form-group">
                 <label for="exampleInputEmail1">
@@ -155,7 +155,7 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                     <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechacad_prod" type="text">
+                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechacad_prod" type="text">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -260,7 +260,6 @@
                 </input>
             </div>
         </div>
-    </form>
 </div>
 <!-- /.input group -->
 <!-- /.box-body -->
@@ -270,5 +269,6 @@
     </button>
     <input name="_token" type="hidden" value="{{ csrf_token() }}">
     </input>
+    </form>
 </div>
 @endsection
