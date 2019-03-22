@@ -265,9 +265,27 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     //Funcion Guardar Persona
     public function  guardarPersona(Request $request)
     {
-        $persona= new Persona;
-        $persona->create($request->all());
-        $id_per = $persona->id_per;
+       $persona= new Persona ();
+        $persona->id_contrib=$request->input('id_contrib');
+        $persona->id_ident=$request->input('id_ident');
+        $persona->id_ciu=$request->input('id_ciu'); 
+        $persona->doc_per=$request->input('doc_per'); 
+        $persona->organiz_per=$request->input('organiz_per'); 
+        $persona->nombre_per=$request->input('nombre_per'); 
+        $persona->apel_per=$request->input('apel_per'); 
+        $persona->direc_per=$request->input('direc_per'); 
+        $persona->fono1_per=$request->input('fono1_per'); 
+        $persona->fono2_per=$request->input('fono2_per'); 
+        $persona->cel1_per=$request->input('cel1_per'); 
+        $persona->cel2_per=$request->input('cel2_per'); 
+        $persona->fecnac_per=$request->input('fecnac_per'); 
+        $persona->correo_per=$request->input('correo_per'); 
+        $persona->estado_per=$request->input('estado_per'); 
+        $persona->fechaini_per=$request->input('fechaini_per'); 
+        $persona->fechafin_per=$request->input('fechafin_per');
+        $persona->save();
+        $persona_ced =Persona::where('doc_per',$persona->doc_per)->first();
+        $id_per=$persona_ced->id_per;
         $empresas = Empresa::get();
         $fechas = Fecha_periodo::get();
         $personas = Persona::get();
@@ -384,6 +402,111 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             ->update(['sri_ident' => $sri_ident, 'descrip_ident' => $descrip_ident , 'observ_ident' => $observ_ident, 'estado_ident' => $estado_ident,'fechaini_ident'=> $fechaini_ident,'fechafin_ident'=> $fechafin_ident]
           );
         return redirect('Identificaciones');
+    }
+
+    //Producto
+     public function Producto()
+    {
+       $productos = DB::select('SELECT id_prod,nombre_emp, nomb_fec, codigo_prod,codbarra_prod,descripcion_prod,nomb_marca,present_prod,precio_prod,ubicacion_prod,stockmin_prod,stockmax_prod,fechaing_prod,fechaelab_prod,fechacad_prod,aplicaiva_prod,aplicaice_prod,util_prod,comision_prod,imagen_prod,observ_prod,estado_prod,fechaini_prod,fechafin_prod FROM producto
+      INNER JOIN empresa ON producto.id_emp= empresa.id_emp
+      INNER JOIN fecha_periodo ON producto.id_fec= fecha_periodo.id_fec
+      INNER JOIN marca ON producto.id_prod= producto.id_prod');
+       return view('admin.Producto.index',compact('productos'));
+    }
+    public function CargarProducto()
+    {
+    $empresas = Empresa::get();
+    $fechas = Fecha_periodo::get();
+    $marcas = Marca::get();
+    return view('admin.Producto.Crear',compact('empresas','fechas','marcas'));
+    }
+
+    public function guardarProducto(Request $request)
+    {
+       if($request->hasfile('imagen_prod'))
+      {
+        $file = $request->file('imagen_prod');
+        $name =time().'_'.$file->getClientOriginalName();
+        $file->move(public_path().'/img/producto',$name);
+      $producto = new Producto();
+      $producto->id_emp  =  $request->input('id_emp');
+      $producto->id_fec =  $request->input('id_fec');
+      $producto->codigo_prod =  $request->input('codigo_prod');
+      $producto->codbarra_prod =  $request->input('codbarra_prod');
+      $producto->descripcion_prod= $request->input('descripcion_prod');
+      $producto->id_marca =  $request->input('id_marca');
+      $producto->present_prod=  $request->input('present_prod');
+      $producto->precio_prod=  $request->input('precio_prod');
+      $producto->ubicacion_prod =  $request->input('ubicacion_prod');
+      $producto->stockmin_prod =  $request->input('stockmin_prod');
+      $producto->stockmax_prod =  $request->input('stockmax_prod');
+      $producto->fechaing_prod =  $request->input('fechaing_prod');
+      $producto->fechaelab_prod =  $request->input('fechaelab_prod');
+      $producto->fechacad_prod =  $request->input('fechacad_prod');
+      $producto->aplicaiva_prod =  $request->input('aplicaiva_prod');
+      $producto->aplicaice_prod =  $request->input('aplicaice_prod');
+      $producto->util_prod =  $request->input('util_prod');
+      $producto->comision_prod =  $request->input('comision_prod');
+      $producto->imagen_prod =  $name;
+      $producto->estado_prod =  $request->input('estado_prod');
+      $producto->observ_prod =  $request->input('observ_prod');
+      $producto->fechaini_prod =  $request->input('fechaini_prod');
+      $producto->fechafin_prod =  $request->input('fechafin_prod');
+      $producto->save();
+      }
+      return redirect('Producto');
+
+    }
+    public function premodificarProducto(Request $request,$id)
+    {
+        $producto = Producto::where('id_prod',$id)->first();
+        $empresas = Empresa::get();
+        $fechas = Fecha_periodo::get();
+        $marcas = Marca::get();
+        return view('admin.Producto.Modificar',compact('producto','empresas','fechas','marcas'));
+    }
+    public function modificarProducto(Request $request,$id)
+    {
+       if($request->hasfile('imagen_prod'))
+      {
+        $file = $request->file('imagen_prod');
+        $name =time().'_'.$file->getClientOriginalName();
+        $file->move(public_path().'/img/producto',$name);
+      $id_emp  =  $request->input('id_emp');
+      $id_fec =  $request->input('id_fec');
+      $codigo_prod =  $request->input('codigo_prod');
+      $codbarra_prod =  $request->input('codbarra_prod');
+      $descripcion_prod= $request->input('descripcion_prod');
+      $id_marca =  $request->input('id_marca');
+      $present_prod=  $request->input('present_prod');
+      $precio_prod=  $request->input('precio_prod');
+      $ubicacion_prod =  $request->input('ubicacion_prod');
+      $stockmin_prod =  $request->input('stockmin_prod');
+      $stockmax_prod =  $request->input('stockmax_prod');
+      $fechaing_prod =  $request->input('fechaing_prod');
+      $fechaelab_prod =  $request->input('fechaelab_prod');
+      $fechacad_prod =  $request->input('fechacad_prod');
+      $aplicaiva_prod =  $request->input('aplicaiva_prod');
+      $aplicaice_prod =  $request->input('aplicaice_prod');
+      $util_prod =  $request->input('util_prod');
+      $comision_prod =  $request->input('comision_prod');
+      $imagen_prod =  $request->input('imagen_prod');
+      $estado_prod =  $request->input('estado_prod');
+      $observ_prod =  $request->input('observ_prod');
+      $fechaini_prod =  $request->input('fechaini_prod');
+      $fechafin_prod =  $request->input('fechafin_prod');
+
+
+       DB::table('producto')
+            ->where('id_prod', $id)
+            ->update(  ['id_emp' => $id_emp,'id_fec' => $id_fec,'codigo_prod' => $codigo_prod,'codbarra_prod' => $codbarra_prod , 
+  'descripcion_prod' => $descripcion_prod ,'id_marca' => $id_marca,'present_prod' => $present_prod ,  'precio_prod' => $precio_prod ,
+  'ubicacion_prod' => $ubicacion_prod ,  'stockmin_prod' => $stockmin_prod ,  'stockmax_prod' => $stockmax_prod ,'fechaing_prod'  => $fechaing_prod ,  'fechaelab_prod' => $fechaelab_prod ,'fechacad_prod' => $fechacad_prod ,'aplicaiva_prod' => $aplicaiva_prod,'aplicaice_prod' => $aplicaice_prod,'util_prod' => $util_prod ,  'comision_prod' => $comision_prod,'imagen_prod' => $imagen_prod ,
+  'observ_prod' => $observ_prod ,'estado_prod' => $estado_prod , 'fechaini_prod' => $fechaini_prod ,'fechafin_prod' => $fechafin_prod]
+          );
+          }
+       return redirect('Producto');
+
     }
 
 }

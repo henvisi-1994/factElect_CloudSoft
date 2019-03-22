@@ -341,12 +341,7 @@
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <li><a href="#"><i class="fa fa-shopping-cart"></i> <span>Compras</span></a></li>
-        <li><a href="#"><i class="fa fa-money"></i> <span>Ventas</span></a></li>
-        <li><a href="#"><i class="fa fa-users"></i> <span>Usuarios</span></a></li>
-      </ul>
+      @include('admin.layouts.menu')
     </section>
     <!-- /.sidebar -->
   </aside>
