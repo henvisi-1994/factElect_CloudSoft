@@ -36,7 +36,7 @@
                   @foreach($productos as $producto)
                 <tr>
                   <td>{{$producto->codigo_prod}}</td>
-                  <td><img src="{{asset('/img/producto'.$producto->imagen_prod)}}" alt="" />
+                  <td><img src="{{asset('/img/producto/'.$producto->imagen_prod)}}" alt="" />
                   </td>
                   <td>{{$producto->descripcion_prod}}</td>
                   <td>{{$producto->nomb_marca}}</td>
@@ -51,7 +51,7 @@
                   <td>{{$producto->observ_prod}}</td>
                   <td>{{$producto->estado_prod}}</td>
                     <td>
-                  <a data-toggle="tooltip" title="Edit" class="pd-setting-ed btn btn-success" href="{{asset('preupdateProducto/'.$producto->id_marca)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                  <a data-toggle="tooltip" title="Edit" class="pd-setting-ed btn btn-success" href="{{asset('preupdateProducto/'.$producto->id_prod)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                   <a data-toggle="tooltip" title="Trash" class="pd-setting-ed btn btn-danger" href="#"><i class="fa fa-trash-o" aria-hidden="true" ></i></a>
                   </td>
                 </tr>
