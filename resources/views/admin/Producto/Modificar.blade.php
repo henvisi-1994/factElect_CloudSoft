@@ -221,7 +221,7 @@
                 Estado
             </label>
             <select class="form-control" name="estado_prod">
-                <option disabled="" selected="" value="none">
+                <option selected="" value="{{$producto->estado_prod}}">
                     Selecione Estado
                 </option>
                 <option value="A">
