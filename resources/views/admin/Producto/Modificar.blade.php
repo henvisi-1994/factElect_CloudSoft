@@ -128,7 +128,8 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                    <input class="form-control pull-right" id="datepicker" name="fechaing_prod" value="{{$producto->fechaing_prod}}" placeholder="aaaa-mm-yyyy" type="text">
+                  
+                     <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaing_prod"  value="{{$producto->fechaing_prod}}" type="text">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -142,7 +143,7 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                    <input class="form-control pull-right" id="datepicker" name="fechaelab_prod" value="{{$producto->fechaelab_prod}}" placeholder="aaaa-mm-yyyy" type="text">
+                     <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaelab_prod" value="{{$producto->fechaelab_prod}}"  type="text">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -156,7 +157,7 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                    <input class="form-control pull-right" id="datepicker" name="fechacad_prod" value="{{$producto->fechacad_prod}}" placeholder="aaaa-mm-yyyy" type="text">
+                     <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechacad_prod" value="{{$producto->fechacad_prod}}" type="text">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -243,7 +244,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control pull-right" id="datepicker" name="fechaini_prod" placeholder="aaaa-mm-yyyy" type="text">
+                 <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaini_prod"  value= "{{$producto->fechaini_prod}}"type="text">
                 </input>
             </div>
             <!-- /.input group -->
@@ -257,11 +258,10 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control pull-right" id="datepicker" name="fechafin_prod" placeholder="aaaa-mm-yyyy" type="text">
+                <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaini_prod"  value= "{{$producto->fechafin_prod}}"type="text">
                 </input>
             </div>
         </div>
-    </form>
 </div>
 <!-- /.input group -->
 <!-- /.box-body -->
@@ -271,5 +271,6 @@
     </button>
     <input name="_token" type="hidden" value="{{ csrf_token() }}">
     </input>
+</form>
 </div>
 @endsection

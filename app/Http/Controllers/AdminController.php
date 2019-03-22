@@ -411,7 +411,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
        $productos = DB::select('SELECT id_prod,nombre_emp, nomb_fec, codigo_prod,codbarra_prod,descripcion_prod,nomb_marca,present_prod,precio_prod,ubicacion_prod,stockmin_prod,stockmax_prod,fechaing_prod,fechaelab_prod,fechacad_prod,aplicaiva_prod,aplicaice_prod,util_prod,comision_prod,imagen_prod,observ_prod,estado_prod,fechaini_prod,fechafin_prod FROM producto
       INNER JOIN empresa ON producto.id_emp= empresa.id_emp
       INNER JOIN fecha_periodo ON producto.id_fec= fecha_periodo.id_fec
-      INNER JOIN marca ON producto.id_prod= producto.id_prod');
+      INNER JOIN marca ON producto.id_marca= marca.id_marca');
        return view('admin.Producto.index',compact('productos'));
     }
     public function CargarProducto()
