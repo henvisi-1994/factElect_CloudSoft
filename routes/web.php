@@ -29,6 +29,7 @@ Route::get('Producto','AdminController@Producto');
 //Añadir
 Route::get('addCategoria','AdminController@CargarCategoria');
 Route::get('addMarca','AdminController@CargarMarca');
+Route::get('addPersona','AdminController@CargarPersona');
 Route::get('addUnidad','AdminController@CargarUnidad');
 Route::get('addCiudad','AdminController@CargarCiudad');
 Route::get('addProveedor','AdminController@CargarPersona');

@@ -4,6 +4,13 @@
             <div class="box-header with-border">
               <h3 class="box-title">Añadir Proveedor</h3>
             </div>
+             @if ($errors->count())
+            <div class="alert alert-warning" role="alert">
+               @foreach ($errors->all() as $error)
+                  <div>{{ $error }}</div>
+              @endforeach
+            </div>
+            @endif </br> 
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" method="POST" action="/storeProveedor">

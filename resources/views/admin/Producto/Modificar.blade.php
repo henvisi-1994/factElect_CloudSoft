@@ -8,7 +8,7 @@
     </div>
     <!-- /.box-header -->
     <!-- form start -->
-    <form action="/storeMarca" method="POST" enctype="multipart/form-data"role="form">
+    <form action="{{asset('updateProducto/'.$producto->id_prod)}}" method="POST" enctype="multipart/form-data"role="form">
         <div class="box-body">
             <div class="form-group">
                 <label for="exampleInputEmail1">

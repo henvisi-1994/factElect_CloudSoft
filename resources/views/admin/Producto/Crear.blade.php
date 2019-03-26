@@ -90,13 +90,19 @@
                 <input class="form-control" id="exampleInputEmail1" name="present_prod" placeholder="Ingrese Presentación " type="text">
                 </input>
             </div>
+
             <div class="form-group">
                 <label for="exampleInputEmail1">
                     Precio
                 </label>
-                <input class="form-control" id="exampleInputEmail1" name="precio_prod" placeholder="Ingrese Precio " type="text">
-                </input>
+                <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                <input type="text" name="precio_prod" class="form-control">
+              </div>
             </div>
+
+
+
             <div class="form-group">
                 <label for="exampleInputEmail1">
                     Ubicación
@@ -192,20 +198,30 @@
                     </option>
                 </select>
             </div>
+           
+
             <div class="form-group">
                 <label for="exampleInputEmail1">
                     Utilidad
                 </label>
-                <input class="form-control" id="exampleInputEmail1" name="util_prod" placeholder="Ingrese Utilidad " type="text">
-                </input>
+                <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                <input type="text" name="util_prod" class="form-control">
+              </div>
             </div>
+
             <div class="form-group">
                 <label for="exampleInputEmail1">
-                    Comision
+                    Comisión
                 </label>
-                <input class="form-control" id="exampleInputEmail1" name="comision_prod" placeholder="Ingrese Comisión " type="text">
-                </input>
+                <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                <input type="text" name="comision_prod" class="form-control">
+              </div>
             </div>
+
+
+            
             <div class="form-group files">
                 <label>
                     Imagen
@@ -213,8 +229,7 @@
                 <input class="form-control" multiple="" name="imagen_prod" type="file">
                 </input>
             </div>
-        </div>
-        <div class="form-group">
+                    <div class="form-group">
             <label>
                 Estado
             </label>
@@ -260,6 +275,8 @@
                 </input>
             </div>
         </div>
+        </div>
+
 </div>
 <!-- /.input group -->
 <!-- /.box-body -->

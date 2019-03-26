@@ -5,6 +5,13 @@
             <div class="box-header with-border">
               <h3 class="box-title">Datos Personales</h3>
             </div>
+           @if ($errors->count())
+            <div class="alert alert-warning" role="alert">
+               @foreach ($errors->all() as $error)
+                  <div>{{ $error }}</div>
+              @endforeach
+            </div>
+        @endif </br> 
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" method="POST" action="/storePersona">
@@ -29,29 +36,64 @@
                   <input type="text" name="apel_per" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Apellido">
                 </div>
 
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Telefono 1 </label>
-                  <input type="text" name="fono1_per" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Teléfono 1">
+                
+
+              <div class="form-group">
+                <label>Telefono 1</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <input type="text" name="fono1_per" class="form-control" data-inputmask='"mask": "(+999) 99 9999999"' data-mask>
                 </div>
+                <!-- /.input group -->
+              </div>
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Telefono 2 </label>
-                  <input type="text" name="fono2_per" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Teléfono 2">
+                <label>Telefono 2</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <input type="text" name="fono2_per" class="form-control" data-inputmask='"mask": "(+999) 99 9999999"' data-mask>
                 </div>
+                <!-- /.input group -->
+              </div>
+
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Celular 1 </label>
-                  <input type="text" name="cel1_per" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Celular 1">
+                <label>Celular 1</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <input type="text" name="cel1_per" class="form-control" data-inputmask='"mask": "9999999999"' data-mask>
                 </div>
+                <!-- /.input group -->
+              </div>
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Celular 2 </label>
-                  <input type="text" name="cel2_per" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Celular 2">
-                </div>
+                <label>Celular 2</label>
 
-                <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <input type="text" name="cel2_per" class="form-control" data-inputmask='"mask": "9999999999"' data-mask>
+                </div>
+                <!-- /.input group -->
+              </div>
+               
+
+                 <div class="form-group">
                   <label for="exampleInputEmail1">Correo Personal </label>
-                  <input type="text" name="correo_per" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Correo Personal">
+                 <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input type="email" name="correo_per" class="form-control" placeholder="Ingrese Correo Personal">
+                </div>
                 </div>
 
                 

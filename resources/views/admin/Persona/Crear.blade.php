@@ -49,12 +49,13 @@
                   <input type="text" name="cel2_per" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Celular 2">
                 </div>
 
-                <div class="form-group">
+                 <div class="form-group">
                   <label for="exampleInputEmail1">Correo Personal </label>
-                  <input type="text" name="correo_per" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Correo Personal">
+                 <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input type="email" name="correo_per" class="form-control" placeholder="Ingrese Correo Personal">
                 </div>
-
-                
+                </div>
 
 
                  <div class="form-group">

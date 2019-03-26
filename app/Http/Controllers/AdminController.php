@@ -16,6 +16,7 @@ use App\Producto;
 use App\Identificaciones;
 use App\TipoContribuyente;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 
 class AdminController extends Controller
@@ -213,7 +214,20 @@ public function Unidad()
 
     public function guardarProveedor(Request $request)
     {
+
       $proveedor = new Proveedor;
+      $v = \Validator::make($request->all(), [
+            
+            'id_emp' => 'required',
+            'id_fec' => 'required',
+            'cod_prov' => 'required',
+            'id_per' => 'required',
+            'estado_prov' => 'required',
+        ]);
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
       $proveedor->create($request->all());
       return redirect('Proveedor');
 
@@ -267,6 +281,24 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     public function  guardarPersona(Request $request)
     {
        $persona= new Persona ();
+               $v = \Validator::make($request->all(), [
+            
+            'doc_per' => 'required | Numeric',
+            'organiz_per' => 'required',
+            'nombre_per' => 'required',
+            'apel_per' => 'required',
+            'direc_per' => 'required',
+            'fecnac_per' => 'required',
+            'estado_per' => 'required',
+            'correo_per'    => 'required|email',
+            'fono1_per' => 'required',
+            'cel1_per' => 'required'
+        ]);
+ 
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
         $persona->id_contrib=$request->input('id_contrib');
         $persona->id_ident=$request->input('id_ident');
         $persona->id_ciu=$request->input('id_ciu'); 
