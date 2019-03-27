@@ -12,7 +12,7 @@
             </a>
         </div>
         <br>
-        <table class="table table-bordered table-striped" id="example1">
+        <table class="table table-bordered table-striped" id="example3">
             <thead>
                 <tr>
                     <th>

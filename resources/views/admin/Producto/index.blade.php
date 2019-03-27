@@ -1,18 +1,16 @@
-<div class="box">
-    <div class="box-header">
-        <h3 class="box-title">
-            Producto
-        </h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body" style="overflow-x: auto">
-        <div class="card-body d-flex justify-content-between align-items-center">
+ <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Producto</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow-x: auto">
+                      <div class="card-body d-flex justify-content-between align-items-center">
             <a class="btn btn-primary btn-sm" href="{{asset('addProducto')}}">
                 Crear
             </a>
         </div>
         <br>
-        <table class="table table-bordered table-striped" id="example1">
+        <table id="example2" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>
