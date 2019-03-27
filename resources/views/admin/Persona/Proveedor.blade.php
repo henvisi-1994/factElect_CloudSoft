@@ -6,7 +6,7 @@
               <h3 class="box-title">Datos Personales</h3>
             </div>
            @if ($errors->count())
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-danger" role="alert">
                @foreach ($errors->all() as $error)
                   <div>{{ $error }}</div>
               @endforeach

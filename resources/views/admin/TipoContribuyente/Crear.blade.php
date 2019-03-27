@@ -5,6 +5,13 @@
               <h3 class="box-title">Añadir Tipo de Contribuyente</h3>
             </div>
             <!-- /.box-header -->
+             @if ($errors->count())
+            <div class="alert alert-danger" role="alert">
+               @foreach ($errors->all() as $error)
+                  <div>{{ $error }}</div>
+              @endforeach
+            </div>
+        @endif </br> 
             <!-- form start -->
             <form role="form" method="POST" action="/storeTipoContribuyente">
               <div class="box-body">

@@ -7,6 +7,13 @@
         </h3>
     </div>
     <!-- /.box-header -->
+               @if ($errors->count())
+            <div class="alert alert-danger" role="alert">
+               @foreach ($errors->all() as $error)
+                  <div>{{ $error }}</div>
+              @endforeach
+            </div>
+        @endif </br> 
     <!-- form start -->
     <form action="/storeProducto" method="POST" enctype="multipart/form-data" role="form">
         <div class="box-body">

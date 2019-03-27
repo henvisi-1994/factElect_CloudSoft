@@ -67,9 +67,19 @@ public function Unidad()
   //Funcion Guardar Categoria
     public function  guardarCategoria(Request $request)
     {
-        $categoria= new Categoria;
-        $categoria->create($request->all());
-        return redirect('addCategoria');
+        $v=$this->validate(request(),[
+            'nomb_cat' => 'required|string',
+            'estado_cat' => 'required|string'
+        ]);
+                if ($v) {
+                   $categoria= new Categoria;
+                   $categoria->create($request->all());
+                  return redirect('Categoria');
+                }
+                else
+                {
+                   return back()->withInput($request->all());
+                }
     }
      //Pre modificar Categoria
     public function  premodificarCategoria(Request $request,$id)
@@ -99,9 +109,31 @@ public function Unidad()
     //Guardar Marca
      public function  guardarMarca(Request $request)
     {
-        $marca= new Marca;
-        $marca->create($request->all());
-        return redirect('addMarca');
+        
+        $v =$this->validate(request(), [
+            
+            'nomb_marca' => 'required',
+            'observ_marca' => 'required',
+            'estado_marca' => 'required',
+            'fechaini_marca' => 'required',
+            'fechafin_marca' => 'required'
+        ]);
+        if ($v)
+        {
+          $marca= new Marca();
+          $marca->id_marca=$request->input('id_marca');
+          $marca->nomb_marca=$request->input('nomb_marca');
+          $marca->observ_marca=$request->input('observ_marca');
+          $marca->estado_marca=$request->input('estado_marca');
+          $marca->fechaini_marca=$request->input('fechaini_marca');
+          $marca->fechafin_marca=$request->input('fechafin_marca');
+          $marca->save();
+          return redirect('Marca');
+        }
+        else
+        {
+          return back()->withInput($request->all());
+        }
     }
     //Pre modificar Marca
     public function  premodificarMarca(Request $request,$id)
@@ -126,9 +158,30 @@ public function Unidad()
     //Guardar Unidad
       public function  guardarUnidad(Request $request)
     {
-        $unidad= new Unidad;
-        $unidad->create($request->all());
-        return redirect('addUnidad');
+        $v =$this->validate(request(), [
+            
+            'nomb_unidad' => 'required',
+            'observ_unidad' => 'required',
+            'estado_unidad' => 'required',
+            'fechaini_unidad' => 'required',
+            'fechafin_unidad' => 'required'
+        ]);
+        if ($v)
+        {
+          $unidad= new Unidad();
+          $unidad->id_unidad=$request->input('id_unidad');
+          $unidad->nomb_unidad=$request->input('nomb_unidad');
+          $unidad->observ_unidad=$request->input('observ_unidad');
+          $unidad->estado_unidad=$request->input('estado_unidad');
+          $unidad->fechaini_unidad=$request->input('fechaini_unidad');
+          $unidad->fechafin_unidad=$request->input('fechafin_unidad');
+          $unidad->save();
+          return redirect('Unidad');
+        }
+        else
+        {
+          return back()->withInput($request->all());
+        }
     }
      //Pre modificar Unidad
     public function  premodificarUnidad(Request $request,$id)
@@ -168,9 +221,24 @@ public function Unidad()
     //Funcion Guardar Ciudad
     public function  guardarCiudad(Request $request)
     {
-        $ciudad= new Ciudad;
-        $ciudad->create($request->all());
-        return redirect('addCiudad');
+
+         $v =$this->validate(request(), [
+            
+            'nomb_ciu' => 'required',
+            'id_emp' => 'required',
+            'id_fec' => 'required',
+            'estado_ciu' => 'required',
+        ]);
+        if ($v)
+        {
+          $ciudad= new Ciudad;
+          $ciudad->create($request->all());
+          return redirect('addCiudad');
+        }
+        else
+        {
+          return back()->withInput($request->all());
+        }
     }
       //Pre modificar Ciudad
     public function  premodificarCiudad(Request $request,$id)
@@ -215,21 +283,25 @@ public function Unidad()
     public function guardarProveedor(Request $request)
     {
 
-      $proveedor = new Proveedor;
-      $v = \Validator::make($request->all(), [
+      $v =$this->validate(request(), [
             
             'id_emp' => 'required',
             'id_fec' => 'required',
             'cod_prov' => 'required',
             'id_per' => 'required',
-            'estado_prov' => 'required',
+            'estado_prov' => 'required'
         ]);
-        if ($v->fails())
+        if ($v)
         {
-            return redirect()->back()->withInput()->withErrors($v->errors());
+          $proveedor = new Proveedor;
+           $proveedor->create($request->all());
+          return redirect('Proveedor');       
         }
-      $proveedor->create($request->all());
-      return redirect('Proveedor');
+        else
+        {
+          return back()->withInput($request->all());
+        }
+     
 
     }
     public function premodificarProveedor(Request $request,$id)
@@ -242,20 +314,35 @@ public function Unidad()
     }
     public function modificarProveedor(Request $request,$id)
     {
-
-      $id_emp  =  $request->input('id_emp');
-      $id_fec =  $request->input('id_fec');
-      $cod_prov =  $request->input('cod_prov');
-      $id_per =  $request->input('id_per');
-      $obser_prov =  $request->input('obser_prov');
-      $estado_prov =  $request->input('estado_prov');
-      $fechaini_prov =  $request->input('fechaini_prov');
-      $fechafin_prov =  $request->input('fechafin_prov');
-       DB::table('proveedor')
-            ->where('id_prov', $id)
-            ->update(['id_emp' => $id_emp,'id_fec' => $id_fec,'cod_prov' => $cod_prov, 'id_per' => $id_per,'obser_prov' => $obser_prov ,'estado_prov' => $estado_prov, 'fechaini_prov' => $fechaini_prov, 'fechafin_prov' => $fechafin_prov]
-          );
-       return redirect('Proveedor');
+      $v =$this->validate(request(), [
+            
+            'id_emp' => 'required',
+            'id_fec' => 'required',
+            'cod_prov' => 'required',
+            'id_per' => 'required',
+            'estado_prov' => 'required'
+        ]);
+        if ($v)
+        {
+          $id_emp  =  $request->input('id_emp');
+          $id_fec =  $request->input('id_fec');
+          $cod_prov =  $request->input('cod_prov');
+          $id_per =  $request->input('id_per');
+          $obser_prov =  $request->input('obser_prov');
+          $estado_prov =  $request->input('estado_prov');
+          $fechaini_prov =  $request->input('fechaini_prov');
+          $fechafin_prov =  $request->input('fechafin_prov');
+           DB::table('proveedor')
+                ->where('id_prov', $id)
+                ->update(['id_emp' => $id_emp,'id_fec' => $id_fec,'cod_prov' => $cod_prov, 'id_per' => $id_per,'obser_prov' => $obser_prov ,'estado_prov' => $estado_prov, 'fechaini_prov' => $fechaini_prov, 'fechafin_prov' => $fechafin_prov]
+              );
+           return redirect('Proveedor');
+           }
+        else
+        {
+          return back()->withInput($request->all());
+        }
+     
 
     }
 //Persona
@@ -280,8 +367,8 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     //Funcion Guardar Persona
     public function  guardarPersona(Request $request)
     {
-       $persona= new Persona ();
-               $v = \Validator::make($request->all(), [
+       
+            $v =$this->validate(request(), [
             
             'doc_per' => 'required | Numeric',
             'organiz_per' => 'required',
@@ -295,10 +382,8 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             'cel1_per' => 'required'
         ]);
  
-        if ($v->fails())
+        if ($v)
         {
-            return redirect()->back()->withInput()->withErrors($v->errors());
-        }
         $persona->id_contrib=$request->input('id_contrib');
         $persona->id_ident=$request->input('id_ident');
         $persona->id_ciu=$request->input('id_ciu'); 
@@ -323,6 +408,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         $fechas = Fecha_periodo::get();
         $personas = Persona::get();
         return view('admin.Proveedor.Crear',compact('empresas','fechas','personas','id_per'));
+      }
+      else
+        {
+          return back()->withInput($request->all());
+        }
+
     }
       //Pre modificar Persona
     public function  premodificarPersona(Request $request,$id)
@@ -336,6 +427,22 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     //Modificar Persona
     public function  modificarPersona(Request $request,$id)
     {
+       $v =$this->validate(request(), [
+            
+            'doc_per' => 'required | Numeric',
+            'organiz_per' => 'required',
+            'nombre_per' => 'required',
+            'apel_per' => 'required',
+            'direc_per' => 'required',
+            'fecnac_per' => 'required',
+            'estado_per' => 'required',
+            'correo_per'    => 'required|email',
+            'fono1_per' => 'required',
+            'cel1_per' => 'required'
+        ]);
+ 
+        if ($v)
+        {
         $id_contrib =  $request->input('id_contrib');
         $id_ident =  $request->input('id_ident');
         $id_ciu =  $request->input('id_ciu');
@@ -358,6 +465,11 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             ->update(['id_contrib' => $id_contrib,'id_ident' => $id_ident,'id_ciu' => $id_ciu, 'doc_per' => $doc_per , 'organiz_per' => $organiz_per, 'nombre_per' => $nombre_per,'apel_per'=> $apel_per,'direc_per'=> $direc_per,'fono1_per'=> $fono1_per,'fono2_per'=> $fono2_per,'cel1_per'=> $cel1_per,'cel2_per'=> $cel2_per,'fecnac_per'=> $fecnac_per,'correo_per'=> $correo_per,'estado_per'=> $estado_per,'fechaini_per'=> $fechaini_per,'fechafin_per'=> $fechafin_per]
           );
         return redirect('Persona');
+      }
+      else
+        {
+          return back()->withInput($request->all());
+        }
     }
     public function TipoContribuyente()
     {
@@ -372,9 +484,26 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar TipoContribuyente
      public function  guardarTipoContribuyente(Request $request)
     {
-        $tiposContribuyentes= new TipoContribuyente;
-        $tiposContribuyentes->create($request->all());
-        return redirect('addTipoContribuyente');
+        
+        $v =$this->validate(request(), [
+            
+            'nomb_contrib' => 'required',
+            'obser_contrib' => 'required',
+            'estado_contrib' => 'required',
+            'fechaini_contrib' => 'required',
+            'fechafin_contrib' => 'required'
+        ]);
+        if ($v)
+        {
+            $tiposContribuyentes= new TipoContribuyente();
+            $tiposContribuyentes->create($request->all());
+            return redirect('TipoContribuyente');
+        }
+        else
+        {
+          return back()->withInput($request->all());
+        }
+
     }
     //Pre modificar Tipo Contribuyente
     public function  premodificarTipoContribuyente(Request $request,$id)
@@ -385,6 +514,17 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
      //Modificar Tipo Contribuyente
     public function  modificarTipoContribuyente(Request $request,$id)
     {
+
+       $v =$this->validate(request(), [
+            
+            'nomb_contrib' => 'required',
+            'obser_contrib' => 'required',
+            'estado_contrib' => 'required',
+            'fechaini_contrib' => 'required',
+            'fechafin_contrib' => 'required'
+        ]);
+        if ($v)
+        {
         $nomb_contrib= $request->input('nomb_contrib');
         $obser_contrib= $request->input('obser_contrib');
         $estado_contrib= $request->input('estado_contrib');
@@ -395,6 +535,11 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             ->update(['nomb_contrib' => $nomb_contrib, 'obser_contrib' => $obser_contrib , 'estado_contrib' => $estado_contrib, 'fechaini_contrib' => $fechaini_contrib,'fechafin_contrib'=> $fechafin_contrib]
           );
         return redirect('TipoContribuyente');
+      }
+      else
+        {
+          return back()->withInput($request->all());
+        }
     }
 
     //Funcion Identificaciones
@@ -411,9 +556,24 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar Identificacion
      public function  guardarIdentificacion(Request $request)
     {
-        $identificacion= new Identificaciones;
-        $identificacion->create($request->all());
-        return redirect('addIdentificacion');
+         
+        $v =$this->validate(request(), [
+            
+            'sri_ident' => 'required',
+            'descrip_ident' => 'required',
+            'observ_ident' => 'required',
+            'estado_ident' => 'required'
+        ]);
+        if ($v)
+        {
+            $identificacion= new Identificaciones();
+            $identificacion->create($request->all());
+            return redirect('addIdentificacion');
+        }
+        else
+        {
+          return back()->withInput($request->all());
+        }
     }
     //Pre modificar Identificacion
     public function  premodificarIdentificacion(Request $request,$id)
@@ -424,6 +584,15 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
      //Modificar Tipo Identificacion
     public function  modificarIdentificacion(Request $request,$id)
     {
+      $v =$this->validate(request(), [
+            
+            'sri_ident' => 'required',
+            'descrip_ident' => 'required',
+            'observ_ident' => 'required',
+            'estado_ident' => 'required'
+        ]);
+        if ($v)
+        {
         $sri_ident= $request->input('sri_ident');
         $descrip_ident= $request->input('descrip_ident');
         $observ_ident= $request->input('observ_ident');
@@ -435,6 +604,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             ->update(['sri_ident' => $sri_ident, 'descrip_ident' => $descrip_ident , 'observ_ident' => $observ_ident, 'estado_ident' => $estado_ident,'fechaini_ident'=> $fechaini_ident,'fechafin_ident'=> $fechafin_ident]
           );
         return redirect('Identificaciones');
+      }
+      else
+        {
+          return back()->withInput($request->all());
+        }
+
     }
 
     //Producto
@@ -456,38 +631,55 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
 
     public function guardarProducto(Request $request)
     {
-       if($request->hasfile('imagen_prod'))
+      $v= $this->validate(request(),[
+            'codigo_prod' => 'required|string',
+            'precio_prod' => 'required|numeric',
+            'codbarra_prod' => 'required|numeric',
+            'id_marca' => 'required',
+            'stockmin_prod' => 'required|numeric',
+            'stockmax_prod' => 'required|numeric',
+            'precio_prod' =>'required|numeric|between:0,9999.99',
+            'util_prod' =>'required|numeric|between:0,9999.99',
+            'comision_prod'=>'required|numeric|between:0,9999.99',
+            'imagen_prod'=>'required'
+
+        ]);
+       if($request->hasfile('imagen_prod') & $v)
       {
         $file = $request->file('imagen_prod');
         $name =time().'_'.$file->getClientOriginalName();
         $file->move(public_path().'/img/producto',$name);
-      $producto = new Producto();
-      $producto->id_emp  =  $request->input('id_emp');
-      $producto->id_fec =  $request->input('id_fec');
-      $producto->codigo_prod =  $request->input('codigo_prod');
-      $producto->codbarra_prod =  $request->input('codbarra_prod');
-      $producto->descripcion_prod= $request->input('descripcion_prod');
-      $producto->id_marca =  $request->input('id_marca');
-      $producto->present_prod=  $request->input('present_prod');
-      $producto->precio_prod=  $request->input('precio_prod');
-      $producto->ubicacion_prod =  $request->input('ubicacion_prod');
-      $producto->stockmin_prod =  $request->input('stockmin_prod');
-      $producto->stockmax_prod =  $request->input('stockmax_prod');
-      $producto->fechaing_prod =  $request->input('fechaing_prod');
-      $producto->fechaelab_prod =  $request->input('fechaelab_prod');
-      $producto->fechacad_prod =  $request->input('fechacad_prod');
-      $producto->aplicaiva_prod =  $request->input('aplicaiva_prod');
-      $producto->aplicaice_prod =  $request->input('aplicaice_prod');
-      $producto->util_prod =  $request->input('util_prod');
-      $producto->comision_prod =  $request->input('comision_prod');
-      $producto->imagen_prod =  $name;
-      $producto->estado_prod =  $request->input('estado_prod');
-      $producto->observ_prod =  $request->input('observ_prod');
-      $producto->fechaini_prod =  $request->input('fechaini_prod');
-      $producto->fechafin_prod =  $request->input('fechafin_prod');
-      $producto->save();
+         $producto = new Producto();
+          $producto->id_emp  =  $request->input('id_emp');
+          $producto->id_fec =  $request->input('id_fec');
+          $producto->codigo_prod =  $request->input('codigo_prod');
+          $producto->codbarra_prod =  $request->input('codbarra_prod');
+          $producto->descripcion_prod= $request->input('descripcion_prod');
+          $producto->id_marca =  $request->input('id_marca');
+          $producto->present_prod=  $request->input('present_prod');
+          $producto->precio_prod=  $request->input('precio_prod');
+          $producto->ubicacion_prod =  $request->input('ubicacion_prod');
+          $producto->stockmin_prod =  $request->input('stockmin_prod');
+          $producto->stockmax_prod =  $request->input('stockmax_prod');
+          $producto->fechaing_prod =  $request->input('fechaing_prod');
+          $producto->fechaelab_prod =  $request->input('fechaelab_prod');
+          $producto->fechacad_prod =  $request->input('fechacad_prod');
+          $producto->aplicaiva_prod =  $request->input('aplicaiva_prod');
+          $producto->aplicaice_prod =  $request->input('aplicaice_prod');
+          $producto->util_prod =  $request->input('util_prod');
+          $producto->comision_prod =  $request->input('comision_prod');
+          $producto->imagen_prod =  $name;
+          $producto->estado_prod =  $request->input('estado_prod');
+          $producto->observ_prod =  $request->input('observ_prod');
+          $producto->fechaini_prod =  $request->input('fechaini_prod');
+          $producto->fechafin_prod =  $request->input('fechafin_prod');
+          $producto->save();
+          return redirect('Producto');
       }
-      return redirect('Producto');
+      else
+      {
+        return back()->withInput($request->all());
+      }
 
     }
     public function premodificarProducto(Request $request,$id)
@@ -500,7 +692,20 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
     public function modificarProducto(Request $request,$id)
     {
-       if($request->hasfile('imagen_prod'))
+      $v= $this->validate(request(),[
+            'codigo_prod' => 'required|string',
+            'precio_prod' => 'required|numeric',
+            'codbarra_prod' => 'required|numeric',
+            'id_marca' => 'required',
+            'stockmin_prod' => 'required|numeric',
+            'stockmax_prod' => 'required|numeric',
+            'precio_prod' =>'required|numeric|between:0,9999.99',
+            'util_prod' =>'required|numeric|between:0,9999.99',
+            'comision_prod'=>'required|numeric|between:0,9999.99',
+            'imagen_prod'=>'required'
+
+        ]);
+       if($request->hasfile('imagen_prod') & $v)
       {
         $file = $request->file('imagen_prod');
         $name =time().'_'.$file->getClientOriginalName();
@@ -537,9 +742,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
   'ubicacion_prod' => $ubicacion_prod ,  'stockmin_prod' => $stockmin_prod ,  'stockmax_prod' => $stockmax_prod ,'fechaing_prod'  => $fechaing_prod ,  'fechaelab_prod' => $fechaelab_prod ,'fechacad_prod' => $fechacad_prod ,'aplicaiva_prod' => $aplicaiva_prod,'aplicaice_prod' => $aplicaice_prod,'util_prod' => $util_prod ,  'comision_prod' => $comision_prod,'imagen_prod' => $imagen_prod ,
   'observ_prod' => $observ_prod ,'estado_prod' => $estado_prod , 'fechaini_prod' => $fechaini_prod ,'fechafin_prod' => $fechafin_prod]
           );
+            return redirect('Producto');
           }
-       return redirect('Producto');
-
+          else
+      {
+        return back()->withInput($request->all());
+      }
     }
 
 }
