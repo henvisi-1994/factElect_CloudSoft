@@ -1,5 +1,3 @@
-@extends('admin.layouts.compras')
-@section('content')
  <div class="box">
             <div class="box-header">
               <h3 class="box-title">Proveedor</h3>
@@ -48,5 +46,3 @@
             </div>
             <!-- /.box-body -->
           </div>
-
-@endsection

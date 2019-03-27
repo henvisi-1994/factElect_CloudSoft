@@ -27,7 +27,20 @@ class AdminController extends Controller
   }
   public function Compras()
   {
-    return view('admin.compras');
+    $categorias = DB::select('SELECT categoria.id_cat, categoria.nomb_cat,categoria.observ_cat,categoria.estado_cat,categoria.fechaini_cat,categoria.fechafin_cat,empresa.nombre_emp,fecha_periodo.nomb_fec FROM categoria
+      INNER JOIN empresa ON categoria.id_emp= empresa.id_emp
+      INNER JOIN fecha_periodo ON categoria.id_fec = fecha_periodo.id_fec');
+     $marcas = Marca::get();
+     $unidades = Unidad::get();
+     $proveedores = DB::select('SELECT id_prov ,nombre_emp, nomb_fec, cod_prov,nombre_per,apel_per,obser_prov,estado_prov,fechaini_prov,fechafin_prov FROM proveedor
+        INNER JOIN empresa ON proveedor.id_emp= empresa.id_emp
+        INNER JOIN fecha_periodo ON proveedor.id_fec= fecha_periodo.id_fec
+        INNER JOIN persona ON proveedor.id_per= persona.id_per');
+     $productos = DB::select('SELECT id_prod,nombre_emp, nomb_fec, codigo_prod,codbarra_prod,descripcion_prod,nomb_marca,present_prod,precio_prod,ubicacion_prod,stockmin_prod,stockmax_prod,fechaing_prod,fechaelab_prod,fechacad_prod,aplicaiva_prod,aplicaice_prod,util_prod,comision_prod,imagen_prod,observ_prod,estado_prod,fechaini_prod,fechafin_prod FROM producto
+      INNER JOIN empresa ON producto.id_emp= empresa.id_emp
+      INNER JOIN fecha_periodo ON producto.id_fec= fecha_periodo.id_fec
+      INNER JOIN marca ON producto.id_marca= marca.id_marca');
+    return view('admin.compras',compact('categorias','marcas','unidades','proveedores','productos'));
   }
   
   public function Categoria()

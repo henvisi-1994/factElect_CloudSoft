@@ -548,17 +548,11 @@
 </div>
 <!-- ./wrapper -->
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
-  </footer>
+
 <!-- jQuery 3 -->
 <script src="{{ asset("Administrador/bower_components/jquery/dist/jquery.min.js") }}"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="{{ asset("Administrador/bower_components/jquery-ui/jquery-umin.js") }}"></script>
+<script src="{{ asset("Administrador/bower_components/jquery-ui/jquery-ui.min.js") }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button);
@@ -620,4 +614,11 @@
 <!-- Page script -->
 <script src="{{ asset("Administrador/dist/js/personalizar.js") }}"></script>
 </body>
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.4.0
+    </div>
+    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    reserved.
+  </footer>
 </html>
