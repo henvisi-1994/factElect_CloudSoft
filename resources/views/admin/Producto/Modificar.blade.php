@@ -1,4 +1,4 @@
-@extends('admin.layouts.compras')
+@extends('admin.layouts.app')
 @section('content')
 <div class="box box-primary">
     <div class="box-header with-border">
@@ -129,7 +129,7 @@
                         </i>
                     </div>
                   
-                     <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaing_prod"  value="{{$producto->fechaing_prod}}" type="text">
+                     <input class="form-control" name="fechaing_prod"  value="{{$producto->fechaing_prod}}" type="date">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -143,7 +143,7 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                     <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaelab_prod" value="{{$producto->fechaelab_prod}}"  type="text">
+                     <input class="form-control" name="fechaelab_prod" value="{{$producto->fechaelab_prod}}"  type="date">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -157,7 +157,7 @@
                         <i class="fa fa-calendar">
                         </i>
                     </div>
-                     <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechacad_prod" value="{{$producto->fechacad_prod}}" type="text">
+                     <input class="form-control" name="fechacad_prod" value="{{$producto->fechacad_prod}}" type="date">
                     </input>
                 </div>
                 <!-- /.input group -->
@@ -244,7 +244,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                 <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaini_prod"  value= "{{$producto->fechaini_prod}}"type="text">
+                 <input class="form-control" name="fechaini_prod"  value= "{{$producto->fechaini_prod}}"type="date">
                 </input>
             </div>
             <!-- /.input group -->
@@ -258,7 +258,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" name="fechaini_prod"  value= "{{$producto->fechafin_prod}}"type="text">
+                <input class="form-control" name="fechaini_prod"  value= "{{$producto->fechafin_prod}}"type="date">
                 </input>
             </div>
         </div>

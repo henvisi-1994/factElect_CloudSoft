@@ -1,75 +1,107 @@
-@extends('admin.layouts.compras')
-@section('content')
- <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Añadir Identificación</h3>
+<form action="storeIdentificaciones" method="POST">
+    <div class="modal fade" id="crearIdentificaciones">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span>
+                            ×
+                        </span>
+                    </button>
+                    <h4>
+                        Añadir Identificacion
+                    </h4>
+                    <span class="text-danger" v-for="error in errors">
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>
+                            Estado
+                        </label>
+                        <select class="form-control" name="sri_ident">
+                            <option disabled="" selected="" value="none">
+                                Selecione Identificación
+                            </option>
+                            <option value="N">
+                                Natural
+                            </option>
+                            <option value="J">
+                                Juridica
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>
+                                Descripción
+                            </label>
+                            <textarea class="form-control" name="descrip_ident" placeholder="Ingrese Descripción" rows="3">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Observación
+                            </label>
+                            <textarea class="form-control" name="observ_ident" placeholder="Ingrese Observación" rows="3">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Estado
+                            </label>
+                            <select class="form-control" name="estado_ident">
+                                <option disabled="" selected="" value="none">
+                                    Selecione Estado
+                                </option>
+                                <option value="A">
+                                    Activo
+                                </option>
+                                <option value="P">
+                                    Pendiente
+                                </option>
+                                <option value="I">
+                                    Inactivo
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Fecha Inicial:
+                            </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar">
+                                    </i>
+                                </div>
+                                <input class="form-control" name="fechaini_ident" type="date">
+                                </input>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Fecha Final:
+                            </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar">
+                                    </i>
+                                </div>
+                                <input class="form-control" name="fechafin_ident" type="date">
+                                </input>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                        </input>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-primary" type="submit" value="Guardar">
+                        </input>
+                    </div>
+                </div>
             </div>
-            <!-- /.box-header -->
-             @if ($errors->count())
-            <div class="alert alert-danger" role="alert">
-               @foreach ($errors->all() as $error)
-                  <div>{{ $error }}</div>
-              @endforeach
-            </div>
-        @endif </br> 
-            <!-- form start -->
-            <form role="form" method="POST" action="/storeIdentificaciones">
-              <div class="box-body">
-                 <div class="form-group">
-                  <label>Estado</label>
-                  <select class="form-control"name="sri_ident">
-                    <option value="none" selected="" disabled="">Selecione Identificación</option>
-                    <option value="N">Natural</option>
-                     <option value="J">Juridica</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                 <div class="form-group">
-                  <label>Descripción</label>
-                  <textarea class="form-control" rows="3" placeholder="Ingrese Descripción"name="descrip_ident"></textarea>
-                </div>
-                <div class="form-group">
-                  <label>Observación</label>
-                  <textarea class="form-control" rows="3" placeholder="Ingrese Observación"name="observ_ident"></textarea>
-                </div>
-                 <div class="form-group">
-                  <label>Estado</label>
-                  <select class="form-control"name="estado_ident">
-                    <option value="none" selected="" disabled="">Selecione Estado</option>
-                    <option value="A">Activo</option>
-                     <option value="P">Pendiente</option>
-                     <option value="I">Inactivo</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                <label>Fecha Inicial:</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control" name="fechaini_ident" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
-                </div>
-                <!-- /.input group -->
-              </div>
-              <div class="form-group">
-                <label>Fecha Final:</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control" name="fechafin_ident" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
-                </div>
-                <!-- /.input group -->
-              </div>
-
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              </div>
-            </form>
-          </div>
-@endsection
+        </div>
+    </div>
+</form>

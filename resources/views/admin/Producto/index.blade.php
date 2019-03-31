@@ -5,7 +5,7 @@
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x: auto">
                       <div class="card-body d-flex justify-content-between align-items-center">
-            <a class="btn btn-primary btn-sm" href="{{asset('addProducto')}}">
+            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#crearProducto">
                 Crear
             </a>
         </div>
@@ -119,5 +119,6 @@
                 @endforeach
             </tbody>
         </table>
+        @include('admin.Producto.Crear')
     </div>
 </div>

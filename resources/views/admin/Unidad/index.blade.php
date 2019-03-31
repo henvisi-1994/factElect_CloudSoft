@@ -6,7 +6,7 @@
             <div class="box-body">
                <div class="box-body">
                       <div class="card-body d-flex justify-content-between align-items-center">
-            <a class="btn btn-primary btn-sm" href="{{asset('addUnidad')}}">
+            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#crearUnidad">
                 Crear
             </a>
         </div>
@@ -39,6 +39,7 @@
                 @endforeach
                 </tfoot>
               </table>
+              @include('admin.Unidad.Crear')
             </div>
             <!-- /.box-body -->
           </div>

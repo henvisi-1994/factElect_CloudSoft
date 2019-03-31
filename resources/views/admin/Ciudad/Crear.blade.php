@@ -1,84 +1,121 @@
-@extends('admin.layouts.compras')
-@section('content')
- <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Añadir Ciudad</h3>
+<form action="storeCiudad" method="POST">
+    <div class="modal fade" id="crearCiudad">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span>
+                            ×
+                        </span>
+                    </button>
+                    <h4>
+                        Añadir Ciudad
+                    </h4>
+                    <span class="text-danger" v-for="error in errors">
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                Nombre
+                            </label>
+                            <input class="form-control" id="exampleInputEmail1" name="nomb_ciu" placeholder="Ingrese Nombre" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Observacion
+                            </label>
+                            <textarea class="form-control" name="observ_ciu" placeholder="Ingrese Observación" rows="3">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Estado
+                            </label>
+                            <select class="form-control" name="estado_ciu">
+                                <option disabled="" selected="" value="none">
+                                    Selecione Estado
+                                </option>
+                                <option value="A">
+                                    Activo
+                                </option>
+                                <option value="P">
+                                    Pendiente
+                                </option>
+                                <option value="I">
+                                    Inactivo
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Fecha Inicial:
+                            </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar">
+                                    </i>
+                                </div>
+                                <input class="form-control" name="fechaini_ciu" type="date">
+                                </input>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Fecha Final:
+                            </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar">
+                                    </i>
+                                </div>
+                                <input class="form-control" name="fechafin_ciu" type="date">
+                                </input>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Empresa
+                            </label>
+                            <select class="form-control" name="id_emp">
+                                <option disabled="" selected="" value="none">
+                                    Selecione una Empresa
+                                </option>
+                                @foreach($empresas as $empresa)
+                                <option value="{{$empresa->id_emp}}">
+                                    {{$empresa->nombre_emp}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Periodo
+                            </label>
+                            <select class="form-control" name="id_fec">
+                                <option disabled="" selected="" value="none">
+                                    Selecione una Periodo
+                                </option>
+                                @foreach($fechas as $periodo)
+                                <option value="{{$periodo->id_fec}}">
+                                    {{$periodo->nomb_fec}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                        </input>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-primary" type="submit" value="Guardar">
+                        </input>
+                    </div>
+                </div>
             </div>
-            <!-- /.box-header -->
-             @if ($errors->count())
-            <div class="alert alert-danger" role="alert">
-               @foreach ($errors->all() as $error)
-                  <div>{{ $error }}</div>
-              @endforeach
-            </div>
-        @endif </br> 
-            <!-- form start -->
-            <form role="form" method="POST" action="/storeCiudad">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Nombre</label>
-                  <input type="text" name="nomb_ciu" class="form-control" id="exampleInputEmail1" placeholder="Ingrese Nombre">
-                </div>
-                 <div class="form-group">
-                  <label>Observacion</label>
-                  <textarea class="form-control" rows="3"  name="observ_ciu" placeholder="Ingrese Observación"></textarea>
-                </div>
-                 <div class="form-group">
-                  <label>Estado</label>
-                  <select class="form-control" name="estado_ciu" >
-                    <option value="none" selected="" disabled="">Selecione Estado</option>
-                    <option value="A">Activo</option>
-                     <option value="P">Pendiente</option>
-                     <option value="I">Inactivo</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                <label>Fecha Inicial:</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control" name="fechaini_ciu" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
-                </div>
-                <!-- /.input group -->
-              </div>
-              <div class="form-group">
-                <label>Fecha Final:</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control" name="fechafin_ciu" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
-                </div>
-                <!-- /.input group -->
-              </div>
-                <div class="form-group">
-                  <label>Empresa</label>
-                  <select class="form-control" name="id_emp">
-                    <option value="none" selected="" disabled="">Selecione una Empresa</option>
-                    @foreach($empresas as $empresa)
-                    <option value="{{$empresa->id_emp}}">{{$empresa->nombre_emp}}</option>
-                    @endforeach
-                  </select>
-                </div>
-                 <div class="form-group">
-                  <label>Periodo</label>
-                  <select class="form-control" name="id_fec">
-                    <option value="none" selected="" disabled="">Selecione una Periodo</option>
-                     @foreach($fechas as $periodo)
-                    <option value="{{$periodo->id_fec}}">{{$periodo->nomb_fec}}</option>
-                    @endforeach
-                  </select>
-                </div>
-
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              </div>
-            </form>
-          </div>
-@endsection
+        </div>
+    </div>
+</form>

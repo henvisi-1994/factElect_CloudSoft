@@ -1,5 +1,4 @@
-
-@extends('admin.layouts.compras')
+@extends('admin.layouts.app')
 @section('content')
  <div class="box box-primary">
             <div class="box-header with-border">
@@ -78,7 +77,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                   <input type="text" class="form-control" name="fechaini_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
+                   <input type="date" class="form-control" name="fechaini_per">
                 </div>
                 <!-- /.input group -->
 
@@ -89,7 +88,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fecnac_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
+                  <input type="date" class="form-control" name="fecnac_per">
                 </div>
                 <!-- /.input group -->
 
@@ -101,7 +100,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fechafin_per" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
+                  <input type="date" class="form-control" name="fechafin_per">
                 </div>
                 <!-- /.input group -->
               </div>

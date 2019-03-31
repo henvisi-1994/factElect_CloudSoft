@@ -1,19 +1,20 @@
-@extends('admin.layouts.compras')
-@section('content')
- <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Añadir Unidad</h3>
-            </div>
-            <!-- /.box-header -->
-             @if ($errors->count())
-            <div class="alert alert-danger" role="alert">
-               @foreach ($errors->all() as $error)
-                  <div>{{ $error }}</div>
-              @endforeach
-            </div>
-        @endif </br> 
-            <!-- form start -->
-            <form role="form"method="POST" action="/storeUnidad">
+<form action="storeUnidad" method="POST">
+    <div class="modal fade" id="crearUnidad">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span>
+                            ×
+                        </span>
+                    </button>
+                    <h4>
+                        Añadir Unidad
+                    </h4>
+                    <span class="text-danger" v-for="error in errors">
+                    </span>
+                </div>
+                <div class="modal-body">
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nombre</label>
@@ -39,7 +40,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fechaini_unidad" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
+                  <input type="date" class="form-control" name="fechaini_unidad">
                 </div>
                 <!-- /.input group -->
               </div>
@@ -50,17 +51,20 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" name="fechafin_unidad" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
+                  <input type="date" class="form-control" name="fechafin_unidad">
                 </div>
                 <!-- /.input group -->
               </div>
 
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              </div>
-            </form>
-          </div>
-@endsection
+              <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                        </input>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-primary" type="submit" value="Guardar">
+                        </input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

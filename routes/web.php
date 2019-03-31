@@ -15,27 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 //Mostrar
-Route::get('Categoria','AdminController@Categoria');
-Route::get('Marca','AdminController@Marca');
-Route::get('Unidad','AdminController@Unidad');
 Route::get('Ciudad','AdminController@Ciudad');
-Route::get('Proveedor','AdminController@Proveedor');
 Route::get('Persona', 'AdminController@Persona');
 Route::get('/admin', 'AdminController@inicio');
 Route::get('Compras','AdminController@Compras');
 Route::get('TipoContribuyente','AdminController@TipoContribuyente');
 Route::get('Identificaciones','AdminController@Identificaciones');
-Route::get('Producto','AdminController@Producto');
+//Obtener
+Route::get('getProveedor','AdminController@getProveedor');
+Route::get('getProducto','AdminController@getProducto');
+Route::get('getCategoria','AdminController@getCategoria');
+Route::get('getUnidad','AdminController@getUnidad');
+Route::get('getMarca','AdminController@getMarca');
 //Añadir
-Route::get('addCategoria','AdminController@CargarCategoria');
-Route::get('addMarca','AdminController@CargarMarca');
 Route::get('addPersona','AdminController@CargarPersona');
-Route::get('addUnidad','AdminController@CargarUnidad');
-Route::get('addCiudad','AdminController@CargarCiudad');
 Route::get('addProveedor','AdminController@CargarPersona');
-Route::get('addTipoContribuyente','AdminController@CargarTipoContribuyente');
-Route::get('addIdentificacion','AdminController@CargarIdentificaciones');
-Route::get('addProducto','AdminController@CargarProducto');
 //Ruta Guardar
 Route::post('storeCategoria','AdminController@guardarCategoria');
 Route::post('storeMarca','AdminController@guardarMarca');

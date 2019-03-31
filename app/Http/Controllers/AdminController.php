@@ -40,26 +40,32 @@ class AdminController extends Controller
       INNER JOIN empresa ON producto.id_emp= empresa.id_emp
       INNER JOIN fecha_periodo ON producto.id_fec= fecha_periodo.id_fec
       INNER JOIN marca ON producto.id_marca= marca.id_marca');
-    return view('admin.compras',compact('categorias','marcas','unidades','proveedores','productos'));
+      $empresas = Empresa::get();
+      $fechas = Fecha_periodo::get();
+      $personas = Persona::get();
+      $tipoContribuyentes= TipoContribuyente::get();
+      $identificaciones = Identificaciones::get();
+      $ciudades = Ciudad::get();
+    return view('admin.compras',compact('categorias','marcas','unidades','proveedores','productos','empresas','fechas','personas','tipoContribuyentes','identificaciones','ciudades'));
   }
   
-  public function Categoria()
+  public function getCategoria()
   {
     $categorias = DB::select('SELECT categoria.id_cat, categoria.nomb_cat,categoria.observ_cat,categoria.estado_cat,categoria.fechaini_cat,categoria.fechafin_cat,empresa.nombre_emp,fecha_periodo.nomb_fec FROM categoria
       INNER JOIN empresa ON categoria.id_emp= empresa.id_emp
       INNER JOIN fecha_periodo ON categoria.id_fec = fecha_periodo.id_fec');
-      return view('admin.Categoria.index',compact('categorias'));
+      return $categorias;
   }
-public function Marca()
+public function getMarca()
 {
   $marcas = Marca::get();
-  return view('admin.Marca.index',compact('marcas'));
+  return $marcas;
 }
 
-public function Unidad()
+public function getUnidad()
 {
   $unidades = Unidad::get();
-  return view('admin.Unidad.index',compact('unidades'));
+  return $unidades;
 }
   public function CargarCategoria()
   {
@@ -166,7 +172,7 @@ public function Unidad()
             ->where('id_marca', $id)
             ->update(['nomb_marca' => $nomb_marca, 'estado_marca' => $estado_marca , 'fechaini_marca' => $fechaini_marca, 'fechafin_marca' => $fechafin_marca,'observ_marca'=> $observ_marca]
           );
-        return redirect('Marca');
+        return redirect('Compras');
     }
     //Guardar Unidad
       public function  guardarUnidad(Request $request)
@@ -189,7 +195,7 @@ public function Unidad()
           $unidad->fechaini_unidad=$request->input('fechaini_unidad');
           $unidad->fechafin_unidad=$request->input('fechafin_unidad');
           $unidad->save();
-          return redirect('Unidad');
+          return redirect('Compras');
         }
         else
         {
@@ -246,7 +252,7 @@ public function Unidad()
         {
           $ciudad= new Ciudad;
           $ciudad->create($request->all());
-          return redirect('addCiudad');
+          return redirect('Compras');
         }
         else
         {
@@ -277,13 +283,13 @@ public function Unidad()
           );
         return redirect('Ciudad');
     }  
-    public function Proveedor()
+    public function getProveedor()
     {
        $proveedores = DB::select('SELECT id_prov ,nombre_emp, nomb_fec, cod_prov,nombre_per,apel_per,obser_prov,estado_prov,fechaini_prov,fechafin_prov FROM proveedor
         INNER JOIN empresa ON proveedor.id_emp= empresa.id_emp
         INNER JOIN fecha_periodo ON proveedor.id_fec= fecha_periodo.id_fec
         INNER JOIN persona ON proveedor.id_per= persona.id_per');
-       return view('admin.Proveedor.index',compact('proveedores'));
+       return $proveedores;
     }
     public function CargarProveedor()
     {
@@ -308,7 +314,7 @@ public function Unidad()
         {
           $proveedor = new Proveedor;
            $proveedor->create($request->all());
-          return redirect('Proveedor');       
+          return redirect('Compras');       
         }
         else
         {
@@ -626,13 +632,13 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
 
     //Producto
-     public function Producto()
+     public function getProducto()
     {
        $productos = DB::select('SELECT id_prod,nombre_emp, nomb_fec, codigo_prod,codbarra_prod,descripcion_prod,nomb_marca,present_prod,precio_prod,ubicacion_prod,stockmin_prod,stockmax_prod,fechaing_prod,fechaelab_prod,fechacad_prod,aplicaiva_prod,aplicaice_prod,util_prod,comision_prod,imagen_prod,observ_prod,estado_prod,fechaini_prod,fechafin_prod FROM producto
       INNER JOIN empresa ON producto.id_emp= empresa.id_emp
       INNER JOIN fecha_periodo ON producto.id_fec= fecha_periodo.id_fec
       INNER JOIN marca ON producto.id_marca= marca.id_marca');
-       return view('admin.Producto.index',compact('productos'));
+       return  $productos;
     }
     public function CargarProducto()
     {

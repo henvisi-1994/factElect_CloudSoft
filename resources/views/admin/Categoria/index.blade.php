@@ -7,7 +7,7 @@
     <!-- /.box-header -->
     <div class="box-body">
         <div class="card-body d-flex justify-content-between align-items-center">
-            <a class="btn btn-primary btn-sm" href="{{asset('addCategoria')}}">
+            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#crearCategoria">
                 Crear
             </a>
         </div>
@@ -79,5 +79,6 @@
                 @endforeach
             </tbody>
         </table>
+        @include('admin.Categoria.Crear')
     </div>
 </div>

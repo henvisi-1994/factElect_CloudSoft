@@ -1,4 +1,4 @@
-@extends('admin.layouts.compras')
+@extends('admin.layouts.app')
 @section('content')
  <div class="box">
             <div class="box-header">
@@ -7,7 +7,7 @@
             <!-- /.box-header -->
             <div class="box-body">
                <div class="card-body d-flex justify-content-between align-items-center">
-            <a class="btn btn-primary btn-sm" href="{{asset('addIdentificacion')}}">
+            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#crearIdentificaciones">
                 Crear
             </a>
         </div>
@@ -42,6 +42,7 @@
                 @endforeach
                 </tfoot>
               </table>
+                      @include('admin.Identificaciones.Crear')
             </div>
             <!-- /.box-body -->
           </div>
