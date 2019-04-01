@@ -29,5 +29,130 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#crud',
+    created: function() {
+        this.getCategorias();
+    },
+    data: {
+        categorias: [],
+         newcategoria: {
+            'nomb_cat': '',
+            'observ_cat': '',
+            'estado_cat': '',
+            'fechaini_cat': '',
+            'fechafin_cat': '',
+            'id_emp': '',
+            'id_fec': ''
+        },
+        fillCategoria: {
+            'id_cat': '',
+            'nomb_cat': '',
+            'observ_cat': '',
+            'estado_cat': '',
+            'fechaini_cat': '',
+            'fechafin_cat': '',
+            'id_emp': '',
+            'id_fec': ''
+        },
+        ciudades: [],
+        newCiudad:{'nomb_ciu':'','estado_ciu':'','fechaini_ciu':'','fechafin_ciu':'','observ_ciu':'','id_emp':'','id_fec':''},
+        fillCiudad {'nomb_ciu':'','estado_ciu':'','fechaini_ciu':'','fechafin_ciu':'','observ_ciu':'','id_emp':'','id_fec':''},
+        empresas: [],
+        newEmpresa:{},
+        fillEmpresa: {},
+        fechas:[],
+        newFecha:{},
+        fillFechas:{},
+        identificaciones:[],
+        newIdentificacion:{'sri_ident':'','descrip_ident':'','observ_ident':'','estado_ident':'','fechaini_ident':'','fechafin_ident':''},
+        fillIdentificacion:{'sri_ident':'','descrip_ident':'','observ_ident':'','estado_ident':'','fechaini_ident':'','fechafin_ident':''},
+        marcas: [],
+        newMarca: {'nomb_marca':'','observ_marca':'','estado_marca':'','fechaini_marca':'','fechafin_marca':'','control_fecha':''},
+        fillMarca: {'nomb_marca':'','observ_marca':'','estado_marca':'','fechaini_marca':'','fechafin_marca':'','control_fecha':''},
+        productos: [],
+        newProducto: {'id_emp':'' ,'id_fec':'','codigo_prod':'','codbarra_prod':'' , 
+					  'descripcion_prod':'','id_marca':'','present_prod':'','precio_prod':'',
+					  'ubicacion_prod':'','stockmin_prod':'','stockmax_prod':'','fechaing_prod':'','fechaelab_prod':'','fechacad_prod':'','aplicaiva_prod':'',
+					  'aplicaice_prod':'','util_prod':'','comision_prod':'','imagen_prod':'','observ_prod':'','estado_prod':'','fechaini_prod':'','fechafin_prod':''},
+        fillProducto: {'id_emp':'' ,'id_fec':'','codigo_prod':'','codbarra_prod':'' , 
+						  'descripcion_prod':'','id_marca':'','present_prod':'','precio_prod':'',
+						  'ubicacion_prod':'','stockmin_prod':'','stockmax_prod':'','fechaing_prod':'','fechaelab_prod':'','fechacad_prod':'','aplicaiva_prod':'',
+						  'aplicaice_prod':'','util_prod':'','comision_prod':'','imagen_prod':'','observ_prod':'','estado_prod':'','fechaini_prod':'','fechafin_prod':''},
+        proveedores:[],
+        newProveedor:{'id_emp':'','id_fec':'','cod_prov':'','id_per':'','obser_prov':'','estado_prov':'','fechaini_prov':'','fechafin_prov':''},
+        fillProveedor:{'id_emp':'','id_fec':'','cod_prov':'','id_per':'','obser_prov':'','estado_prov':'','fechaini_prov':'','fechafin_prov':''},
+        tipoContribuyentes:[],
+        newTipoContribuyente:{'nomb_contrib':'','obser_contrib':'','estado_contrib':'','fechaini_contrib':'','fechafin_contrib':''},
+        fillTipoContribuyente:{'nomb_contrib':'','obser_contrib':'','estado_contrib':'','fechaini_contrib':'','fechafin_contrib':''},
+        unidades:[],
+        newUnidad:{'nomb_unidad':'','observ_unidad':'','estado_unidad':'','fechaini_unidad':'','fechafin_unidad':'','control_fecha':''},
+        fillUnidad:{'nomb_unidad':'','observ_unidad':'','estado_unidad':'','fechaini_unidad':'','fechafin_unidad':'','control_fecha':''},
+        errors: []
+    },
+    methods: {
+        getCategorias: function() {
+            var urlCategorias = 'getCategorias';
+            axios.get(urlCategorias).then(response => {
+                this.categorias = response.data
+            });
+        },
+        createCategoria: function() {
+            var urlGuardarCategoria = 'storeCategoria';
+            axios.post(urlGuardarCategoria, this.newcategoria).then((response) => {
+                this.getCategorias();
+                newcategoria = {
+                    'nomb_cat': '',
+                    'observ_cat': '',
+                    'estado_cat': '',
+                    'fechaini_cat': '',
+                    'fechafin_cat': '',
+                    'id_emp': '',
+                    'id_fec': ''
+                };
+                this.errors = [];
+                $('#crear').modal('hide');
+                toastr.success('Se añadido una nueva categoria');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editCategoria: function(categoria) {
+            this.fillCategoria.id_cat = categoria.id_cat;
+            this.fillCategoria.id_emp = categoria.id_emp;
+            this.fillCategoria.id_fec = categoria.id_fec;
+            this.fillCategoria.nomb_cat = categoria.nomb_cat;
+            this.fillCategoria.observ_cat = categoria.observ_cat;
+            this.fillCategoria.estado_cat = categoria.estado_cat;
+            this.fillCategoria.fechaini_cat = categoria.fechaini_cat;
+            this.fillCategoria.fechafin_cat = categoria.fechafin_cat;
+            $('#edit').modal('show');
+        },
+        updateCategoria: function(id) {
+            var url = 'updateCategoria/' + id;
+            axios.post(url, this.fillCategoria).then(response => {
+                this.getCategorias();
+                this.fillCategoria = {
+                    'id_cat': '',
+                    'nomb_cat': '',
+                    'observ_cat': '',
+                    'estado_cat': '',
+                    'fechaini_cat': '',
+                    'fechafin_cat': '',
+                    'id_emp': '',
+                    'id_fec': ''
+                };
+                this.errors = [];
+                $('#edit').modal('hide');
+                toastr.success('Categoria actualizada con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteCategoria: function(categoria) {
+             var url = 'deleteCategoria/' + categoria.id_cat;
+             axios.delete(url).then(response => {
+                 this.getCategorias();   
+                  toastr.success('Categoria eliminada con éxito');         
+             });
+        }
 });

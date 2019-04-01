@@ -46,6 +46,7 @@
   <![endif]-->
 
   <!-- Google Font -->
+  <link rel="stylesheet" href="{{ asset("Administrador/dist/css/toastr.css") }}">
   <link rel="stylesheet" href="{{ asset("Administrador/dist/css/fontFamili.css") }}">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -611,6 +612,7 @@
 <script src="{{ asset("Administrador/dist/js/pages/dashboard.js") }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset("Administrador/dist/js/demo.js") }}"></script>
+<script src="{{ asset("Administrador/dist/js/toastr.js") }}"></script>
 <!-- Page script -->
 <script src="{{ asset("Administrador/dist/js/personalizar.js") }}"></script>
 </body>
