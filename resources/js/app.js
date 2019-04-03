@@ -56,7 +56,7 @@ const app = new Vue({
         },
         ciudades: [],
         newCiudad:{'nomb_ciu':'','estado_ciu':'','fechaini_ciu':'','fechafin_ciu':'','observ_ciu':'','id_emp':'','id_fec':''},
-        fillCiudad {'nomb_ciu':'','estado_ciu':'','fechaini_ciu':'','fechafin_ciu':'','observ_ciu':'','id_emp':'','id_fec':''},
+        fillCiudad: {'nomb_ciu':'','estado_ciu':'','fechaini_ciu':'','fechafin_ciu':'','observ_ciu':'','id_emp':'','id_fec':''},
         empresas: [],
         newEmpresa:{},
         fillEmpresa: {},
@@ -110,7 +110,7 @@ const app = new Vue({
                     'id_fec': ''
                 };
                 this.errors = [];
-                $('#crear').modal('hide');
+                $('#crearCategoria').modal('hide');
                 toastr.success('Se añadido una nueva categoria');
             }).catch(error => {
                 this.errors = error.response.data;
@@ -125,7 +125,7 @@ const app = new Vue({
             this.fillCategoria.estado_cat = categoria.estado_cat;
             this.fillCategoria.fechaini_cat = categoria.fechaini_cat;
             this.fillCategoria.fechafin_cat = categoria.fechafin_cat;
-            $('#edit').modal('show');
+            $('#editCategoria').modal('show');
         },
         updateCategoria: function(id) {
             var url = 'updateCategoria/' + id;
@@ -142,7 +142,7 @@ const app = new Vue({
                     'id_fec': ''
                 };
                 this.errors = [];
-                $('#edit').modal('hide');
+                $('#editCategoria').modal('hide');
                 toastr.success('Categoria actualizada con éxito');
             }).catch(error => {
                 this.errors = error.response.data;
@@ -150,9 +150,11 @@ const app = new Vue({
         },
         deleteCategoria: function(categoria) {
              var url = 'deleteCategoria/' + categoria.id_cat;
-             axios.delete(url).then(response => {
+             axios.delete(url).then(
+                response => 
+            {
                  this.getCategorias();   
                   toastr.success('Categoria eliminada con éxito');         
-             });
+            });
         }
-});
+}});

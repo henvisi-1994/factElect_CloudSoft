@@ -93,7 +93,7 @@ public function getUnidad()
                 if ($v) {
                    $categoria= new Categoria;
                    $categoria->create($request->all());
-                  return redirect('Categoria');
+                  return ;
                 }
                 else
                 {

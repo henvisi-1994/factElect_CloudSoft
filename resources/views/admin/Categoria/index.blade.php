@@ -1,4 +1,4 @@
-<div class="box">
+<div class="box" id="crud">
     <div class="box-header">
         <h3 class="box-title">
             Categoria
@@ -12,7 +12,7 @@
             </a>
         </div>
         <br>
-        <table class="table table-bordered table-striped" id="example3">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>
@@ -42,43 +42,40 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($categorias as $categoria)
-                <tr>
+                <tr v-for="categoria in categorias">
                     <td>
-                        {{$categoria->nomb_cat}}
+                        @{{categoria.nomb_cat}}
                     </td>
                     <td>
-                        {{$categoria->observ_cat}}
+                        @{{categoria.observ_cat}}
                     </td>
                     <td>
-                        {{$categoria->estado_cat}}
+                        @{{categoria.estado_cat}}
                     </td>
                     <td>
-                        {{$categoria->fechaini_cat}}
+                        @{{categoria.fechaini_cat}}
                     </td>
                     <td>
-                        {{$categoria->fechafin_cat}}
+                        @{{categoria.fechafin_cat}}
+                    </td>s
+                    <td>
+                        @{{categoria.nombre_emp}}
                     </td>
                     <td>
-                        {{$categoria->nombre_emp}}
+                        @{{categoria.nomb_fec}}
                     </td>
                     <td>
-                        {{$categoria->nomb_fec}}
-                    </td>
-                    <td>
-                        <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="{{asset('preupdateCategoria/'.$categoria->id_cat)}}" title="Edit">
-                            <i aria-hidden="true" class="fa fa-pencil-square-o">
-                            </i>
-                        </a>
-                        <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash">
-                            <i aria-hidden="true" class="fa fa-trash-o">
-                            </i>
-                        </a>
+                    <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editCategoria(categoria)">
+                    <i aria-hidden="true" class="fa fa-pencil-square-o"></i>
+                    </a>
+                    <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deleteCategoria(categoria)">
+                    <i aria-hidden="true" class="fa fa-trash-o"></i>
+                    </a>
                     </td>
                 </tr>
-                @endforeach
             </tbody>
         </table>
         @include('admin.Categoria.Crear')
+        @include('admin.Categoria.Modificar')
     </div>
 </div>

@@ -24,7 +24,7 @@ Route::get('Identificaciones','AdminController@Identificaciones');
 //Obtener
 Route::get('getProveedor','AdminController@getProveedor');
 Route::get('getProducto','AdminController@getProducto');
-Route::get('getCategoria','AdminController@getCategoria');
+Route::get('getCategorias','AdminController@getCategoria');
 Route::get('getUnidad','AdminController@getUnidad');
 Route::get('getMarca','AdminController@getMarca');
 //Añadir
