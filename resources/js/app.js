@@ -87,7 +87,15 @@ const app = new Vue({
         unidades:[],
         newUnidad:{'nomb_unidad':'','observ_unidad':'','estado_unidad':'','fechaini_unidad':'','fechafin_unidad':'','control_fecha':''},
         fillUnidad:{'nomb_unidad':'','observ_unidad':'','estado_unidad':'','fechaini_unidad':'','fechafin_unidad':'','control_fecha':''},
-        errors: []
+        errors: [],
+        buscar_cat:'',
+        numregistros: 10
+    },
+    computed: {
+        buscarCategoria: function()
+        {
+             return this.categorias.filter((categoria) => categoria.nomb_cat.includes(this.buscar_cat));          
+        }
     },
     methods: {
         getCategorias: function() {

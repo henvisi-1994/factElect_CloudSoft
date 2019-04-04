@@ -49004,6 +49004,10 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -49218,23 +49222,34 @@ var app = new Vue({
       'fechafin_unidad': '',
       'control_fecha': ''
     },
-    errors: []
+    errors: [],
+    buscar_cat: '',
+    numregistros: 10
   },
-  methods: {
-    getCategorias: function getCategorias() {
+  computed: {
+    buscarCategoria: function buscarCategoria() {
       var _this = this;
+
+      return this.categorias.filter(function (categoria) {
+        return categoria.nomb_cat.includes(_this.buscar_cat);
+      });
+    }
+  },
+  methods: (_methods = {
+    getCategorias: function getCategorias() {
+      var _this2 = this;
 
       var urlCategorias = 'getCategorias';
       axios.get(urlCategorias).then(function (response) {
-        _this.categorias = response.data;
+        _this2.categorias = response.data;
       });
     },
     createCategoria: function createCategoria() {
-      var _this2 = this;
+      var _this3 = this;
 
       var urlGuardarCategoria = 'storeCategoria';
       axios.post(urlGuardarCategoria, this.newcategoria).then(function (response) {
-        _this2.getCategorias();
+        _this3.getCategorias();
 
         newcategoria = {
           'nomb_cat': '',
@@ -49245,11 +49260,11 @@ var app = new Vue({
           'id_emp': '',
           'id_fec': ''
         };
-        _this2.errors = [];
+        _this3.errors = [];
         $('#crearCategoria').modal('hide');
         toastr.success('Se añadido una nueva categoria');
       })["catch"](function (error) {
-        _this2.errors = error.response.data;
+        _this3.errors = error.response.data;
       });
     },
     editCategoria: function editCategoria(categoria) {
@@ -49264,13 +49279,13 @@ var app = new Vue({
       $('#editCategoria').modal('show');
     },
     updateCategoria: function updateCategoria(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       var url = 'updateCategoria/' + id;
       axios.post(url, this.fillCategoria).then(function (response) {
-        _this3.getCategorias();
+        _this4.getCategorias();
 
-        _this3.fillCategoria = {
+        _this4.fillCategoria = {
           'id_cat': '',
           'nomb_cat': '',
           'observ_cat': '',
@@ -49280,24 +49295,95 @@ var app = new Vue({
           'id_emp': '',
           'id_fec': ''
         };
-        _this3.errors = [];
+        _this4.errors = [];
         $('#editCategoria').modal('hide');
         toastr.success('Categoria actualizada con éxito');
       })["catch"](function (error) {
-        _this3.errors = error.response.data;
+        _this4.errors = error.response.data;
       });
     },
     deleteCategoria: function deleteCategoria(categoria) {
-      var _this4 = this;
+      var _this5 = this;
 
       var url = 'deleteCategoria/' + categoria.id_cat;
       axios["delete"](url).then(function (response) {
-        _this4.getCategorias();
+        _this5.getCategorias();
 
         toastr.success('Categoria eliminada con éxito');
       });
+    },
+    //MEtodos de Identificacion
+    getIdentificacion: function getIdentificacion() {
+      var _this6 = this;
+
+      var urlIdentificacion = 'getIdentificacion';
+      axios.get(urlIdentificacion).then(function (response) {
+        _this6.identificaciones = response.data;
+      });
+    },
+    createIdentificacion: function createIdentificacion() {
+      var _this7 = this;
+
+      var urlGuardarIdentificacion = 'storeIdentificaciones';
+      axios.post(urlGuardarIdentificacion, this.newidentificacion).then(function (response) {
+        _this7.getIdentificacion();
+
+        _this7.newidentificacion.sri_ident = '';
+        _this7.newidentificacion.descrip_ident = '';
+        _this7.newidentificacion.observ_ident = '';
+        _this7.newidentificacion.estado_ident = '';
+        _this7.newidentificacion.fechaini_ident = '';
+        _this7.newidentificacion.fechafin_ident = '';
+        _this7.errors = [];
+        $('#crearIdentificacion').modal('hide');
+        toastr.success('Se añadido una nueva Identificacion');
+      })["catch"](function (error) {
+        _this7.errors = error.response.data;
+      });
     }
-  }
+  }, _defineProperty(_methods, "editCategoria", function editCategoria(categoria) {
+    this.fillCategoria.id_cat = categoria.id_cat;
+    this.fillCategoria.id_emp = categoria.id_emp;
+    this.fillCategoria.id_fec = categoria.id_fec;
+    this.fillCategoria.nomb_cat = categoria.nomb_cat;
+    this.fillCategoria.observ_cat = categoria.observ_cat;
+    this.fillCategoria.estado_cat = categoria.estado_cat;
+    this.fillCategoria.fechaini_cat = categoria.fechaini_cat;
+    this.fillCategoria.fechafin_cat = categoria.fechafin_cat;
+    $('#editCategoria').modal('show');
+  }), _defineProperty(_methods, "updateCategoria", function updateCategoria(id) {
+    var _this8 = this;
+
+    var url = 'updateCategoria/' + id;
+    axios.post(url, this.fillCategoria).then(function (response) {
+      _this8.getCategorias();
+
+      _this8.fillCategoria = {
+        'id_cat': '',
+        'nomb_cat': '',
+        'observ_cat': '',
+        'estado_cat': '',
+        'fechaini_cat': '',
+        'fechafin_cat': '',
+        'id_emp': '',
+        'id_fec': ''
+      };
+      _this8.errors = [];
+      $('#editCategoria').modal('hide');
+      toastr.success('Categoria actualizada con éxito');
+    })["catch"](function (error) {
+      _this8.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteCategoria", function deleteCategoria(categoria) {
+    var _this9 = this;
+
+    var url = 'deleteCategoria/' + categoria.id_cat;
+    axios["delete"](url).then(function (response) {
+      _this9.getCategorias();
+
+      toastr.success('Categoria eliminada con éxito');
+    });
+  }), _methods)
 });
 
 /***/ }),
