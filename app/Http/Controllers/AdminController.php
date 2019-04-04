@@ -287,10 +287,11 @@ public function getUnidad()
     }  
     public function getProveedor()
     {
-       $proveedores = DB::select('SELECT id_prov ,nombre_emp, nomb_fec, cod_prov,nombre_per,apel_per,obser_prov,estado_prov,fechaini_prov,fechafin_prov FROM proveedor
-        INNER JOIN empresa ON proveedor.id_emp= empresa.id_emp
-        INNER JOIN fecha_periodo ON proveedor.id_fec= fecha_periodo.id_fec
-        INNER JOIN persona ON proveedor.id_per= persona.id_per');
+       $proveedores = DB::table('proveedor as pro')
+        ->join('empresa', 'pro.id_emp', '=', 'empresa.id_emp')
+        ->join('fecha_periodo', 'pro.id_fec', '=', 'fecha_periodo.id_fec')
+        ->join('persona','pro.id_per','=','persona.id_per')
+        ->get();
        return $proveedores;
     }
     public function CargarProveedor()
@@ -785,13 +786,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
 
     public function getCiudad()
     {
-      $ciudades = DB::select('SELECT ciudad.id_ciu,ciudad.nomb_ciu,ciudad.estado_ciu,ciudad.fechaini_ciu,ciudad.fechafin_ciu,ciudad.observ_ciu,empresa.nombre_emp,fecha_periodo.nomb_fec FROM ciudad
-      INNER JOIN empresa ON ciudad.id_emp= empresa.id_emp
-      INNER JOIN fecha_periodo ON ciudad.id_fec = fecha_periodo.id_fec');
+      $ciudades = DB::table ('ciudad as ciu')
+      ->join('empresa', 'ciu.id_emp', '=', 'empresa.id_emp')
+      ->join('fecha_periodo', 'ciu.id_fec', '=', 'fecha_periodo.id_fec')
+      ->orderBy("ciu.id_ciu","desc")
+      ->get();
       return $ciudades;
 
     }
-    
-    
-
 }

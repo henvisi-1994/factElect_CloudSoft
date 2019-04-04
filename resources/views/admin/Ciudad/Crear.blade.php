@@ -1,4 +1,4 @@
-<form action="storeCiudad" method="POST">
+<form  method="POST"  v-on:submit.prevent="createCiudad">
     <div class="modal fade" id="crearCiudad">
         <div class="modal-dialog">
             <div class="modal-content">

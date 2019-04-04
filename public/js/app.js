@@ -49340,48 +49340,235 @@ var app = new Vue({
       })["catch"](function (error) {
         _this7.errors = error.response.data;
       });
+    },
+    editIdentificacion: function editIdentificacion(identificacion) {
+      this.fillIdentificacion.sri_ident = identificacion.sri_ident;
+      this.fillIdentificacion.descrip_ident = identificacion.descrip_ident;
+      this.fillIdentificacion.observ_ident = identificacion.observ_ident;
+      this.fillIdentificacion.estado_ident = identificacion.estado_ident;
+      this.fillIdentificacion.fechaini_ident = identificacion.fechaini_ident;
+      this.fillIdentificacion.fechaini_ident = identificacion.fechaini_ident;
+      $('#editIdentificacion').modal('show');
+    },
+    updateIdentificacion: function updateIdentificacion(id) {
+      var _this8 = this;
+
+      var url = 'updateIdentificacion/' + id;
+      axios.post(url, this.fillIdentificacion).then(function (response) {
+        _this8.getIdentificacion();
+
+        _this8.fillIdentificacion.sri_ident = '';
+        _this8.fillIdentificacion.descrip_ident = '';
+        _this8.fillIdentificacion.observ_ident = '';
+        _this8.fillIdentificacion.estado_ident = '';
+        _this8.fillIdentificacion.fechaini_ident = '';
+        _this8.fillIdentificacion.fechaini_ident = '';
+        _this8.errors = [];
+        $('#editIdentificacion').modal('hide');
+        toastr.success('Identficación actualizada con éxito');
+      })["catch"](function (error) {
+        _this8.errors = error.response.data;
+      });
+    },
+    deleteIdentificacion: function deleteIdentificacion(categoria) {
+      var _this9 = this;
+
+      var url = 'deleteIdentidicacion/' + identificacion.id_ident;
+      axios["delete"](url).then(function (response) {
+        _this9.getCategorias();
+
+        toastr.success('Identficación eliminada con éxito');
+      });
+    },
+    //MEtodos de Marca
+    getMarca: function getMarca() {
+      var _this10 = this;
+
+      var urlMarca = 'getMarca';
+      axios.get(urlMarca).then(function (response) {
+        _this10.marcas = response.data;
+      });
+    },
+    createMarca: function createMarca() {
+      var _this11 = this;
+
+      var urlGuardarMarca = 'storeMarca';
+      axios.post(urlGuardarMarca, this.newmarca).then(function (response) {
+        _this11.getMarca();
+
+        _this11.newmarca.nomb_marca = '';
+        _this11.newmarca.observ_marca = '';
+        _this11.newmarca.estado_marca = '';
+        _this11.newmarca.fechaini_marca = '';
+        _this11.newmarca.fechafin_marca = '';
+        _this11.newmarca.control_fecha = '';
+        _this11.errors = [];
+        $('#crearMarca').modal('hide');
+        toastr.success('Se ha añadido una nueva Marca');
+      })["catch"](function (error) {
+        _this11.errors = error.response.data;
+      });
+    },
+    editMarca: function editMarca(marca) {
+      this.fillMarca.nomb_marca = marca.nomb_marca;
+      this.fillMarca.observ_marca = marca.observ_marca;
+      this.fillMarca.estado_marca = marca.estado_marca;
+      this.fillMarca.fechaini_marca = marca.fechaini_marca;
+      this.fillMarca.fechafin_marca = marca.fechafin_marca;
+      this.fillMarca.control_fecha = marca.control_fecha;
+      $('#editMarca').modal('show');
+    },
+    updateMarca: function updateMarca(id) {
+      var _this12 = this;
+
+      var url = 'updateMarca/' + id;
+      axios.post(url, this.fillMarca).then(function (response) {
+        _this12.getMarca();
+
+        _this12.fillMarca.nomb_marca = '';
+        _this12.fillMarca.observ_marca = '';
+        _this12.fillMarca.estado_marca = '';
+        _this12.fillMarca.fechaini_marca = '';
+        _this12.fillMarca.fechafin_marca = '';
+        _this12.fillMarca.control_fecha = '';
+        _this12.errors = [];
+        $('#editMarca').modal('hide');
+        toastr.success('Marca actualizada con éxito');
+      })["catch"](function (error) {
+        _this12.errors = error.response.data;
+      });
+    },
+    deleteMarca: function deleteMarca(marca) {
+      var _this13 = this;
+
+      var url = 'deleteMarca/' + marca.id_marca;
+      axios["delete"](url).then(function (response) {
+        _this13.getMarca();
+
+        toastr.success('Marca eliminada con éxito');
+      });
     }
-  }, _defineProperty(_methods, "editCategoria", function editCategoria(categoria) {
-    this.fillCategoria.id_cat = categoria.id_cat;
-    this.fillCategoria.id_emp = categoria.id_emp;
-    this.fillCategoria.id_fec = categoria.id_fec;
-    this.fillCategoria.nomb_cat = categoria.nomb_cat;
-    this.fillCategoria.observ_cat = categoria.observ_cat;
-    this.fillCategoria.estado_cat = categoria.estado_cat;
-    this.fillCategoria.fechaini_cat = categoria.fechaini_cat;
-    this.fillCategoria.fechafin_cat = categoria.fechafin_cat;
-    $('#editCategoria').modal('show');
-  }), _defineProperty(_methods, "updateCategoria", function updateCategoria(id) {
-    var _this8 = this;
+  }, _defineProperty(_methods, "getMarca", function getMarca() {
+    var _this14 = this;
 
-    var url = 'updateCategoria/' + id;
-    axios.post(url, this.fillCategoria).then(function (response) {
-      _this8.getCategorias();
-
-      _this8.fillCategoria = {
-        'id_cat': '',
-        'nomb_cat': '',
-        'observ_cat': '',
-        'estado_cat': '',
-        'fechaini_cat': '',
-        'fechafin_cat': '',
-        'id_emp': '',
-        'id_fec': ''
-      };
-      _this8.errors = [];
-      $('#editCategoria').modal('hide');
-      toastr.success('Categoria actualizada con éxito');
-    })["catch"](function (error) {
-      _this8.errors = error.response.data;
+    var urlUnidad = 'getUnidad';
+    axios.get(urlUnidad).then(function (response) {
+      _this14.unidades = response.data;
     });
-  }), _defineProperty(_methods, "deleteCategoria", function deleteCategoria(categoria) {
-    var _this9 = this;
+  }), _defineProperty(_methods, "createUnidad", function createUnidad() {
+    var _this15 = this;
 
-    var url = 'deleteCategoria/' + categoria.id_cat;
+    var urlGuardarUnidad = 'storeUnidad';
+    axios.post(urlGuardarUnidad, this.newunidad).then(function (response) {
+      _this15.getUnidad();
+
+      _this15.newunidad.nomb_unidad = '';
+      _this15.newunidad.observ_unidad = '';
+      _this15.newunidad.estado_unidad = '';
+      _this15.newunidad.fechaini_unidad = '';
+      _this15.newunidad.fechafin_unidad = '';
+      _this15.newunidad.control_fecha = '';
+      _this15.errors = [];
+      $('#crearUnidad').modal('hide');
+      toastr.success('Se ha añadido una nueva Unidad');
+    })["catch"](function (error) {
+      _this15.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editUnidad", function editUnidad(unidades) {
+    this.fillUnidad.nomb_unidad = unidades.nomb_unidad;
+    this.fillUnidad.observ_unidad = unidades.observ_unidad;
+    this.fillUnidad.estado_unidad = unidades.estado_unidad;
+    this.fillUnidad.fechaini_unidad = unidades.fechaini_unidad;
+    this.fillUnidad.fechafin_unidad = unidades.fechafin_unidad;
+    this.fillUnidad.control_fecha = unidades.control_fecha;
+    $('#editUnidad').modal('show');
+  }), _defineProperty(_methods, "updateUnidad", function updateUnidad(id) {
+    var _this16 = this;
+
+    var url = 'updateUnidad/' + id;
+    axios.post(url, this.fillUnidad).then(function (response) {
+      _this16.getUnidad();
+
+      _this16.fillUnidad.nomb_unidad = '';
+      _this16.fillUnidad.observ_unidad = '';
+      _this16.fillUnidad.estado_unidad = '';
+      _this16.fillUnidad.fechaini_unidad = '';
+      _this16.fillUnidad.fechafin_unidad = '';
+      _this16.fillUnidad.control_fecha = '';
+      _this16.errors = [];
+      $('#editUnidad').modal('hide');
+      toastr.success('Unidad actualizada con éxito');
+    })["catch"](function (error) {
+      _this16.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteUnidad", function deleteUnidad(unidades) {
+    var _this17 = this;
+
+    var url = 'deleteUnidad/' + unidades.id_unidad;
     axios["delete"](url).then(function (response) {
-      _this9.getCategorias();
+      _this17.getUnidad();
 
-      toastr.success('Categoria eliminada con éxito');
+      toastr.success('Unidad eliminada con éxito');
+    });
+  }), _defineProperty(_methods, "getTipoContribuyente", function getTipoContribuyente() {
+    var _this18 = this;
+
+    var urlContribuyente = 'getTipoContribuyente';
+    axios.get(urlContribuyente).then(function (response) {
+      _this18.tipoContribuyentes = response.data;
+    });
+  }), _defineProperty(_methods, "createTipoContribuyente", function createTipoContribuyente() {
+    var _this19 = this;
+
+    var urlGuardarContribuyente = 'storeTipoContribuyente';
+    axios.post(urlGuardarContribuyente, this.newcontribuyente).then(function (response) {
+      _this19.getTipoContribuyente();
+
+      _this19.newcontribuyente.nomb_contrib = '';
+      _this19.newcontribuyente.obser_contrib = '';
+      _this19.newcontribuyente.estado_contrib = '';
+      _this19.newcontribuyente.fechaini_contrib = '';
+      _this19.newcontribuyente.fechafin_contrib = '';
+      _this19.errors = [];
+      $('#crearContribuyente').modal('hide');
+      toastr.success('Se ha añadido un Nuevo Tipo de Contribuyente');
+    })["catch"](function (error) {
+      _this19.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editTipoContribuyente", function editTipoContribuyente(tipoContribuyentes) {
+    this.fillTipoContribuyente.nomb_contrib = tipoContribuyentes.nomb_contrib;
+    this.fillTipoContribuyente.obser_contrib = tipoContribuyentes.obser_contrib;
+    this.fillTipoContribuyente.estado_contrib = tipoContribuyentes.estado_contrib;
+    this.fillTipoContribuyente.fechaini_contrib = tipoContribuyentes.fechaini_contrib;
+    this.fillTipoContribuyente.fechafin_contrib = tipoContribuyentes.fechafin_contrib;
+    $('#editTipoContribuyente').modal('show');
+  }), _defineProperty(_methods, "updateTipoContribuyente", function updateTipoContribuyente(id) {
+    var _this20 = this;
+
+    var url = 'updateTipoContribuyente/' + id;
+    axios.post(url, this.fillTipoContribuyente).then(function (response) {
+      _this20.getUnidad();
+
+      _this20.fillTipoContribuyente.nomb_contrib = '';
+      _this20.fillTipoContribuyente.obser_contrib = '';
+      _this20.fillTipoContribuyente.estado_contrib = '';
+      _this20.fillTipoContribuyente.fechaini_contrib = '';
+      _this20.fillTipoContribuyente.fechafin_contrib = '';
+      _this20.fillTipoContribuyente.control_fecha = '';
+      _this20.errors = [];
+      $('#editTipoContribuyente').modal('hide');
+      toastr.success('Tipo de Contribuyente actualizado con éxito');
+    })["catch"](function (error) {
+      _this20.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteTipoContribuyente", function deleteTipoContribuyente(tipoContribuyentes) {
+    var _this21 = this;
+
+    var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
+    axios["delete"](url).then(function (response) {
+      _this21.getTipoContribuyente();
+
+      toastr.success('Tipo de Contribuyente eliminado con éxito');
     });
   }), _methods)
 });

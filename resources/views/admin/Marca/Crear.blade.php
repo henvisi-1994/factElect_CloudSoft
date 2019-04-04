@@ -1,4 +1,4 @@
-<form action="storeMarca" method="POST">
+<form method="POST" v-on:submit.prevent="createMarca">
     <div class="modal fade" id="crearMarca">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -20,21 +20,21 @@
                             <label for="exampleInputEmail1">
                                 Nombre
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="nomb_marca" placeholder="Ingrese Nombre " type="text">
+                            <input class="form-control" id="exampleInputEmail1" name="nomb_marca" placeholder="Ingrese Nombre " type="text" v-model="newMarca.nomb_marca">
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
                                 Observacion
                             </label>
-                            <textarea class="form-control" name="observ_marca" placeholder="Ingrese Observación" rows="3">
-                            </textarea>
+                            <textarea class="form-control" name="observ_marca" placeholder="Ingrese Observación" rows="3" v-model="newMarca.observ_marca">
+                            </textarea >
                         </div>
                         <div class="form-group">
                             <label>
                                 Estado
                             </label>
-                            <select class="form-control" name="estado_marca">
+                            <select class="form-control" name="estado_marca" v-model="newMarca.estado_marca">
                                 <option disabled="" selected="" value="none">
                                     Selecione Estado
                                 </option>
@@ -58,7 +58,7 @@
                                     <i class="fa fa-calendar">
                                     </i>
                                 </div>
-                                <input class="form-control" name="fechaini_marca" type="date">
+                                <input class="form-control" name="fechaini_marca" type="date" v-model="newMarca.fechaini_marca">
                                 </input>
                             </div>
                             <!-- /.input group -->
@@ -72,7 +72,7 @@
                                     <i class="fa fa-calendar">
                                     </i>
                                 </div>
-                                <input class="form-control" name="fechafin_marca" type="date">
+                                <input class="form-control" name="fechafin_marca" type="date" v-model="newMarca.fechafin_marca">
                                 </input>
                             </div>
                             <!-- /.input group -->

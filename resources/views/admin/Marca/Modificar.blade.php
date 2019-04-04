@@ -1,59 +1,91 @@
-@extends('admin.layouts.app')
-@section('content')
- <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Modificar Marca</h3>
+<form method="POST" v-on:submit.prevent="updateMarca(fillMarca.id_marca)">
+    <div class="modal fade" id="editMarca">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span>
+                            ×
+                        </span>
+                    </button>
+                    <h4>
+                        Añadir Marca
+                    </h4>
+                    <span class="text-danger" v-for="error in errors">
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                Nombre
+                            </label>
+                            <input class="form-control" id="exampleInputEmail1" name="nomb_marca" placeholder="Ingrese Nombre " type="text" v-model="fillMarca.nomb_marca">
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Observacion
+                            </label>
+                            <textarea class="form-control" name="observ_marca" placeholder="Ingrese Observación" rows="3" v-model="fillMarca.observ_marca">
+                            </textarea >
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Estado
+                            </label>
+                            <select class="form-control" name="estado_marca" v-model="fillMarca.estado_marca">
+                                <option disabled="" selected="" value="none">
+                                    Selecione Estado
+                                </option>
+                                <option value="A">
+                                    Activo
+                                </option>
+                                <option value="P">
+                                    Pendiente
+                                </option>
+                                <option value="I">
+                                    Inactivo
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Fecha Inicial:
+                            </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar">
+                                    </i>
+                                </div>
+                                <input class="form-control" name="fechaini_marca" type="date" v-model="fillMarca.fechaini_marca">
+                                </input>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Fecha Final:
+                            </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar">
+                                    </i>
+                                </div>
+                                <input class="form-control" name="fechafin_marca" type="date" v-model="fillMarca.fechafin_marca">
+                                </input>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                        </input>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-primary" type="submit" value="Guardar">
+                        </input>
+                    </div>
+                </div>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form role="form" method="POST" action="{{asset('updateMarca/'.$marca->id_marca)}}">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Nombre</label>marca
-                  <input type="text" class="form-control" id="exampleInputEmail1" value = "{{$marca->nomb_marca}}"placeholder="Ingrese Nombre " name="nomb_marca" >
-                </div>
-                 <div class="form-group">
-                  <label>Observacion</label>
-                  <textarea class="form-control" rows="3" placeholder="Ingrese Observación"name="observ_marca">{{$marca->observ_marca}}</textarea>
-                </div>
-                 <div class="form-group">
-                  <label>Estado</label>
-                  <select class="form-control"name="estado_marca">
-                    <option value="{{$marca->estado_marca}}"  selected="">Selecione Estado</option>
-                    <option value="A">Activo</option>
-                     <option value="P">Pendiente</option>
-                     <option value="I">Inactivo</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                <label>Fecha Inicial:</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                 <input type="date" class="form-control" name="fechaini_marca" value="{{$marca->fechaini_marca}}">
-                </div>
-                <!-- /.input group -->
-              </div>
-              <div class="form-group">
-                <label>Fecha Final:</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                 <input type="date" class="form-control" name="fechafin_marca" value="{{$marca->fechafin_marca}}">
-                </div>
-                <!-- /.input group -->
-              </div>
-
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              </div>
-            </form>
-          </div>
-@endsection
+        </div>
+    </div>
+</form>
