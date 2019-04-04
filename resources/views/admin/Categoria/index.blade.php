@@ -129,36 +129,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="container-fluid">
-                    <div class="col-xs-12 col-lg-8">
-                     Pagina @{{pagination.current_page}} de @{{pagination.last_page}} 
-                    </div>
-                    <div class="col-xs-6 col-md-4">
-                        <nav>
-                            <ul class="pagination">
-                                <li v-if="pagination.current_page > 1">
-                                    <a @click.prevent="changePage(pagination.current_page-1)" href="#">
-                                        <span>
-                                            Atras
-                                        </span>
-                                    </a>
-                                </li>
-                                <li v-bind:class="[ page == isActived ? 'active' : '']" v-for="page in pagesNumber">
-                                    <a @click.prevent="changePage(page)" href="#">
-                                        @{{page}}
-                                    </a>
-                                </li>
-                                <li v-if="pagination.current_page < pagination.last_page">
-                                    <a @click.prevent="changePage(pagination.current_page+1)" href="#">
-                                        <span>
-                                            Siguiente
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+               
                 @include('admin.Categoria.Crear')
             @include('admin.Categoria.Modificar')
             </br>
