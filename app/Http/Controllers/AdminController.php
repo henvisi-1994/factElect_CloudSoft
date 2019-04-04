@@ -122,7 +122,7 @@ public function getUnidad()
             ->where('id_cat', $id)
             ->update(['id_emp' => $id_emp,'id_fec' => $id_fec,'nomb_cat' => $nomb_cat, 'estado_cat' => $estado_cat , 'fechaini_cat' => $fechaini_cat, 'fechafin_cat' => $fechafin_cat,'observ_cat'=> $observ_cat]
           );
-        return redirect('Categoria');
+        return;
     }
 
     //Guardar Marca
