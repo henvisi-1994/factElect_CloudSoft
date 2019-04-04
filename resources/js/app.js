@@ -156,5 +156,74 @@ const app = new Vue({
                  this.getCategorias();   
                   toastr.success('Categoria eliminada con éxito');         
             });
+        },
+
+        //MEtodos de Identificacion
+        getIdentificacion: function() {
+            var urlIdentificacion = 'getIdentificacion';
+            axios.get(urlIdentificacion).then(response => {
+                this.identificaciones = response.data
+            });
+        },
+        createIdentificacion: function() {
+            var urlGuardarIdentificacion = 'storeIdentificaciones';
+            axios.post(urlGuardarIdentificacion, this.newidentificacion).then((response) => {
+                this.getIdentificacion();
+                newidentificacion = {
+                    'nomb_cat': '',
+                    'observ_cat': '',
+                    'estado_cat': '',
+                    'fechaini_cat': '',
+                    'fechafin_cat': '',
+                    'id_emp': '',
+                    'id_fec': ''
+                };
+                this.errors = [];
+                $('#crearCategoria').modal('hide');
+                toastr.success('Se añadido una nueva categoria');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editCategoria: function(categoria) {
+            this.fillCategoria.id_cat = categoria.id_cat;
+            this.fillCategoria.id_emp = categoria.id_emp;
+            this.fillCategoria.id_fec = categoria.id_fec;
+            this.fillCategoria.nomb_cat = categoria.nomb_cat;
+            this.fillCategoria.observ_cat = categoria.observ_cat;
+            this.fillCategoria.estado_cat = categoria.estado_cat;
+            this.fillCategoria.fechaini_cat = categoria.fechaini_cat;
+            this.fillCategoria.fechafin_cat = categoria.fechafin_cat;
+            $('#editCategoria').modal('show');
+        },
+        updateCategoria: function(id) {
+            var url = 'updateCategoria/' + id;
+            axios.post(url, this.fillCategoria).then(response => {
+                this.getCategorias();
+                this.fillCategoria = {
+                    'id_cat': '',
+                    'nomb_cat': '',
+                    'observ_cat': '',
+                    'estado_cat': '',
+                    'fechaini_cat': '',
+                    'fechafin_cat': '',
+                    'id_emp': '',
+                    'id_fec': ''
+                };
+                this.errors = [];
+                $('#editCategoria').modal('hide');
+                toastr.success('Categoria actualizada con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteCategoria: function(categoria) {
+             var url = 'deleteCategoria/' + categoria.id_cat;
+             axios.delete(url).then(
+                response => 
+            {
+                 this.getCategorias();   
+                  toastr.success('Categoria eliminada con éxito');         
+            });
         }
 }});
