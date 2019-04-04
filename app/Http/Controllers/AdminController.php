@@ -650,7 +650,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
 
     public function guardarProducto(Request $request)
     {
-  role="tab" aria-controls="nav-profile" aria-selected="false"    $v= $this->validate(request(),[
+        $v= $this->validate(request(),[
             'codigo_prod' => 'required|string',
             'precio_prod' => 'required|numeric',
             'codbarra_prod' => 'required|numeric',
@@ -775,13 +775,13 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         
     }
 
-    public function getTipoContribuyente
+    public function getTipoContribuyente()
     {
       $tiposContribuyentes = TipoContribuyente::get();
       return $tiposContribuyentes;
     }
 
-    public function getCiudad
+    public function getCiudad()
     {
       $ciudades = DB::select('SELECT ciudad.id_ciu,ciudad.nomb_ciu,ciudad.estado_ciu,ciudad.fechaini_ciu,ciudad.fechafin_ciu,ciudad.observ_ciu,empresa.nombre_emp,fecha_periodo.nomb_fec FROM ciudad
       INNER JOIN empresa ON ciudad.id_emp= empresa.id_emp
