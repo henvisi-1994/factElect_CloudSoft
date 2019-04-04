@@ -51,9 +51,10 @@ class AdminController extends Controller
   
   public function getCategoria()
   {
-    $categorias = DB::select('SELECT categoria.id_cat, categoria.nomb_cat,categoria.observ_cat,categoria.estado_cat,categoria.fechaini_cat,categoria.fechafin_cat,empresa.nombre_emp,fecha_periodo.nomb_fec FROM categoria
-      INNER JOIN empresa ON categoria.id_emp= empresa.id_emp
-      INNER JOIN fecha_periodo ON categoria.id_fec = fecha_periodo.id_fec');
+   $categorias = DB::table('categoria as c')
+      ->join('empresa', 'c.id_emp', '=', 'empresa.id_emp')
+      ->join('fecha_periodo', 'c.id_fec', '=', 'fecha_periodo.id_fec')
+      ->orderBy("c.id_cat","desc");
       return $categorias;
   }
 public function getMarca()
