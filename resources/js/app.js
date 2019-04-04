@@ -169,18 +169,17 @@ const app = new Vue({
             var urlGuardarIdentificacion = 'storeIdentificaciones';
             axios.post(urlGuardarIdentificacion, this.newidentificacion).then((response) => {
                 this.getIdentificacion();
-                newidentificacion = {
-                    'nomb_cat': '',
-                    'observ_cat': '',
-                    'estado_cat': '',
-                    'fechaini_cat': '',
-                    'fechafin_cat': '',
-                    'id_emp': '',
-                    'id_fec': ''
-                };
+                
+                this.newidentificacion.sri_ident = '';
+                this.newidentificacion.descrip_ident = '';
+                this.newidentificacion.observ_ident = '';
+                this.newidentificacion.estado_ident = '';
+                this.newidentificacion.fechaini_ident = '';
+                this.newidentificacion.fechafin_ident= '';
+                
                 this.errors = [];
-                $('#crearCategoria').modal('hide');
-                toastr.success('Se añadido una nueva categoria');
+                $('#crearIdentificacion').modal('hide');
+                toastr.success('Se añadido una nueva Identificacion');
             }).catch(error => {
                 this.errors = error.response.data;
             });
