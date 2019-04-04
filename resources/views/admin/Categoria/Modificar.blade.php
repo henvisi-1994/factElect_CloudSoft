@@ -1,5 +1,5 @@
 <form method="POST" v-on:submit.prevent="updateCategoria(fillCategoria.id_cat)">
-    <div class="modal fade" id="edit">
+    <div class="modal fade" id="editCategoria">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

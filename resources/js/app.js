@@ -125,6 +125,7 @@ const app = new Vue({
             });
         },
         editCategoria: function(categoria) {
+            
             this.fillCategoria.id_cat = categoria.id_cat;
             this.fillCategoria.id_emp = categoria.id_emp;
             this.fillCategoria.id_fec = categoria.id_fec;
