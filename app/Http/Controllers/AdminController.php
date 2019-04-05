@@ -230,7 +230,9 @@ public function getUnidad()
     $ciudades = DB::select('SELECT ciudad.id_ciu,ciudad.nomb_ciu,ciudad.estado_ciu,ciudad.fechaini_ciu,ciudad.fechafin_ciu,ciudad.observ_ciu,empresa.nombre_emp,fecha_periodo.nomb_fec FROM ciudad
       INNER JOIN empresa ON ciudad.id_emp= empresa.id_emp
       INNER JOIN fecha_periodo ON ciudad.id_fec = fecha_periodo.id_fec');
-      return view('admin.Ciudad.index',compact('ciudades'));
+        $empresas = Empresa::get();
+        $fechas = Fecha_periodo::get();
+      return view('admin.Ciudad.index',compact('ciudades','empresas','fechas'));
   }
   //Funcion de Cargar Ciudad
    public function CargarCiudad()

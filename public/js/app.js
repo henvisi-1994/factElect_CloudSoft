@@ -49033,6 +49033,12 @@ var app = new Vue({
   el: '#crud',
   created: function created() {
     this.getCategorias();
+    this.getMarcas();
+    this.getProductos();
+    this.getUnidad();
+    this.getCiudad();
+    this.getIdentificacion();
+    this.getTipoContribuyente();
   },
   data: {
     categorias: [],
@@ -49220,7 +49226,8 @@ var app = new Vue({
     },
     errors: [],
     buscar_cat: '',
-    numregistros: 10
+    numregistros: 10,
+    src: ''
   },
   computed: {
     buscarCategoria: function buscarCategoria() {
@@ -49377,7 +49384,7 @@ var app = new Vue({
       });
     },
     //MEtodos de Marca
-    getMarca: function getMarca() {
+    getMarcas: function getMarcas() {
       var _this10 = this;
 
       var urlMarca = 'getMarca';
@@ -49647,6 +49654,156 @@ var app = new Vue({
         _this25.getCiudad();
 
         toastr.success('Ciudad eliminada con éxito');
+      });
+    },
+    //Productos
+    getImagenProducto: function getImagenProducto(event) {
+      //Asignamos la imagen a  nuestra data
+      this.newProducto.imagen_prod = event.target.files[0].name;
+    },
+    getProductos: function getProductos() {
+      var _this26 = this;
+
+      var urlProducto = 'getProductos';
+      axios.get(urlProducto).then(function (response) {
+        _this26.productos = response.data;
+      });
+    },
+    createProducto: function createProducto() {
+      var _this27 = this;
+
+      var urlGuardarProducto = 'storeProducto';
+      axios.post(urlGuardarProducto, this.newproducto).then(function (response) {
+        _this27.getProductos();
+
+        _this27.id_emp = '';
+        _this27.id_fec = '';
+        _this27.codigo_prod = '';
+        _this27.codbarra_prod = '';
+        _this27.descripcion_prod = '';
+        _this27.id_marca = '';
+        _this27.present_prod = '';
+        _this27.precio_prod = '';
+        _this27.ubicacion_prod = '';
+        _this27.stockmin_prod = '';
+        _this27.stockmax_prod = '';
+        _this27.fechaing_prod = '';
+        _this27.fechaelab_prod = '';
+        _this27.fechacad_prod = '';
+        _this27.aplicaiva_prod = '';
+        _this27.aplicaice_prod = '';
+        _this27.util_prod = '';
+        _this27.comision_prod = '';
+        _this27.imagen_prod = '';
+        _this27.observ_prod = '';
+        _this27.estado_prod = '';
+        _this27.fechaini_prod = '';
+        _this27.fechafin_prod = '';
+        _this27.errors = [];
+        $('#crearProducto').modal('hide');
+        toastr.success('Se añadido una nueva producto');
+      })["catch"](function (error) {
+        _this27.errors = error.response.data;
+      });
+    },
+    editProducto: function editProducto(producto) {
+      this.fillProducto.id_emp = producto.id_emp;
+      this.fillProducto.id_fec = producto.id_fec;
+      this.fillProducto.codigo_prod = producto.codigo_prod;
+      this.fillProducto.codbarra_prod = producto.codbarra_prod;
+      this.fillProducto.descripcion_prod = producto.descripcion_prod;
+      this.fillProducto.id_marca = producto.id_marca;
+      this.fillProducto.present_prod = producto.present_prod;
+      this.fillProducto.precio_prod = producto.precio_prod;
+      this.fillProducto.ubicacion_prod = producto.ubicacion_prod;
+      this.fillProducto.stockmin_prod = producto.stockmin_prod;
+      this.fillProducto.stockmax_prod = producto.stockmax_prod;
+      this.fillProducto.fechaing_prod = producto.fechaing_prod;
+      this.fillProducto.fechaelab_prod = producto.fechaelab_prod;
+      this.fillProducto.fechacad_prod = producto.fechacad_prod;
+      this.fillProducto.aplicaiva_prod = producto.aplicaiva_prod;
+      this.fillProducto.aplicaice_prod = producto.aplicaice_prod;
+      this.fillProducto.util_prod = producto.util_prod;
+      this.fillProducto.comision_prod = producto.comision_prod;
+      this.fillProducto.imagen_prod = producto.imagen_prod;
+      this.fillProducto.observ_prod = producto.observ_prod;
+      this.fillProducto.estado_prod = producto.estado_prod;
+      this.fillProducto.fechaini_prod = producto.fechaini_prod;
+      this.fillProducto.fechafin_prod = producto.fechafin_prod;
+      $('#editProducto').modal('show');
+    },
+    viewProducto: function viewProducto(producto) {
+      var urlImagenProducto = '../img/producto/';
+      this.fillProducto.id_emp = producto.id_emp;
+      this.fillProducto.id_fec = producto.id_fec;
+      this.fillProducto.codigo_prod = producto.codigo_prod;
+      this.fillProducto.codbarra_prod = producto.codbarra_prod;
+      this.fillProducto.descripcion_prod = producto.descripcion_prod;
+      this.fillProducto.id_marca = producto.id_marca;
+      this.fillProducto.present_prod = producto.present_prod;
+      this.fillProducto.precio_prod = producto.precio_prod;
+      this.fillProducto.ubicacion_prod = producto.ubicacion_prod;
+      this.fillProducto.stockmin_prod = producto.stockmin_prod;
+      this.fillProducto.stockmax_prod = producto.stockmax_prod;
+      this.fillProducto.fechaing_prod = producto.fechaing_prod;
+      this.fillProducto.fechaelab_prod = producto.fechaelab_prod;
+      this.fillProducto.fechacad_prod = producto.fechacad_prod;
+      this.fillProducto.aplicaiva_prod = producto.aplicaiva_prod;
+      this.fillProducto.aplicaice_prod = producto.aplicaice_prod;
+      this.fillProducto.util_prod = producto.util_prod;
+      this.fillProducto.comision_prod = producto.comision_prod;
+      this.src = urlImagenProducto + producto.imagen_prod;
+      this.fillProducto.observ_prod = producto.observ_prod;
+      this.fillProducto.estado_prod = producto.estado_prod;
+      this.fillProducto.fechaini_prod = producto.fechaini_prod;
+      this.fillProducto.fechafin_prod = producto.fechafin_prod;
+      $('#viewProducto').modal('show');
+    },
+    updateProducto: function updateProducto(id) {
+      var _this28 = this;
+
+      var url = 'updateProducto/' + id;
+      axios.post(url, this.fillProducto).then(function (response) {
+        _this28.getProductos();
+
+        _this28.fillProducto.id_emp = '';
+        _this28.fillProducto.id_fec = '';
+        _this28.fillProducto.codigo_prod = '';
+        _this28.fillProducto.codbarra_prod = '';
+        _this28.fillProducto.descripcion_prod = '';
+        _this28.fillProducto.id_marca = '';
+        _this28.fillProducto.present_prod = '';
+        _this28.fillProducto.precio_prod = '';
+        _this28.fillProducto.ubicacion_prod = '';
+        _this28.fillProducto.stockmin_prod = '';
+        _this28.fillProducto.stockmax_prod = '';
+        _this28.fillProducto.fechaing_prod = '';
+        _this28.fillProducto.fechaelab_prod = '';
+        _this28.fillProducto.fechacad_prod = '';
+        _this28.fillProducto.aplicaiva_prod = '';
+        _this28.fillProducto.aplicaice_prod = '';
+        _this28.fillProducto.util_prod = '';
+        _this28.fillProducto.comision_prod = '';
+        _this28.fillProducto.imagen_prod = '';
+        _this28.fillProducto.observ_prod = '';
+        _this28.fillProducto.estado_prod = '';
+        _this28.fillProducto.fechaini_prod = '';
+        _this28.fillProducto.fechafin_prod = '';
+        _this28.errors = [];
+        $('#editProducto').modal('hide');
+        toastr.success('Producto actualizado con éxito');
+      })["catch"](function (error) {
+        _this28.errors = error.response.data;
+      });
+    },
+    deleteProducto: function deleteProducto(producto) {
+      var _this29 = this;
+
+      var url = 'deleteProducto/' + producto.id_cat;
+      axios["delete"](url).then(function (response) {
+        _this29.getCategorias();
+
+        toastr.success('Producto eliminado con éxito');
       });
     }
   }

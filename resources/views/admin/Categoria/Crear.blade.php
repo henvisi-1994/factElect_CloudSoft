@@ -1,5 +1,5 @@
 <form method="POST" v-on:submit.prevent="createCategoria">
-    <div class="modal fade" id="crear">
+    <div class="modal fade" id="crearCategoria">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

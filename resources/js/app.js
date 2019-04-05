@@ -1,14 +1,10 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 require('./bootstrap');
-
 window.Vue = require('vue');
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -16,26 +12,28 @@ window.Vue = require('vue');
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 const app = new Vue({
     el: '#crud',
     created: function() {
         this.getCategorias();
+        this.getMarcas();
+        this.getProductos();
+        this.getUnidad();
+        this.getCiudad();
+        this.getIdentificacion();
+        this.getTipoContribuyente();
     },
     data: {
         categorias: [],
-         newcategoria: {
+        newcategoria: {
             'nomb_cat': '',
             'observ_cat': '',
             'estado_cat': '',
@@ -55,54 +53,184 @@ const app = new Vue({
             'id_fec': ''
         },
         ciudades: [],
-        newCiudad:{'nomb_ciu':'','estado_ciu':'','fechaini_ciu':'','fechafin_ciu':'','observ_ciu':'','id_emp':'','id_fec':''},
-        fillCiudad: {'nomb_ciu':'','estado_ciu':'','fechaini_ciu':'','fechafin_ciu':'','observ_ciu':'','id_emp':'','id_fec':''},
+        newCiudad: {
+            'nomb_ciu': '',
+            'estado_ciu': '',
+            'fechaini_ciu': '',
+            'fechafin_ciu': '',
+            'observ_ciu': '',
+            'id_emp': '',
+            'id_fec': ''
+        },
+        fillCiudad: {
+            'nomb_ciu': '',
+            'estado_ciu': '',
+            'fechaini_ciu': '',
+            'fechafin_ciu': '',
+            'observ_ciu': '',
+            'id_emp': '',
+            'id_fec': ''
+        },
         empresas: [],
-        newEmpresa:{},
+        newEmpresa: {},
         fillEmpresa: {},
-        fechas:[],
-        newFecha:{},
-        fillFechas:{},
-        identificaciones:[],
-        newIdentificacion:{'sri_ident':'','descrip_ident':'','observ_ident':'','estado_ident':'','fechaini_ident':'','fechafin_ident':''},
-        fillIdentificacion:{'sri_ident':'','descrip_ident':'','observ_ident':'','estado_ident':'','fechaini_ident':'','fechafin_ident':''},
+        fechas: [],
+        newFecha: {},
+        fillFechas: {},
+        identificaciones: [],
+        newIdentificacion: {
+            'sri_ident': '',
+            'descrip_ident': '',
+            'observ_ident': '',
+            'estado_ident': '',
+            'fechaini_ident': '',
+            'fechafin_ident': ''
+        },
+        fillIdentificacion: {
+            'sri_ident': '',
+            'descrip_ident': '',
+            'observ_ident': '',
+            'estado_ident': '',
+            'fechaini_ident': '',
+            'fechafin_ident': ''
+        },
         marcas: [],
-        newMarca: {'nomb_marca':'','observ_marca':'','estado_marca':'','fechaini_marca':'','fechafin_marca':'','control_fecha':''},
-        fillMarca: {'nomb_marca':'','observ_marca':'','estado_marca':'','fechaini_marca':'','fechafin_marca':'','control_fecha':''},
+        newMarca: {
+            'nomb_marca': '',
+            'observ_marca': '',
+            'estado_marca': '',
+            'fechaini_marca': '',
+            'fechafin_marca': '',
+            'control_fecha': ''
+        },
+        fillMarca: {
+            'nomb_marca': '',
+            'observ_marca': '',
+            'estado_marca': '',
+            'fechaini_marca': '',
+            'fechafin_marca': '',
+            'control_fecha': ''
+        },
         productos: [],
-        newProducto: {'id_emp':'' ,'id_fec':'','codigo_prod':'','codbarra_prod':'' , 
-					  'descripcion_prod':'','id_marca':'','present_prod':'','precio_prod':'',
-					  'ubicacion_prod':'','stockmin_prod':'','stockmax_prod':'','fechaing_prod':'','fechaelab_prod':'','fechacad_prod':'','aplicaiva_prod':'',
-					  'aplicaice_prod':'','util_prod':'','comision_prod':'','imagen_prod':'','observ_prod':'','estado_prod':'','fechaini_prod':'','fechafin_prod':''},
-        fillProducto: {'id_emp':'' ,'id_fec':'','codigo_prod':'','codbarra_prod':'' , 
-						  'descripcion_prod':'','id_marca':'','present_prod':'','precio_prod':'',
-						  'ubicacion_prod':'','stockmin_prod':'','stockmax_prod':'','fechaing_prod':'','fechaelab_prod':'','fechacad_prod':'','aplicaiva_prod':'',
-						  'aplicaice_prod':'','util_prod':'','comision_prod':'','imagen_prod':'','observ_prod':'','estado_prod':'','fechaini_prod':'','fechafin_prod':''},
-        proveedores:[],
-        newProveedor:{'id_emp':'','id_fec':'','cod_prov':'','id_per':'','obser_prov':'','estado_prov':'','fechaini_prov':'','fechafin_prov':''},
-        fillProveedor:{'id_emp':'','id_fec':'','cod_prov':'','id_per':'','obser_prov':'','estado_prov':'','fechaini_prov':'','fechafin_prov':''},
-        tipoContribuyentes:[],
-        newTipoContribuyente:{'nomb_contrib':'','obser_contrib':'','estado_contrib':'','fechaini_contrib':'','fechafin_contrib':''},
-        fillTipoContribuyente:{'nomb_contrib':'','obser_contrib':'','estado_contrib':'','fechaini_contrib':'','fechafin_contrib':''},
-        unidades:[],
-        newUnidad:{'nomb_unidad':'','observ_unidad':'','estado_unidad':'','fechaini_unidad':'','fechafin_unidad':'','control_fecha':''},
-        fillUnidad:{'nomb_unidad':'','observ_unidad':'','estado_unidad':'','fechaini_unidad':'','fechafin_unidad':'','control_fecha':''},
+        newProducto: {
+            'id_emp': '',
+            'id_fec': '',
+            'codigo_prod': '',
+            'codbarra_prod': '',
+            'descripcion_prod': '',
+            'id_marca': '',
+            'present_prod': '',
+            'precio_prod': '',
+            'ubicacion_prod': '',
+            'stockmin_prod': '',
+            'stockmax_prod': '',
+            'fechaing_prod': '',
+            'fechaelab_prod': '',
+            'fechacad_prod': '',
+            'aplicaiva_prod': '',
+            'aplicaice_prod': '',
+            'util_prod': '',
+            'comision_prod': '',
+            'imagen_prod': '',
+            'observ_prod': '',
+            'estado_prod': '',
+            'fechaini_prod': '',
+            'fechafin_prod': ''
+        },
+        fillProducto: {
+            'id_emp': '',
+            'id_fec': '',
+            'codigo_prod': '',
+            'codbarra_prod': '',
+            'descripcion_prod': '',
+            'id_marca': '',
+            'present_prod': '',
+            'precio_prod': '',
+            'ubicacion_prod': '',
+            'stockmin_prod': '',
+            'stockmax_prod': '',
+            'fechaing_prod': '',
+            'fechaelab_prod': '',
+            'fechacad_prod': '',
+            'aplicaiva_prod': '',
+            'aplicaice_prod': '',
+            'util_prod': '',
+            'comision_prod': '',
+            'imagen_prod': '',
+            'observ_prod': '',
+            'estado_prod': '',
+            'fechaini_prod': '',
+            'fechafin_prod': ''
+        },
+        proveedores: [],
+        newProveedor: {
+            'id_emp': '',
+            'id_fec': '',
+            'cod_prov': '',
+            'id_per': '',
+            'obser_prov': '',
+            'estado_prov': '',
+            'fechaini_prov': '',
+            'fechafin_prov': ''
+        },
+        fillProveedor: {
+            'id_emp': '',
+            'id_fec': '',
+            'cod_prov': '',
+            'id_per': '',
+            'obser_prov': '',
+            'estado_prov': '',
+            'fechaini_prov': '',
+            'fechafin_prov': ''
+        },
+        tipoContribuyentes: [],
+        newTipoContribuyente: {
+            'nomb_contrib': '',
+            'obser_contrib': '',
+            'estado_contrib': '',
+            'fechaini_contrib': '',
+            'fechafin_contrib': ''
+        },
+        fillTipoContribuyente: {
+            'nomb_contrib': '',
+            'obser_contrib': '',
+            'estado_contrib': '',
+            'fechaini_contrib': '',
+            'fechafin_contrib': ''
+        },
+        unidades: [],
+        newUnidad: {
+            'nomb_unidad': '',
+            'observ_unidad': '',
+            'estado_unidad': '',
+            'fechaini_unidad': '',
+            'fechafin_unidad': '',
+            'control_fecha': ''
+        },
+        fillUnidad: {
+            'nomb_unidad': '',
+            'observ_unidad': '',
+            'estado_unidad': '',
+            'fechaini_unidad': '',
+            'fechafin_unidad': '',
+            'control_fecha': ''
+        },
         errors: [],
-        buscar_cat:'',
-        numregistros: 10
+        buscar_cat: '',
+        numregistros: 10,
+        src: '',
     },
     computed: {
-        buscarCategoria: function()
-        {
-             return this.categorias.filter((categoria) => categoria.nomb_cat.includes(this.buscar_cat));          
+        buscarCategoria: function() {
+            return this.categorias.filter((categoria) => categoria.nomb_cat.includes(this.buscar_cat));
         }
     },
     methods: {
         getCategorias: function() {
-            var urlCategorias = 'getCategorias';
-            axios.get(urlCategorias).then(response => {
-                this.categorias = response.data
-            });
+                var urlCategorias = 'getCategorias';
+                axios.get(urlCategorias).then(response => {
+                    this.categorias = response.data
+                });
         },
         createCategoria: function() {
             var urlGuardarCategoria = 'storeCategoria';
@@ -125,7 +253,6 @@ const app = new Vue({
             });
         },
         editCategoria: function(categoria) {
-            
             this.fillCategoria.id_cat = categoria.id_cat;
             this.fillCategoria.id_emp = categoria.id_emp;
             this.fillCategoria.id_fec = categoria.id_fec;
@@ -158,15 +285,12 @@ const app = new Vue({
             });
         },
         deleteCategoria: function(categoria) {
-             var url = 'deleteCategoria/' + categoria.id_cat;
-             axios.delete(url).then(
-                response => 
-            {
-                 this.getCategorias();   
-                  toastr.success('Categoria eliminada con éxito');         
+            var url = 'deleteCategoria/' + categoria.id_cat;
+            axios.delete(url).then(response => {
+                this.getCategorias();
+                toastr.success('Categoria eliminada con éxito');
             });
         },
-
         //MEtodos de Identificacion
         getIdentificacion: function() {
             var urlIdentificacion = 'getIdentificacion';
@@ -178,13 +302,12 @@ const app = new Vue({
             var urlGuardarIdentificacion = 'storeIdentificaciones';
             axios.post(urlGuardarIdentificacion, this.newidentificacion).then((response) => {
                 this.getIdentificacion();
-                
                 this.newidentificacion.sri_ident = '';
                 this.newidentificacion.descrip_ident = '';
                 this.newidentificacion.observ_ident = '';
                 this.newidentificacion.estado_ident = '';
                 this.newidentificacion.fechaini_ident = '';
-                this.newidentificacion.fechafin_ident= '';
+                this.newidentificacion.fechafin_ident = '';
                 this.errors = [];
                 $('#crearIdentificacion').modal('hide');
                 toastr.success('Se añadido una nueva Identificacion');
@@ -205,7 +328,7 @@ const app = new Vue({
             var url = 'updateIdentificacion/' + id;
             axios.post(url, this.fillIdentificacion).then(response => {
                 this.getIdentificacion();
-                this.fillIdentificacion.sri_ident ='' ;
+                this.fillIdentificacion.sri_ident = '';
                 this.fillIdentificacion.descrip_ident = '';
                 this.fillIdentificacion.observ_ident = '';
                 this.fillIdentificacion.estado_ident = '';
@@ -219,17 +342,14 @@ const app = new Vue({
             });
         },
         deleteIdentificacion: function(categoria) {
-             var url = 'deleteIdentidicacion/' + identificacion.id_ident;
-             axios.delete(url).then(
-                response => 
-            {
-                 this.getCategorias();   
-                  toastr.success('Identficación eliminada con éxito');         
+            var url = 'deleteIdentidicacion/' + identificacion.id_ident;
+            axios.delete(url).then(response => {
+                this.getCategorias();
+                toastr.success('Identficación eliminada con éxito');
             });
         },
-
-         //MEtodos de Marca
-        getMarca: function() {
+        //MEtodos de Marca
+        getMarcas: function() {
             var urlMarca = 'getMarca';
             axios.get(urlMarca).then(response => {
                 this.marcas = response.data
@@ -239,13 +359,12 @@ const app = new Vue({
             var urlGuardarMarca = 'storeMarca';
             axios.post(urlGuardarMarca, this.newmarca).then((response) => {
                 this.getMarca();
-                
                 this.newmarca.nomb_marca = '';
                 this.newmarca.observ_marca = '';
                 this.newmarca.estado_marca = '';
                 this.newmarca.fechaini_marca = '';
                 this.newmarca.fechafin_marca = '';
-                this.newmarca.control_fecha= '';
+                this.newmarca.control_fecha = '';
                 this.errors = [];
                 $('#crearMarca').modal('hide');
                 toastr.success('Se ha añadido una nueva Marca');
@@ -266,7 +385,7 @@ const app = new Vue({
             var url = 'updateMarca/' + id;
             axios.post(url, this.fillMarca).then(response => {
                 this.getMarca();
-                this.fillMarca.nomb_marca ='' ;
+                this.fillMarca.nomb_marca = '';
                 this.fillMarca.observ_marca = '';
                 this.fillMarca.estado_marca = '';
                 this.fillMarca.fechaini_marca = '';
@@ -280,12 +399,10 @@ const app = new Vue({
             });
         },
         deleteMarca: function(marca) {
-             var url = 'deleteMarca/' + marca.id_marca;
-             axios.delete(url).then(
-                response => 
-            {
-                 this.getMarca();   
-                  toastr.success('Marca eliminada con éxito');         
+            var url = 'deleteMarca/' + marca.id_marca;
+            axios.delete(url).then(response => {
+                this.getMarca();
+                toastr.success('Marca eliminada con éxito');
             });
         },
         //MEtodos de Unidad
@@ -298,13 +415,13 @@ const app = new Vue({
         createUnidad: function() {
             var urlGuardarUnidad = 'storeUnidad';
             axios.post(urlGuardarUnidad, this.newunidad).then((response) => {
-                this.getUnidad();   
+                this.getUnidad();
                 this.newunidad.nomb_unidad = '';
                 this.newunidad.observ_unidad = '';
                 this.newunidad.estado_unidad = '';
                 this.newunidad.fechaini_unidad = '';
                 this.newunidad.fechafin_unidad = '';
-                this.newunidad.control_fecha= '';
+                this.newunidad.control_fecha = '';
                 this.errors = [];
                 $('#crearUnidad').modal('hide');
                 toastr.success('Se ha añadido una nueva Unidad');
@@ -325,7 +442,7 @@ const app = new Vue({
             var url = 'updateUnidad/' + id;
             axios.post(url, this.fillUnidad).then(response => {
                 this.getUnidad();
-                this.fillUnidad.nomb_unidad ='' ;
+                this.fillUnidad.nomb_unidad = '';
                 this.fillUnidad.observ_unidad = '';
                 this.fillUnidad.estado_unidad = '';
                 this.fillUnidad.fechaini_unidad = '';
@@ -339,16 +456,12 @@ const app = new Vue({
             });
         },
         deleteUnidad: function(unidades) {
-             var url = 'deleteUnidad/' + unidades.id_unidad;
-             axios.delete(url).then(
-                response => 
-            {
-                 this.getUnidad();   
-                  toastr.success('Unidad eliminada con éxito');         
+            var url = 'deleteUnidad/' + unidades.id_unidad;
+            axios.delete(url).then(response => {
+                this.getUnidad();
+                toastr.success('Unidad eliminada con éxito');
             });
         },
-
-
         //MEtodos de TipoContribuyente
         getTipoContribuyente: function() {
             var urlContribuyente = 'getTipoContribuyente';
@@ -359,7 +472,7 @@ const app = new Vue({
         createTipoContribuyente: function() {
             var urlGuardarContribuyente = 'storeTipoContribuyente';
             axios.post(urlGuardarContribuyente, this.newcontribuyente).then((response) => {
-                this.getTipoContribuyente();   
+                this.getTipoContribuyente();
                 this.newcontribuyente.nomb_contrib = '';
                 this.newcontribuyente.obser_contrib = '';
                 this.newcontribuyente.estado_contrib = '';
@@ -384,7 +497,7 @@ const app = new Vue({
             var url = 'updateTipoContribuyente/' + id;
             axios.post(url, this.fillTipoContribuyente).then(response => {
                 this.getTipoContribuyente();
-                this.fillTipoContribuyente.nomb_contrib ='' ;
+                this.fillTipoContribuyente.nomb_contrib = '';
                 this.fillTipoContribuyente.obser_contrib = '';
                 this.fillTipoContribuyente.estado_contrib = '';
                 this.fillTipoContribuyente.fechaini_contrib = '';
@@ -398,16 +511,12 @@ const app = new Vue({
             });
         },
         deleteTipoContribuyente: function(tipoContribuyentes) {
-             var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
-             axios.delete(url).then(
-                response => 
-            {
-                 this.getTipoContribuyente();   
-                  toastr.success('Tipo de Contribuyente eliminado con éxito');         
+            var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
+            axios.delete(url).then(response => {
+                this.getTipoContribuyente();
+                toastr.success('Tipo de Contribuyente eliminado con éxito');
             });
         },
-
-
         //MEtodos de Ciudad
         getCiudad: function() {
             var urlCiudad = 'getCiudad';
@@ -418,7 +527,7 @@ const app = new Vue({
         createCiudad: function() {
             var urlGuardarCiudad = 'storeCiudad';
             axios.post(urlGuardarCiudad, this.newciudad).then((response) => {
-                this.getCiudad();   
+                this.getCiudad();
                 this.newciudad.nomb_ciu = '';
                 this.newciudad.estado_ciu = '';
                 this.newciudad.fechaini_ciu = '';
@@ -447,7 +556,7 @@ const app = new Vue({
             var url = 'updateCiudad/' + id;
             axios.post(url, this.fillCiudad).then(response => {
                 this.getCiudad();
-                this.fillCiudad.nomb_ciu ='' ;
+                this.fillCiudad.nomb_ciu = '';
                 this.fillCiudad.estado_ciu = '';
                 this.fillCiudad.fechaini_ciu = '';
                 this.fillCiudad.fechafin_ciu = '';
@@ -462,12 +571,150 @@ const app = new Vue({
             });
         },
         deleteCiudad: function(ciudades) {
-             var url = 'deleteCiudad/' + ciudades.id_ciu;
-             axios.delete(url).then(
-                response => 
-            {
-                 this.getCiudad();   
-                  toastr.success('Ciudad eliminada con éxito');         
+            var url = 'deleteCiudad/' + ciudades.id_ciu;
+            axios.delete(url).then(response => {
+                this.getCiudad();
+                toastr.success('Ciudad eliminada con éxito');
             });
         },
-}});
+        //Productos
+        getImagenProducto(event) {
+            //Asignamos la imagen a  nuestra data
+            this.newProducto.imagen_prod = event.target.files[0].name;
+        },
+        getProductos: function() {
+            var urlProducto = 'getProductos';
+            axios.get(urlProducto).then(response => {
+                this.productos = response.data;
+            });
+        },
+        createProducto: function() {
+            var urlGuardarProducto = 'storeProducto';
+            axios.post(urlGuardarProducto, this.newproducto).then((response) => {
+                this.getProductos();
+                this.id_emp = '';
+                this.id_fec = '';
+                this.codigo_prod = '';
+                this.codbarra_prod = '';
+                this.descripcion_prod = '';
+                this.id_marca = '';
+                this.present_prod = '';
+                this.precio_prod = '';
+                this.ubicacion_prod = '';
+                this.stockmin_prod = '';
+                this.stockmax_prod = '';
+                this.fechaing_prod = '';
+                this.fechaelab_prod = '';
+                this.fechacad_prod = '';
+                this.aplicaiva_prod = '';
+                this.aplicaice_prod = '';
+                this.util_prod = '';
+                this.comision_prod = '';
+                this.imagen_prod = '';
+                this.observ_prod = '';
+                this.estado_prod = '';
+                this.fechaini_prod = '';
+                this.fechafin_prod = '';
+                this.errors = [];
+                $('#crearProducto').modal('hide');
+                toastr.success('Se añadido una nueva producto');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editProducto: function(producto) {
+            this.fillProducto.id_emp = producto.id_emp;
+            this.fillProducto.id_fec = producto.id_fec;
+            this.fillProducto.codigo_prod = producto.codigo_prod;
+            this.fillProducto.codbarra_prod = producto.codbarra_prod;
+            this.fillProducto.descripcion_prod = producto.descripcion_prod;
+            this.fillProducto.id_marca = producto.id_marca;
+            this.fillProducto.present_prod = producto.present_prod;
+            this.fillProducto.precio_prod = producto.precio_prod;
+            this.fillProducto.ubicacion_prod = producto.ubicacion_prod;
+            this.fillProducto.stockmin_prod = producto.stockmin_prod;
+            this.fillProducto.stockmax_prod = producto.stockmax_prod;
+            this.fillProducto.fechaing_prod = producto.fechaing_prod;
+            this.fillProducto.fechaelab_prod = producto.fechaelab_prod;
+            this.fillProducto.fechacad_prod = producto.fechacad_prod;
+            this.fillProducto.aplicaiva_prod = producto.aplicaiva_prod;
+            this.fillProducto.aplicaice_prod = producto.aplicaice_prod;
+            this.fillProducto.util_prod = producto.util_prod;
+            this.fillProducto.comision_prod = producto.comision_prod;
+            this.fillProducto.imagen_prod = producto.imagen_prod;
+            this.fillProducto.observ_prod = producto.observ_prod;
+            this.fillProducto.estado_prod = producto.estado_prod;
+            this.fillProducto.fechaini_prod = producto.fechaini_prod;
+            this.fillProducto.fechafin_prod = producto.fechafin_prod;
+            $('#editProducto').modal('show');
+        },
+        viewProducto: function(producto) {
+            var urlImagenProducto = '../img/producto/';
+            this.fillProducto.id_emp = producto.id_emp;
+            this.fillProducto.id_fec = producto.id_fec;
+            this.fillProducto.codigo_prod = producto.codigo_prod;
+            this.fillProducto.codbarra_prod = producto.codbarra_prod;
+            this.fillProducto.descripcion_prod = producto.descripcion_prod;
+            this.fillProducto.id_marca = producto.id_marca;
+            this.fillProducto.present_prod = producto.present_prod;
+            this.fillProducto.precio_prod = producto.precio_prod;
+            this.fillProducto.ubicacion_prod = producto.ubicacion_prod;
+            this.fillProducto.stockmin_prod = producto.stockmin_prod;
+            this.fillProducto.stockmax_prod = producto.stockmax_prod;
+            this.fillProducto.fechaing_prod = producto.fechaing_prod;
+            this.fillProducto.fechaelab_prod = producto.fechaelab_prod;
+            this.fillProducto.fechacad_prod = producto.fechacad_prod;
+            this.fillProducto.aplicaiva_prod = producto.aplicaiva_prod;
+            this.fillProducto.aplicaice_prod = producto.aplicaice_prod;
+            this.fillProducto.util_prod = producto.util_prod;
+            this.fillProducto.comision_prod = producto.comision_prod;
+            this.src = urlImagenProducto + producto.imagen_prod;
+            this.fillProducto.observ_prod = producto.observ_prod;
+            this.fillProducto.estado_prod = producto.estado_prod;
+            this.fillProducto.fechaini_prod = producto.fechaini_prod;
+            this.fillProducto.fechafin_prod = producto.fechafin_prod;
+            $('#viewProducto').modal('show');
+        },
+        updateProducto: function(id) {
+            var url = 'updateProducto/' + id;
+            axios.post(url, this.fillProducto).then(response => {
+                this.getProductos();
+                this.fillProducto.id_emp = '';
+                this.fillProducto.id_fec = '';
+                this.fillProducto.codigo_prod = '';
+                this.fillProducto.codbarra_prod = '';
+                this.fillProducto.descripcion_prod = '';
+                this.fillProducto.id_marca = '';
+                this.fillProducto.present_prod = '';
+                this.fillProducto.precio_prod = '';
+                this.fillProducto.ubicacion_prod = '';
+                this.fillProducto.stockmin_prod = '';
+                this.fillProducto.stockmax_prod = '';
+                this.fillProducto.fechaing_prod = '';
+                this.fillProducto.fechaelab_prod = '';
+                this.fillProducto.fechacad_prod = '';
+                this.fillProducto.aplicaiva_prod = '';
+                this.fillProducto.aplicaice_prod = '';
+                this.fillProducto.util_prod = '';
+                this.fillProducto.comision_prod = '';
+                this.fillProducto.imagen_prod = '';
+                this.fillProducto.observ_prod = '';
+                this.fillProducto.estado_prod = '';
+                this.fillProducto.fechaini_prod = '';
+                this.fillProducto.fechafin_prod = '';
+                this.errors = [];
+                $('#editProducto').modal('hide');
+                toastr.success('Producto actualizado con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteProducto: function(producto) {
+            var url = 'deleteProducto/' + producto.id_cat;
+            axios.delete(url).then(response => {
+                this.getCategorias();
+                toastr.success('Producto eliminado con éxito');
+            });
+        }
+    }
+});

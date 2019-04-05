@@ -1,5 +1,5 @@
 <form  method="POST" v-on:submit.prevent="createTipoContribuyente">
-    <div class="modal fade" id="crearContribuyente">
+    <div class="modal fade" id="crearTipoContribuyente">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

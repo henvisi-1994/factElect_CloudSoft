@@ -1,12 +1,12 @@
-<div class="box" id="crud">
+<div class="box">
     <div class="box-header">
         <h1 class="box-title">
             Categoria
         </h1>
     </div>
     <div class="box-body">
-        <a class="btn btn-primary pull-left" data-target="#crear" data-toggle="modal" href="#">
-            Nueva Categoria
+        <a class="btn btn-primary pull-left" data-target="#crearCategoria" data-toggle="modal" href="#">
+            Crear
         </a>
         <br>
             <br>

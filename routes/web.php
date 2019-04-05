@@ -23,10 +23,13 @@ Route::get('TipoContribuyente','AdminController@TipoContribuyente');
 Route::get('Identificaciones','AdminController@Identificaciones');
 //Obtener
 Route::get('getProveedor','AdminController@getProveedor');
-Route::get('getProducto','AdminController@getProducto');
+Route::get('getProductos','AdminController@getProducto');
 Route::get('getCategorias','AdminController@getCategoria');
 Route::get('getUnidad','AdminController@getUnidad');
 Route::get('getMarca','AdminController@getMarca');
+Route::get('getCiudad','AdminController@getCiudad');
+Route::get('getTipoContribuyente','AdminController@getTipoContribuyente');
+Route::get('getIdentificacion','AdminController@getIdentificacion');
 //Añadir
 Route::get('addPersona','AdminController@CargarPersona');
 Route::get('addProveedor','AdminController@CargarPersona');
