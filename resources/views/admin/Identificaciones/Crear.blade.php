@@ -1,5 +1,5 @@
-<form action="storeIdentificaciones" method="POST">
-    <div class="modal fade" id="crearIdentificaciones">
+<form  method="POST" v-on:submit.prevent="createIdentificacion">
+    <div class="modal fade" id="crearIdentificacion">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -19,7 +19,7 @@
                         <label>
                             Estado
                         </label>
-                        <select class="form-control" name="sri_ident">
+                        <select class="form-control" name="sri_ident" v-model="newIdentificacion.sri_ident">
                             <option disabled="" selected="" value="none">
                                 Selecione Identificación
                             </option>
@@ -36,21 +36,21 @@
                             <label>
                                 Descripción
                             </label>
-                            <textarea class="form-control" name="descrip_ident" placeholder="Ingrese Descripción" rows="3">
+                            <textarea class="form-control" name="descrip_ident" placeholder="Ingrese Descripción" rows="3" v-model="newIdentificacion.descrip_ident">
                             </textarea>
                         </div>
                         <div class="form-group">
                             <label>
                                 Observación
                             </label>
-                            <textarea class="form-control" name="observ_ident" placeholder="Ingrese Observación" rows="3">
+                            <textarea class="form-control" name="observ_ident" placeholder="Ingrese Observación" rows="3" v-model="newIdentificacion.observ_ident">
                             </textarea>
                         </div>
                         <div class="form-group">
                             <label>
                                 Estado
                             </label>
-                            <select class="form-control" name="estado_ident">
+                            <select class="form-control" name="estado_ident" v-model="newIdentificacion.estado_ident">
                                 <option disabled="" selected="" value="none">
                                     Selecione Estado
                                 </option>
@@ -74,7 +74,7 @@
                                     <i class="fa fa-calendar">
                                     </i>
                                 </div>
-                                <input class="form-control" name="fechaini_ident" type="date">
+                                <input class="form-control" name="fechaini_ident" type="date" v-model="newIdentificacion.fechaini_ident">
                                 </input>
                             </div>
                             <!-- /.input group -->
@@ -88,7 +88,7 @@
                                     <i class="fa fa-calendar">
                                     </i>
                                 </div>
-                                <input class="form-control" name="fechafin_ident" type="date">
+                                <input class="form-control" name="fechafin_ident" type="date" v-model="newIdentificacion.fechafin_ident">
                                 </input>
                             </div>
                             <!-- /.input group -->

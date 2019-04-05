@@ -1,5 +1,5 @@
-<form action="storeCiudad" method="POST"  v-on:submit.prevent="updateCiudad(fillCiudad.id_ciu)">
-    <div class="modal fade" id="crearCiudad">
+<form  method="POST"   v-on:submit.prevent="updateCiudad(fillCiudad.id_ciu)">
+    <div class="modal fade" id="editCiudad">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -20,21 +20,21 @@
                             <label for="exampleInputEmail1">
                                 Nombre
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="nomb_ciu" placeholder="Ingrese Nombre" type="text">
+                            <input class="form-control" id="exampleInputEmail1" name="nomb_ciu" placeholder="Ingrese Nombre" type="text" v-model="fillCiudad.nomb_ciu">
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
                                 Observacion
                             </label>
-                            <textarea class="form-control" name="observ_ciu" placeholder="Ingrese Observación" rows="3">
+                            <textarea class="form-control" name="observ_ciu" placeholder="Ingrese Observación" rows="3" v-model="fillCiudad.observ_ciu">
                             </textarea>
                         </div>
                         <div class="form-group">
                             <label>
                                 Estado
                             </label>
-                            <select class="form-control" name="estado_ciu">
+                            <select class="form-control" name="estado_ciu" v-model="fillCiudad.estado_ciu">
                                 <option disabled="" selected="" value="none">
                                     Selecione Estado
                                 </option>
@@ -58,7 +58,7 @@
                                     <i class="fa fa-calendar">
                                     </i>
                                 </div>
-                                <input class="form-control" name="fechaini_ciu" type="date">
+                                <input class="form-control" name="fechaini_ciu" type="date" v-model="fillCiudad.fechaini_ciu">
                                 </input>
                             </div>
                             <!-- /.input group -->
@@ -72,7 +72,7 @@
                                     <i class="fa fa-calendar">
                                     </i>
                                 </div>
-                                <input class="form-control" name="fechafin_ciu" type="date">
+                                <input class="form-control" name="fechafin_ciu" type="date" v-model="fillCiudad.fechafin_ciu">
                                 </input>
                             </div>
                             <!-- /.input group -->
@@ -81,7 +81,7 @@
                             <label>
                                 Empresa
                             </label>
-                            <select class="form-control" name="id_emp">
+                            <select class="form-control" name="id_emp" v-model="fillCiudad.id_emp">
                                 <option disabled="" selected="" value="none">
                                     Selecione una Empresa
                                 </option>
@@ -96,7 +96,7 @@
                             <label>
                                 Periodo
                             </label>
-                            <select class="form-control" name="id_fec">
+                            <select class="form-control" name="id_fec" v-model="fillCiudad.id_fec">
                                 <option disabled="" selected="" value="none">
                                     Selecione una Periodo
                                 </option>

@@ -1,68 +1,107 @@
-@extends('admin.layouts.app')
-@section('content')
- <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Añadir Identificación</h3>
+<form  method="POST" v-on:submit.prevent="updateIdentificacion(fillIdentificacion.id_ident)">
+    <div class="modal fade" id="editIdentificacion">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span>
+                            ×
+                        </span>
+                    </button>
+                    <h4>
+                        Añadir Identificacion
+                    </h4>
+                    <span class="text-danger" v-for="error in errors">
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>
+                            Estado
+                        </label>
+                        <select class="form-control" name="sri_ident" v-model="fillIdentificacion.sri_ident">
+                            <option disabled="" selected="" value="none">
+                                Selecione Identificación
+                            </option>
+                            <option value="N">
+                                Natural
+                            </option>
+                            <option value="J">
+                                Juridica
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>
+                                Descripción
+                            </label>
+                            <textarea class="form-control" name="descrip_ident" placeholder="Ingrese Descripción" rows="3" v-model="fillIdentificacion.descrip_ident">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Observación
+                            </label>
+                            <textarea class="form-control" name="observ_ident" placeholder="Ingrese Observación" rows="3" v-model="fillIdentificacion.observ_ident">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Estado
+                            </label>
+                            <select class="form-control" name="estado_ident" v-model="fillIdentificacion.estado_ident">
+                                <option disabled="" selected="" value="none">
+                                    Selecione Estado
+                                </option>
+                                <option value="A">
+                                    Activo
+                                </option>
+                                <option value="P">
+                                    Pendiente
+                                </option>
+                                <option value="I">
+                                    Inactivo
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Fecha Inicial:
+                            </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar">
+                                    </i>
+                                </div>
+                                <input class="form-control" name="fechaini_ident" type="date" v-model="fillIdentificacion.fechaini_ident">
+                                </input>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Fecha Final:
+                            </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar">
+                                    </i>
+                                </div>
+                                <input class="form-control" name="fechafin_ident" type="date" v-model="fillIdentificacion.fechafin_ident">
+                                </input>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                        </input>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-primary" type="submit" value="Guardar">
+                        </input>
+                    </div>
+                </div>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form role="form" method="POST" action="{{asset('updateIdentificaciones/'.$identificacion->id_ident)}}">
-              <div class="box-body">
-                 </div>
-                 <div class="form-group">
-                  <label>Estado</label>
-                  <select class="form-control"name="sri_ident">
-                    <option value="{{$identificacion->sri_ident}}" selected="">Selecione Identificación</option>
-                    <option value="N">Natural</option>
-                     <option value="J">Juridica</option>
-                  </select>
-                </div>
-                 <div class="form-group">
-                  <label>Observacion</label>
-                  <textarea class="form-control" rows="3" value = "{{$identificacion->descrip_ident}}"  placeholder="Ingrese Descripción"name="descrip_ident">{{$identificacion->descrip_ident}}</textarea>
-                </div>
-                <div class="form-group">
-                  <label>Observacion</label>
-                  <textarea class="form-control" rows="3" value = "{{$identificacion->observ_ident}}" placeholder="Ingrese Observación"name="observ_ident">{{$identificacion->observ_ident}}</textarea>
-                </div>
-                 <div class="form-group">
-                  <label>Estado</label>
-                  <select class="form-control"name="estado_ident">
-                    <option value="{{$identificacion->estado_ident}}" selected="">Selecione Estado</option>
-                    <option value="A">Activo</option>
-                     <option value="P">Pendiente</option>
-                     <option value="I">Inactivo</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                <label>Fecha Inicial:</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="date" class="form-control" name="fechaini_ident" value="{{$identificacion->fechaini_ident}}">
-                </div>
-                <!-- /.input group -->
-              </div>
-              <div class="form-group">
-                <label>Fecha Final:</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="date" class="form-control" name="fechafin_ident" value="{{$identificacion->fechafin_ident}}">
-                </div>
-                <!-- /.input group -->
-              </div>
-
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              </div>
-            </form>
-          </div>
-@endsection
+        </div>
+    </div>
+</form>

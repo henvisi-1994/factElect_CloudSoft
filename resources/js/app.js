@@ -289,7 +289,7 @@ const app = new Vue({
             });
         },
         //MEtodos de Unidad
-        getMarca: function() {
+        getUnidad: function() {
             var urlUnidad = 'getUnidad';
             axios.get(urlUnidad).then(response => {
                 this.unidades = response.data
@@ -383,7 +383,7 @@ const app = new Vue({
         updateTipoContribuyente: function(id) {
             var url = 'updateTipoContribuyente/' + id;
             axios.post(url, this.fillTipoContribuyente).then(response => {
-                this.getUnidad();
+                this.getTipoContribuyente();
                 this.fillTipoContribuyente.nomb_contrib ='' ;
                 this.fillTipoContribuyente.obser_contrib = '';
                 this.fillTipoContribuyente.estado_contrib = '';
@@ -404,6 +404,70 @@ const app = new Vue({
             {
                  this.getTipoContribuyente();   
                   toastr.success('Tipo de Contribuyente eliminado con éxito');         
+            });
+        },
+
+
+        //MEtodos de Ciudad
+        getCiudad: function() {
+            var urlCiudad = 'getCiudad';
+            axios.get(urlCiudad).then(response => {
+                this.ciudades = response.data
+            });
+        },
+        createCiudad: function() {
+            var urlGuardarCiudad = 'storeCiudad';
+            axios.post(urlGuardarCiudad, this.newciudad).then((response) => {
+                this.getCiudad();   
+                this.newciudad.nomb_ciu = '';
+                this.newciudad.estado_ciu = '';
+                this.newciudad.fechaini_ciu = '';
+                this.newciudad.fechafin_ciu = '';
+                this.newciudad.observ_ciu = '';
+                this.newciudad.id_emp = '';
+                this.newciudad.id_fec = '';
+                this.errors = [];
+                $('#crearCiudad').modal('hide');
+                toastr.success('Se ha añadido una Nueva Ciudad');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editCiudad: function(ciudades) {
+            this.fillCiudad.nomb_ciu = ciudades.nomb_ciu;
+            this.fillCiudad.estado_ciu = ciudades.estado_ciu;
+            this.fillCiudad.fechaini_ciu = ciudades.fechaini_ciu;
+            this.fillCiudad.fechafin_ciu = ciudades.fechafin_ciu;
+            this.fillCiudad.observ_ciu = ciudades.observ_ciu;
+            this.fillCiudad.id_emp = ciudades.id_emp;
+            this.fillCiudad.id_fec = ciudades.id_fec;
+            $('#editCiudad').modal('show');
+        },
+        updateCiudad: function(id) {
+            var url = 'updateCiudad/' + id;
+            axios.post(url, this.fillCiudad).then(response => {
+                this.getCiudad();
+                this.fillCiudad.nomb_ciu ='' ;
+                this.fillCiudad.estado_ciu = '';
+                this.fillCiudad.fechaini_ciu = '';
+                this.fillCiudad.fechafin_ciu = '';
+                this.fillCiudad.observ_ciu = '';
+                this.fillCiudad.id_emp = '';
+                this.fillCiudad.id_fec = '';
+                this.errors = [];
+                $('#editCiudad').modal('hide');
+                toastr.success('Ciudad actualizada con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteCiudad: function(ciudades) {
+             var url = 'deleteCiudad/' + ciudades.id_ciu;
+             axios.delete(url).then(
+                response => 
+            {
+                 this.getCiudad();   
+                  toastr.success('Ciudad eliminada con éxito');         
             });
         },
 }});

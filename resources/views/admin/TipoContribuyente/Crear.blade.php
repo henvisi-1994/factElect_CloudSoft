@@ -1,5 +1,5 @@
-<form action="storeTipoContribuyente" method="POST">
-    <div class="modal fade" id="crearTipoContribuyente">
+<form  method="POST" v-on:submit.prevent="createTipoContribuyente">
+    <div class="modal fade" id="crearContribuyente">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -31,21 +31,21 @@
             <label for="exampleInputEmail1">
                 Nombre
             </label>
-            <input class="form-control" id="exampleInputEmail1" name="nomb_contrib" placeholder="Ingrese Nombre " type="text">
+            <input class="form-control" id="exampleInputEmail1" name="nomb_contrib" placeholder="Ingrese Nombre " type="text" v-model="newTipoContribuyente.nomb_contrib">
             </input>
         </div>
         <div class="form-group">
             <label>
                 Observacion
             </label>
-            <textarea class="form-control" name="obser_contrib" placeholder="Ingrese Observación" rows="3">
+            <textarea class="form-control" name="obser_contrib" placeholder="Ingrese Observación" rows="3" v-model="newTipoContribuyente.obser_contrib">
             </textarea>
         </div>
         <div class="form-group">
             <label>
                 Estado
             </label>
-            <select class="form-control" name="estado_contrib">
+            <select class="form-control" name="estado_contrib" v-model="newTipoContribuyente.estado_contrib">
                 <option disabled="" selected="" value="none">
                     Selecione Estado
                 </option>
@@ -69,7 +69,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control" name="fechaini_contrib" type="date">
+                <input class="form-control" name="fechaini_contrib" type="date" v-model="newTipoContribuyente.fechaini_contrib">
                 </input>
             </div>
             <!-- /.input group -->
@@ -83,7 +83,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control" name="fechafin_contrib" type="date">
+                <input class="form-control" name="fechafin_contrib" type="date" v-model="newTipoContribuyente.fechafin_contrib">
                 </input>
             </div>
             <!-- /.input group -->

@@ -49004,10 +49004,6 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _methods;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -49235,7 +49231,7 @@ var app = new Vue({
       });
     }
   },
-  methods: (_methods = {
+  methods: {
     getCategorias: function getCategorias() {
       var _this2 = this;
 
@@ -49447,130 +49443,213 @@ var app = new Vue({
 
         toastr.success('Marca eliminada con éxito');
       });
+    },
+    //MEtodos de Unidad
+    getUnidad: function getUnidad() {
+      var _this14 = this;
+
+      var urlUnidad = 'getUnidad';
+      axios.get(urlUnidad).then(function (response) {
+        _this14.unidades = response.data;
+      });
+    },
+    createUnidad: function createUnidad() {
+      var _this15 = this;
+
+      var urlGuardarUnidad = 'storeUnidad';
+      axios.post(urlGuardarUnidad, this.newunidad).then(function (response) {
+        _this15.getUnidad();
+
+        _this15.newunidad.nomb_unidad = '';
+        _this15.newunidad.observ_unidad = '';
+        _this15.newunidad.estado_unidad = '';
+        _this15.newunidad.fechaini_unidad = '';
+        _this15.newunidad.fechafin_unidad = '';
+        _this15.newunidad.control_fecha = '';
+        _this15.errors = [];
+        $('#crearUnidad').modal('hide');
+        toastr.success('Se ha añadido una nueva Unidad');
+      })["catch"](function (error) {
+        _this15.errors = error.response.data;
+      });
+    },
+    editUnidad: function editUnidad(unidades) {
+      this.fillUnidad.nomb_unidad = unidades.nomb_unidad;
+      this.fillUnidad.observ_unidad = unidades.observ_unidad;
+      this.fillUnidad.estado_unidad = unidades.estado_unidad;
+      this.fillUnidad.fechaini_unidad = unidades.fechaini_unidad;
+      this.fillUnidad.fechafin_unidad = unidades.fechafin_unidad;
+      this.fillUnidad.control_fecha = unidades.control_fecha;
+      $('#editUnidad').modal('show');
+    },
+    updateUnidad: function updateUnidad(id) {
+      var _this16 = this;
+
+      var url = 'updateUnidad/' + id;
+      axios.post(url, this.fillUnidad).then(function (response) {
+        _this16.getUnidad();
+
+        _this16.fillUnidad.nomb_unidad = '';
+        _this16.fillUnidad.observ_unidad = '';
+        _this16.fillUnidad.estado_unidad = '';
+        _this16.fillUnidad.fechaini_unidad = '';
+        _this16.fillUnidad.fechafin_unidad = '';
+        _this16.fillUnidad.control_fecha = '';
+        _this16.errors = [];
+        $('#editUnidad').modal('hide');
+        toastr.success('Unidad actualizada con éxito');
+      })["catch"](function (error) {
+        _this16.errors = error.response.data;
+      });
+    },
+    deleteUnidad: function deleteUnidad(unidades) {
+      var _this17 = this;
+
+      var url = 'deleteUnidad/' + unidades.id_unidad;
+      axios["delete"](url).then(function (response) {
+        _this17.getUnidad();
+
+        toastr.success('Unidad eliminada con éxito');
+      });
+    },
+    //MEtodos de TipoContribuyente
+    getTipoContribuyente: function getTipoContribuyente() {
+      var _this18 = this;
+
+      var urlContribuyente = 'getTipoContribuyente';
+      axios.get(urlContribuyente).then(function (response) {
+        _this18.tipoContribuyentes = response.data;
+      });
+    },
+    createTipoContribuyente: function createTipoContribuyente() {
+      var _this19 = this;
+
+      var urlGuardarContribuyente = 'storeTipoContribuyente';
+      axios.post(urlGuardarContribuyente, this.newcontribuyente).then(function (response) {
+        _this19.getTipoContribuyente();
+
+        _this19.newcontribuyente.nomb_contrib = '';
+        _this19.newcontribuyente.obser_contrib = '';
+        _this19.newcontribuyente.estado_contrib = '';
+        _this19.newcontribuyente.fechaini_contrib = '';
+        _this19.newcontribuyente.fechafin_contrib = '';
+        _this19.errors = [];
+        $('#crearContribuyente').modal('hide');
+        toastr.success('Se ha añadido un Nuevo Tipo de Contribuyente');
+      })["catch"](function (error) {
+        _this19.errors = error.response.data;
+      });
+    },
+    editTipoContribuyente: function editTipoContribuyente(tipoContribuyentes) {
+      this.fillTipoContribuyente.nomb_contrib = tipoContribuyentes.nomb_contrib;
+      this.fillTipoContribuyente.obser_contrib = tipoContribuyentes.obser_contrib;
+      this.fillTipoContribuyente.estado_contrib = tipoContribuyentes.estado_contrib;
+      this.fillTipoContribuyente.fechaini_contrib = tipoContribuyentes.fechaini_contrib;
+      this.fillTipoContribuyente.fechafin_contrib = tipoContribuyentes.fechafin_contrib;
+      $('#editTipoContribuyente').modal('show');
+    },
+    updateTipoContribuyente: function updateTipoContribuyente(id) {
+      var _this20 = this;
+
+      var url = 'updateTipoContribuyente/' + id;
+      axios.post(url, this.fillTipoContribuyente).then(function (response) {
+        _this20.getTipoContribuyente();
+
+        _this20.fillTipoContribuyente.nomb_contrib = '';
+        _this20.fillTipoContribuyente.obser_contrib = '';
+        _this20.fillTipoContribuyente.estado_contrib = '';
+        _this20.fillTipoContribuyente.fechaini_contrib = '';
+        _this20.fillTipoContribuyente.fechafin_contrib = '';
+        _this20.fillTipoContribuyente.control_fecha = '';
+        _this20.errors = [];
+        $('#editTipoContribuyente').modal('hide');
+        toastr.success('Tipo de Contribuyente actualizado con éxito');
+      })["catch"](function (error) {
+        _this20.errors = error.response.data;
+      });
+    },
+    deleteTipoContribuyente: function deleteTipoContribuyente(tipoContribuyentes) {
+      var _this21 = this;
+
+      var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
+      axios["delete"](url).then(function (response) {
+        _this21.getTipoContribuyente();
+
+        toastr.success('Tipo de Contribuyente eliminado con éxito');
+      });
+    },
+    //MEtodos de Ciudad
+    getCiudad: function getCiudad() {
+      var _this22 = this;
+
+      var urlCiudad = 'getCiudad';
+      axios.get(urlCiudad).then(function (response) {
+        _this22.ciudades = response.data;
+      });
+    },
+    createCiudad: function createCiudad() {
+      var _this23 = this;
+
+      var urlGuardarCiudad = 'storeCiudad';
+      axios.post(urlGuardarCiudad, this.newciudad).then(function (response) {
+        _this23.getCiudad();
+
+        _this23.newciudad.nomb_ciu = '';
+        _this23.newciudad.estado_ciu = '';
+        _this23.newciudad.fechaini_ciu = '';
+        _this23.newciudad.fechafin_ciu = '';
+        _this23.newciudad.observ_ciu = '';
+        _this23.newciudad.id_emp = '';
+        _this23.newciudad.id_fec = '';
+        _this23.errors = [];
+        $('#crearCiudad').modal('hide');
+        toastr.success('Se ha añadido una Nueva Ciudad');
+      })["catch"](function (error) {
+        _this23.errors = error.response.data;
+      });
+    },
+    editCiudad: function editCiudad(ciudades) {
+      this.fillCiudad.nomb_ciu = ciudades.nomb_ciu;
+      this.fillCiudad.estado_ciu = ciudades.estado_ciu;
+      this.fillCiudad.fechaini_ciu = ciudades.fechaini_ciu;
+      this.fillCiudad.fechafin_ciu = ciudades.fechafin_ciu;
+      this.fillCiudad.observ_ciu = ciudades.observ_ciu;
+      this.fillCiudad.id_emp = ciudades.id_emp;
+      this.fillCiudad.id_fec = ciudades.id_fec;
+      $('#editCiudad').modal('show');
+    },
+    updateCiudad: function updateCiudad(id) {
+      var _this24 = this;
+
+      var url = 'updateCiudad/' + id;
+      axios.post(url, this.fillCiudad).then(function (response) {
+        _this24.getCiudad();
+
+        _this24.fillCiudad.nomb_ciu = '';
+        _this24.fillCiudad.estado_ciu = '';
+        _this24.fillCiudad.fechaini_ciu = '';
+        _this24.fillCiudad.fechafin_ciu = '';
+        _this24.fillCiudad.observ_ciu = '';
+        _this24.fillCiudad.id_emp = '';
+        _this24.fillCiudad.id_fec = '';
+        _this24.errors = [];
+        $('#editCiudad').modal('hide');
+        toastr.success('Ciudad actualizada con éxito');
+      })["catch"](function (error) {
+        _this24.errors = error.response.data;
+      });
+    },
+    deleteCiudad: function deleteCiudad(ciudades) {
+      var _this25 = this;
+
+      var url = 'deleteCiudad/' + ciudades.id_ciu;
+      axios["delete"](url).then(function (response) {
+        _this25.getCiudad();
+
+        toastr.success('Ciudad eliminada con éxito');
+      });
     }
-  }, _defineProperty(_methods, "getMarca", function getMarca() {
-    var _this14 = this;
-
-    var urlUnidad = 'getUnidad';
-    axios.get(urlUnidad).then(function (response) {
-      _this14.unidades = response.data;
-    });
-  }), _defineProperty(_methods, "createUnidad", function createUnidad() {
-    var _this15 = this;
-
-    var urlGuardarUnidad = 'storeUnidad';
-    axios.post(urlGuardarUnidad, this.newunidad).then(function (response) {
-      _this15.getUnidad();
-
-      _this15.newunidad.nomb_unidad = '';
-      _this15.newunidad.observ_unidad = '';
-      _this15.newunidad.estado_unidad = '';
-      _this15.newunidad.fechaini_unidad = '';
-      _this15.newunidad.fechafin_unidad = '';
-      _this15.newunidad.control_fecha = '';
-      _this15.errors = [];
-      $('#crearUnidad').modal('hide');
-      toastr.success('Se ha añadido una nueva Unidad');
-    })["catch"](function (error) {
-      _this15.errors = error.response.data;
-    });
-  }), _defineProperty(_methods, "editUnidad", function editUnidad(unidades) {
-    this.fillUnidad.nomb_unidad = unidades.nomb_unidad;
-    this.fillUnidad.observ_unidad = unidades.observ_unidad;
-    this.fillUnidad.estado_unidad = unidades.estado_unidad;
-    this.fillUnidad.fechaini_unidad = unidades.fechaini_unidad;
-    this.fillUnidad.fechafin_unidad = unidades.fechafin_unidad;
-    this.fillUnidad.control_fecha = unidades.control_fecha;
-    $('#editUnidad').modal('show');
-  }), _defineProperty(_methods, "updateUnidad", function updateUnidad(id) {
-    var _this16 = this;
-
-    var url = 'updateUnidad/' + id;
-    axios.post(url, this.fillUnidad).then(function (response) {
-      _this16.getUnidad();
-
-      _this16.fillUnidad.nomb_unidad = '';
-      _this16.fillUnidad.observ_unidad = '';
-      _this16.fillUnidad.estado_unidad = '';
-      _this16.fillUnidad.fechaini_unidad = '';
-      _this16.fillUnidad.fechafin_unidad = '';
-      _this16.fillUnidad.control_fecha = '';
-      _this16.errors = [];
-      $('#editUnidad').modal('hide');
-      toastr.success('Unidad actualizada con éxito');
-    })["catch"](function (error) {
-      _this16.errors = error.response.data;
-    });
-  }), _defineProperty(_methods, "deleteUnidad", function deleteUnidad(unidades) {
-    var _this17 = this;
-
-    var url = 'deleteUnidad/' + unidades.id_unidad;
-    axios["delete"](url).then(function (response) {
-      _this17.getUnidad();
-
-      toastr.success('Unidad eliminada con éxito');
-    });
-  }), _defineProperty(_methods, "getTipoContribuyente", function getTipoContribuyente() {
-    var _this18 = this;
-
-    var urlContribuyente = 'getTipoContribuyente';
-    axios.get(urlContribuyente).then(function (response) {
-      _this18.tipoContribuyentes = response.data;
-    });
-  }), _defineProperty(_methods, "createTipoContribuyente", function createTipoContribuyente() {
-    var _this19 = this;
-
-    var urlGuardarContribuyente = 'storeTipoContribuyente';
-    axios.post(urlGuardarContribuyente, this.newcontribuyente).then(function (response) {
-      _this19.getTipoContribuyente();
-
-      _this19.newcontribuyente.nomb_contrib = '';
-      _this19.newcontribuyente.obser_contrib = '';
-      _this19.newcontribuyente.estado_contrib = '';
-      _this19.newcontribuyente.fechaini_contrib = '';
-      _this19.newcontribuyente.fechafin_contrib = '';
-      _this19.errors = [];
-      $('#crearContribuyente').modal('hide');
-      toastr.success('Se ha añadido un Nuevo Tipo de Contribuyente');
-    })["catch"](function (error) {
-      _this19.errors = error.response.data;
-    });
-  }), _defineProperty(_methods, "editTipoContribuyente", function editTipoContribuyente(tipoContribuyentes) {
-    this.fillTipoContribuyente.nomb_contrib = tipoContribuyentes.nomb_contrib;
-    this.fillTipoContribuyente.obser_contrib = tipoContribuyentes.obser_contrib;
-    this.fillTipoContribuyente.estado_contrib = tipoContribuyentes.estado_contrib;
-    this.fillTipoContribuyente.fechaini_contrib = tipoContribuyentes.fechaini_contrib;
-    this.fillTipoContribuyente.fechafin_contrib = tipoContribuyentes.fechafin_contrib;
-    $('#editTipoContribuyente').modal('show');
-  }), _defineProperty(_methods, "updateTipoContribuyente", function updateTipoContribuyente(id) {
-    var _this20 = this;
-
-    var url = 'updateTipoContribuyente/' + id;
-    axios.post(url, this.fillTipoContribuyente).then(function (response) {
-      _this20.getUnidad();
-
-      _this20.fillTipoContribuyente.nomb_contrib = '';
-      _this20.fillTipoContribuyente.obser_contrib = '';
-      _this20.fillTipoContribuyente.estado_contrib = '';
-      _this20.fillTipoContribuyente.fechaini_contrib = '';
-      _this20.fillTipoContribuyente.fechafin_contrib = '';
-      _this20.fillTipoContribuyente.control_fecha = '';
-      _this20.errors = [];
-      $('#editTipoContribuyente').modal('hide');
-      toastr.success('Tipo de Contribuyente actualizado con éxito');
-    })["catch"](function (error) {
-      _this20.errors = error.response.data;
-    });
-  }), _defineProperty(_methods, "deleteTipoContribuyente", function deleteTipoContribuyente(tipoContribuyentes) {
-    var _this21 = this;
-
-    var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
-    axios["delete"](url).then(function (response) {
-      _this21.getTipoContribuyente();
-
-      toastr.success('Tipo de Contribuyente eliminado con éxito');
-    });
-  }), _methods)
+  }
 });
 
 /***/ }),
