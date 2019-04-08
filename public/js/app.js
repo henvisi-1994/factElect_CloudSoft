@@ -49213,16 +49213,14 @@ var app = new Vue({
       'observ_unidad': '',
       'estado_unidad': '',
       'fechaini_unidad': '',
-      'fechafin_unidad': '',
-      'control_fecha': ''
+      'fechafin_unidad': ''
     },
     fillUnidad: {
       'nomb_unidad': '',
       'observ_unidad': '',
       'estado_unidad': '',
       'fechaini_unidad': '',
-      'fechafin_unidad': '',
-      'control_fecha': ''
+      'fechafin_unidad': ''
     },
     errors: [],
     buscar_cat: '',
@@ -49486,7 +49484,6 @@ var app = new Vue({
       this.fillUnidad.estado_unidad = unidades.estado_unidad;
       this.fillUnidad.fechaini_unidad = unidades.fechaini_unidad;
       this.fillUnidad.fechafin_unidad = unidades.fechafin_unidad;
-      this.fillUnidad.control_fecha = unidades.control_fecha;
       $('#editUnidad').modal('show');
     },
     updateUnidad: function updateUnidad(id) {
@@ -49501,7 +49498,6 @@ var app = new Vue({
         _this16.fillUnidad.estado_unidad = '';
         _this16.fillUnidad.fechaini_unidad = '';
         _this16.fillUnidad.fechafin_unidad = '';
-        _this16.fillUnidad.control_fecha = '';
         _this16.errors = [];
         $('#editUnidad').modal('hide');
         toastr.success('Unidad actualizada con éxito');
