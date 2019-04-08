@@ -46,7 +46,7 @@
                             @{{identificacion.sri_ident}}
                         </td>
                         <td>
-                            @{{identificaciones.descrip_ident}}
+                            @{{identificacion.descrip_ident}}
                         </td>
                         <td>
                             @{{identificacion.observ_ident}}

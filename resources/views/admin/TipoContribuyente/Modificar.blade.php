@@ -9,22 +9,11 @@
                         </span>
                     </button>
                     <h4>
-                        Añadir Tipo de Identificacion de Contribuyente
+                        Modificar Tipo de Identificacion de Contribuyente
                     </h4>
-                    @if ($errors->count())
-                    <div class="alert alert-danger" role="alert">
-                        @foreach ($errors->all() as $error)
-                        <div>
-                            {{ $error }}
-                        </div>
-                        @endforeach
+                    <span class="text-danger" v-for="error in errors">
+                    </span>
                     </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 <div class="modal-body">
     <div class="box-body">
         <div class="form-group">
@@ -93,6 +82,10 @@
     </div>
     <div class="modal-footer">
         <input class="btn btn-primary" type="submit" value="Guardar">
-        </input>
+         </input>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</form>

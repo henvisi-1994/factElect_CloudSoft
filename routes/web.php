@@ -51,7 +51,7 @@ Route::post('updateCiudad/{id}','AdminController@modificarCiudad');
 Route::post('updateProveedor/{id}','AdminController@modificarProveedor');
 Route::post('updatePersona/{id}','AdminController@modificarPersona');
 Route::post('updateTipoContribuyente/{id}','AdminController@modificarTipoContribuyente');
-Route::post('updateIdentificaciones/{id}','AdminController@modificarIdentificacion');
+Route::post('updateIdentificacion/{id}','AdminController@modificarIdentificacion');
 Route::post('updateProducto/{id}','AdminController@modificarProducto');
 //Ruta Pre-Modificar
 Route::get('preupdateCategoria/{id}','AdminController@premodificarCategoria');
@@ -63,5 +63,11 @@ Route::get('preupdatePersona/{id}','AdminController@premodificarPersona');
 Route::get('preupdateTipoContribuyente/{id}','AdminController@premodificarTipoContribuyente');
 Route::get('preupdateIdentificaciones/{id}','AdminController@premodificarIdentificacion');
 Route::get('preupdateProducto/{id}','AdminController@premodificarProducto');
+
+//Ruta Eliminar
+Route::post('deleteMarca/{id}','AdminController@eliminarMarca');
+Route::post('deleteUnidad/{id}','AdminController@eliminarUnidad');
+Route::post('deleteIdentificacion/{id}','AdminController@eliminarIdentificacion');
+Route::post('deleteTipoContribuyente/{id}','AdminController@eliminarTipoContribuyente');
 
 

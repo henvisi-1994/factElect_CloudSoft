@@ -102,14 +102,7 @@ public function getUnidad()
                    return back()->withInput($request->all());
                 }
     }
-     //Pre modificar Categoria
-    public function  premodificarCategoria(Request $request,$id)
-    {
-        $categoria= Categoria::where('id_cat',$id)->first();
-        $empresas = Empresa::get();
-        $fechas = Fecha_periodo::get();
-        return view('admin.Categoria.Modificar',compact('categoria','empresas','fechas'));
-    }
+
     //Modificar Categoria
     public function  modificarCategoria(Request $request,$id)
     {
@@ -119,7 +112,7 @@ public function getUnidad()
         $estado_cat= $request->input('estado_cat');
         $fechaini_cat= $request->input('fechaini_cat');
         $fechafin_cat= $request->input('fechafin_cat');
-        $observ_cat= $request->input('fechaini_cat');
+        $observ_cat= $request->input('observ_cat');
         DB::table('categoria')
             ->where('id_cat', $id)
             ->update(['id_emp' => $id_emp,'id_fec' => $id_fec,'nomb_cat' => $nomb_cat, 'estado_cat' => $estado_cat , 'fechaini_cat' => $fechaini_cat, 'fechafin_cat' => $fechafin_cat,'observ_cat'=> $observ_cat]
@@ -156,12 +149,7 @@ public function getUnidad()
           return back()->withInput($request->all());
         }
     }
-    //Pre modificar Marca
-    public function  premodificarMarca(Request $request,$id)
-    {
-        $marca= Marca::where('id_marca',$id)->first();
-        return view('admin.Marca.Modificar',compact('marca'));
-    }
+
      //Modificar Marca
     public function  modificarMarca(Request $request,$id)
     {
@@ -174,7 +162,17 @@ public function getUnidad()
             ->where('id_marca', $id)
             ->update(['nomb_marca' => $nomb_marca, 'estado_marca' => $estado_marca , 'fechaini_marca' => $fechaini_marca, 'fechafin_marca' => $fechafin_marca,'observ_marca'=> $observ_marca]
           );
-        return redirect('Compras');
+        return;
+    }
+    //Eliminar Marca
+    public function  eliminarMarca($id)
+    { 
+        $estado_marca= 'I';
+        DB::table('marca')
+            ->where('id_marca', $id)
+            ->update(['estado_marca' => $estado_marca]
+          );
+        return;
     }
     //Guardar Unidad
       public function  guardarUnidad(Request $request)
@@ -204,12 +202,7 @@ public function getUnidad()
           return back()->withInput($request->all());
         }
     }
-     //Pre modificar Unidad
-    public function  premodificarUnidad(Request $request,$id)
-    {
-        $unidad= Unidad::where('id_unidad',$id)->first();
-        return view('admin.Unidad.Modificar',compact('unidad'));
-    }
+
      //Modificar Unidad
     public function  modificarUnidad(Request $request,$id)
     {
@@ -222,7 +215,17 @@ public function getUnidad()
             ->where('id_unidad', $id)
             ->update(['nomb_unidad' => $nomb_unidad, 'estado_unidad' => $estado_unidad , 'fechaini_unidad' => $fechaini_unidad, 'fechafin_unidad' => $fechafin_unidad,'observ_unidad'=> $observ_unidad]
           );
-        return redirect('Unidad');
+        return;
+    }
+        //Eliminar Unidad
+    public function  eliminarUnidad($id)
+    { 
+        $estado_unidad= 'I';
+        DB::table('unidad')
+            ->where('id_unidad', $id)
+            ->update(['estado_unidad' => $estado_unidad]
+          );
+        return;
     }
 
       public function Ciudad()
@@ -263,14 +266,7 @@ public function getUnidad()
           return back()->withInput($request->all());
         }
     }
-      //Pre modificar Ciudad
-    public function  premodificarCiudad(Request $request,$id)
-    {
-        $ciudad= Ciudad::where('id_ciu',$id)->first();
-        $empresas = Empresa::get();
-        $fechas = Fecha_periodo::get();
-        return view('admin.Ciudad.Modificar',compact('ciudad','empresas','fechas'));
-    }
+
     //Modificar Ciudad
     public function  modificarCiudad(Request $request,$id)
     {
@@ -285,7 +281,7 @@ public function getUnidad()
             ->where('id_ciu', $id)
             ->update(['id_emp' => $id_emp,'id_fec' => $id_fec,'nomb_ciu' => $nomb_ciu, 'estado_ciu' => $estado_ciu , 'fechaini_ciu' => $fechaini_ciu, 'fechafin_ciu' => $fechafin_ciu,'observ_ciu'=> $observ_ciu]
           );
-        return redirect('Ciudad');
+        return;
     }  
     public function getProveedor()
     {
@@ -529,12 +525,6 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         }
 
     }
-    //Pre modificar Tipo Contribuyente
-    public function  premodificarTipoContribuyente(Request $request,$id)
-    {
-        $tiposContribuyentes= TipoContribuyente::where('id_contrib',$id)->first();
-        return view('admin.TipoContribuyente.Modificar',compact('tiposContribuyentes'));
-    }
      //Modificar Tipo Contribuyente
     public function  modificarTipoContribuyente(Request $request,$id)
     {
@@ -558,12 +548,22 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             ->where('id_contrib', $id)
             ->update(['nomb_contrib' => $nomb_contrib, 'obser_contrib' => $obser_contrib , 'estado_contrib' => $estado_contrib, 'fechaini_contrib' => $fechaini_contrib,'fechafin_contrib'=> $fechafin_contrib]
           );
-        return redirect('TipoContribuyente');
+        return;
       }
       else
         {
           return back()->withInput($request->all());
         }
+    }
+    //EliminarTipoContribuyente
+    public function  eliminarTipoContribuyente($id)
+    { 
+        $estado_contrib= 'I';
+        DB::table('tip_contrib')
+            ->where('id_contrib', $id)
+            ->update(['estado_contrib' => $estado_contrib]
+          );
+        return;
     }
 
     //Funcion Identificaciones
@@ -599,12 +599,6 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
           return back()->withInput($request->all());
         }
     }
-    //Pre modificar Identificacion
-    public function  premodificarIdentificacion(Request $request,$id)
-    {
-        $identificacion= Identificaciones::where('id_ident',$id)->first();
-        return view('admin.Identificaciones.Modificar',compact('identificacion'));
-    }
      //Modificar Tipo Identificacion
     public function  modificarIdentificacion(Request $request,$id)
     {
@@ -627,13 +621,23 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             ->where('id_ident', $id)
             ->update(['sri_ident' => $sri_ident, 'descrip_ident' => $descrip_ident , 'observ_ident' => $observ_ident, 'estado_ident' => $estado_ident,'fechaini_ident'=> $fechaini_ident,'fechafin_ident'=> $fechafin_ident]
           );
-        return redirect('Identificaciones');
+        return;
       }
       else
         {
           return back()->withInput($request->all());
         }
 
+    }
+     //Eliminar Unidad
+    public function  eliminarIdentificacion($id)
+    { 
+        $estado_ident= 'I';
+        DB::table('identificacion')
+            ->where('id_ident', $id)
+            ->update(['estado_ident' => $estado_ident]
+          );
+        return;
     }
 
     //Producto

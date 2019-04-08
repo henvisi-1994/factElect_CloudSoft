@@ -49072,6 +49072,7 @@ var app = new Vue({
       'id_fec': ''
     },
     fillCiudad: {
+      'id_ciu': '',
       'nomb_ciu': '',
       'estado_ciu': '',
       'fechaini_ciu': '',
@@ -49096,6 +49097,7 @@ var app = new Vue({
       'fechafin_ident': ''
     },
     fillIdentificacion: {
+      'id_ident': '',
       'sri_ident': '',
       'descrip_ident': '',
       'observ_ident': '',
@@ -49112,6 +49114,7 @@ var app = new Vue({
       'fechafin_marca': ''
     },
     fillMarca: {
+      'id_marca': '',
       'nomb_marca': '',
       'observ_marca': '',
       'estado_marca': '',
@@ -49199,6 +49202,7 @@ var app = new Vue({
       'fechafin_contrib': ''
     },
     fillTipoContribuyente: {
+      'id_contrib': '',
       'nomb_contrib': '',
       'obser_contrib': '',
       'estado_contrib': '',
@@ -49214,6 +49218,7 @@ var app = new Vue({
       'fechafin_unidad': ''
     },
     fillUnidad: {
+      'id_unidad': '',
       'nomb_unidad': '',
       'observ_unidad': '',
       'estado_unidad': '',
@@ -49341,6 +49346,7 @@ var app = new Vue({
       });
     },
     editIdentificacion: function editIdentificacion(identificacion) {
+      this.fillIdentificacion.id_ident = identificacion.id_ident;
       this.fillIdentificacion.sri_ident = identificacion.sri_ident;
       this.fillIdentificacion.descrip_ident = identificacion.descrip_ident;
       this.fillIdentificacion.observ_ident = identificacion.observ_ident;
@@ -49369,12 +49375,12 @@ var app = new Vue({
         _this8.errors = error.response.data;
       });
     },
-    deleteIdentificacion: function deleteIdentificacion(categoria) {
+    deleteIdentificacion: function deleteIdentificacion(identificacion) {
       var _this9 = this;
 
-      var url = 'deleteIdentidicacion/' + identificacion.id_ident;
-      axios["delete"](url).then(function (response) {
-        _this9.getCategorias();
+      var url = 'deleteIdentificacion/' + identificacion.id_ident;
+      axios.post(url).then(function (response) {
+        _this9.getIdentificacion();
 
         toastr.success('Identficación eliminada con éxito');
       });
@@ -49408,6 +49414,7 @@ var app = new Vue({
       });
     },
     editMarca: function editMarca(marca) {
+      this.fillMarca.id_marca = marca.id_marca;
       this.fillMarca.nomb_marca = marca.nomb_marca;
       this.fillMarca.observ_marca = marca.observ_marca;
       this.fillMarca.estado_marca = marca.estado_marca;
@@ -49420,13 +49427,16 @@ var app = new Vue({
 
       var url = 'updateMarca/' + id;
       axios.post(url, this.fillMarca).then(function (response) {
-        _this12.getMarca();
+        _this12.getMarcas();
 
-        _this12.fillMarca.nomb_marca = '';
-        _this12.fillMarca.observ_marca = '';
-        _this12.fillMarca.estado_marca = '';
-        _this12.fillMarca.fechaini_marca = '';
-        _this12.fillMarca.fechafin_marca = '';
+        _this12.fillMarca = {
+          'id_marca': '',
+          'nomb_marca': '',
+          'observ_marca': '',
+          'estado_marca': '',
+          'fechaini_marca': '',
+          'fechafin_marca': ''
+        };
         _this12.errors = [];
         $('#editMarca').modal('hide');
         toastr.success('Marca actualizada con éxito');
@@ -49438,8 +49448,8 @@ var app = new Vue({
       var _this13 = this;
 
       var url = 'deleteMarca/' + marca.id_marca;
-      axios["delete"](url).then(function (response) {
-        _this13.getMarca();
+      axios.post(url).then(function (response) {
+        _this13.getMarcas();
 
         toastr.success('Marca eliminada con éxito');
       });
@@ -49473,6 +49483,7 @@ var app = new Vue({
       });
     },
     editUnidad: function editUnidad(unidades) {
+      this.fillUnidad.id_unidad = unidades.id_unidad;
       this.fillUnidad.nomb_unidad = unidades.nomb_unidad;
       this.fillUnidad.observ_unidad = unidades.observ_unidad;
       this.fillUnidad.estado_unidad = unidades.estado_unidad;
@@ -49483,8 +49494,8 @@ var app = new Vue({
     updateUnidad: function updateUnidad(id) {
       var _this16 = this;
 
-      var url = 'updateUnidad/' + id;
-      axios.post(url, this.fillUnidad).then(function (response) {
+      var urlEditarUnidad = 'updateUnidad/' + id;
+      axios.post(urlEditarUnidad, this.fillUnidad).then(function (response) {
         _this16.getUnidad();
 
         _this16.fillUnidad.nomb_unidad = '';
@@ -49503,7 +49514,7 @@ var app = new Vue({
       var _this17 = this;
 
       var url = 'deleteUnidad/' + unidades.id_unidad;
-      axios["delete"](url).then(function (response) {
+      axios.post(url).then(function (response) {
         _this17.getUnidad();
 
         toastr.success('Unidad eliminada con éxito');
@@ -49522,14 +49533,14 @@ var app = new Vue({
       var _this19 = this;
 
       var urlGuardarContribuyente = 'storeTipoContribuyente';
-      axios.post(urlGuardarContribuyente, this.newcontribuyente).then(function (response) {
+      axios.post(urlGuardarContribuyente, this.newTipoContribuyente).then(function (response) {
         _this19.getTipoContribuyente();
 
-        _this19.newcontribuyente.nomb_contrib = '';
-        _this19.newcontribuyente.obser_contrib = '';
-        _this19.newcontribuyente.estado_contrib = '';
-        _this19.newcontribuyente.fechaini_contrib = '';
-        _this19.newcontribuyente.fechafin_contrib = '';
+        _this19.newTipoContribuyente.nomb_contrib = '';
+        _this19.newTipoContribuyente.obser_contrib = '';
+        _this19.newTipoContribuyente.estado_contrib = '';
+        _this19.newTipoContribuyente.fechaini_contrib = '';
+        _this19.newTipoContribuyente.fechafin_contrib = '';
         _this19.errors = [];
         $('#crearContribuyente').modal('hide');
         toastr.success('Se ha añadido un Nuevo Tipo de Contribuyente');
@@ -49538,6 +49549,7 @@ var app = new Vue({
       });
     },
     editTipoContribuyente: function editTipoContribuyente(tipoContribuyentes) {
+      this.fillTipoContribuyente.id_contrib = tipoContribuyentes.id_contrib;
       this.fillTipoContribuyente.nomb_contrib = tipoContribuyentes.nomb_contrib;
       this.fillTipoContribuyente.obser_contrib = tipoContribuyentes.obser_contrib;
       this.fillTipoContribuyente.estado_contrib = tipoContribuyentes.estado_contrib;
@@ -49564,16 +49576,26 @@ var app = new Vue({
         _this20.errors = error.response.data;
       });
     },
-    deleteTipoContribuyente: function deleteTipoContribuyente(tipoContribuyentes) {
+    deleteTipoContribuyente: function (_deleteTipoContribuyente) {
+      function deleteTipoContribuyente(_x) {
+        return _deleteTipoContribuyente.apply(this, arguments);
+      }
+
+      deleteTipoContribuyente.toString = function () {
+        return _deleteTipoContribuyente.toString();
+      };
+
+      return deleteTipoContribuyente;
+    }(function (tipoContribuyentes) {
       var _this21 = this;
 
-      var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
-      axios["delete"](url).then(function (response) {
+      var url = 'deleteTipoContribuyente/' + deleteTipoContribuyente.id_contrib;
+      axios.post(url).then(function (response) {
         _this21.getTipoContribuyente();
 
         toastr.success('Tipo de Contribuyente eliminado con éxito');
       });
-    },
+    }),
     //MEtodos de Ciudad
     getCiudad: function getCiudad() {
       var _this22 = this;
@@ -49605,6 +49627,7 @@ var app = new Vue({
       });
     },
     editCiudad: function editCiudad(ciudades) {
+      this.fillCiudad.id_ciu = ciudades.id_ciu;
       this.fillCiudad.nomb_ciu = ciudades.nomb_ciu;
       this.fillCiudad.estado_ciu = ciudades.estado_ciu;
       this.fillCiudad.fechaini_ciu = ciudades.fechaini_ciu;

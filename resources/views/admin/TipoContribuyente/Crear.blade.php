@@ -11,21 +11,8 @@
                     <h4>
                         Añadir Tipo de Identificacion de Contribuyente
                     </h4>
-                    @if ($errors->count())
-                    <div class="alert alert-danger" role="alert">
-                        @foreach ($errors->all() as $error)
-                        <div>
-                            {{ $error }}
-                        </div>
-                        @endforeach
-                    </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-<div class="modal-body">
+
+    <div class="modal-body">
     <div class="box-body">
         <div class="form-group">
             <label for="exampleInputEmail1">
