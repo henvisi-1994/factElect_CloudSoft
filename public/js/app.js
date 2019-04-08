@@ -49109,16 +49109,14 @@ var app = new Vue({
       'observ_marca': '',
       'estado_marca': '',
       'fechaini_marca': '',
-      'fechafin_marca': '',
-      'control_fecha': ''
+      'fechafin_marca': ''
     },
     fillMarca: {
       'nomb_marca': '',
       'observ_marca': '',
       'estado_marca': '',
       'fechaini_marca': '',
-      'fechafin_marca': '',
-      'control_fecha': ''
+      'fechafin_marca': ''
     },
     productos: [],
     newProducto: {
@@ -49394,15 +49392,14 @@ var app = new Vue({
       var _this11 = this;
 
       var urlGuardarMarca = 'storeMarca';
-      axios.post(urlGuardarMarca, this.newmarca).then(function (response) {
+      axios.post(urlGuardarMarca, this.newMarca).then(function (response) {
         _this11.getMarca();
 
-        _this11.newmarca.nomb_marca = '';
-        _this11.newmarca.observ_marca = '';
-        _this11.newmarca.estado_marca = '';
-        _this11.newmarca.fechaini_marca = '';
-        _this11.newmarca.fechafin_marca = '';
-        _this11.newmarca.control_fecha = '';
+        _this11.newMarca.nomb_marca = '';
+        _this11.newMarca.observ_marca = '';
+        _this11.newMarca.estado_marca = '';
+        _this11.newMarca.fechaini_marca = '';
+        _this11.newMarca.fechafin_marca = '';
         _this11.errors = [];
         $('#crearMarca').modal('hide');
         toastr.success('Se ha añadido una nueva Marca');
@@ -49416,7 +49413,6 @@ var app = new Vue({
       this.fillMarca.estado_marca = marca.estado_marca;
       this.fillMarca.fechaini_marca = marca.fechaini_marca;
       this.fillMarca.fechafin_marca = marca.fechafin_marca;
-      this.fillMarca.control_fecha = marca.control_fecha;
       $('#editMarca').modal('show');
     },
     updateMarca: function updateMarca(id) {
@@ -49431,7 +49427,6 @@ var app = new Vue({
         _this12.fillMarca.estado_marca = '';
         _this12.fillMarca.fechaini_marca = '';
         _this12.fillMarca.fechafin_marca = '';
-        _this12.fillMarca.control_fecha = '';
         _this12.errors = [];
         $('#editMarca').modal('hide');
         toastr.success('Marca actualizada con éxito');
@@ -49462,15 +49457,14 @@ var app = new Vue({
       var _this15 = this;
 
       var urlGuardarUnidad = 'storeUnidad';
-      axios.post(urlGuardarUnidad, this.newunidad).then(function (response) {
+      axios.post(urlGuardarUnidad, this.newUnidad).then(function (response) {
         _this15.getUnidad();
 
-        _this15.newunidad.nomb_unidad = '';
-        _this15.newunidad.observ_unidad = '';
-        _this15.newunidad.estado_unidad = '';
-        _this15.newunidad.fechaini_unidad = '';
-        _this15.newunidad.fechafin_unidad = '';
-        _this15.newunidad.control_fecha = '';
+        _this15.newUnidad.nomb_unidad = '';
+        _this15.newUnidad.observ_unidad = '';
+        _this15.newUnidad.estado_unidad = '';
+        _this15.newUnidad.fechaini_unidad = '';
+        _this15.newUnidad.fechafin_unidad = '';
         _this15.errors = [];
         $('#crearUnidad').modal('hide');
         toastr.success('Se ha añadido una nueva Unidad');
@@ -49563,7 +49557,6 @@ var app = new Vue({
         _this20.fillTipoContribuyente.estado_contrib = '';
         _this20.fillTipoContribuyente.fechaini_contrib = '';
         _this20.fillTipoContribuyente.fechafin_contrib = '';
-        _this20.fillTipoContribuyente.control_fecha = '';
         _this20.errors = [];
         $('#editTipoContribuyente').modal('hide');
         toastr.success('Tipo de Contribuyente actualizado con éxito');
