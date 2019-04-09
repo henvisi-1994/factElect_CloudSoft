@@ -119,7 +119,16 @@ public function getUnidad()
           );
         return;
     }
-
+        //eliminar Categoria
+    public function eliminarCategoria($id)
+    {
+        $estado_cat='I';
+        DB::table('categoria')
+            ->where('id_cat', $id)
+            ->update(['estado_cat' => $estado_cat]
+          );
+        return;
+    }
     //Guardar Marca
      public function  guardarMarca(Request $request)
     {
@@ -302,7 +311,6 @@ public function getUnidad()
 
     public function guardarProveedor(Request $request)
     {
-
       $v =$this->validate(request(), [
             
             'id_emp' => 'required',
@@ -315,7 +323,7 @@ public function getUnidad()
         {
           $proveedor = new Proveedor;
            $proveedor->create($request->all());
-          return redirect('Compras');       
+          return ;       
         }
         else
         {
@@ -356,14 +364,22 @@ public function getUnidad()
                 ->where('id_prov', $id)
                 ->update(['id_emp' => $id_emp,'id_fec' => $id_fec,'cod_prov' => $cod_prov, 'id_per' => $id_per,'obser_prov' => $obser_prov ,'estado_prov' => $estado_prov, 'fechaini_prov' => $fechaini_prov, 'fechafin_prov' => $fechafin_prov]
               );
-           return redirect('Proveedor');
+           return ;
            }
         else
         {
           return back()->withInput($request->all());
         }
-     
-
+    }
+       public function eliminarProveedor($id)
+    {
+          $estado_prov = 'I';
+           DB::table('proveedor')
+                ->where('id_prov', $id)
+                ->update(['estado_prov' => $estado_prov]
+              );
+           return;
+          
     }
 //Persona
   public function Persona()
@@ -387,8 +403,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     //Funcion Guardar Persona
     public function  guardarPersona(Request $request)
     {
-       
-            $v =$this->validate(request(), [
+           $v =$this->validate(request(), [
             
             'doc_per' => 'required | Numeric',
             'organiz_per' => 'required',
@@ -404,6 +419,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
  
         if ($v)
         {
+        $persona = new Persona();
         $persona->id_contrib=$request->input('id_contrib');
         $persona->id_ident=$request->input('id_ident');
         $persona->id_ciu=$request->input('id_ciu'); 
@@ -424,10 +440,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         $persona->save();
         $persona_ced =Persona::where('doc_per',$persona->doc_per)->first();
         $id_per=$persona_ced->id_per;
-        $empresas = Empresa::get();
-        $fechas = Fecha_periodo::get();
-        $personas = Persona::get();
-        return view('admin.Proveedor.Crear',compact('empresas','fechas','personas','id_per'));
+        return $id_per;
       }
       else
         {
@@ -484,12 +497,20 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             ->where('id_per', $id)
             ->update(['id_contrib' => $id_contrib,'id_ident' => $id_ident,'id_ciu' => $id_ciu, 'doc_per' => $doc_per , 'organiz_per' => $organiz_per, 'nombre_per' => $nombre_per,'apel_per'=> $apel_per,'direc_per'=> $direc_per,'fono1_per'=> $fono1_per,'fono2_per'=> $fono2_per,'cel1_per'=> $cel1_per,'cel2_per'=> $cel2_per,'fecnac_per'=> $fecnac_per,'correo_per'=> $correo_per,'estado_per'=> $estado_per,'fechaini_per'=> $fechaini_per,'fechafin_per'=> $fechafin_per]
           );
-        return redirect('Persona');
+        return;
       }
       else
         {
           return back()->withInput($request->all());
         }
+    }
+     public function  eliminarPersona($id)
+    {
+        $estado_per = 'I';
+        DB::table('persona')
+            ->where('id_per', $id)
+            ->update(['estado_per'=> $estado_per]);
+        return ;
     }
     public function TipoContribuyente()
     {

@@ -69,5 +69,9 @@ Route::post('deleteMarca/{id}','AdminController@eliminarMarca');
 Route::post('deleteUnidad/{id}','AdminController@eliminarUnidad');
 Route::post('deleteIdentificacion/{id}','AdminController@eliminarIdentificacion');
 Route::post('deleteTipoContribuyente/{id}','AdminController@eliminarTipoContribuyente');
+Route::post('deleteCategoria/{id}','AdminController@eliminarCategoria');
+Route::post('deleteProducto/{id}','AdminController@eliminarProducto');
+Route::post('deletePersona/{id}','AdminController@eliminarPersona');
+Route::post('deleteProveedor/{id}','AdminController@eliminarProveedor');
 
 
