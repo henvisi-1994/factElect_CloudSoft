@@ -516,7 +516,13 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         if ($v)
         {
             $tiposContribuyentes= new TipoContribuyente();
-            $tiposContribuyentes->create($request->all());
+            $tiposContribuyentes->id_contrib=$request->input('id_contrib');
+            $tiposContribuyentes->nomb_contrib=$request->input('nomb_contrib');
+            $tiposContribuyentes->obser_contrib=$request->input('obser_contrib');
+            $tiposContribuyentes->estado_contrib=$request->input('estado_contrib');
+            $tiposContribuyentes->fechaini_contrib=$request->input('fechaini_contrib');
+            $tiposContribuyentes->fechafin_contrib=$request->input('fechafin_contrib');
+            $tiposContribuyentes->save();
             return redirect('TipoContribuyente');
         }
         else
@@ -591,8 +597,15 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         if ($v)
         {
             $identificacion= new Identificaciones();
-            $identificacion->create($request->all());
-            return redirect('addIdentificacion');
+            $identificacion->id_ident=$request->input('id_ident');
+            $identificacion->sri_ident=$request->input('sri_ident');
+            $identificacion->descrip_ident=$request->input('descrip_ident');
+            $identificacion->observ_ident=$request->input('observ_ident');
+            $identificacion->estado_ident=$request->input('estado_ident');
+            $identificacion->fechaini_ident=$request->input('fechaini_ident');
+            $identificacion->fechafin_ident=$request->input('fechafin_ident');
+            $identificacion->save();
+          return ;
         }
         else
         {

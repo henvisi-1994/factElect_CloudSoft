@@ -49329,17 +49329,17 @@ var app = new Vue({
       var _this7 = this;
 
       var urlGuardarIdentificacion = 'storeIdentificaciones';
-      axios.post(urlGuardarIdentificacion, this.newidentificacion).then(function (response) {
+      axios.post(urlGuardarIdentificacion, this.newIdentificacion).then(function (response) {
         _this7.getIdentificacion();
 
-        _this7.newidentificacion.sri_ident = '';
-        _this7.newidentificacion.descrip_ident = '';
-        _this7.newidentificacion.observ_ident = '';
-        _this7.newidentificacion.estado_ident = '';
-        _this7.newidentificacion.fechaini_ident = '';
-        _this7.newidentificacion.fechafin_ident = '';
+        _this7.newIdentificacion.sri_ident = '';
+        _this7.newIdentificacion.descrip_ident = '';
+        _this7.newIdentificacion.observ_ident = '';
+        _this7.newIdentificacion.estado_ident = '';
+        _this7.newIdentificacion.fechaini_ident = '';
+        _this7.newIdentificacion.fechafin_ident = '';
         _this7.errors = [];
-        $('#crearIdentificacion').modal('hide');
+        $('#crearIdentificaciones').modal('hide');
         toastr.success('Se añadido una nueva Identificacion');
       })["catch"](function (error) {
         _this7.errors = error.response.data;
@@ -49542,7 +49542,7 @@ var app = new Vue({
         _this19.newTipoContribuyente.fechaini_contrib = '';
         _this19.newTipoContribuyente.fechafin_contrib = '';
         _this19.errors = [];
-        $('#crearContribuyente').modal('hide');
+        $('#crearTipoContribuyente').modal('hide');
         toastr.success('Se ha añadido un Nuevo Tipo de Contribuyente');
       })["catch"](function (error) {
         _this19.errors = error.response.data;
@@ -49576,26 +49576,16 @@ var app = new Vue({
         _this20.errors = error.response.data;
       });
     },
-    deleteTipoContribuyente: function (_deleteTipoContribuyente) {
-      function deleteTipoContribuyente(_x) {
-        return _deleteTipoContribuyente.apply(this, arguments);
-      }
-
-      deleteTipoContribuyente.toString = function () {
-        return _deleteTipoContribuyente.toString();
-      };
-
-      return deleteTipoContribuyente;
-    }(function (tipoContribuyentes) {
+    deleteTipoContribuyente: function deleteTipoContribuyente(tipoContribuyentes) {
       var _this21 = this;
 
-      var url = 'deleteTipoContribuyente/' + deleteTipoContribuyente.id_contrib;
+      var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
       axios.post(url).then(function (response) {
         _this21.getTipoContribuyente();
 
         toastr.success('Tipo de Contribuyente eliminado con éxito');
       });
-    }),
+    },
     //MEtodos de Ciudad
     getCiudad: function getCiudad() {
       var _this22 = this;

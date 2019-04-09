@@ -1,5 +1,5 @@
 <form  method="POST" v-on:submit.prevent="createIdentificacion">
-    <div class="modal fade" id="crearIdentificacion">
+    <div class="modal fade" id="crearIdentificaciones">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

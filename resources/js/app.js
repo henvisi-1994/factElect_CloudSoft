@@ -301,16 +301,16 @@ const app = new Vue({
         },
         createIdentificacion: function() {
             var urlGuardarIdentificacion = 'storeIdentificaciones';
-            axios.post(urlGuardarIdentificacion, this.newidentificacion).then((response) => {
+            axios.post(urlGuardarIdentificacion, this.newIdentificacion).then((response) => {
                 this.getIdentificacion();
-                this.newidentificacion.sri_ident = '';
-                this.newidentificacion.descrip_ident = '';
-                this.newidentificacion.observ_ident = '';
-                this.newidentificacion.estado_ident = '';
-                this.newidentificacion.fechaini_ident = '';
-                this.newidentificacion.fechafin_ident = '';
+                this.newIdentificacion.sri_ident = '';
+                this.newIdentificacion.descrip_ident = '';
+                this.newIdentificacion.observ_ident = '';
+                this.newIdentificacion.estado_ident = '';
+                this.newIdentificacion.fechaini_ident = '';
+                this.newIdentificacion.fechafin_ident = '';
                 this.errors = [];
-                $('#crearIdentificacion').modal('hide');
+                $('#crearIdentificaciones').modal('hide');
                 toastr.success('Se añadido una nueva Identificacion');
             }).catch(error => {
                 this.errors = error.response.data;
@@ -480,7 +480,7 @@ const app = new Vue({
                 this.newTipoContribuyente.fechaini_contrib = '';
                 this.newTipoContribuyente.fechafin_contrib = '';
                 this.errors = [];
-                $('#crearContribuyente').modal('hide');
+                $('#crearTipoContribuyente').modal('hide');
                 toastr.success('Se ha añadido un Nuevo Tipo de Contribuyente');
             }).catch(error => {
                 this.errors = error.response.data;
@@ -512,7 +512,7 @@ const app = new Vue({
             });
         },
         deleteTipoContribuyente: function(tipoContribuyentes) {
-            var url = 'deleteTipoContribuyente/' + deleteTipoContribuyente.id_contrib;
+            var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
             axios.post(url).then(response => {
                 this.getTipoContribuyente();
                 toastr.success('Tipo de Contribuyente eliminado con éxito');
