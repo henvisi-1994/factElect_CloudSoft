@@ -49149,6 +49149,7 @@ var app = new Vue({
       'fechafin_prod': ''
     },
     fillProducto: {
+      'id_prod': '',
       'id_emp': '',
       'id_fec': '',
       'codigo_prod': '',
@@ -49750,6 +49751,7 @@ var app = new Vue({
       });
     },
     editProducto: function editProducto(producto) {
+      this.fillProducto.id_prod = producto.id_prod;
       this.fillProducto.id_emp = producto.id_emp;
       this.fillProducto.id_fec = producto.id_fec;
       this.fillProducto.codigo_prod = producto.codigo_prod;

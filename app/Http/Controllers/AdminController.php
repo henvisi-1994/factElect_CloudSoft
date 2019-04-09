@@ -677,10 +677,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     //Producto
      public function getProducto()
     {
-       $productos = DB::select('SELECT id_prod,nombre_emp, nomb_fec, codigo_prod,codbarra_prod,descripcion_prod,nomb_marca,present_prod,precio_prod,ubicacion_prod,stockmin_prod,stockmax_prod,fechaing_prod,fechaelab_prod,fechacad_prod,aplicaiva_prod,aplicaice_prod,util_prod,comision_prod,imagen_prod,observ_prod,estado_prod,fechaini_prod,fechafin_prod FROM producto
-      INNER JOIN empresa ON producto.id_emp= empresa.id_emp
-      INNER JOIN fecha_periodo ON producto.id_fec= fecha_periodo.id_fec
-      INNER JOIN marca ON producto.id_marca= marca.id_marca');
+       $productos = DB::table('producto as prod')
+      ->join('empresa', 'prod.id_emp', '=', 'empresa.id_emp')
+      ->join('fecha_periodo', 'prod.id_fec', '=', 'fecha_periodo.id_fec')
+      ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
+      ->orderBy("prod.id_prod","desc")
+      ->get();
        return  $productos;
     }
     public function CargarProducto()
@@ -804,7 +806,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
   'ubicacion_prod' => $ubicacion_prod ,  'stockmin_prod' => $stockmin_prod ,  'stockmax_prod' => $stockmax_prod ,'fechaing_prod'  => $fechaing_prod ,  'fechaelab_prod' => $fechaelab_prod ,'fechacad_prod' => $fechacad_prod ,'aplicaiva_prod' => $aplicaiva_prod,'aplicaice_prod' => $aplicaice_prod,'util_prod' => $util_prod ,  'comision_prod' => $comision_prod,'imagen_prod' => $imagen_prod ,
   'observ_prod' => $observ_prod ,'estado_prod' => $estado_prod , 'fechaini_prod' => $fechaini_prod ,'fechafin_prod' => $fechafin_prod]
           );
-            return redirect('Producto');
+            return;
           }
           else
       {
