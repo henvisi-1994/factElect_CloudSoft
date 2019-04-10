@@ -841,6 +841,23 @@ const app = new Vue({
         updatePersona: function(id) {
             var url = 'updatePersona/' + id;
             axios.post(url, this.fillPersona).then(response => {
+                this.fillPersona.id_contrib = '';
+                this.fillPersona.id_ident = ''
+                this.fillPersona.id_ciu = ''
+                this.fillPersona.doc_per = '';
+                this.fillPersona.organiz_per = '';
+                this.fillPersona.nombre_per = '';
+                this.fillPersona.apel_per = '';
+                this.fillPersona.direc_per = '';
+                this.fillPersona.fono1_per = '';
+                this.fillPersona.fono2_per = '';
+                this.fillPersona.cel1_per = '';
+                this.fillPersona.cel2_per = '';
+                this.fillPersona.fecnac_per = '';
+                this.fillPersona.correo_per = '';
+                this.fillPersona.estado_per = '';
+                this.fillPersona.fechaini_per = '';
+                this.fillPersona.fechafin_per = '';
                 this.errors = [];
                 $('#editPersona').modal('hide');
                 $('#editProveedor').modal('show');
@@ -881,7 +898,7 @@ const app = new Vue({
             });
         },
         updateProveedor: function(id) {
-            var url = 'updatePersona/' + id;
+            var url = 'updateProveedor/' + id;
             axios.post(url, this.fillProveedor).then(response => {
                 this.getProveedores();
                                 this.fillPersona.id_contrib = '';

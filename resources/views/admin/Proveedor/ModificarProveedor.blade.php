@@ -112,7 +112,7 @@
                         </input>
                     </div>
                     <div class="modal-footer">
-                        <input class="btn btn-primary" type="submit" value="Siguente">
+                        <input class="btn btn-primary" type="submit" value="Guardar">
                         </input>
                     </div>
                 </div>
