@@ -693,9 +693,9 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     return view('admin.Producto.Crear',compact('empresas','fechas','marcas'));
     }
 
-    public function guardarProducto(Request $request)
+   public function guardarProducto(Request $request)
     {
-        $v= $this->validate(request(),[
+      $v= $this->validate(request(),[
             'codigo_prod' => 'required|string',
             'precio_prod' => 'required|numeric',
             'codbarra_prod' => 'required|numeric',
@@ -705,14 +705,18 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             'precio_prod' =>'required|numeric|between:0,9999.99',
             'util_prod' =>'required|numeric|between:0,9999.99',
             'comision_prod'=>'required|numeric|between:0,9999.99',
-            'imagen_prod'=>'required'
-
         ]);
-       if($request->hasfile('imagen_prod') & $v)
+       if($v)
       {
-        $file = $request->file('imagen_prod');
-        $name =time().'_'.$file->getClientOriginalName();
-        $file->move(public_path().'/img/producto',$name);
+      list($type,$imageData)=explode(';', $request->imagen_prod);
+      list(,$extension)=explode('/', $type);
+      list(,$imageData)=explode(',', $imageData);
+      $name =$request->codbarra_prod.'.'.$extension;
+      $source=fopen( $request->imagen_prod, 'r');
+      $destination = fopen(public_path().'/img/producto/'.$name, 'w');
+      stream_copy_to_stream($source, $destination);
+      fclose( $source);
+      fclose($destination);
          $producto = new Producto();
           $producto->id_emp  =  $request->input('id_emp');
           $producto->id_fec =  $request->input('id_fec');
@@ -738,7 +742,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
           $producto->fechaini_prod =  $request->input('fechaini_prod');
           $producto->fechafin_prod =  $request->input('fechafin_prod');
           $producto->save();
-          return redirect('Producto');
+          return $name;
       }
       else
       {
@@ -766,14 +770,22 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             'precio_prod' =>'required|numeric|between:0,9999.99',
             'util_prod' =>'required|numeric|between:0,9999.99',
             'comision_prod'=>'required|numeric|between:0,9999.99',
-            'imagen_prod'=>'required'
-
         ]);
-       if($request->hasfile('imagen_prod') & $v)
+       if($v)
       {
-        $file = $request->file('imagen_prod');
-        $name =time().'_'.$file->getClientOriginalName();
-        $file->move(public_path().'/img/producto',$name);
+        if(!empty($var))
+        {
+           list($type,$imageData)=explode(';', $request->imagen_prod);
+          list(,$extension)=explode('/', $type);
+          list(,$imageData)=explode(',', $imageData);
+          $name =$request->codbarra_prod.'.'.$extension;
+          $source=fopen( $request->imagen_prod, 'r');
+          $destination = fopen(public_path().'/img/producto/'.$name, 'w');
+          stream_copy_to_stream($source, $destination);
+          fclose( $source);
+          fclose($destination);
+          $imagen_prod = $name;
+        }
       $id_emp  =  $request->input('id_emp');
       $id_fec =  $request->input('id_fec');
       $codigo_prod =  $request->input('codigo_prod');
@@ -797,8 +809,6 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
       $observ_prod =  $request->input('observ_prod');
       $fechaini_prod =  $request->input('fechaini_prod');
       $fechafin_prod =  $request->input('fechafin_prod');
-
-
        DB::table('producto')
             ->where('id_prod', $id)
             ->update(  ['id_emp' => $id_emp,'id_fec' => $id_fec,'codigo_prod' => $codigo_prod,'codbarra_prod' => $codbarra_prod , 
@@ -806,13 +816,23 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
   'ubicacion_prod' => $ubicacion_prod ,  'stockmin_prod' => $stockmin_prod ,  'stockmax_prod' => $stockmax_prod ,'fechaing_prod'  => $fechaing_prod ,  'fechaelab_prod' => $fechaelab_prod ,'fechacad_prod' => $fechacad_prod ,'aplicaiva_prod' => $aplicaiva_prod,'aplicaice_prod' => $aplicaice_prod,'util_prod' => $util_prod ,  'comision_prod' => $comision_prod,'imagen_prod' => $imagen_prod ,
   'observ_prod' => $observ_prod ,'estado_prod' => $estado_prod , 'fechaini_prod' => $fechaini_prod ,'fechafin_prod' => $fechafin_prod]
           );
-            return;
+            return ;     
           }
           else
       {
         return back()->withInput($request->all());
       }
     }
+       public function eliminarProducto($id)
+    {
+        $estado_prod='I';
+        DB::table('producto')
+            ->where('id_prod', $id)
+            ->update(['estado_prod' => $estado_prod]
+          );
+        return;
+    }
+    
     public function getIdentificacion()
     {
         $identificacion = Identificaciones::get();

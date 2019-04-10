@@ -622,11 +622,25 @@ const app = new Vue({
             });
         },
         //Productos
-        getImagenProducto(event) {
+         getImagenProducto(event) {
             //Asignamos la imagen a  nuestra data
-            this.newProducto.imagen_prod = event.target.files[0].name;
+            var files = event.target.files || event.dataTransfer.files;
+            if (!files.length) return;
+            this.createImage(files[0]);
         },
-        getProductos: function() {
+        createImage(file) {
+            var image = new Image();
+            var reader = new FileReader();
+            var vm = this;
+            reader.onload = (event) => {
+                vm.image = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        removeImage: function(event) {
+            this.image = '';
+        },
+         getProductos: function() {
             var urlProducto = 'getProductos';
             axios.get(urlProducto).then(response => {
                 this.productos = response.data;
@@ -634,31 +648,38 @@ const app = new Vue({
         },
         createProducto: function() {
             var urlGuardarProducto = 'storeProducto';
-            axios.post(urlGuardarProducto, this.newproducto).then((response) => {
+            var image = new Image();
+            var reader = new FileReader();
+            var vm = this;
+            reader.onload = (event) => {
+                vm.image = event.target.result;
+            };
+            this.newProducto.imagen_prod = vm.image;
+            axios.post(urlGuardarProducto, this.newProducto).then((response) => {
                 this.getProductos();
-                this.id_emp = '';
-                this.id_fec = '';
-                this.codigo_prod = '';
-                this.codbarra_prod = '';
-                this.descripcion_prod = '';
-                this.id_marca = '';
-                this.present_prod = '';
-                this.precio_prod = '';
-                this.ubicacion_prod = '';
-                this.stockmin_prod = '';
-                this.stockmax_prod = '';
-                this.fechaing_prod = '';
-                this.fechaelab_prod = '';
-                this.fechacad_prod = '';
-                this.aplicaiva_prod = '';
-                this.aplicaice_prod = '';
-                this.util_prod = '';
-                this.comision_prod = '';
-                this.imagen_prod = '';
-                this.observ_prod = '';
-                this.estado_prod = '';
-                this.fechaini_prod = '';
-                this.fechafin_prod = '';
+                this.newProducto.id_emp = '';
+                this.newProducto.id_fec = '';
+                this.newProducto.codigo_prod = '';
+                this.newProducto.codbarra_prod = '';
+                this.newProducto.descripcion_prod = '';
+                this.newProducto.id_marca = '';
+                this.newProducto.present_prod = '';
+                this.newProducto.precio_prod = '';
+                this.newProducto.ubicacion_prod = '';
+                this.newProducto.stockmin_prod = '';
+                this.newProducto.stockmax_prod = '';
+                this.newProducto.fechaing_prod = '';
+                this.newProducto.fechaelab_prod = '';
+                this.newProducto.fechacad_prod = '';
+                this.newProducto.aplicaiva_prod = '';
+                this.newProducto.aplicaice_prod = '';
+                this.newProducto.util_prod = '';
+                this.newProducto.comision_prod = '';
+                this.newProducto.imagen_prod = '';
+                this.newProducto.observ_prod = '';
+                this.newProducto.estado_prod = '';
+                this.newProducto.fechaini_prod = '';
+                this.newProducto.fechafin_prod = '';
                 this.errors = [];
                 $('#crearProducto').modal('hide');
                 toastr.success('Se añadido una nueva producto');
@@ -679,14 +700,14 @@ const app = new Vue({
             this.fillProducto.ubicacion_prod = producto.ubicacion_prod;
             this.fillProducto.stockmin_prod = producto.stockmin_prod;
             this.fillProducto.stockmax_prod = producto.stockmax_prod;
-            this.fillProducto.fechaing_prod = producto.fechaing_prod;
+            this.fillProducto.fechaing_prod= producto.fechaing_prod;
             this.fillProducto.fechaelab_prod = producto.fechaelab_prod;
             this.fillProducto.fechacad_prod = producto.fechacad_prod;
             this.fillProducto.aplicaiva_prod = producto.aplicaiva_prod;
             this.fillProducto.aplicaice_prod = producto.aplicaice_prod;
+            this.fillProducto.imagen_prod = producto.imagen_prod;
             this.fillProducto.util_prod = producto.util_prod;
             this.fillProducto.comision_prod = producto.comision_prod;
-            this.fillProducto.imagen_prod = producto.imagen_prod;
             this.fillProducto.observ_prod = producto.observ_prod;
             this.fillProducto.estado_prod = producto.estado_prod;
             this.fillProducto.fechaini_prod = producto.fechaini_prod;
@@ -720,8 +741,9 @@ const app = new Vue({
             this.fillProducto.fechafin_prod = producto.fechafin_prod;
             $('#viewProducto').modal('show');
         },
-        updateProducto: function(id) {
+        updateProducto: function(id,imagen_prod) {
             var url = 'updateProducto/' + id;
+            this.fillProducto.imagen_prod = imagen_prod;
             axios.post(url, this.fillProducto).then(response => {
                 this.getProductos();
                 this.fillProducto.id_emp = '';
@@ -755,9 +777,9 @@ const app = new Vue({
             });
         },
         deleteProducto: function(producto) {
-            var url = 'deleteProducto/' + producto.id_cat;
-            axios.delete(url).then(response => {
-                this.getCategorias();
+            var url = 'deleteProducto/' + producto.id_prod;
+            axios.post(url).then(response => {
+                this.getProductos();
                 toastr.success('Producto eliminado con éxito');
             });
         },

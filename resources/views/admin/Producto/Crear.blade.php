@@ -12,6 +12,7 @@
                         Añadir Producto
                     </h4>
                     <span class="text-danger" v-for="error in errors">
+                        @{{ error }}
                     </span>
                 </div>
                 <div class="modal-body">
@@ -234,8 +235,7 @@
                             <label>
                                 Imagen
                             </label>
-                            <input class="form-control" multiple="" name="imagen_prod" type="file" v-on:change="getImagenProducto" >
-                            </input>
+                            <input class="form-control"  name="imagen_prod" type="file" v-on:change="getImagenProducto" >                             </input>
                         </div>
                         <div class="form-group">
                             <label>

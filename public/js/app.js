@@ -49703,7 +49703,23 @@ var app = new Vue({
     //Productos
     getImagenProducto: function getImagenProducto(event) {
       //Asignamos la imagen a  nuestra data
-      this.newProducto.imagen_prod = event.target.files[0].name;
+      var files = event.target.files || event.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (event) {
+        vm.image = event.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    removeImage: function removeImage(event) {
+      this.image = '';
     },
     getProductos: function getProductos() {
       var _this26 = this;
@@ -49717,32 +49733,41 @@ var app = new Vue({
       var _this27 = this;
 
       var urlGuardarProducto = 'storeProducto';
-      axios.post(urlGuardarProducto, this.newproducto).then(function (response) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (event) {
+        vm.image = event.target.result;
+      };
+
+      this.newProducto.imagen_prod = vm.image;
+      axios.post(urlGuardarProducto, this.newProducto).then(function (response) {
         _this27.getProductos();
 
-        _this27.id_emp = '';
-        _this27.id_fec = '';
-        _this27.codigo_prod = '';
-        _this27.codbarra_prod = '';
-        _this27.descripcion_prod = '';
-        _this27.id_marca = '';
-        _this27.present_prod = '';
-        _this27.precio_prod = '';
-        _this27.ubicacion_prod = '';
-        _this27.stockmin_prod = '';
-        _this27.stockmax_prod = '';
-        _this27.fechaing_prod = '';
-        _this27.fechaelab_prod = '';
-        _this27.fechacad_prod = '';
-        _this27.aplicaiva_prod = '';
-        _this27.aplicaice_prod = '';
-        _this27.util_prod = '';
-        _this27.comision_prod = '';
-        _this27.imagen_prod = '';
-        _this27.observ_prod = '';
-        _this27.estado_prod = '';
-        _this27.fechaini_prod = '';
-        _this27.fechafin_prod = '';
+        _this27.newProducto.id_emp = '';
+        _this27.newProducto.id_fec = '';
+        _this27.newProducto.codigo_prod = '';
+        _this27.newProducto.codbarra_prod = '';
+        _this27.newProducto.descripcion_prod = '';
+        _this27.newProducto.id_marca = '';
+        _this27.newProducto.present_prod = '';
+        _this27.newProducto.precio_prod = '';
+        _this27.newProducto.ubicacion_prod = '';
+        _this27.newProducto.stockmin_prod = '';
+        _this27.newProducto.stockmax_prod = '';
+        _this27.newProducto.fechaing_prod = '';
+        _this27.newProducto.fechaelab_prod = '';
+        _this27.newProducto.fechacad_prod = '';
+        _this27.newProducto.aplicaiva_prod = '';
+        _this27.newProducto.aplicaice_prod = '';
+        _this27.newProducto.util_prod = '';
+        _this27.newProducto.comision_prod = '';
+        _this27.newProducto.imagen_prod = '';
+        _this27.newProducto.observ_prod = '';
+        _this27.newProducto.estado_prod = '';
+        _this27.newProducto.fechaini_prod = '';
+        _this27.newProducto.fechafin_prod = '';
         _this27.errors = [];
         $('#crearProducto').modal('hide');
         toastr.success('Se añadido una nueva producto');
@@ -49768,9 +49793,9 @@ var app = new Vue({
       this.fillProducto.fechacad_prod = producto.fechacad_prod;
       this.fillProducto.aplicaiva_prod = producto.aplicaiva_prod;
       this.fillProducto.aplicaice_prod = producto.aplicaice_prod;
+      this.fillProducto.imagen_prod = producto.imagen_prod;
       this.fillProducto.util_prod = producto.util_prod;
       this.fillProducto.comision_prod = producto.comision_prod;
-      this.fillProducto.imagen_prod = producto.imagen_prod;
       this.fillProducto.observ_prod = producto.observ_prod;
       this.fillProducto.estado_prod = producto.estado_prod;
       this.fillProducto.fechaini_prod = producto.fechaini_prod;
@@ -49804,10 +49829,11 @@ var app = new Vue({
       this.fillProducto.fechafin_prod = producto.fechafin_prod;
       $('#viewProducto').modal('show');
     },
-    updateProducto: function updateProducto(id) {
+    updateProducto: function updateProducto(id, imagen_prod) {
       var _this28 = this;
 
       var url = 'updateProducto/' + id;
+      this.fillProducto.imagen_prod = imagen_prod;
       axios.post(url, this.fillProducto).then(function (response) {
         _this28.getProductos();
 
@@ -49844,9 +49870,9 @@ var app = new Vue({
     deleteProducto: function deleteProducto(producto) {
       var _this29 = this;
 
-      var url = 'deleteProducto/' + producto.id_cat;
-      axios["delete"](url).then(function (response) {
-        _this29.getCategorias();
+      var url = 'deleteProducto/' + producto.id_prod;
+      axios.post(url).then(function (response) {
+        _this29.getProductos();
 
         toastr.success('Producto eliminado con éxito');
       });
