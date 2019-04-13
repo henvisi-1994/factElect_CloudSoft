@@ -19,6 +19,9 @@ Route::get('Ciudad','AdminController@Ciudad');
 Route::get('Persona', 'AdminController@Persona');
 Route::get('/admin', 'AdminController@inicio');
 Route::get('Compras','AdminController@Compras');
+Route::get('Compras','AdminController@Compras');
+Route::get('Ventas','AdminController@ventas');
+Route::get('Configuracion','AdminController@configuracion');
 Route::get('TipoContribuyente','AdminController@TipoContribuyente');
 Route::get('Identificaciones','AdminController@Identificaciones');
 //Obtener
