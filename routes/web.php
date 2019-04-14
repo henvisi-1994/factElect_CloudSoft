@@ -22,6 +22,7 @@ Route::get('Compras','AdminController@Compras');
 Route::get('Compras','AdminController@Compras');
 Route::get('Ventas','AdminController@ventas');
 Route::get('Configuracion','AdminController@configuracion');
+Route::get('Contabilidad','AdminController@contabilidad');
 Route::get('TipoContribuyente','AdminController@TipoContribuyente');
 Route::get('Identificaciones','AdminController@Identificaciones');
 //Obtener

@@ -84,6 +84,10 @@ class AdminController extends Controller
      $identificaciones = Identificaciones::get();
     return view('admin.configuracion',compact('categorias','unidades','marcas','empresas','fechas','ciudades','tipoContribuyentes','identificaciones'));
   }
+   public function contabilidad()
+  {
+   return view('admin.contabilidad');
+  }
   
   public function getCategoria()
   {
