@@ -1,5 +1,5 @@
-<form  method="POST"   v-on:submit.prevent="updateCiudad(fillCiudad.id_ciu)">
-    <div class="modal fade" id="editCiudad">
+<form method="POST" v-on:submit.prevent="createBodega">
+    <div class="modal fade" id="crearBodega">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,9 +9,10 @@
                         </span>
                     </button>
                     <h4>
-                        Añadir Ciudad
+                        Crear
                     </h4>
                     <span class="text-danger" v-for="error in errors">
+                        @{{ error }}
                     </span>
                 </div>
                 <div class="modal-body">
@@ -20,21 +21,46 @@
                             <label for="exampleInputEmail1">
                                 Nombre
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="nomb_ciu" placeholder="Ingrese Nombre" type="text" v-model="fillCiudad.nomb_ciu">
+                            <input class="form-control" id="exampleInputEmail1" name="nombre_bod" placeholder="Ingrese Nombre" type="text" v-model="newbodega.nombre_bod">
+                            </input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                Teléfono
+                            </label>
+                            <input class="form-control" id="exampleInputEmail1" name="telef_bod" placeholder="Ingrese Número de Teléfono" type="text" v-model="newbodega.telef_bod">
+                            </input>
+                        </div>
+
+                         <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                Célular
+                            </label>
+                            <input class="form-control" id="exampleInputEmail1" name="cel_bod" placeholder="Ingrese Número de Célular" type="text" v-model="newbodega.cel_bod">
+                            </input>
+                        </div>
+
+
+                         <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                Contacto
+                            </label>
+                            <input class="form-control" id="exampleInputEmail1" name="nomb_contac_bod" placeholder="Ingrese Nombre de Contacto" type="text" v-model="newbodega.nomb_contac_bod">
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
-                                Observacion
+                                Dirección
                             </label>
-                            <textarea class="form-control" name="observ_ciu" placeholder="Ingrese Observación" rows="3" v-model="fillCiudad.observ_ciu">
+                            <textarea class="form-control" name="direcc_bod" placeholder="Ingrese Dirección" rows="3" v-model="newbodega.direcc_bod">
                             </textarea>
                         </div>
                         <div class="form-group">
                             <label>
                                 Estado
                             </label>
-                            <select class="form-control" name="estado_ciu" v-model="fillCiudad.estado_ciu">
+                            <select class="form-control" name="estado_bod" v-model="newbodega.estado_bod">
                                 <option disabled="" selected="" value="none">
                                     Selecione Estado
                                 </option>
@@ -53,51 +79,36 @@
                             <label>
                                 Fecha Inicial:
                             </label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar">
-                                    </i>
-                                </div>
-                                <input class="form-control" name="fechaini_ciu" type="date" v-model="fillCiudad.fechaini_ciu">
-                                </input>
-                            </div>
-                            <!-- /.input group -->
+                            <input class="form-control" name="fechaini_cat" type="date" v-model="newbodega.fechaini_bod">
+                            </input>
                         </div>
                         <div class="form-group">
                             <label>
                                 Fecha Final:
                             </label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar">
-                                    </i>
-                                </div>
-                                <input class="form-control" name="fechafin_ciu" type="date" v-model="fillCiudad.fechafin_ciu">
-                                </input>
-                            </div>
-                            <!-- /.input group -->
+                            <input class="form-control" name="fechafin_cat" type="date" v-model="newbodega.fechafin_bod">
+                            </input>
                         </div>
                         <div class="form-group">
                             <label>
-                                Empresa
+                                País
                             </label>
-                            <select class="form-control" name="id_emp" v-model="fillCiudad.id_emp">
+                            <select class="form-control" name="id_pais" v-model="newbodega.id_pais">
                                 <option disabled="" selected="" value="none">
-                                    Selecione una Empresa
+                                    Selecione un País
                                 </option>
-                                @foreach($empresas as $empresa)
-                                <option value="{{$empresa->id_emp}}">
-                                    {{$empresa->nombre_emp}}
+                                @foreach($paises as $pais)
+                                <option value="{{$pais->id_pais}}">
+                                    {{$pais->nomb_pais}}
                                 </option>
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label>
                                 Provincia
                             </label>
-                            <select class="form-control" name="id_prov" v-model="fillCiudad.id_prov">
+                            <select class="form-control" name="id_prov" v-model="newbodega.id_prov">
                                 <option disabled="" selected="" value="none">
                                     Selecione una Provincia
                                 </option>
@@ -108,17 +119,18 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
+
+                         <div class="form-group">
                             <label>
-                                Periodo
+                                Ciudad
                             </label>
-                            <select class="form-control" name="id_fec" v-model="fillCiudad.id_fec">
+                            <select class="form-control" name="id_ciu" v-model="newbodega.id_ciu">
                                 <option disabled="" selected="" value="none">
-                                    Selecione una Periodo
+                                    Selecione una Ciudad
                                 </option>
-                                @foreach($fechas as $periodo)
-                                <option value="{{$periodo->id_fec}}">
-                                    {{$periodo->nomb_fec}}
+                                @foreach($ciudades as $ciudad)
+                                <option value="{{$ciudad->id_ciu}}">
+                                    {{$ciudad->nomb_ciu}}
                                 </option>
                                 @endforeach
                             </select>
@@ -135,3 +147,4 @@
         </div>
     </div>
 </form>
+

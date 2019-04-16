@@ -31,6 +31,7 @@ const app = new Vue({
         this.getIdentificacion();
         this.getTipoContribuyente();
         this.getProveedores();
+        this.getBodega();
     },
     data: {
         categorias: [],
@@ -52,6 +53,32 @@ const app = new Vue({
             'fechafin_cat': '',
             'id_emp': '',
             'id_fec': ''
+        },
+        bodegas:[],
+        newbodega:{
+            'nombre_bod':'',
+            'direcc_bod':'',
+            'telef_bod':'',
+            'cel_bod':'',
+            'nomb_contac_bod':'',
+            'fechaini_bod':'',
+            'fechafin_bod':'',
+            'id_ciu':'',
+            'id_pais':'',
+            'id_prov':''
+        },
+        fillBodega:{
+            'id_bod': '',
+            'nombre_bod':'',
+            'direcc_bod':'',
+            'telef_bod':'',
+            'cel_bod':'',
+            'nomb_contac_bod':'',
+            'fechaini_bod':'',
+            'fechafin_bod':'',
+            'id_ciu':'',
+            'id_pais':'',
+            'id_prov':''
         },
         ciudades: [],
         newCiudad: {
@@ -577,6 +604,7 @@ const app = new Vue({
                 this.newciudad.fechafin_ciu = '';
                 this.newciudad.observ_ciu = '';
                 this.newciudad.id_emp = '';
+                this.newciudad.id_prov = '';
                 this.newciudad.id_fec = '';
                 this.errors = [];
                 $('#crearCiudad').modal('hide');
@@ -593,6 +621,7 @@ const app = new Vue({
             this.fillCiudad.fechafin_ciu = ciudades.fechafin_ciu;
             this.fillCiudad.observ_ciu = ciudades.observ_ciu;
             this.fillCiudad.id_emp = ciudades.id_emp;
+            this.fillCiudad.id_prov = ciudades.id_prov;
             this.fillCiudad.id_fec = ciudades.id_fec;
             $('#editCiudad').modal('show');
         },
@@ -971,6 +1000,83 @@ const app = new Vue({
                 this.getProveedores();
                 toastr.success('Proveedor eliminado con éxito');
             });
-        }
+        },
+
+
+
+        ///Metodos de Bodega
+        getBodega: function() {
+                var urlBodega = 'getBodega';
+                axios.get(urlBodega).then(response => {
+                    this.bodegas = response.data
+                });
+        },
+        createBodega: function() {
+            var urlGuardarBodega = 'storeBodega';
+            axios.post(urlGuardarBodega, this.newbodega).then((response) => {
+                this.getBodega();
+                this.nombre_bod='';
+                this.direcc_bod='';
+                this.telef_bod='';
+                this.cel_bod='';
+                this.nomb_contac_bod='';
+                this.estado_bod='';
+                this.fechaini_bod='';
+                this.fechafin_bod='';
+                this.id_ciu='';
+                this.id_pais='';
+                this.id_prov='';
+                this.errors = [];
+                $('#crearBodega').modal('hide');
+                toastr.success('Se añadido una nueva Bodega');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editBodega: function(bodegas) {
+            this.fillBodega.id_bod=bodegas.id_bod;
+            this.fillBodega.nombre_bod=bodegas.nombre_bod;
+            this.fillBodega.direcc_bod=bodegas.direcc_bod;
+            this.fillBodega.telef_bod=bodegas.telef_bod;
+            this.fillBodega.cel_bod=bodegas.cel_bod;
+            this.fillBodega.nomb_contac_bod=bodegas.nomb_contac_bod;
+            this.fillBodega.fechaini_bod=bodegas.fechaini_bod;
+            this.fillBodega.fechafin_bod=bodegas.fechafin_bod;
+            this.fillBodega.estado_bod=bodegas.estado_bod;
+            this.fillBodega.id_ciu=bodegas.id_ciu;
+            this.fillBodega.id_pais=bodegas.id_pais;
+            this.fillBodega.id_prov=bodegas.id_prov;
+            $('#editBodega').modal('show');
+        },
+        updateBodega: function(id) {
+            var url = 'updateBodega/' + id;
+            axios.post(url, this.fillBodega).then(response => {
+                this.getBodega();
+                this.nombre_bod='';
+                this.direcc_bod='';
+                this.telef_bod='';
+                this.cel_bod='';
+                this.nomb_contac_bod='';
+                this.estado_bod='';
+                this.fechaini_bod='';
+                this.fechafin_bod='';
+                this.id_ciu='';
+                this.id_pais='';
+                this.id_prov='';
+                this.errors = [];
+                $('#editBodega').modal('hide');
+                toastr.success('Bodega actualizada con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteBodega: function(bodegas) {
+            var url = 'deleteBodega/' + bodegas.id_bod;
+            axios.post(url).then(response => {
+                this.getBodega();
+                toastr.success('Bodega eliminada con éxito');
+            });
+        },
+
     }
 });

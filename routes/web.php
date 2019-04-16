@@ -25,6 +25,7 @@ Route::get('Configuracion','AdminController@configuracion');
 Route::get('Contabilidad','AdminController@contabilidad');
 Route::get('TipoContribuyente','AdminController@TipoContribuyente');
 Route::get('Identificaciones','AdminController@Identificaciones');
+Route::get('Bodega','AdminController@Bodega');
 //Obtener
 Route::get('getProveedor','AdminController@getProveedor');
 Route::get('getProductos','AdminController@getProducto');
@@ -34,6 +35,7 @@ Route::get('getMarca','AdminController@getMarca');
 Route::get('getCiudad','AdminController@getCiudad');
 Route::get('getTipoContribuyente','AdminController@getTipoContribuyente');
 Route::get('getIdentificacion','AdminController@getIdentificacion');
+Route::get('getBodega','AdminController@getBodega');
 //Añadir
 Route::get('addPersona','AdminController@CargarPersona');
 Route::get('addProveedor','AdminController@CargarPersona');
@@ -47,6 +49,7 @@ Route::post('storePersona','AdminController@guardarPersona');
 Route::post('storeTipoContribuyente','AdminController@guardarTipoContribuyente');
 Route::post('storeIdentificaciones','AdminController@guardarIdentificacion');
 Route::post('storeProducto','AdminController@guardarProducto');
+Route::post('storeBodega','AdminController@guardarBodega');
 //Ruta Modificar
 Route::post('updateCategoria/{id}','AdminController@modificarCategoria');
 Route::post('updateMarca/{id}','AdminController@modificarMarca');
@@ -57,16 +60,8 @@ Route::post('updatePersona/{id}','AdminController@modificarPersona');
 Route::post('updateTipoContribuyente/{id}','AdminController@modificarTipoContribuyente');
 Route::post('updateIdentificacion/{id}','AdminController@modificarIdentificacion');
 Route::post('updateProducto/{id}','AdminController@modificarProducto');
-//Ruta Pre-Modificar
-Route::get('preupdateCategoria/{id}','AdminController@premodificarCategoria');
-Route::get('preupdateMarca/{id}','AdminController@premodificarMarca');
-Route::get('preupdateUnidad/{id}','AdminController@premodificarUnidad');
-Route::get('preupdateCiudad/{id}','AdminController@premodificarCiudad');
-Route::get('preupdateProveedor/{id}','AdminController@premodificarProveedor');
-Route::get('preupdatePersona/{id}','AdminController@premodificarPersona');
-Route::get('preupdateTipoContribuyente/{id}','AdminController@premodificarTipoContribuyente');
-Route::get('preupdateIdentificaciones/{id}','AdminController@premodificarIdentificacion');
-Route::get('preupdateProducto/{id}','AdminController@premodificarProducto');
+Route::post('updateBodega/{id}','AdminController@modificarBodega');
+
 
 //Ruta Eliminar
 Route::post('deleteMarca/{id}','AdminController@eliminarMarca');
@@ -77,5 +72,6 @@ Route::post('deleteCategoria/{id}','AdminController@eliminarCategoria');
 Route::post('deleteProducto/{id}','AdminController@eliminarProducto');
 Route::post('deletePersona/{id}','AdminController@eliminarPersona');
 Route::post('deleteProveedor/{id}','AdminController@eliminarProveedor');
+Route::post('deleteBodega/{id}','AdminController@eliminarBodega');
 
 

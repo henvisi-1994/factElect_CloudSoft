@@ -94,6 +94,21 @@
                         </div>
                         <div class="form-group">
                             <label>
+                                Provincia
+                            </label>
+                            <select class="form-control" name="id_prov" v-model="newCiudad.id_prov">
+                                <option disabled="" selected="" value="none">
+                                    Selecione una Provincia
+                                </option>
+                                @foreach($provincias as $provincia)
+                                <option value="{{$provincia->id_prov}}">
+                                    {{$provincia->nomb_prov}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
                                 Periodo
                             </label>
                             <select class="form-control" name="id_fec" v-model="newCiudad.id_fec">

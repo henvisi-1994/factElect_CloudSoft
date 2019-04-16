@@ -44,6 +44,13 @@
                     Empresa
                 </a>
             </li>
+             <li>
+                <a data-toggle="tab" href="#nav-bodega">
+                    <i class="fa fa-building">
+                    </i>
+                    Bodega
+                </a>
+            </li>
             <li>
                 <a data-toggle="tab" href="#nav-usuario">
                     <i class="fa fa-users">
@@ -73,6 +80,10 @@
         <div class="tab-pane fade" id="nav-descuentos">
         </div>
         <div class="tab-pane fade" id="nav-ciudad">
+             @include('admin.Ciudad.index')
+        </div>
+        <div class="tab-pane fade" id="nav-bodega">
+             @include('admin.Bodega.index')
         </div>
         <div class="tab-pane fade" id="nav-empresa">
         </div>

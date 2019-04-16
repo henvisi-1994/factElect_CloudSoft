@@ -1,5 +1,4 @@
-@extends('admin.layouts.app')
-@section('content')
+
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">
@@ -22,6 +21,9 @@
                         </th>
                         <th>
                             Observación
+                        </th>
+                        <th>
+                            Provincia
                         </th>
                         <th>
                             Estado
@@ -52,6 +54,9 @@
                             @{{ciudad.observ_ciu}}
                         </td>
                         <td>
+                            @{{ciudad.nomb_prov}}
+                        </td>
+                        <td>
                             @{{ciudad.estado_ciu}}
                         </td>
                         <td>
@@ -79,10 +84,10 @@
                     </tr>
                 </tbody>
             </table>
+            @include('admin.Ciudad.Crear')
+                      @include('admin.Ciudad.Modificar')
         </br>
     </div>
 </div>
-@include('admin.Ciudad.Crear')
-                      @include('admin.Ciudad.Modificar')
+
 <!-- /.box-body -->
-@endsection

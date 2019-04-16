@@ -49040,6 +49040,7 @@ var app = new Vue({
     this.getIdentificacion();
     this.getTipoContribuyente();
     this.getProveedores();
+    this.getBodega();
   },
   data: {
     categorias: [],
@@ -49061,6 +49062,32 @@ var app = new Vue({
       'fechafin_cat': '',
       'id_emp': '',
       'id_fec': ''
+    },
+    bodegas: [],
+    newbodega: {
+      'nombre_bod': '',
+      'direcc_bod': '',
+      'telef_bod': '',
+      'cel_bod': '',
+      'nomb_contac_bod': '',
+      'fechaini_bod': '',
+      'fechafin_bod': '',
+      'id_ciu': '',
+      'id_pais': '',
+      'id_prov': ''
+    },
+    fillBodega: {
+      'id_bod': '',
+      'nombre_bod': '',
+      'direcc_bod': '',
+      'telef_bod': '',
+      'cel_bod': '',
+      'nomb_contac_bod': '',
+      'fechaini_bod': '',
+      'fechafin_bod': '',
+      'id_ciu': '',
+      'id_pais': '',
+      'id_prov': ''
     },
     ciudades: [],
     newCiudad: {
@@ -49650,6 +49677,7 @@ var app = new Vue({
         _this23.newciudad.fechafin_ciu = '';
         _this23.newciudad.observ_ciu = '';
         _this23.newciudad.id_emp = '';
+        _this23.newciudad.id_prov = '';
         _this23.newciudad.id_fec = '';
         _this23.errors = [];
         $('#crearCiudad').modal('hide');
@@ -49666,6 +49694,7 @@ var app = new Vue({
       this.fillCiudad.fechafin_ciu = ciudades.fechafin_ciu;
       this.fillCiudad.observ_ciu = ciudades.observ_ciu;
       this.fillCiudad.id_emp = ciudades.id_emp;
+      this.fillCiudad.id_prov = ciudades.id_prov;
       this.fillCiudad.id_fec = ciudades.id_fec;
       $('#editCiudad').modal('show');
     },
@@ -50084,6 +50113,90 @@ var app = new Vue({
         _this37.getProveedores();
 
         toastr.success('Proveedor eliminado con éxito');
+      });
+    },
+    ///Metodos de Bodega
+    getBodega: function getBodega() {
+      var _this38 = this;
+
+      var urlBodega = 'getBodega';
+      axios.get(urlBodega).then(function (response) {
+        _this38.bodegas = response.data;
+      });
+    },
+    createBodega: function createBodega() {
+      var _this39 = this;
+
+      var urlGuardarBodega = 'storeBodega';
+      axios.post(urlGuardarBodega, this.newbodega).then(function (response) {
+        _this39.getBodega();
+
+        _this39.nombre_bod = '';
+        _this39.direcc_bod = '';
+        _this39.telef_bod = '';
+        _this39.cel_bod = '';
+        _this39.nomb_contac_bod = '';
+        _this39.estado_bod = '';
+        _this39.fechaini_bod = '';
+        _this39.fechafin_bod = '';
+        _this39.id_ciu = '';
+        _this39.id_pais = '';
+        _this39.id_prov = '';
+        _this39.errors = [];
+        $('#crearBodega').modal('hide');
+        toastr.success('Se añadido una nueva Bodega');
+      })["catch"](function (error) {
+        _this39.errors = error.response.data;
+      });
+    },
+    editBodega: function editBodega(bodegas) {
+      this.fillBodega.id_bod = bodegas.id_bod;
+      this.fillBodega.nombre_bod = bodegas.nombre_bod;
+      this.fillBodega.direcc_bod = bodegas.direcc_bod;
+      this.fillBodega.telef_bod = bodegas.telef_bod;
+      this.fillBodega.cel_bod = bodegas.cel_bod;
+      this.fillBodega.nomb_contac_bod = bodegas.nomb_contac_bod;
+      this.fillBodega.fechaini_bod = bodegas.fechaini_bod;
+      this.fillBodega.fechafin_bod = bodegas.fechafin_bod;
+      this.fillBodega.estado_bod = bodegas.estado_bod;
+      this.fillBodega.id_ciu = bodegas.id_ciu;
+      this.fillBodega.id_pais = bodegas.id_pais;
+      this.fillBodega.id_prov = bodegas.id_prov;
+      $('#editBodega').modal('show');
+    },
+    updateBodega: function updateBodega(id) {
+      var _this40 = this;
+
+      var url = 'updateBodega/' + id;
+      axios.post(url, this.fillBodega).then(function (response) {
+        _this40.getBodega();
+
+        _this40.nombre_bod = '';
+        _this40.direcc_bod = '';
+        _this40.telef_bod = '';
+        _this40.cel_bod = '';
+        _this40.nomb_contac_bod = '';
+        _this40.estado_bod = '';
+        _this40.fechaini_bod = '';
+        _this40.fechafin_bod = '';
+        _this40.id_ciu = '';
+        _this40.id_pais = '';
+        _this40.id_prov = '';
+        _this40.errors = [];
+        $('#editBodega').modal('hide');
+        toastr.success('Bodega actualizada con éxito');
+      })["catch"](function (error) {
+        _this40.errors = error.response.data;
+      });
+    },
+    deleteBodega: function deleteBodega(bodegas) {
+      var _this41 = this;
+
+      var url = 'deleteBodega/' + bodegas.id_bod;
+      axios.post(url).then(function (response) {
+        _this41.getBodega();
+
+        toastr.success('Bodega eliminada con éxito');
       });
     }
   }
