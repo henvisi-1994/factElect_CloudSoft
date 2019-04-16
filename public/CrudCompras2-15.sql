@@ -16,6 +16,34 @@
 CREATE DATABASE IF NOT EXISTS `facturacion` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `facturacion`;
 
+-- Volcando estructura para tabla facturacion.bodega
+CREATE TABLE IF NOT EXISTS `bodega` (
+  `id_bod` int(11) NOT NULL AUTO_INCREMENT,
+  `id_ciu` int(11) DEFAULT NULL,
+  `id_pais` int(11) DEFAULT NULL,
+  `id_prov` int(11) DEFAULT NULL,
+  `nombre_bod` varchar(30) DEFAULT NULL,
+  `estado_bod` char(1) DEFAULT '0',
+  `direcc_bod` text,
+  `telef_bod` varchar(14) DEFAULT NULL,
+  `cel_bod` varchar(14) DEFAULT NULL,
+  `nomb_contac_bod` varchar(30) DEFAULT NULL,
+  `fechaini_bod` date DEFAULT NULL,
+  `fechafin_bod` date DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id_bod`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla facturacion.bodega: ~4 rows (aproximadamente)
+/*!40000 ALTER TABLE `bodega` DISABLE KEYS */;
+INSERT INTO `bodega` (`id_bod`, `id_ciu`, `id_pais`, `id_prov`, `nombre_bod`, `estado_bod`, `direcc_bod`, `telef_bod`, `cel_bod`, `nomb_contac_bod`, `fechaini_bod`, `fechafin_bod`, `created_at`, `updated_at`) VALUES
+	(1, 2, 1, 1, 'Bodega 3', 'I', 'sssssdddddd', '072792829', '0980472010', 'Frank', '2019-04-15', '2019-04-30', '2019-04-16 00:09:13', '2019-04-16 00:09:13'),
+	(3, 1, 1, 1, 'Bodega 5', 'I', 'cdcdcdcdc', '014012', '1111111', 'dcdcdc', '2019-04-15', '2019-04-29', '2019-04-16 00:12:14', '2019-04-16 00:12:14'),
+	(4, 1, 1, 1, 'Bodega 8', 'A', 'bfbfbf', '01401224', '0980472010', 'mmmmmmmmmm', '2019-04-10', '2019-04-27', '2019-04-16 00:13:09', '2019-04-16 00:13:09'),
+	(5, 1, 1, 1, 'Bodega 10', 'A', 'aaaaaaa', '5555555', '777777777', 'cccccccccc', '2019-04-16', '2019-04-25', '2019-04-16 00:18:09', '2019-04-16 00:18:09');
+/*!40000 ALTER TABLE `bodega` ENABLE KEYS */;
+
 -- Volcando estructura para tabla facturacion.categoria
 CREATE TABLE IF NOT EXISTS `categoria` (
   `id_cat` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -29,18 +57,23 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cat`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla facturacion.categoria: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla facturacion.categoria: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
 INSERT INTO `categoria` (`id_cat`, `id_emp`, `id_fec`, `nomb_cat`, `observ_cat`, `estado_cat`, `fechaini_cat`, `fechafin_cat`, `created_at`, `updated_at`) VALUES
-	(1, 2, 2, 'Ropa', '2016-05-09', 'A', '2016-05-09', '2018-07-12', '2019-03-19 10:45:30', '2019-03-19 10:45:30');
+	(1, 2, 2, 'Ropa', '2016-05-09', 'A', '2016-05-09', '2018-07-12', '2019-04-04 12:12:35', '2019-04-04 12:12:35'),
+	(2, 2, 2, 'Ropa1', 'fsdfsdf', 'A', '2019-04-03', '2019-04-27', '2019-04-03 20:16:36', '2019-04-03 20:16:36'),
+	(3, 2, 2, 'Ropa2', 'fsdfsdf', 'A', '2019-04-03', '2019-04-27', '2019-04-03 20:17:04', '2019-04-03 20:17:04'),
+	(4, 2, 2, 'Ropa3', 'zxczxc', 'A', '2019-03-03', '2019-04-27', '2019-04-03 20:28:03', '2019-04-03 20:28:03'),
+	(5, 2, 2, 'Ropa8', 'aaaaaaaaaaaaaaaa', 'A', '2019-04-05', '2019-04-30', '2019-04-08 11:53:08', '2019-04-08 11:53:08');
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 
 -- Volcando estructura para tabla facturacion.ciudad
 CREATE TABLE IF NOT EXISTS `ciudad` (
   `id_ciu` bigint(20) NOT NULL AUTO_INCREMENT,
   `id_emp` bigint(20) DEFAULT NULL,
+  `id_prov` bigint(20) DEFAULT NULL,
   `id_fec` bigint(20) DEFAULT NULL,
   `nomb_ciu` varchar(100) DEFAULT NULL,
   `estado_ciu` char(1) DEFAULT NULL,
@@ -52,12 +85,12 @@ CREATE TABLE IF NOT EXISTS `ciudad` (
   PRIMARY KEY (`id_ciu`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla facturacion.ciudad: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla facturacion.ciudad: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `ciudad` DISABLE KEYS */;
-INSERT INTO `ciudad` (`id_ciu`, `id_emp`, `id_fec`, `nomb_ciu`, `estado_ciu`, `fechaini_ciu`, `fechafin_ciu`, `observ_ciu`, `created_at`, `updated_at`) VALUES
-	(1, 2, 2, 'Santa Rosa', 'A', '2017-09-09', '2018-08-09', 'Ciudad vvvvv', '2019-03-19 10:50:16', '2019-03-19 10:50:16'),
-	(2, 1, 2, 'Pasaje', 'A', '2016-03-19', '2018-03-19', 'Ciudad yaa', '2019-03-19 10:40:05', '2019-03-19 10:40:05'),
-	(3, 2, 2, 'El Guabo', 'A', '2012-04-07', '2020-10-04', 'Ciudad Grande', '2019-03-20 14:25:57', '2019-03-20 14:25:57');
+INSERT INTO `ciudad` (`id_ciu`, `id_emp`, `id_prov`, `id_fec`, `nomb_ciu`, `estado_ciu`, `fechaini_ciu`, `fechafin_ciu`, `observ_ciu`, `created_at`, `updated_at`) VALUES
+	(1, 2, 1, 2, 'Santa Rosa', 'A', '2017-09-09', '2018-08-09', 'Ciudad vvvvv', '2019-04-15 18:59:31', '2019-04-15 18:59:31'),
+	(2, 1, 1, 2, 'Pasaje', 'A', '2016-03-19', '2018-03-19', 'Ciudad yaa', '2019-04-15 18:59:34', '2019-04-15 18:59:34'),
+	(3, 2, 1, 2, 'El Guabo', 'A', '2012-04-07', '2020-10-04', 'Ciudad Grande', '2019-04-15 18:59:36', '2019-04-15 18:59:36');
 /*!40000 ALTER TABLE `ciudad` ENABLE KEYS */;
 
 -- Volcando estructura para tabla facturacion.cliente
@@ -198,14 +231,16 @@ CREATE TABLE IF NOT EXISTS `identificacion` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_ident`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla facturacion.identificacion: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla facturacion.identificacion: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `identificacion` DISABLE KEYS */;
 INSERT INTO `identificacion` (`id_ident`, `sri_ident`, `descrip_ident`, `observ_ident`, `estado_ident`, `fechaini_ident`, `fechafin_ident`, `created_at`, `updated_at`) VALUES
-	(1, 'N', 'Juuuu', 'Juuuu2', 'A', '2014-05-07', '2019-03-20', '2019-03-21 21:54:59', '2019-03-18 14:50:55'),
-	(2, 'J', 'Persona Natural', 'Yaaaaa1', 'A', '2014-05-04', '2017-06-28', '2019-03-21 21:54:37', '2019-03-22 02:36:47'),
-	(3, 'J', 'Persona Juridica Especial', 'Cliente Preferencial', 'A', '2015-04-06', '2019-05-06', '2019-03-22 02:55:50', '2019-03-22 02:55:50');
+	(1, 'N', 'Mimi', 'Juuuu2', 'A', '2014-05-07', '2019-04-08', '2019-04-08 19:21:48', '2019-03-18 14:50:55'),
+	(2, 'J', 'Persona Natural', 'Yaaaaa1', 'I', '2014-05-04', '2017-06-28', '2019-04-08 13:09:29', '2019-03-22 02:36:47'),
+	(3, 'J', 'Persona Juridica Especial', 'Cliente Preferencial', 'A', '2015-04-06', '2019-05-06', '2019-03-22 02:55:50', '2019-03-22 02:55:50'),
+	(4, 'N', 'aaaaaaaaa', 'bbbbbbbbbbb', 'I', '2019-04-08', '2019-04-30', '2019-04-08 19:24:42', '2019-04-09 00:24:10'),
+	(5, 'N', 'aaaaaaaaaa', 'aaaaaaaaaaaa', 'P', '2019-04-08', '2019-05-02', '2019-04-09 00:30:10', '2019-04-09 00:30:10');
 /*!40000 ALTER TABLE `identificacion` ENABLE KEYS */;
 
 -- Volcando estructura para tabla facturacion.inventario
@@ -250,9 +285,9 @@ CREATE TABLE IF NOT EXISTS `marca` (
 -- Volcando datos para la tabla facturacion.marca: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `marca` DISABLE KEYS */;
 INSERT INTO `marca` (`id_marca`, `nomb_marca`, `observ_marca`, `estado_marca`, `fechaini_marca`, `fechafin_marca`, `created_at`, `updated_at`) VALUES
-	(4, 'Matel', 'Figura de Acción', 'A', '2018-08-09', '2019-02-09', '2019-03-26 11:28:03', '2019-03-26 11:28:03'),
-	(5, 'Hot Weells', 'Juguete de Carro', 'A', '2016-04-06', '2014-05-20', '2019-03-20 14:11:08', '2019-03-20 14:11:08'),
-	(6, 'Unilever', 'Productos Basicos', 'P', '2008-01-03', '2018-06-05', '2019-03-26 11:27:41', '2019-03-26 11:27:41'),
+	(4, 'Matel', 'Figura de Acción22222', 'A', '2018-08-09', '2019-02-09', '2019-04-08 12:54:24', '2019-04-08 12:54:24'),
+	(5, 'Hot Weells', 'Juguete de Carro', 'I', '2016-04-06', '2014-05-20', '2019-04-08 12:59:04', '2019-04-08 12:59:04'),
+	(6, 'Unilever', 'Productos Basicos', 'I', '2008-01-03', '2018-06-05', '2019-04-08 12:43:35', '2019-04-08 12:43:35'),
 	(7, 'Hasbro', 'juego de mesa', 'A', '2019-02-09', '2020-02-03', '2019-03-27 15:19:20', '2019-03-27 15:19:20');
 /*!40000 ALTER TABLE `marca` ENABLE KEYS */;
 
@@ -267,6 +302,23 @@ CREATE TABLE IF NOT EXISTS `migrations` (
 -- Volcando datos para la tabla facturacion.migrations: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+
+-- Volcando estructura para tabla facturacion.pais
+CREATE TABLE IF NOT EXISTS `pais` (
+  `id_pais` int(11) NOT NULL AUTO_INCREMENT,
+  `nomb_pais` varchar(50) DEFAULT NULL,
+  `estado_pais` char(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_pais`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla facturacion.pais: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `pais` DISABLE KEYS */;
+INSERT INTO `pais` (`id_pais`, `nomb_pais`, `estado_pais`, `created_at`, `updated_at`) VALUES
+	(1, 'Ecuador', 'A', '2019-04-15 18:58:38', '2019-04-15 18:58:38'),
+	(2, 'Perú', 'P', '2019-04-16 15:39:37', '2019-04-16 15:39:37');
+/*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 
 -- Volcando estructura para tabla facturacion.param_docs
 CREATE TABLE IF NOT EXISTS `param_docs` (
@@ -402,8 +454,26 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
 -- Volcando datos para la tabla facturacion.proveedor: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
 INSERT INTO `proveedor` (`id_prov`, `id_emp`, `id_fec`, `cod_prov`, `id_per`, `obser_prov`, `estado_prov`, `fechaini_prov`, `fechafin_prov`, `created_at`, `updated_at`) VALUES
-	(1, 2, 2, 'c001', 1, 'ggg', 'A', '2019-07-23', '2019-05-21', '2019-03-19 11:09:16', '2019-03-19 11:09:16');
+	(1, 2, 2, 'c001', 1, 'aaaaaaaaaaaa', 'A', '2019-07-23', '2019-05-21', '2019-04-08 11:48:12', '2019-04-08 11:48:12');
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
+
+-- Volcando estructura para tabla facturacion.provincia
+CREATE TABLE IF NOT EXISTS `provincia` (
+  `id_prov` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pais` int(11) DEFAULT NULL,
+  `nomb_prov` varchar(50) DEFAULT NULL,
+  `estado_prov` char(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_prov`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla facturacion.provincia: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
+INSERT INTO `provincia` (`id_prov`, `id_pais`, `nomb_prov`, `estado_prov`, `created_at`, `updated_at`) VALUES
+	(1, 1, 'El Oro', 'A', '2019-04-15 18:59:11', '2019-04-15 18:59:11'),
+	(2, 1, 'Pichincha', 'I', '2019-04-16 22:46:04', '2019-04-16 22:46:04');
+/*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
 
 -- Volcando estructura para tabla facturacion.roles
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -453,13 +523,16 @@ CREATE TABLE IF NOT EXISTS `tip_contrib` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_contrib`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla facturacion.tip_contrib: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla facturacion.tip_contrib: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `tip_contrib` DISABLE KEYS */;
 INSERT INTO `tip_contrib` (`id_contrib`, `nomb_contrib`, `obser_contrib`, `estado_contrib`, `fechaini_contrib`, `fechafin_contrib`, `created_at`, `updated_at`) VALUES
-	(1, 'Jorge', 'Contribuyente Especial', 'A', '2012-03-18', '2019-03-18', '2019-03-20 14:16:51', '2019-03-20 14:16:51'),
-	(2, 'Juan Roberto', 'Cliente Preferencial', 'A', '2011-02-04', '2018-05-03', '2019-03-20 14:17:06', '2019-03-20 14:17:06');
+	(1, 'Jorge', 'Contribuyente VIP', 'A', '2012-03-18', '2019-03-18', '2019-04-08 18:08:06', '2019-04-08 18:08:06'),
+	(2, 'Juan Roberto', 'Cliente Preferencial', 'I', '2011-02-04', '2018-05-03', '2019-04-08 18:08:00', '2019-04-08 18:08:00'),
+	(5, 'Frank', 'yaaaaaaaaa', 'I', '2019-04-08', '2019-04-30', '2019-04-08 19:35:49', '2019-04-08 19:35:49'),
+	(6, 'Henry', 'dddddd', 'A', '2019-04-15', '2019-04-30', '2019-04-09 00:36:06', '2019-04-09 00:36:06'),
+	(7, 'Pepe', 'Yaaaa222', 'A', '2019-04-15', '2019-04-30', '2019-04-15 22:08:35', '2019-04-15 22:08:35');
 /*!40000 ALTER TABLE `tip_contrib` ENABLE KEYS */;
 
 -- Volcando estructura para tabla facturacion.unidad
@@ -473,13 +546,14 @@ CREATE TABLE IF NOT EXISTS `unidad` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_unidad`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla facturacion.unidad: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `unidad` DISABLE KEYS */;
 INSERT INTO `unidad` (`id_unidad`, `nomb_unidad`, `observ_unidad`, `estado_unidad`, `fechaini_unidad`, `fechafin_unidad`, `created_at`, `updated_at`) VALUES
-	(1, 'Sacos', 'Pesados', 'A', '2018-05-09', '2018-06-10', '2019-03-20 14:26:59', '2019-03-20 14:26:59'),
-	(2, 'Quintales', 'Pesados', 'A', '2012-02-03', '2013-04-08', '2019-03-20 19:26:42', '2019-03-20 19:26:42');
+	(1, 'Sacos', 'Livianos', 'A', '2018-05-09', '2018-06-10', '2019-04-08 12:55:13', '2019-04-08 12:55:13'),
+	(2, 'Quintales', 'Pesados', 'A', '2012-02-03', '2013-04-08', '2019-03-20 19:26:42', '2019-03-20 19:26:42'),
+	(3, 'Arroba', 'bbbbbbb', 'I', '2019-04-08', '2019-04-26', '2019-04-08 12:58:50', '2019-04-08 12:58:50');
 /*!40000 ALTER TABLE `unidad` ENABLE KEYS */;
 
 -- Volcando estructura para tabla facturacion.usuario
