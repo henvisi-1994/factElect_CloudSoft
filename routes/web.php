@@ -26,6 +26,8 @@ Route::get('Contabilidad','AdminController@contabilidad');
 Route::get('TipoContribuyente','AdminController@TipoContribuyente');
 Route::get('Identificaciones','AdminController@Identificaciones');
 Route::get('Bodega','AdminController@Bodega');
+Route::get('Pais','AdminController@Pais');
+Route::get('Provincia','AdminController@Provincia');
 //Obtener
 Route::get('getProveedor','AdminController@getProveedor');
 Route::get('getProductos','AdminController@getProducto');
@@ -36,6 +38,8 @@ Route::get('getCiudad','AdminController@getCiudad');
 Route::get('getTipoContribuyente','AdminController@getTipoContribuyente');
 Route::get('getIdentificacion','AdminController@getIdentificacion');
 Route::get('getBodega','AdminController@getBodega');
+Route::get('getPais','AdminController@getPais');
+Route::get('getProvincia','AdminController@getProvincia');
 //Añadir
 Route::get('addPersona','AdminController@CargarPersona');
 Route::get('addProveedor','AdminController@CargarPersona');
@@ -50,6 +54,8 @@ Route::post('storeTipoContribuyente','AdminController@guardarTipoContribuyente')
 Route::post('storeIdentificaciones','AdminController@guardarIdentificacion');
 Route::post('storeProducto','AdminController@guardarProducto');
 Route::post('storeBodega','AdminController@guardarBodega');
+Route::post('storePais','AdminController@guardarPais');
+Route::post('storeProvincia','AdminController@guardarProvincia');
 //Ruta Modificar
 Route::post('updateCategoria/{id}','AdminController@modificarCategoria');
 Route::post('updateMarca/{id}','AdminController@modificarMarca');
@@ -61,6 +67,8 @@ Route::post('updateTipoContribuyente/{id}','AdminController@modificarTipoContrib
 Route::post('updateIdentificacion/{id}','AdminController@modificarIdentificacion');
 Route::post('updateProducto/{id}','AdminController@modificarProducto');
 Route::post('updateBodega/{id}','AdminController@modificarBodega');
+Route::post('updatePais/{id}','AdminController@modificarPais');
+Route::post('updateProvincia/{id}','AdminController@modificarProvincia');
 
 
 //Ruta Eliminar
@@ -73,5 +81,7 @@ Route::post('deleteProducto/{id}','AdminController@eliminarProducto');
 Route::post('deletePersona/{id}','AdminController@eliminarPersona');
 Route::post('deleteProveedor/{id}','AdminController@eliminarProveedor');
 Route::post('deleteBodega/{id}','AdminController@eliminarBodega');
+Route::post('deletePais/{id}','AdminController@eliminarPais');
+Route::post('deleteProvincia/{id}','AdminController@eliminarProvincia');
 
 

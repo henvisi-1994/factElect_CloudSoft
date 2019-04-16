@@ -1,5 +1,5 @@
-<form method="POST" v-on:submit.prevent="updateMarca(fillMarca.id_marca)">
-    <div class="modal fade" id="editMarca">
+<form method="POST" v-on:submit.prevent="createProvincia">
+    <div class="modal fade" id="crearProvincia">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,9 +9,10 @@
                         </span>
                     </button>
                     <h4>
-                        Modificar Marca
+                        Crear
                     </h4>
                     <span class="text-danger" v-for="error in errors">
+                        @{{ error }}
                     </span>
                 </div>
                 <div class="modal-body">
@@ -20,21 +21,15 @@
                             <label for="exampleInputEmail1">
                                 Nombre
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="nomb_marca" placeholder="Ingrese Nombre " type="text" v-model="fillMarca.nomb_marca">
+                            <input class="form-control" id="exampleInputEmail1" name="nomb_prov" placeholder="Ingrese Nombre" type="text" v-model="newProvincia.nomb_prov">
                             </input>
                         </div>
-                        <div class="form-group">
-                            <label>
-                                Observacion
-                            </label>
-                            <textarea class="form-control" name="observ_marca" placeholder="Ingrese Observación" rows="3" v-model="fillMarca.observ_marca">
-                            </textarea >
-                        </div>
+
                         <div class="form-group">
                             <label>
                                 Estado
                             </label>
-                            <select class="form-control" name="estado_marca" v-model="fillMarca.estado_marca">
+                            <select class="form-control" name="estado_prov" v-model="newProvincia.estado_prov">
                                 <option disabled="" selected="" value="none">
                                     Selecione Estado
                                 </option>
@@ -49,34 +44,23 @@
                                 </option>
                             </select>
                         </div>
+                        
                         <div class="form-group">
                             <label>
-                                Fecha Inicial:
+                                País
                             </label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar">
-                                    </i>
-                                </div>
-                                <input class="form-control" name="fechaini_marca" type="date" v-model="fillMarca.fechaini_marca">
-                                </input>
-                            </div>
-                            <!-- /.input group -->
+                            <select class="form-control" name="id_pais" v-model="newProvincia.id_pais">
+                                <option disabled="" selected="" value="none">
+                                    Selecione un País
+                                </option>
+                                @foreach($paises as $pais)
+                                <option value="{{$pais->id_pais}}">
+                                    {{$pais->nomb_pais}}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label>
-                                Fecha Final:
-                            </label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar">
-                                    </i>
-                                </div>
-                                <input class="form-control" name="fechafin_marca" type="date" v-model="fillMarca.fechafin_marca">
-                                </input>
-                            </div>
-                            <!-- /.input group -->
-                        </div>
+                        
                         <input name="_token" type="hidden" value="{{ csrf_token() }}">
                         </input>
                     </div>
@@ -89,3 +73,4 @@
         </div>
     </div>
 </form>
+

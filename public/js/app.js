@@ -49041,6 +49041,8 @@ var app = new Vue({
     this.getTipoContribuyente();
     this.getProveedores();
     this.getBodega();
+    this.getPais();
+    this.getProvincia();
   },
   data: {
     categorias: [],
@@ -49088,6 +49090,28 @@ var app = new Vue({
       'id_ciu': '',
       'id_pais': '',
       'id_prov': ''
+    },
+    paises: [],
+    newPais: {
+      'nomb_pais': '',
+      'estado_pais': ''
+    },
+    fillPais: {
+      'id_pais': '',
+      'nomb_pais': '',
+      'estado_pais': ''
+    },
+    provincias: [],
+    newProvincia: {
+      'nomb_prov': '',
+      'id_pais': '',
+      'estado_prov': ''
+    },
+    fillProvincia: {
+      'id_prov': '',
+      'nomb_prov': '',
+      'id_pais': '',
+      'estado_prov': ''
     },
     ciudades: [],
     newCiudad: {
@@ -50144,7 +50168,7 @@ var app = new Vue({
         _this39.id_prov = '';
         _this39.errors = [];
         $('#crearBodega').modal('hide');
-        toastr.success('Se añadido una nueva Bodega');
+        toastr.success('Se ha añadido una nueva Bodega');
       })["catch"](function (error) {
         _this39.errors = error.response.data;
       });
@@ -50197,6 +50221,122 @@ var app = new Vue({
         _this41.getBodega();
 
         toastr.success('Bodega eliminada con éxito');
+      });
+    },
+    ///Metodos de Pais
+    getPais: function getPais() {
+      var _this42 = this;
+
+      var urlPais = 'getPais';
+      axios.get(urlPais).then(function (response) {
+        _this42.paises = response.data;
+      });
+    },
+    createPais: function createPais() {
+      var _this43 = this;
+
+      var urlGuardarPais = 'storePais';
+      axios.post(urlGuardarPais, this.newPais).then(function (response) {
+        _this43.getPais();
+
+        _this43.nomb_pais = '';
+        _this43.estado_pais = '';
+        _this43.errors = [];
+        $('#crearPais').modal('hide');
+        toastr.success('Se ha añadido un nuevo Pais');
+      })["catch"](function (error) {
+        _this43.errors = error.response.data;
+      });
+    },
+    editPais: function editPais(paises) {
+      this.fillPais.id_pais = paises.id_pais;
+      this.fillPais.nomb_pais = paises.nomb_pais;
+      this.fillPais.estado_pais = paises.estado_pais;
+      $('#editPais').modal('show');
+    },
+    updatePais: function updatePais(id) {
+      var _this44 = this;
+
+      var url = 'updatePais/' + id;
+      axios.post(url, this.fillPais).then(function (response) {
+        _this44.getPais();
+
+        _this44.nomb_pais = '';
+        _this44.estado_pais = '';
+        _this44.errors = [];
+        $('#editPais').modal('hide');
+        toastr.success('Pais actualizado con éxito');
+      })["catch"](function (error) {
+        _this44.errors = error.response.data;
+      });
+    },
+    deletePais: function deletePais(bodegas) {
+      var _this45 = this;
+
+      var url = 'deletePais/' + paises.id_pais;
+      axios.post(url).then(function (response) {
+        _this45.getPais();
+
+        toastr.success('Pais eliminado con éxito');
+      });
+    },
+    ///Metodos de Provincias
+    getProvincia: function getProvincia() {
+      var _this46 = this;
+
+      var urlProvincia = 'getProvincia';
+      axios.get(urlProvincia).then(function (response) {
+        _this46.provincias = response.data;
+      });
+    },
+    createProvincia: function createProvincia() {
+      var _this47 = this;
+
+      var urlGuardarProvincia = 'storeProvincia';
+      axios.post(urlGuardarProvincia, this.newProvincia).then(function (response) {
+        _this47.getProvincia();
+
+        _this47.nomb_prov = '';
+        _this47.estado_prov = '';
+        _this47.errors = [];
+        $('#crearProvincia').modal('hide');
+        toastr.success('Se ha añadido una nueva Provincia');
+      })["catch"](function (error) {
+        _this47.errors = error.response.data;
+      });
+    },
+    editProvincia: function editProvincia(provincias) {
+      this.fillProvincia.id_prov = provincias.id_prov;
+      this.fillProvincia.id_pais = provincias.id_pais;
+      this.fillProvincia.nomb_prov = provincias.nomb_prov;
+      this.fillProvincia.estado_prov = provincias.estado_prov;
+      $('#editProvincia').modal('show');
+    },
+    updateProvincia: function updateProvincia(id) {
+      var _this48 = this;
+
+      var url = 'updateProvincia/' + id;
+      axios.post(url, this.fillProvincia).then(function (response) {
+        _this48.getProvincia();
+
+        _this48.id_pais = '';
+        _this48.nomb_prov = '';
+        _this48.estado_prov = '';
+        _this48.errors = [];
+        $('#editProvincia').modal('hide');
+        toastr.success('Provincia actualizada con éxito');
+      })["catch"](function (error) {
+        _this48.errors = error.response.data;
+      });
+    },
+    deleteProvincia: function deleteProvincia(provincias) {
+      var _this49 = this;
+
+      var url = 'deleteProvincia/' + provincias.id_prov;
+      axios.post(url).then(function (response) {
+        _this49.getProvincia();
+
+        toastr.success('Provincia eliminada con éxito');
       });
     }
   }

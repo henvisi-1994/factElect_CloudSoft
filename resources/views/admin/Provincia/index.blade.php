@@ -1,11 +1,11 @@
 <div class="box">
     <div class="box-header">
         <h1 class="box-title">
-            Bodega
+            Provincia
         </h1>
     </div>
     <div class="box-body">
-        <a class="btn btn-primary pull-left" data-target="#crearBodega" data-toggle="modal" href="#">
+        <a class="btn btn-primary pull-left" data-target="#crearProvincia" data-toggle="modal" href="#">
             Crear
         </a>
         <br>
@@ -40,7 +40,7 @@
                         <label for="exampleInputEmail1">
                             Buscar:
                         </label>
-                        <input id="exampleInputEmail1" name="buscar_bod" placeholder="Ingrese Nombre" type="text">
+                        <input id="exampleInputEmail1" name="buscar_prov" placeholder="Ingrese Nombre" type="text">
                         </input>
                     </div>
                 </div>
@@ -51,34 +51,11 @@
                                 Nombre
                             </th>
                             <th>
-                                Dirección
-                            </th>
-                            <th>
                                 Estado
                             </th>
-                            <th>
-                             <th>
-                                Teléfono
-                            </th>
-                            <th>
-                                Célular
-                            </th>
-                            <th>
-                                Contacto
-                            </th>
-                                Fecha Inicio
-                            </th>
-                            <th>
-                                Fecha Fin
-                            </th>
+                            
                             <th>
                                 País
-                            </th>
-                            <th>
-                                Provincia
-                            </th>
-                            <th>
-                                Ciudad
                             </th>
                             <th>
                                 Configuración
@@ -86,25 +63,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="bodega in bodegas">
+                        <tr v-for="provincia in provincias">
                             <td>
-                                @{{bodega.nombre_bod}}
+                                @{{provincia.nomb_prov}}
                             </td>
                             <td>
-                                @{{bodega.direcc_bod}}
-                            </td>
-                            <td>
-                                <div v-if="bodega.estado_bod == 'A'">
+                                <div v-if="provincia.estado_prov == 'A'">
                                     <span class="label label-success">
                                         Activo
                                     </span>
                                 </div>
-                                <div v-else-if="bodega.estado_bod == 'P'">
+                                <div v-else-if="provincia.estado_prov == 'P'">
                                     <span class="label label-warning">
                                         Pendiente
                                     </span>
                                 </div>
-                                <div v-else-if="bodega.estado_bod == 'I'">
+                                <div v-else-if="provincia.estado_prov == 'I'">
                                     <span class="label label-danger">
                                         Inactivo
                                     </span>
@@ -115,37 +89,18 @@
                                     </span>
                                 </div>
                             </td>
-                             <td>
-                                @{{bodega.telef_bod}}
-                            </td>
-                             <td>
-                                @{{bodega.cel_bod}}
-                            </td>
-                             <td>
-                                @{{bodega.nomb_contac_bod}}
-                            </td>
+                             
+                            
                             <td>
-                                @{{bodega.fechaini_bod}}
-                            </td>
-                            <td>
-                                @{{bodega.fechafin_bod}}
+                                @{{provincia.nomb_pais}}
                             </td>
                             
                             <td>
-                                @{{bodega.nomb_pais}}
-                            </td>
-                            <td>
-                                @{{bodega.nomb_prov}}
-                            </td>
-                            <td>
-                                @{{bodega.nomb_ciu}}
-                            </td>
-                            <td>
-                                <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editBodega(bodega)">
+                                <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editProvincia(provincia)">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o">
                                     </i>
                                 </a>
-                                <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deleteBodega(bodega)">
+                                <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deleteProvincia(provincia)">
                                     <i aria-hidden="true" class="fa fa-trash-o">
                                     </i>
                                 </a>
@@ -154,8 +109,8 @@
                     </tbody>
                 </table>
                
-                @include('admin.Bodega.Crear')
-            @include('admin.Bodega.Modificar')
+                @include('admin.Provincia.Crear')
+            @include('admin.Provincia.Modificar')
             </br>
         </br>
     </div>

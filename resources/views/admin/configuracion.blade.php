@@ -44,11 +44,25 @@
                     Empresa
                 </a>
             </li>
+            <li>
+                <a data-toggle="tab" href="#nav-provincia">
+                    <i class="fa   fa-globe">
+                    </i>
+                    Provincia
+                </a>
+            </li>
              <li>
                 <a data-toggle="tab" href="#nav-bodega">
                     <i class="fa fa-building">
                     </i>
                     Bodega
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#nav-pais">
+                    <i class="fa   fa-globe">
+                    </i>
+                    País
                 </a>
             </li>
             <li>
@@ -84,6 +98,12 @@
         </div>
         <div class="tab-pane fade" id="nav-bodega">
              @include('admin.Bodega.index')
+        </div>
+        <div class="tab-pane fade" id="nav-pais">
+             @include('admin.Pais.index')
+        </div>
+        <div class="tab-pane fade"  id="nav-provincia">
+             @include('admin.Provincia.index')
         </div>
         <div class="tab-pane fade" id="nav-empresa">
         </div>
