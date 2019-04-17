@@ -50406,15 +50406,6 @@ var app = new Vue({
       var _this51 = this;
 
       var urlGuardarProducto = 'storeEmpresa';
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = function (event) {
-        vm.image = event.target.result;
-      };
-
-      this.newProducto.imagen_prod = vm.image;
       axios.post(urlGuardarEmpresa, this.newEmpresa).then(function (response) {
         _this51.getEmpresa();
 
@@ -50465,7 +50456,7 @@ var app = new Vue({
     updateEmpresa: function updateEmpresa(id) {
       var _this52 = this;
 
-      var url = 'updateProducto/' + id;
+      var url = 'updateEmpresa/' + id;
       axios.post(url, this.fillEmpresa).then(function (response) {
         _this52.getEmpresa();
 
@@ -50496,7 +50487,7 @@ var app = new Vue({
     deleteEmpresa: function deleteEmpresa(empresa) {
       var _this53 = this;
 
-      var url = 'deleteProducto/' + empresa.id_emp;
+      var url = 'deleteEmpresa/' + empresa.id_emp;
       axios.post(url).then(function (response) {
         _this53.getEmpresa();
 
@@ -50546,7 +50537,7 @@ var app = new Vue({
   }, _defineProperty(_methods, "updateEmpresa", function updateEmpresa(id) {
     var _this56 = this;
 
-    var url = 'updateProducto/' + id;
+    var url = 'updateEmpresa/' + id;
     axios.post(url, this.fillRol).then(function (response) {
       _this56.getRoles();
 

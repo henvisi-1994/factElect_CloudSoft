@@ -1270,13 +1270,6 @@ const app = new Vue({
         },
         createEmpresa: function() {
             var urlGuardarProducto = 'storeEmpresa';
-            var image = new Image();
-            var reader = new FileReader();
-            var vm = this;
-            reader.onload = (event) => {
-                vm.image = event.target.result;
-            };
-            this.newProducto.imagen_prod = vm.image;
             axios.post(urlGuardarEmpresa, this.newEmpresa).then((response) => {
                 this.getEmpresa();
                 this.newEmpresa.id_ciu = '';
@@ -1324,7 +1317,7 @@ const app = new Vue({
             $('#editEmpresa').modal('show');
         },
         updateEmpresa: function(id) {
-            var url = 'updateProducto/' + id;
+            var url = 'updateEmpresa/' + id;
             axios.post(url, this.fillEmpresa).then(response => {
                 this.getEmpresa();
                this.fillEmpresa.id_ciu = '';
@@ -1352,7 +1345,7 @@ const app = new Vue({
             });
         },
         deleteEmpresa: function(empresa) {
-            var url = 'deleteProducto/' + empresa.id_emp;
+            var url = 'deleteEmpresa/' + empresa.id_emp;
             axios.post(url).then(response => {
                 this.getEmpresa();
                 toastr.success('Empresaa eliminada con éxito');
@@ -1394,7 +1387,7 @@ const app = new Vue({
             $('#editRol').modal('show');
         },
         updateEmpresa: function(id) {
-            var url = 'updateProducto/' + id;
+            var url = 'updateEmpresa/' + id;
             axios.post(url, this.fillRol).then(response => {
                 this.getRoles();
                 this.fillRol.id_emp = '';
