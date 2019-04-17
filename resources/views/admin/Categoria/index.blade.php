@@ -109,7 +109,6 @@
                             <td>
                                 @{{categoria.fechafin_cat}}
                             </td>
-                            s
                             <td>
                                 @{{categoria.nombre_emp}}
                             </td>

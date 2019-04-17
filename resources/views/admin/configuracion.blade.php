@@ -96,21 +96,28 @@
         <div class="tab-pane fade" id="nav-ciudad">
              @include('admin.Ciudad.index')
         </div>
+        <div class="tab-pane fade" id="nav-empresa">
+            @include('admin.Empresa.index')
+        </div>
+        <div class="tab-pane fade"  id="nav-provincia">
+             @include('admin.Provincia.index')
+        </div>
+        <div class="tab-pane fade" id="nav-usuario">
+        </div>
+        <div class="tab-pane fade" id="nav-rol">
+            @include('admin.Rol.index')
+        </div>
         <div class="tab-pane fade" id="nav-bodega">
              @include('admin.Bodega.index')
         </div>
         <div class="tab-pane fade" id="nav-pais">
              @include('admin.Pais.index')
         </div>
-        <div class="tab-pane fade"  id="nav-provincia">
-             @include('admin.Provincia.index')
-        </div>
-        <div class="tab-pane fade" id="nav-empresa">
-        </div>
-        <div class="tab-pane fade" id="nav-usuario">
-        </div>
-        <div class="tab-pane fade" id="nav-rol">
-        </div>
     </div>
 </div>
 @endsection
+
+
+
+
+

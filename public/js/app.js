@@ -49004,6 +49004,10 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _data, _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -49043,8 +49047,10 @@ var app = new Vue({
     this.getBodega();
     this.getPais();
     this.getProvincia();
+    this.getEmpresa();
+    this.getRoles();
   },
-  data: {
+  data: (_data = {
     categorias: [],
     newcategoria: {
       'nomb_cat': '',
@@ -49317,12 +49323,60 @@ var app = new Vue({
       'estado_unidad': '',
       'fechaini_unidad': '',
       'fechafin_unidad': ''
-    },
-    errors: [],
-    buscar_cat: '',
-    numregistros: 10,
-    src: ''
-  },
+    }
+  }, _defineProperty(_data, "empresas", []), _defineProperty(_data, "newEmpresa", {
+    'id_ciu': '',
+    'totestab_emp': '',
+    'rucempresa_emp': '',
+    'razon_emp': '',
+    'nombre_emp': '',
+    'apellido_emp': '',
+    'contacto_emp': '',
+    'direcc_emp': '',
+    'telefono_emp': '',
+    'celular_emp': '',
+    'fax_emp': '',
+    'email_emp': '',
+    'estado_emp': '',
+    'contador_emp': '',
+    'tipcontrib_emp': '',
+    'fechaini_emp': '',
+    'fechafin_emp': ''
+  }), _defineProperty(_data, "fillEmpresa", {
+    'id_ciu': '',
+    'totestab_emp': '',
+    'rucempresa_emp': '',
+    'razon_emp': '',
+    'nombre_emp': '',
+    'apellido_emp': '',
+    'contacto_emp': '',
+    'direcc_emp': '',
+    'telefono_emp': '',
+    'celular_emp': '',
+    'fax_emp': '',
+    'email_emp': '',
+    'estado_emp': '',
+    'contador_emp': '',
+    'tipcontrib_emp': '',
+    'fechaini_emp': '',
+    'fechafin_emp': ''
+  }), _defineProperty(_data, "roles", []), _defineProperty(_data, "newRol", {
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_rol': '',
+    'observ_rol': '',
+    'estado_rol': '',
+    'fechaini_rol': '',
+    'fechafin_rol': ''
+  }), _defineProperty(_data, "fillRol", {
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_rol': '',
+    'observ_rol': '',
+    'estado_rol': '',
+    'fechaini_rol': '',
+    'fechafin_rol': ''
+  }), _defineProperty(_data, "errors", []), _defineProperty(_data, "buscar_cat", ''), _defineProperty(_data, "numregistros", 10), _defineProperty(_data, "src", ''), _data),
   computed: {
     buscarCategoria: function buscarCategoria() {
       var _this = this;
@@ -49332,7 +49386,7 @@ var app = new Vue({
       });
     }
   },
-  methods: {
+  methods: (_methods = {
     getCategorias: function getCategorias() {
       var _this2 = this;
 
@@ -50338,8 +50392,187 @@ var app = new Vue({
 
         toastr.success('Provincia eliminada con éxito');
       });
+    },
+    ///Empresa
+    getEmpresa: function getEmpresa() {
+      var _this50 = this;
+
+      var urlEmpresa = 'getEmpresa';
+      axios.get(urlEmpresa).then(function (response) {
+        _this50.empresas = response.data;
+      });
+    },
+    createEmpresa: function createEmpresa() {
+      var _this51 = this;
+
+      var urlGuardarProducto = 'storeEmpresa';
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (event) {
+        vm.image = event.target.result;
+      };
+
+      this.newProducto.imagen_prod = vm.image;
+      axios.post(urlGuardarEmpresa, this.newEmpresa).then(function (response) {
+        _this51.getEmpresa();
+
+        _this51.newEmpresa.id_ciu = '';
+        _this51.newEmpresa.totestab_emp = '';
+        _this51.newEmpresa.rucempresa_emp = '';
+        _this51.newEmpresa.razon_emp = '';
+        _this51.newEmpresa.nombre_emp = '';
+        _this51.newEmpresa.apellido_emp = '';
+        _this51.newEmpresa.contacto_emp = '';
+        _this51.newEmpresa.direcc_emp = '';
+        _this51.newEmpresa.telefono_emp = '';
+        _this51.newEmpresa.celular_emp = '';
+        _this51.newEmpresa.fax_emp = '';
+        _this51.newEmpresa.email_emp = '';
+        _this51.newEmpresa.estado_emp = '';
+        _this51.newEmpresa.contador_emp = '';
+        _this51.newEmpresa.tipcontrib_emp = '';
+        _this51.newEmpresa.fechaini_emp = '';
+        _this51.newEmpresa.fechafin_emp = '';
+        _this51.errors = [];
+        $('#crearEmpresa').modal('hide');
+        toastr.success('Se añadido una nueva empresa');
+      })["catch"](function (error) {
+        _this51.errors = error.response.data;
+      });
+    },
+    editEmpresa: function editEmpresa(empresa) {
+      this.fillEmpresa.id_ciu = empresa.id_ciu;
+      this.fillEmpresa.totestab_emp = empresa.totestab_emp;
+      this.fillEmpresa.rucempresa_emp = empresa.rucempresa_emp;
+      this.fillEmpresa.razon_emp = empresa.razon_emp;
+      this.fillEmpresa.nombre_emp = empresa.nombre_emp;
+      this.fillEmpresa.apellido_emp = empresa.apellido_emp;
+      this.fillEmpresa.contacto_emp = empresa.contacto_emp;
+      this.fillEmpresa.direcc_emp = empresa.direcc_emp;
+      this.fillEmpresa.telefono_emp = empresa.telefono_emp;
+      this.fillEmpresa.celular_emp = empresa.celular_emp;
+      this.fillEmpresa.fax_emp = empresa.fax_emp;
+      this.fillEmpresa.email_emp = empresa.email_emp;
+      this.fillEmpresa.estado_emp = empresa.estado_emp;
+      this.fillEmpresa.contador_emp = empresa.contador_emp;
+      this.fillEmpresa.tipcontrib_emp = empresa.tipcontrib_emp;
+      this.fillEmpresa.fechaini_emp = empresa.fechaini_emp;
+      this.fillEmpresa.fechafin_emp = empresa.fechafin_emp;
+      $('#editEmpresa').modal('show');
+    },
+    updateEmpresa: function updateEmpresa(id) {
+      var _this52 = this;
+
+      var url = 'updateProducto/' + id;
+      axios.post(url, this.fillEmpresa).then(function (response) {
+        _this52.getEmpresa();
+
+        _this52.fillEmpresa.id_ciu = '';
+        _this52.fillEmpresa.totestab_emp = '';
+        _this52.fillEmpresa.rucempresa_emp = '';
+        _this52.fillEmpresa.razon_emp = '';
+        _this52.fillEmpresa.nombre_emp = '';
+        _this52.fillEmpresa.apellido_emp = '';
+        _this52.fillEmpresa.contacto_emp = '';
+        _this52.fillEmpresa.direcc_emp = '';
+        _this52.fillEmpresa.telefono_emp = '';
+        _this52.fillEmpresa.celular_emp = '';
+        _this52.fillEmpresa.fax_emp = '';
+        _this52.fillEmpresa.email_emp = '';
+        _this52.fillEmpresa.estado_emp = '';
+        _this52.fillEmpresa.contador_emp = '';
+        _this52.fillEmpresa.tipcontrib_emp = '';
+        _this52.newProducto.fechaini_emp = '';
+        _this52.fillEmpresa.fechafin_emp = '';
+        _this52.errors = [];
+        $('#editEmpresa').modal('hide');
+        toastr.success('Empresa actualizada con éxito');
+      })["catch"](function (error) {
+        _this52.errors = error.response.data;
+      });
+    },
+    deleteEmpresa: function deleteEmpresa(empresa) {
+      var _this53 = this;
+
+      var url = 'deleteProducto/' + empresa.id_emp;
+      axios.post(url).then(function (response) {
+        _this53.getEmpresa();
+
+        toastr.success('Empresaa eliminada con éxito');
+      });
+    },
+    //Roles
+    getRoles: function getRoles() {
+      var _this54 = this;
+
+      var urlEmpresa = 'getRol';
+      axios.get(urlEmpresa).then(function (response) {
+        _this54.roles = response.data;
+      });
+    },
+    createRol: function createRol() {
+      var _this55 = this;
+
+      var urlGuardarRol = 'storeRol';
+      axios.post(urlGuardarRol, this.newRol).then(function (response) {
+        _this55.getRoles();
+
+        _this55.newRol.id_emp = '';
+        _this55.newRol.id_fec = '';
+        _this55.newRol.nomb_rol = '';
+        _this55.newRol.observ_rol = '';
+        _this55.newRol.estado_rol = '';
+        _this55.newRol.fechaini_rol = '';
+        _this55.newRol.fechafin_rol = '';
+        _this55.errors = [];
+        $('#crearEmpresa').modal('hide');
+        toastr.success('Se añadido una nuevo rol');
+      })["catch"](function (error) {
+        _this55.errors = error.response.data;
+      });
+    },
+    editRol: function editRol(rol) {
+      this.fillRol.id_emp = rol.id_emp;
+      this.fillRol.id_fec = rol.id_fec;
+      this.fillRol.nomb_rol = rol.nomb_rol;
+      this.fillRol.observ_rol = rol.observ_rol;
+      this.fillRol.estado_rol = rol.estado_rol;
+      this.fillRol.fechaini_rol = rol.fechaini_rol;
+      this.fillRol.fechafin_rol = rol.fechafin_rol;
+      $('#editRol').modal('show');
     }
-  }
+  }, _defineProperty(_methods, "updateEmpresa", function updateEmpresa(id) {
+    var _this56 = this;
+
+    var url = 'updateProducto/' + id;
+    axios.post(url, this.fillRol).then(function (response) {
+      _this56.getRoles();
+
+      _this56.fillRol.id_emp = '';
+      _this56.fillRol.id_fec = '';
+      _this56.fillRol.nomb_rol = '';
+      _this56.fillRol.observ_rol = '';
+      _this56.fillRol.estado_rol = '';
+      _this56.fillRol.fechaini_rol = '';
+      _this56.fillRol.fechafin_rol = '';
+      _this56.errors = [];
+      $('#editRol').modal('hide');
+      toastr.success('Rol actualizado con éxito');
+    })["catch"](function (error) {
+      _this56.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteRol", function deleteRol(rol) {
+    var _this57 = this;
+
+    var url = 'deleteProducto/' + rol.id_rol;
+    axios.post(url).then(function (response) {
+      _this57.getRoles();
+
+      toastr.success('Rol eliminado con éxito');
+    });
+  }), _methods)
 });
 
 /***/ }),

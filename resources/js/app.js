@@ -34,6 +34,8 @@ const app = new Vue({
         this.getBodega();
         this.getPais();
         this.getProvincia();
+        this.getEmpresa();
+        this.getRoles();
     },
     data: {
         categorias: [],
@@ -308,6 +310,65 @@ const app = new Vue({
             'estado_unidad': '',
             'fechaini_unidad': '',
             'fechafin_unidad': ''
+        },
+         empresas: [],
+        newEmpresa:{
+            'id_ciu':'',
+            'totestab_emp':'',
+            'rucempresa_emp':'', 
+            'razon_emp':'', 
+            'nombre_emp':'', 
+            'apellido_emp':'',
+            'contacto_emp':'', 
+            'direcc_emp':'',
+            'telefono_emp':'', 
+            'celular_emp':'', 
+            'fax_emp':'', 
+            'email_emp':'', 
+            'estado_emp':'',
+            'contador_emp': '',
+            'tipcontrib_emp':'',
+            'fechaini_emp':'',
+            'fechafin_emp':''
+        },
+        fillEmpresa:{
+            'id_ciu':'',
+            'totestab_emp':'',
+            'rucempresa_emp':'', 
+            'razon_emp':'', 
+            'nombre_emp':'', 
+            'apellido_emp':'',
+            'contacto_emp':'', 
+            'direcc_emp':'',
+            'telefono_emp':'', 
+            'celular_emp':'', 
+            'fax_emp':'', 
+            'email_emp':'', 
+            'estado_emp':'',
+            'contador_emp': '',
+            'tipcontrib_emp':'',
+            'fechaini_emp':'',
+             'fechafin_emp':''
+        },
+        roles:[],
+        newRol:{
+            'id_emp':'',
+            'id_fec':'',
+            'nomb_rol':'',
+            'observ_rol': '', 
+            'estado_rol': '',
+            'fechaini_rol': '', 
+            'fechafin_rol': ''
+        },
+
+        fillRol:{
+            'id_emp':'',
+            'id_fec':'',
+            'nomb_rol':'',
+            'observ_rol': '', 
+            'estado_rol': '',
+            'fechaini_rol': '', 
+            'fechafin_rol': ''
         },
         errors: [],
         buscar_cat: '',
@@ -1198,6 +1259,163 @@ const app = new Vue({
             axios.post(url).then(response => {
                 this.getProvincia();
                 toastr.success('Provincia eliminada con éxito');
+            });
+        },
+         ///Empresa
+         getEmpresa: function() {
+            var urlEmpresa = 'getEmpresa';
+            axios.get(urlEmpresa).then(response => {
+                this.empresas = response.data;
+            });
+        },
+        createEmpresa: function() {
+            var urlGuardarProducto = 'storeEmpresa';
+            var image = new Image();
+            var reader = new FileReader();
+            var vm = this;
+            reader.onload = (event) => {
+                vm.image = event.target.result;
+            };
+            this.newProducto.imagen_prod = vm.image;
+            axios.post(urlGuardarEmpresa, this.newEmpresa).then((response) => {
+                this.getEmpresa();
+                this.newEmpresa.id_ciu = '';
+                this.newEmpresa.totestab_emp = '';
+                this.newEmpresa.rucempresa_emp = '';
+                this.newEmpresa.razon_emp = '';
+                this.newEmpresa.nombre_emp = '';
+                this.newEmpresa.apellido_emp = '';
+                this.newEmpresa.contacto_emp = '';
+                this.newEmpresa.direcc_emp = '';
+                this.newEmpresa.telefono_emp = '';
+                this.newEmpresa.celular_emp = '';
+                this.newEmpresa.fax_emp = '';
+                this.newEmpresa.email_emp = '';
+                this.newEmpresa.estado_emp = '';
+                this.newEmpresa.contador_emp = '';
+                this.newEmpresa.tipcontrib_emp = '';
+                this.newEmpresa.fechaini_emp = '';
+                this.newEmpresa.fechafin_emp= '';
+                this.errors = [];
+                $('#crearEmpresa').modal('hide');
+                toastr.success('Se añadido una nueva empresa');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editEmpresa: function(empresa) {
+                this.fillEmpresa.id_ciu = empresa.id_ciu;
+                this.fillEmpresa.totestab_emp = empresa.totestab_emp;
+                this.fillEmpresa.rucempresa_emp =empresa.rucempresa_emp;
+                this.fillEmpresa.razon_emp = empresa.razon_emp;
+                this.fillEmpresa.nombre_emp = empresa.nombre_emp;
+                this.fillEmpresa.apellido_emp = empresa.apellido_emp;
+                this.fillEmpresa.contacto_emp = empresa.contacto_emp;
+                this.fillEmpresa.direcc_emp = empresa.direcc_emp;
+                this.fillEmpresa.telefono_emp =empresa.telefono_emp;
+                this.fillEmpresa.celular_emp = empresa.celular_emp;
+                this.fillEmpresa.fax_emp = empresa.fax_emp;
+                this.fillEmpresa.email_emp = empresa.email_emp;
+                this.fillEmpresa.estado_emp =empresa.estado_emp;
+                this.fillEmpresa.contador_emp =empresa.contador_emp;
+                this.fillEmpresa.tipcontrib_emp =empresa.tipcontrib_emp;
+                this.fillEmpresa.fechaini_emp =empresa.fechaini_emp;
+                this.fillEmpresa.fechafin_emp= empresa.fechafin_emp;
+            $('#editEmpresa').modal('show');
+        },
+        updateEmpresa: function(id) {
+            var url = 'updateProducto/' + id;
+            axios.post(url, this.fillEmpresa).then(response => {
+                this.getEmpresa();
+               this.fillEmpresa.id_ciu = '';
+                this.fillEmpresa.totestab_emp = '';
+                this.fillEmpresa.rucempresa_emp = '';
+                this.fillEmpresa.razon_emp = '';
+                this.fillEmpresa.nombre_emp = '';
+                this.fillEmpresa.apellido_emp = '';
+                this.fillEmpresa.contacto_emp = '';
+                this.fillEmpresa.direcc_emp = '';
+                this.fillEmpresa.telefono_emp = '';
+                this.fillEmpresa.celular_emp = '';
+                this.fillEmpresa.fax_emp = '';
+                this.fillEmpresa.email_emp = '';
+                this.fillEmpresa.estado_emp = '';
+                this.fillEmpresa.contador_emp = '';
+                this.fillEmpresa.tipcontrib_emp = '';
+                this.newProducto.fechaini_emp = '';
+                this.fillEmpresa.fechafin_emp= '';
+                this.errors = [];
+                $('#editEmpresa').modal('hide');
+                toastr.success('Empresa actualizada con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteEmpresa: function(empresa) {
+            var url = 'deleteProducto/' + empresa.id_emp;
+            axios.post(url).then(response => {
+                this.getEmpresa();
+                toastr.success('Empresaa eliminada con éxito');
+            });
+        },
+        //Roles
+          getRoles: function() {
+            var urlEmpresa = 'getRol';
+            axios.get(urlEmpresa).then(response => {
+                this.roles = response.data;
+            });
+        },
+        createRol: function() {
+            var urlGuardarRol = 'storeRol';
+            axios.post(urlGuardarRol, this.newRol).then((response) => {
+                this.getRoles();
+                this.newRol.id_emp = '';
+                this.newRol.id_fec = '';
+                this.newRol.nomb_rol = '';
+                this.newRol.observ_rol = '';
+                this.newRol.estado_rol = '';
+                this.newRol.fechaini_rol = '';
+                this.newRol.fechafin_rol = '';
+                this.errors = [];
+                $('#crearEmpresa').modal('hide');
+                toastr.success('Se añadido una nuevo rol');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editRol: function(rol) {
+                this.fillRol.id_emp = rol.id_emp;
+                this.fillRol.id_fec = rol.id_fec;
+                this.fillRol.nomb_rol =rol.nomb_rol;
+                this.fillRol.observ_rol = rol.observ_rol;
+                this.fillRol.estado_rol = rol.estado_rol;
+                this.fillRol.fechaini_rol = rol.fechaini_rol;
+                this.fillRol.fechafin_rol = rol.fechafin_rol;
+            $('#editRol').modal('show');
+        },
+        updateEmpresa: function(id) {
+            var url = 'updateProducto/' + id;
+            axios.post(url, this.fillRol).then(response => {
+                this.getRoles();
+                this.fillRol.id_emp = '';
+                this.fillRol.id_fec = '';
+                this.fillRol.nomb_rol = '';
+                this.fillRol.observ_rol = '';
+                this.fillRol.estado_rol = '';
+                this.fillRol.fechaini_rol = '';
+                this.fillRol.fechafin_rol = '';
+                this.errors = [];
+                $('#editRol').modal('hide');
+                toastr.success('Rol actualizado con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteRol: function(rol) {
+            var url = 'deleteProducto/' + rol.id_rol;
+            axios.post(url).then(response => {
+                this.getRoles();
+                toastr.success('Rol eliminado con éxito');
             });
         },
     }

@@ -18,6 +18,7 @@ use App\TipoContribuyente;
 use App\Bodega;
 use App\Pais;
 use App\Provincia;
+use App\Roles;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
@@ -1177,5 +1178,150 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
       ->orderBy("p.id_prov","desc")
       ->get();
       return $provincias;
+    }
+//empresa
+    public function getEmpresa()
+    {
+      $empresas = DB::table('empresa as emp')
+      ->join('ciudad','emp.id_ciu','=','ciudad.id_ciu')
+      ->orderBy("emp.id_emp","des")
+      ->get();
+      return $empresas;
+    }
+     public function guardarEmmpresa(Request $request)
+    {
+      $v= $this->validate(request(),[
+            'rucempresa_emp' => 'required|numeric',
+            'razon_emp' => 'required|string',
+            'nombre_emp' => 'required|string',
+            'apellido_emp' => 'required|string',
+            'direcc_emp' => 'required',
+            'telefono_emp' => 'required|numeric',
+            'contador_emp' =>'required|string',
+        ]);
+       if($v)
+      {
+        $empresa= new Empresa();
+        $empresa->create($request->all());
+       return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+    public function modificarEmpresa(Request $request,$id)
+    {
+       $v= $this->validate(request(),[
+            'rucempresa_emp' => 'required|numeric',
+            'razon_emp' => 'required|string',
+            'nombre_emp' => 'required|string',
+            'apellido_emp' => 'required|string',
+            'direcc_emp' => 'required',
+            'telefono_emp' => 'required|numeric',
+            'contador_emp' =>'required|string',
+        ]);
+       if($v)
+      {
+        $id_ciu  =  $request->input('id_ciu');
+        $totestab_emp  =  $request->input('totestab_emp');
+        $rucempresa_emp  =  $request->input('rucempresa_emp');
+        $razon_emp  =  $request->input('razon_emp');
+        $nombre_emp  =  $request->input('nombre_emp');
+        $apellido_emp  =  $request->input('apellido_emp');
+        $contacto_emp  =  $request->input('contacto_emp');
+        $direcc_emp  =  $request->input('direcc_emp');
+        $telefono_emp  =  $request->input('telefono_emp');
+        $celular_emp  =  $request->input('celular_emp');
+        $fax_emp  =  $request->input('fax_emp');
+        $email_emp  =  $request->input('email_emp');
+        $estado_emp  =  $request->input('estado_emp');
+        $contador_emp  =  $request->input('contador_emp');
+        $tipcontrib_emp  =  $request->input('tipcontrib_emp');
+        $fechaini_emp  =  $request->input('fechaini_emp');
+        $fechafin_emp  =  $request->input('fechafin_emp');
+        DB::table('empresa')
+            ->where('id_emp', $id)
+            ->update(  ['id_ciu' => $id_ciu,'totestab_emp' => $totestab_emp,'rucempresa_emp' => $rucempresa_emp,'razon_emp' => $razon_emp , 
+  'nombre_emp' => $nombre_emp ,'apellido_emp' => $apellido_emp,'contacto_emp' => $contacto_emp ,  'direcc_emp' => $direcc_emp ,
+  'telefono_emp' => $telefono_emp ,  'celular_emp' => $celular_emp ,  'fax_emp' => $fax_emp ,'email_emp'  => $email_emp ,  'estado_emp' => $estado_emp ,'contador_emp' => $contador_emp ,'tipcontrib_emp' => $tipcontrib_emp,'fechaini_emp' => $fechaini_emp,'fechafin_emp' => $fechafin_emp ,  'comision_prod' => $comision_prod]
+          );
+         return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+      public function eliminarEmpresa($id)
+    {
+        $estado_emp='I';
+        DB::table('empresa')
+            ->where('id_emp', $id)
+            ->update(['estado_emp' => $estado_emp]
+          );
+        return;
+    }
+     //Roles
+      public function getRoles()
+    {
+      $roles = DB::table('roles as r')
+      ->join('empresa','r.id_emp','=','empresa.id_emp')
+      ->join('fecha_periodo','r.id_fec','=','fecha_periodo.id_fec')
+      ->orderBy("r.id_rol","des")
+      ->get();
+      return $roles;
+    }
+     public function guardarRol(Request $request)
+    {
+      $v= $this->validate(request(),[
+            'nomb_rol' => 'required|string'
+        ]);
+       if($v)
+      {
+        $roles= new Roles();
+        $roles->create($request->all());
+       return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+    public function modificarRol(Request $request,$id)
+    {
+        $v= $this->validate(request(),[
+            'nomb_rol' => 'required|string'
+        ]);
+       if($v)
+      {
+        $id_emp  =  $request->input('id_emp');
+        $id_fec  =  $request->input('id_fec');
+        $nomb_rol  =  $request->input('nomb_rol');
+        $observ_rol  =  $request->input('observ_rol');
+        $estado_rol  =  $request->input('estado_rol');
+        $fechaini_rol  =  $request->input('fechaini_rol');
+        $fechafin_rol  =  $request->input('fechafin_rol');
+       
+        DB::table('roles')
+            ->where('id_rol', $id)
+            ->update(  ['id_emp' => $id_emp,'id_fec' => $id_fec,'nomb_rol' => $nomb_rol,'observ_rol' => $observ_rol , 
+  'estado_rol' => $estado_rol ,'fechaini_rol' => $fechaini_rol,'fechafin_rol' => $fechafin_rol]
+          );
+         return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+      public function eliminarRol($id)
+    {
+        $estado_rol='I';
+        DB::table('roles')
+            ->where('id_rol', $id)
+            ->update(['estado_rol' => $estado_rol]
+          );
+        return;
     }
 }

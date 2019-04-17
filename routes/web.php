@@ -40,9 +40,8 @@ Route::get('getIdentificacion','AdminController@getIdentificacion');
 Route::get('getBodega','AdminController@getBodega');
 Route::get('getPais','AdminController@getPais');
 Route::get('getProvincia','AdminController@getProvincia');
-//Añadir
-Route::get('addPersona','AdminController@CargarPersona');
-Route::get('addProveedor','AdminController@CargarPersona');
+Route::get('getEmpresa','AdminController@getEmpresa');
+Route::get('getRol','AdminController@getRoles');
 //Ruta Guardar
 Route::post('storeCategoria','AdminController@guardarCategoria');
 Route::post('storeMarca','AdminController@guardarMarca');
@@ -56,6 +55,8 @@ Route::post('storeProducto','AdminController@guardarProducto');
 Route::post('storeBodega','AdminController@guardarBodega');
 Route::post('storePais','AdminController@guardarPais');
 Route::post('storeProvincia','AdminController@guardarProvincia');
+Route::post('storeEmpresa','AdminController@guardarEmpresa');
+Route::post('storeRol','AdminController@guardarRol');
 //Ruta Modificar
 Route::post('updateCategoria/{id}','AdminController@modificarCategoria');
 Route::post('updateMarca/{id}','AdminController@modificarMarca');
@@ -69,8 +70,8 @@ Route::post('updateProducto/{id}','AdminController@modificarProducto');
 Route::post('updateBodega/{id}','AdminController@modificarBodega');
 Route::post('updatePais/{id}','AdminController@modificarPais');
 Route::post('updateProvincia/{id}','AdminController@modificarProvincia');
-
-
+Route::post('updateEmpresa/{id}','AdminController@modificarEmpresa');
+Route::post('updateRol/{id}','AdminController@modificarRol');
 //Ruta Eliminar
 Route::post('deleteMarca/{id}','AdminController@eliminarMarca');
 Route::post('deleteUnidad/{id}','AdminController@eliminarUnidad');
@@ -83,5 +84,8 @@ Route::post('deleteProveedor/{id}','AdminController@eliminarProveedor');
 Route::post('deleteBodega/{id}','AdminController@eliminarBodega');
 Route::post('deletePais/{id}','AdminController@eliminarPais');
 Route::post('deleteProvincia/{id}','AdminController@eliminarProvincia');
+Route::post('deleteEmpresa/{id}','AdminController@eliminarEmpresa');
+Route::post('deleteRol/{id}','AdminController@eliminarRol');
+
 
 
