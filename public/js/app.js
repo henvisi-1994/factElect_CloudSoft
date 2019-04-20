@@ -49050,6 +49050,7 @@ var app = new Vue({
     this.getEmpresa();
     this.getRoles();
     this.getCliente();
+    this.getDescuento();
   },
   data: (_data = {
     categorias: [],
@@ -49097,6 +49098,26 @@ var app = new Vue({
       'id_ciu': '',
       'id_pais': '',
       'id_prov': ''
+    },
+    descuentos: [],
+    newDescuento: {
+      'nomb_desc': '',
+      'observ_desc': '',
+      'estado_desc': '',
+      'fechaini_desc': '',
+      'fechafin_desc': '',
+      'id_emp': '',
+      'id_fec': ''
+    },
+    fillDescuento: {
+      'id_desc': '',
+      'nomb_desc': '',
+      'observ_desc': '',
+      'estado_desc': '',
+      'fechaini_desc': '',
+      'fechafin_desc': '',
+      'id_emp': '',
+      'id_fec': ''
     },
     clientes: [],
     newCliente: {
@@ -50729,6 +50750,72 @@ var app = new Vue({
       $('#crearCliente').modal('show');
     })["catch"](function (error) {
       _this62.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "getDescuento", function getDescuento() {
+    var _this63 = this;
+
+    var urlDescuento = 'getDescuento';
+    axios.get(urlDescuento).then(function (response) {
+      _this63.descuentos = response.data;
+    });
+  }), _defineProperty(_methods, "createDescuento", function createDescuento() {
+    var _this64 = this;
+
+    var urlGuardarDescuento = 'storeDescuento';
+    axios.post(urlGuardarDescuento, this.newDescuento).then(function (response) {
+      _this64.getDescuento();
+
+      _this64.nomb_desc = '';
+      _this64.observ_desc = '';
+      _this64.estado_desc = '';
+      _this64.fechaini_desc = '';
+      _this64.fechafin_desc = '';
+      _this64.id_emp = '';
+      _this64.id_fec = '';
+      _this64.errors = [];
+      $('#crearDescuento').modal('hide');
+      toastr.success('Se ha añadido un nuevo Descuento');
+    })["catch"](function (error) {
+      _this64.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editDescuento", function editDescuento(descuentos) {
+    this.fillDescuento.id_desc = descuentos.id_desc;
+    this.fillDescuento.nomb_desc = descuentos.nomb_desc;
+    this.fillDescuento.observ_desc = descuentos.observ_desc;
+    this.fillDescuento.estado_desc = descuentos.estado_desc;
+    this.fillDescuento.fechaini_desc = descuentos.fechaini_desc;
+    this.fillDescuento.fechafin_desc = descuentos.fechafin_desc;
+    this.fillDescuento.id_emp = descuentos.id_emp;
+    this.fillDescuento.id_fec = descuentos.id_fec;
+    $('#editDescuento').modal('show');
+  }), _defineProperty(_methods, "updateDescuento", function updateDescuento(id) {
+    var _this65 = this;
+
+    var url = 'updateDescuento/' + id;
+    axios.post(url, this.fillDescuento).then(function (response) {
+      _this65.getDescuento();
+
+      _this65.nomb_desc = '';
+      _this65.observ_desc = '';
+      _this65.estado_desc = '';
+      _this65.fechaini_desc = '';
+      _this65.fechafin_desc = '';
+      _this65.id_emp = '';
+      _this65.id_fec = '';
+      _this65.errors = [];
+      $('#editDescuento').modal('hide');
+      toastr.success('Descuento actualizado con éxito');
+    })["catch"](function (error) {
+      _this65.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteDescuento", function deleteDescuento(descuentos) {
+    var _this66 = this;
+
+    var url = 'deleteDescuento/' + descuentos.id_desc;
+    axios.post(url).then(function (response) {
+      _this66.getDescuento();
+
+      toastr.success('Descuento eliminado con éxito');
     });
   }), _methods)
 });

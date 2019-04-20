@@ -52,20 +52,6 @@
                 </a>
             </li>
              <li>
-                <a data-toggle="tab" href="#nav-bodega">
-                    <i class="fa fa-building">
-                    </i>
-                    Bodega
-                </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="#nav-pais">
-                    <i class="fa   fa-globe">
-                    </i>
-                    País
-                </a>
-            </li>
-            <li>
                 <a data-toggle="tab" href="#nav-usuario">
                     <i class="fa fa-users">
                     </i>
@@ -79,6 +65,22 @@
                     Roles
                 </a>
             </li>
+             <li>
+                <a data-toggle="tab" href="#nav-bodega">
+                    <i class="fa fa-building">
+                    </i>
+                    Bodega
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#nav-pais">
+                    <i class="fa   fa-globe">
+                    </i>
+                    País
+                </a>
+            </li>
+           
+            
         </ul>
     </div>
     <div class="tab-content" id="nav-tabContent">
@@ -92,6 +94,7 @@
             @include('admin.Unidad.index')
         </div>
         <div class="tab-pane fade" id="nav-descuentos">
+            @include('admin.Descuento.index')
         </div>
         <div class="tab-pane fade" id="nav-ciudad">
              @include('admin.Ciudad.index')
