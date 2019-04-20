@@ -28,6 +28,7 @@ Route::get('Identificaciones','AdminController@Identificaciones');
 Route::get('Bodega','AdminController@Bodega');
 Route::get('Pais','AdminController@Pais');
 Route::get('Provincia','AdminController@Provincia');
+Route::get('Cliente','AdminController@Cliente');
 //Obtener
 Route::get('getProveedor','AdminController@getProveedor');
 Route::get('getProductos','AdminController@getProducto');
@@ -42,6 +43,7 @@ Route::get('getPais','AdminController@getPais');
 Route::get('getProvincia','AdminController@getProvincia');
 Route::get('getEmpresa','AdminController@getEmpresa');
 Route::get('getRol','AdminController@getRoles');
+Route::get('getCliente','AdminController@getCliente');
 //Ruta Guardar
 Route::post('storeCategoria','AdminController@guardarCategoria');
 Route::post('storeMarca','AdminController@guardarMarca');
@@ -56,7 +58,7 @@ Route::post('storeBodega','AdminController@guardarBodega');
 Route::post('storePais','AdminController@guardarPais');
 Route::post('storeProvincia','AdminController@guardarProvincia');
 Route::post('storeEmpresa','AdminController@guardarEmpresa');
-Route::post('storeRol','AdminController@guardarRol');
+Route::post('storeCliente','AdminController@guardarCliente');
 //Ruta Modificar
 Route::post('updateCategoria/{id}','AdminController@modificarCategoria');
 Route::post('updateMarca/{id}','AdminController@modificarMarca');
@@ -72,6 +74,7 @@ Route::post('updatePais/{id}','AdminController@modificarPais');
 Route::post('updateProvincia/{id}','AdminController@modificarProvincia');
 Route::post('updateEmpresa/{id}','AdminController@modificarEmpresa');
 Route::post('updateRol/{id}','AdminController@modificarRol');
+Route::post('updateCliente/{id}','AdminController@modificarCliente');
 //Ruta Eliminar
 Route::post('deleteMarca/{id}','AdminController@eliminarMarca');
 Route::post('deleteUnidad/{id}','AdminController@eliminarUnidad');
@@ -86,6 +89,7 @@ Route::post('deletePais/{id}','AdminController@eliminarPais');
 Route::post('deleteProvincia/{id}','AdminController@eliminarProvincia');
 Route::post('deleteEmpresa/{id}','AdminController@eliminarEmpresa');
 Route::post('deleteRol/{id}','AdminController@eliminarRol');
+Route::post('deleteCliente/{id}','AdminController@eliminarCliente');
 
 
 

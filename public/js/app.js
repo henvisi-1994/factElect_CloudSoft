@@ -49049,6 +49049,7 @@ var app = new Vue({
     this.getProvincia();
     this.getEmpresa();
     this.getRoles();
+    this.getCliente();
   },
   data: (_data = {
     categorias: [],
@@ -49096,6 +49097,28 @@ var app = new Vue({
       'id_ciu': '',
       'id_pais': '',
       'id_prov': ''
+    },
+    clientes: [],
+    newCliente: {
+      'cod_cli': '',
+      'observ_cli': '',
+      'estado_cli': '',
+      'fechaini_cli': '',
+      'fechafin_cli': '',
+      'id_emp': '',
+      'id_fec': '',
+      'id_per': ''
+    },
+    fillCliente: {
+      'id_cli': '',
+      'cod_cli': '',
+      'observ_cli': '',
+      'estado_cli': '',
+      'fechaini_cli': '',
+      'fechafin_cli': '',
+      'id_emp': '',
+      'id_fec': '',
+      'id_per': ''
     },
     paises: [],
     newPais: {
@@ -50068,6 +50091,7 @@ var app = new Vue({
         _this32.errors = [];
         $('#editPersona').modal('hide');
         $('#editProveedor').modal('show');
+        $('#editCliente').modal('show');
       })["catch"](function (error) {
         _this32.errors = error.response.data;
       });
@@ -50562,6 +50586,149 @@ var app = new Vue({
       _this57.getRoles();
 
       toastr.success('Rol eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "getCliente", function getCliente() {
+    var _this58 = this;
+
+    var urlCliente = 'getCliente';
+    axios.get(urlCliente).then(function (response) {
+      _this58.clientes = response.data;
+    });
+  }), _defineProperty(_methods, "createCliente", function createCliente() {
+    var _this59 = this;
+
+    var urlGuardarCliente = 'storeCliente';
+    axios.post(urlGuardarCliente, this.newCliente).then(function (response) {
+      _this59.getCliente();
+
+      _this59.cod_cli = '';
+      _this59.observ_cli = '';
+      _this59.estado_cli = '';
+      _this59.fechaini_cli = '';
+      _this59.fechafin_cli = '';
+      _this59.id_emp = '';
+      _this59.id_fec = '';
+      _this59.errors = [];
+      $('#crearCliente').modal('hide');
+      toastr.success('Se ha añadido un nuevo Cliente');
+    })["catch"](function (error) {
+      _this59.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editCliente", function editCliente(clientes) {
+    this.fillPersona.id_contrib = '';
+    this.fillPersona.id_ident = '';
+    this.fillPersona.id_ciu = '';
+    this.fillPersona.doc_per = '';
+    this.fillPersona.organiz_per = '';
+    this.fillPersona.nombre_per = '';
+    this.fillPersona.apel_per = '';
+    this.fillPersona.direc_per = '';
+    this.fillPersona.fono1_per = '';
+    this.fillPersona.fono2_per = '';
+    this.fillPersona.cel1_per = '';
+    this.fillPersona.cel2_per = '';
+    this.fillPersona.fecnac_per = '';
+    this.fillPersona.correo_per = '';
+    this.fillPersona.estado_per = '';
+    this.fillPersona.fechaini_per = '';
+    this.fillPersona.fechafin_per = ''; //persona
+
+    this.fillPersona.id_per = proveedor.id_per;
+    this.fillPersona.id_contrib = proveedor.id_contrib;
+    this.fillPersona.id_ident = proveedor.id_ident;
+    this.fillPersona.id_ciu = proveedor.id_ciu;
+    this.fillPersona.doc_per = proveedor.doc_per;
+    this.fillPersona.organiz_per = proveedor.organiz_per;
+    this.fillPersona.nombre_per = proveedor.nombre_per;
+    this.fillPersona.apel_per = proveedor.apel_per;
+    this.fillPersona.direc_per = proveedor.direc_per;
+    this.fillPersona.fono1_per = proveedor.fono1_per;
+    this.fillPersona.fono2_per = proveedor.fono2_per;
+    this.fillPersona.cel1_per = proveedor.cel1_per;
+    this.fillPersona.cel2_per = proveedor.cel2_per;
+    this.fillPersona.fecnac_per = proveedor.fecnac_per;
+    this.fillPersona.correo_per = proveedor.correo_per;
+    this.fillPersona.estado_per = proveedor.estado_per;
+    this.fillPersona.fechaini_per = proveedor.fechaini_per;
+    this.fillPersona.fechafin_per = proveedor.fechafin_per;
+    $('#editPersona').modal('show');
+  }), _defineProperty(_methods, "updateCliente", function updateCliente(id) {
+    var _this60 = this;
+
+    var url = 'updateCliente/' + id;
+    axios.post(url, this.fillCliente).then(function (response) {
+      _this60.getCliente(); //persona
+
+
+      _this60.fillPersona.id_per = proveedor.id_per;
+      _this60.fillPersona.id_contrib = proveedor.id_contrib;
+      _this60.fillPersona.id_ident = proveedor.id_ident;
+      _this60.fillPersona.id_ciu = proveedor.id_ciu;
+      _this60.fillPersona.doc_per = proveedor.doc_per;
+      _this60.fillPersona.organiz_per = proveedor.organiz_per;
+      _this60.fillPersona.nombre_per = proveedor.nombre_per;
+      _this60.fillPersona.apel_per = proveedor.apel_per;
+      _this60.fillPersona.direc_per = proveedor.direc_per;
+      _this60.fillPersona.fono1_per = proveedor.fono1_per;
+      _this60.fillPersona.fono2_per = proveedor.fono2_per;
+      _this60.fillPersona.cel1_per = proveedor.cel1_per;
+      _this60.fillPersona.cel2_per = proveedor.cel2_per;
+      _this60.fillPersona.fecnac_per = proveedor.fecnac_per;
+      _this60.fillPersona.correo_per = proveedor.correo_per;
+      _this60.fillPersona.estado_per = proveedor.estado_per;
+      _this60.fillPersona.fechaini_per = proveedor.fechaini_per;
+      _this60.fillPersona.fechafin_per = proveedor.fechafin_per;
+      _this60.cod_cli = '';
+      _this60.observ_cli = '';
+      _this60.estado_cli = '';
+      _this60.fechaini_cli = '';
+      _this60.fechafin_cli = '';
+      _this60.id_emp = '';
+      _this60.id_fec = '';
+      _this60.id_per = '';
+      _this60.errors = [];
+      $('#editCliente').modal('hide');
+      toastr.success('Cliente actualizado con éxito');
+    })["catch"](function (error) {
+      _this60.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteCliente", function deleteCliente(clientes) {
+    var _this61 = this;
+
+    var url = 'deleteCliente/' + clientes.id_cli;
+    axios.post(url).then(function (response) {
+      _this61.getCliente();
+
+      toastr.success('Cliente eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "createPersonaCliente", function createPersonaCliente() {
+    var _this62 = this;
+
+    var urlGuardarPersona = 'storePersona';
+    axios.post(urlGuardarPersona, this.newPersona).then(function (response) {
+      _this62.newPersona.id_contrib = '';
+      _this62.newPersona.id_ident = '';
+      _this62.newPersona.id_ciu = '';
+      _this62.newCliente.doc_per = '';
+      _this62.newPersona.organiz_per = '';
+      _this62.newPersona.nombre_per = '';
+      _this62.newPersona.apel_per = '';
+      _this62.newPersona.direc_per = '';
+      _this62.newPersona.fono1_per = '';
+      _this62.newPersona.fono2_per = '';
+      _this62.newPersona.cel1_per = '';
+      _this62.newPersona.cel2_per = '';
+      _this62.newPersona.fecnac_per = '';
+      _this62.newPersona.correo_per = '';
+      _this62.newPersona.estado_per = '';
+      _this62.newPersona.fechaini_per = '';
+      _this62.newPersona.fechafin_per = '';
+      _this62.errors = [];
+      $('#crearPersona').modal('hide');
+      _this62.newCliente.id_per = response.data;
+      $('#crearCliente').modal('show');
+    })["catch"](function (error) {
+      _this62.errors = error.response.data;
     });
   }), _methods)
 });

@@ -17,6 +17,8 @@
         @include('admin.Producto.index') 
     </div>
     <div class="tab-pane fade" id="nav-cliente">
+         @include('admin.Cliente.index') 
+    </div>
     </div>
     <div class="tab-pane fade" id="nav-factura">
     </div>

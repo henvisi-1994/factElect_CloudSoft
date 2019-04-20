@@ -36,7 +36,7 @@
                             </label>
                             <select class="form-control" name="estado_marca" v-model="newMarca.estado_marca">
                                 <option disabled="" selected="" value="none">
-                                    Selecione Estado
+                                    Seleccione Estado
                                 </option>
                                 <option value="A">
                                     Activo

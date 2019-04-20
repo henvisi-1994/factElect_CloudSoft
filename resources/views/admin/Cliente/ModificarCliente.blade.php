@@ -1,5 +1,5 @@
-<form method="POST" v-on:submit.prevent="createCategoria">
-    <div class="modal fade" id="crearCategoria">
+<form method="POST" v-on:submit.prevent="updateCliente(fillCliente.id_cli)">
+    <div class="modal fade" id="editCliente">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,7 +9,7 @@
                         </span>
                     </button>
                     <h4>
-                        Crear
+                        Modificar
                     </h4>
                     <span class="text-danger" v-for="error in errors">
                         @{{ error }}
@@ -19,25 +19,27 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">
-                                Nombre
+                                Código
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="nomb_cat" placeholder="Ingrese Nombre" type="text" v-model="newcategoria.nomb_cat">
+                            <input class="form-control" id="exampleInputEmail1" name="cod_cli" placeholder="Ingrese Código" type="text" v-model="fillCliente.cod_cli">
                             </input>
                         </div>
+
+                       
                         <div class="form-group">
                             <label>
-                                Observacion
+                                Observación
                             </label>
-                            <textarea class="form-control" name="observ_cat" placeholder="Ingrese Observación" rows="3" v-model="newcategoria.observ_cat">
+                            <textarea class="form-control" name="observ_cli" placeholder="Ingrese Observación" rows="3" v-model="fillCliente.observ_cli">
                             </textarea>
                         </div>
                         <div class="form-group">
                             <label>
                                 Estado
                             </label>
-                            <select class="form-control" name="estado_cat" v-model="newcategoria.estado_cat">
+                            <select class="form-control" name="estado_cli" v-model="fillCliente.estado_cli">
                                 <option disabled="" selected="" value="none">
-                                    Seleccione Estado
+                                    Selecione Estado
                                 </option>
                                 <option value="A">
                                     Activo
@@ -54,21 +56,21 @@
                             <label>
                                 Fecha Inicial:
                             </label>
-                            <input class="form-control" name="fechaini_cat" type="date" v-model="newcategoria.fechaini_cat">
+                            <input class="form-control" name="fechaini_cli" type="date" v-model="fillCliente.fechaini_cli">
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
                                 Fecha Final:
                             </label>
-                            <input class="form-control" name="fechafin_cat" type="date" v-model="newcategoria.fechafin_cat">
+                            <input class="form-control" name="fechafin_cli" type="date" v-model="fillCliente.fechafin_cli">
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
                                 Empresa
                             </label>
-                            <select class="form-control" name="id_emp" v-model="newcategoria.id_emp">
+                            <select class="form-control" name="id_emp" v-model="fillCliente.id_emp">
                                 <option disabled="" selected="" value="none">
                                     Seleccione una Empresa
                                 </option>
@@ -83,17 +85,20 @@
                             <label>
                                 Periodo
                             </label>
-                            <select class="form-control" name="id_fec" v-model="newcategoria.id_fec">
+                            <select class="form-control" name="id_fec" v-model="fillCliente.id_fec">
                                 <option disabled="" selected="" value="none">
-                                    Seleccione una Periodo
+                                    Seleccione un Periodo
                                 </option>
-                                @foreach($fechas as $periodo)
-                                <option value="{{$periodo->id_fec}}">
-                                    {{$periodo->nomb_fec}}
+                                @foreach($fechas as $fecha)
+                                <option value="{{$fecha->id_fec}}">
+                                    {{$fecha->nomb_fec}}
                                 </option>
                                 @endforeach
                             </select>
                         </div>
+
+                        
+                        
                         <input name="_token" type="hidden" value="{{ csrf_token() }}">
                         </input>
                     </div>
@@ -106,3 +111,4 @@
         </div>
     </div>
 </form>
+

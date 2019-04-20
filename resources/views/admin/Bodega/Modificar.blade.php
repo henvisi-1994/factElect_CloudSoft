@@ -62,7 +62,7 @@
                             </label>
                             <select class="form-control" name="estado_bod" v-model="fillBodega.estado_bod">
                                 <option disabled="" selected="" value="none">
-                                    Selecione Estado
+                                    Seleccione Estado
                                 </option>
                                 <option value="A">
                                     Activo
@@ -95,7 +95,7 @@
                             </label>
                             <select class="form-control" name="id_pais" v-model="fillBodega.id_pais">
                                 <option disabled="" selected="" value="none">
-                                    Selecione un País
+                                    Seleccione un País
                                 </option>
                                 @foreach($paises as $pais)
                                 <option value="{{$pais->id_pais}}">
@@ -110,7 +110,7 @@
                             </label>
                             <select class="form-control" name="id_prov" v-model="fillBodega.id_prov">
                                 <option disabled="" selected="" value="none">
-                                    Selecione una Provincia
+                                    Seleccione una Provincia
                                 </option>
                                 @foreach($provincias as $provincia)
                                 <option value="{{$provincia->id_prov}}">
@@ -126,7 +126,7 @@
                             </label>
                             <select class="form-control" name="id_ciu" v-model="fillBodega.id_ciu">
                                 <option disabled="" selected="" value="none">
-                                    Selecione una Ciudad
+                                    Seleccione una Ciudad
                                 </option>
                                 @foreach($ciudades as $ciudad)
                                 <option value="{{$ciudad->id_ciu}}">
