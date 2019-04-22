@@ -1,5 +1,5 @@
 <form method="POST" v-on:submit.prevent="updatePersona(fillPersona.id_per)">
-    <div class="modal fade" id="editPersona" style="overflow-y: scroll;">
+    <div class="modal fade" id="editPersonaCli" style="overflow-y: scroll;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

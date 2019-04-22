@@ -1,20 +1,22 @@
 <div class="box">
     <div class="box-header">
         <h1 class="box-title">
-            Cliente
+            Forma de Pago
         </h1>
     </div>
     <div class="box-body">
-        <a class="btn btn-primary pull-left" data-target="#crearPersonaCli" data-toggle="modal" href="#">
-            Crear
-        </a>
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <a class="btn btn-primary btn-sm"  data-target="#crearFormaPago" data-toggle="modal" href="#">
+                Crear
+            </a>
+        </div>
         <br>
             <br>
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>
-                                Código
+                                Nombre
                             </th>
                             <th>
                                 Observación
@@ -35,33 +37,30 @@
                                 Periodo
                             </th>
                             <th>
-                                Persona
-                            </th>
-                            <th>
                                 Configuración
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="cliente in clientes">
+                        <tr v-for="formapago in formaPago">
                             <td>
-                                @{{cliente.cod_cli}}
+                                @{{formapago.nomb_formapago}}
                             </td>
                             <td>
-                                @{{cliente.observ_cli}}
+                                @{{formapago.observ_formapago}}
                             </td>
                             <td>
-                                <div v-if="cliente.estado_cli == 'A'">
+                                <div v-if="formapago.estado_formapago == 'A'">
                                     <span class="label label-success">
                                         Activo
                                     </span>
                                 </div>
-                                <div v-else-if="cliente.estado_cli == 'P'">
+                                <div v-else-if="formapago.estado_formapago == 'P'">
                                     <span class="label label-warning">
                                         Pendiente
                                     </span>
                                 </div>
-                                <div v-else-if="cliente.estado_cli == 'I'">
+                                <div v-else-if="formapago.estado_formapago == 'I'">
                                     <span class="label label-danger">
                                         Inactivo
                                     </span>
@@ -73,26 +72,23 @@
                                 </div>
                             </td>
                             <td>
-                                @{{cliente.fechaini_cli}}
+                                @{{formapago.fechaini_formapago}}
                             </td>
                             <td>
-                                @{{cliente.fechafin_cli}}
+                                @{{formapago.fechafin_formapago}}
                             </td>
                             <td>
-                                @{{cliente.nombre_emp}}
+                                @{{formapago.nombre_emp}}
                             </td>
                             <td>
-                                @{{cliente.nomb_fec}}
-                            </td>
-                             <td>
-                                @{{cliente.nombre_per}}@{{clientes.apel_per}}
+                                @{{formapago.nomb_fec}}
                             </td>
                             <td>
-                                <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editCliente(cliente)">
+                                <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editformaPago(formapago)">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o">
                                     </i>
                                 </a>
-                                <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deleteCliente(cliente)">
+                                <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deleteformaPago(formapago)">
                                     <i aria-hidden="true" class="fa fa-trash-o">
                                     </i>
                                 </a>
@@ -100,11 +96,8 @@
                         </tr>
                     </tbody>
                 </table>
-               
-                @include('admin.Cliente.Crear')
-                @include('admin.Cliente.CrearCliente')
-            @include('admin.Cliente.Modificar')
-            @include('admin.Cliente.ModificarCliente')
+                @include('admin.FormaPago.Crear')
+               @include('admin.FormaPago.Modificar')
             </br>
         </br>
     </div>

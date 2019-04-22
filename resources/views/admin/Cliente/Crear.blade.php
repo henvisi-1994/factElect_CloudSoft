@@ -1,5 +1,5 @@
 <form method="POST" v-on:submit.prevent="createPersonaCliente">
-    <div class="modal fade" id="crearPersona" style="overflow-y: scroll;">
+    <div class="modal fade" id="crearPersonaCli" style="overflow-y: scroll;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,7 +9,7 @@
                         </span>
                     </button>
                     <h4>
-                       Datos Personales
+                       Datos Personales Cliente
                     </h4>
                     <span class="text-danger" v-for="error in errors">
                         @{{ error }}

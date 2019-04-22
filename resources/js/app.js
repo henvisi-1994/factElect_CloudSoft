@@ -38,6 +38,8 @@ const app = new Vue({
         this.getRoles();
         this.getCliente();
         this.getDescuento();
+        this.getFormulario();
+        this.getFormaPago();
     },
     data: {
         categorias: [],
@@ -60,96 +62,95 @@ const app = new Vue({
             'id_emp': '',
             'id_fec': ''
         },
-        bodegas:[],
-        newbodega:{
-            'nombre_bod':'',
-            'direcc_bod':'',
-            'telef_bod':'',
-            'cel_bod':'',
-            'nomb_contac_bod':'',
-            'fechaini_bod':'',
-            'fechafin_bod':'',
-            'id_ciu':'',
-            'id_pais':'',
-            'id_prov':''
+        bodegas: [],
+        newbodega: {
+            'nombre_bod': '',
+            'direcc_bod': '',
+            'telef_bod': '',
+            'cel_bod': '',
+            'nomb_contac_bod': '',
+            'fechaini_bod': '',
+            'fechafin_bod': '',
+            'id_ciu': '',
+            'id_pais': '',
+            'id_prov': ''
         },
-        fillBodega:{
+        fillBodega: {
             'id_bod': '',
-            'nombre_bod':'',
-            'direcc_bod':'',
-            'telef_bod':'',
-            'cel_bod':'',
-            'nomb_contac_bod':'',
-            'fechaini_bod':'',
-            'fechafin_bod':'',
-            'id_ciu':'',
-            'id_pais':'',
-            'id_prov':''
+            'nombre_bod': '',
+            'direcc_bod': '',
+            'telef_bod': '',
+            'cel_bod': '',
+            'nomb_contac_bod': '',
+            'fechaini_bod': '',
+            'fechafin_bod': '',
+            'id_ciu': '',
+            'id_pais': '',
+            'id_prov': ''
         },
-        descuentos:[],
-        newDescuento:{
-            'nomb_desc':'',
-            'observ_desc':'',
-            'estado_desc':'',
-            'fechaini_desc':'',
-            'fechafin_desc':'',
-            'id_emp':'',
-            'id_fec':''
+        descuentos: [],
+        newDescuento: {
+            'nomb_desc': '',
+            'observ_desc': '',
+            'estado_desc': '',
+            'fechaini_desc': '',
+            'fechafin_desc': '',
+            'id_emp': '',
+            'id_fec': ''
         },
-        fillDescuento:{
-            'id_desc':'',
-            'nomb_desc':'',
-            'observ_desc':'',
-            'estado_desc':'',
-            'fechaini_desc':'',
-            'fechafin_desc':'',
-            'id_emp':'',
-            'id_fec':''
+        fillDescuento: {
+            'id_desc': '',
+            'nomb_desc': '',
+            'observ_desc': '',
+            'estado_desc': '',
+            'fechaini_desc': '',
+            'fechafin_desc': '',
+            'id_emp': '',
+            'id_fec': ''
         },
-        clientes:[],
-        newCliente:{
-            'cod_cli':'',
-            'observ_cli':'',
-            'estado_cli':'',
-            'fechaini_cli':'',
-            'fechafin_cli':'',
-            'id_emp':'',
-            'id_fec':'',
-            'id_per':''
+        clientes: [],
+        newCliente: {
+            'cod_cli': '',
+            'observ_cli': '',
+            'estado_cli': '',
+            'fechaini_cli': '',
+            'fechafin_cli': '',
+            'id_emp': '',
+            'id_fec': '',
+            'id_per': ''
         },
-        fillCliente:{
-            'id_cli':'',
-            'cod_cli':'',
-            'observ_cli':'',
-            'estado_cli':'',
-            'fechaini_cli':'',
-            'fechafin_cli':'',
-            'id_emp':'',
-            'id_fec':'',
-            'id_per':''
-
+        fillCliente: {
+            'id_cli': '',
+            'cod_cli': '',
+            'observ_cli': '',
+            'estado_cli': '',
+            'fechaini_cli': '',
+            'fechafin_cli': '',
+            'id_emp': '',
+            'id_fec': '',
+            'id_per': ''
         },
-        paises:[],
-        newPais:{
-            'nomb_pais':'',
-            'estado_pais':''
+        paises: [],
+        newPais: {
+            'nomb_pais': '',
+            'estado_pais': ''
         },
-        fillPais:{
-            'id_pais':'',
-            'nomb_pais':'',
-            'estado_pais':''
+        fillPais: {
+            'id_pais': '',
+            'nomb_pais': '',
+            'estado_pais': ''
         },
-        provincias:[],
-        newProvincia:{
-            'nomb_prov':'',
-            'id_pais':'',
-            'estado_prov':''
+        provincias: [],
+        newProvincia: {
+            'nomb_prov': '',
+            'id_pais': '',
+            'estado_prov': ''
         },
-        fillProvincia:{
-            'id_prov':'',
-            'nomb_prov':'',
-            'id_pais':'',
-            'estado_prov':''
+        fillProvincia: {
+            'id_prov': '',
+            'nomb_prov': '',
+            'id_pais': '',
+            'estado_prov': ''
         },
         ciudades: [],
         newCiudad: {
@@ -162,7 +163,7 @@ const app = new Vue({
             'id_fec': ''
         },
         fillCiudad: {
-            'id_ciu':'',
+            'id_ciu': '',
             'nomb_ciu': '',
             'estado_ciu': '',
             'fechaini_ciu': '',
@@ -187,7 +188,7 @@ const app = new Vue({
             'fechafin_ident': ''
         },
         fillIdentificacion: {
-            'id_ident':'',
+            'id_ident': '',
             'sri_ident': '',
             'descrip_ident': '',
             'observ_ident': '',
@@ -204,7 +205,7 @@ const app = new Vue({
             'fechafin_marca': ''
         },
         fillMarca: {
-            'id_marca':'',
+            'id_marca': '',
             'nomb_marca': '',
             'observ_marca': '',
             'estado_marca': '',
@@ -238,7 +239,7 @@ const app = new Vue({
             'fechafin_prod': ''
         },
         fillProducto: {
-            'id_prod':'',
+            'id_prod': '',
             'id_emp': '',
             'id_fec': '',
             'codigo_prod': '',
@@ -263,7 +264,7 @@ const app = new Vue({
             'fechaini_prod': '',
             'fechafin_prod': ''
         },
-         newPersona: {
+        newPersona: {
             'id_contrib': '',
             'id_ident': '',
             'id_ciu': '',
@@ -333,7 +334,7 @@ const app = new Vue({
             'fechafin_contrib': ''
         },
         fillTipoContribuyente: {
-            'id_contrib':'',
+            'id_contrib': '',
             'nomb_contrib': '',
             'obser_contrib': '',
             'estado_contrib': '',
@@ -349,71 +350,110 @@ const app = new Vue({
             'fechafin_unidad': ''
         },
         fillUnidad: {
-            'id_unidad':'',
+            'id_unidad': '',
             'nomb_unidad': '',
             'observ_unidad': '',
             'estado_unidad': '',
             'fechaini_unidad': '',
             'fechafin_unidad': ''
         },
-         empresas: [],
-        newEmpresa:{
-            'id_ciu':'',
-            'totestab_emp':'',
-            'rucempresa_emp':'', 
-            'razon_emp':'', 
-            'nombre_emp':'', 
-            'apellido_emp':'',
-            'contacto_emp':'', 
-            'direcc_emp':'',
-            'telefono_emp':'', 
-            'celular_emp':'', 
-            'fax_emp':'', 
-            'email_emp':'', 
-            'estado_emp':'',
+        empresas: [],
+        newEmpresa: {
+            'id_ciu': '',
+            'totestab_emp': '',
+            'rucempresa_emp': '',
+            'razon_emp': '',
+            'nombre_emp': '',
+            'apellido_emp': '',
+            'contacto_emp': '',
+            'direcc_emp': '',
+            'telefono_emp': '',
+            'celular_emp': '',
+            'fax_emp': '',
+            'email_emp': '',
+            'estado_emp': '',
             'contador_emp': '',
-            'tipcontrib_emp':'',
-            'fechaini_emp':'',
-            'fechafin_emp':''
+            'tipcontrib_emp': '',
+            'fechaini_emp': '',
+            'fechafin_emp': ''
         },
-        fillEmpresa:{
-            'id_ciu':'',
-            'totestab_emp':'',
-            'rucempresa_emp':'', 
-            'razon_emp':'', 
-            'nombre_emp':'', 
-            'apellido_emp':'',
-            'contacto_emp':'', 
-            'direcc_emp':'',
-            'telefono_emp':'', 
-            'celular_emp':'', 
-            'fax_emp':'', 
-            'email_emp':'', 
-            'estado_emp':'',
+        fillEmpresa: {
+            'id_ciu': '',
+            'totestab_emp': '',
+            'rucempresa_emp': '',
+            'razon_emp': '',
+            'nombre_emp': '',
+            'apellido_emp': '',
+            'contacto_emp': '',
+            'direcc_emp': '',
+            'telefono_emp': '',
+            'celular_emp': '',
+            'fax_emp': '',
+            'email_emp': '',
+            'estado_emp': '',
             'contador_emp': '',
-            'tipcontrib_emp':'',
-            'fechaini_emp':'',
-             'fechafin_emp':''
+            'tipcontrib_emp': '',
+            'fechaini_emp': '',
+            'fechafin_emp': ''
         },
-        roles:[],
-        newRol:{
-            'id_emp':'',
-            'id_fec':'',
-            'nomb_rol':'',
-            'observ_rol': '', 
+        roles: [],
+        newRol: {
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_rol': '',
+            'observ_rol': '',
             'estado_rol': '',
-            'fechaini_rol': '', 
+            'fechaini_rol': '',
             'fechafin_rol': ''
         },
-
-        fillRol:{
-            'id_emp':'',
-            'id_fec':'',
-            'nomb_rol':'',
-            'observ_rol': '', 
+        fillRol: {
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_rol': '',
+            'observ_rol': '',
             'estado_rol': '',
-            'fechaini_rol': '', 
+            'fechaini_rol': '',
             'fechafin_rol': ''
+        },
+        formularios: [],
+        newFormulario: {
+            'id_padcodform': '',
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_codform': '',
+            'observ_codform': '',
+            'estado_codform': '',
+            'fechaini_codform': '',
+            'fechafin_codform': ''
+        },
+        fillFormulario: {
+            'id_padcodform': '',
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_codform': '',
+            'observ_codform': '',
+            'estado_codform': '',
+            'fechaini_codform': '',
+            'fechafin_codform': ''
+        },
+        formaPago: [],
+        newFormaPago: {
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_formapago': '',
+            'observ_formapago': '',
+            'estado_formapago': '',
+            'fechaini_formapago': '',
+            'fechafin_formapago': ''
+        },
+        fillFormaPago: {
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_formapago': '',
+            'observ_formapago': '',
+            'estado_formapago': '',
+            'fechaini_formapago': '',
+            'fechafin_formapago': ''
         },
         errors: [],
         buscar_cat: '',
@@ -427,10 +467,10 @@ const app = new Vue({
     },
     methods: {
         getCategorias: function() {
-                var urlCategorias = 'getCategorias';
-                axios.get(urlCategorias).then(response => {
-                    this.categorias = response.data
-                });
+            var urlCategorias = 'getCategorias';
+            axios.get(urlCategorias).then(response => {
+                this.categorias = response.data
+            });
         },
         createCategoria: function() {
             var urlGuardarCategoria = 'storeCategoria';
@@ -573,7 +613,7 @@ const app = new Vue({
             });
         },
         editMarca: function(marca) {
-            this.fillMarca.id_marca=marca.id_marca;
+            this.fillMarca.id_marca = marca.id_marca;
             this.fillMarca.nomb_marca = marca.nomb_marca;
             this.fillMarca.observ_marca = marca.observ_marca;
             this.fillMarca.estado_marca = marca.estado_marca;
@@ -581,7 +621,7 @@ const app = new Vue({
             this.fillMarca.fechafin_marca = marca.fechafin_marca;
             $('#editMarca').modal('show');
         },
-       updateMarca: function(id) {
+        updateMarca: function(id) {
             var url = 'updateMarca/' + id;
             axios.post(url, this.fillMarca).then(response => {
                 this.getMarcas();
@@ -631,7 +671,7 @@ const app = new Vue({
             });
         },
         editUnidad: function(unidades) {
-            this.fillUnidad.id_unidad=unidades.id_unidad;
+            this.fillUnidad.id_unidad = unidades.id_unidad;
             this.fillUnidad.nomb_unidad = unidades.nomb_unidad;
             this.fillUnidad.observ_unidad = unidades.observ_unidad;
             this.fillUnidad.estado_unidad = unidades.estado_unidad;
@@ -655,7 +695,7 @@ const app = new Vue({
                 this.errors = error.response.data;
             });
         },
-       deleteUnidad: function(unidades) {
+        deleteUnidad: function(unidades) {
             var url = 'deleteUnidad/' + unidades.id_unidad;
             axios.post(url).then(response => {
                 this.getUnidad();
@@ -744,7 +784,7 @@ const app = new Vue({
             });
         },
         editCiudad: function(ciudades) {
-            this.fillCiudad.id_ciu=ciudades.id_ciu;
+            this.fillCiudad.id_ciu = ciudades.id_ciu;
             this.fillCiudad.nomb_ciu = ciudades.nomb_ciu;
             this.fillCiudad.estado_ciu = ciudades.estado_ciu;
             this.fillCiudad.fechaini_ciu = ciudades.fechaini_ciu;
@@ -781,7 +821,7 @@ const app = new Vue({
             });
         },
         //Productos
-         getImagenProducto(event) {
+        getImagenProducto(event) {
             //Asignamos la imagen a  nuestra data
             var files = event.target.files || event.dataTransfer.files;
             if (!files.length) return;
@@ -799,7 +839,7 @@ const app = new Vue({
         removeImage: function(event) {
             this.image = '';
         },
-         getProductos: function() {
+        getProductos: function() {
             var urlProducto = 'getProductos';
             axios.get(urlProducto).then(response => {
                 this.productos = response.data;
@@ -859,7 +899,7 @@ const app = new Vue({
             this.fillProducto.ubicacion_prod = producto.ubicacion_prod;
             this.fillProducto.stockmin_prod = producto.stockmin_prod;
             this.fillProducto.stockmax_prod = producto.stockmax_prod;
-            this.fillProducto.fechaing_prod= producto.fechaing_prod;
+            this.fillProducto.fechaing_prod = producto.fechaing_prod;
             this.fillProducto.fechaelab_prod = producto.fechaelab_prod;
             this.fillProducto.fechacad_prod = producto.fechacad_prod;
             this.fillProducto.aplicaiva_prod = producto.aplicaiva_prod;
@@ -900,7 +940,7 @@ const app = new Vue({
             this.fillProducto.fechafin_prod = producto.fechafin_prod;
             $('#viewProducto').modal('show');
         },
-        updateProducto: function(id,imagen_prod) {
+        updateProducto: function(id, imagen_prod) {
             var url = 'updateProducto/' + id;
             this.fillProducto.imagen_prod = imagen_prod;
             axios.post(url, this.fillProducto).then(response => {
@@ -942,7 +982,7 @@ const app = new Vue({
                 toastr.success('Producto eliminado con éxito');
             });
         },
-         //Persona
+        //Persona
         getPersonas: function() {
             var urlPersona = 'getProductos';
             axios.get(urlPersona).then(response => {
@@ -955,7 +995,7 @@ const app = new Vue({
                 this.newPersona.id_contrib = '';
                 this.newPersona.id_ident = '';
                 this.newPersona.id_ciu = '';
-                this.newProveedor.doc_per='';
+                this.newProveedor.doc_per = '';
                 this.newPersona.organiz_per = '';
                 this.newPersona.nombre_per = '';
                 this.newPersona.apel_per = '';
@@ -1061,7 +1101,7 @@ const app = new Vue({
             var url = 'updateProveedor/' + id;
             axios.post(url, this.fillProveedor).then(response => {
                 this.getProveedores();
-                                this.fillPersona.id_contrib = '';
+                this.fillPersona.id_contrib = '';
                 this.fillPersona.id_ident = '';
                 this.fillPersona.id_ciu = '';
                 this.fillPersona.doc_per = '';
@@ -1104,7 +1144,7 @@ const app = new Vue({
             this.fillProveedor.fechaini_prov = proveedor.fechaini_prov;
             this.fillProveedor.fechafin_prov = proveedor.fechafin_prov;
             //persona
-             this.fillPersona.id_per = proveedor.id_per;
+            this.fillPersona.id_per = proveedor.id_per;
             this.fillPersona.id_contrib = proveedor.id_contrib;
             this.fillPersona.id_ident = proveedor.id_ident;
             this.fillPersona.id_ciu = proveedor.id_ciu;
@@ -1132,31 +1172,28 @@ const app = new Vue({
                 toastr.success('Proveedor eliminado con éxito');
             });
         },
-
-
-
         ///Metodos de Bodega
         getBodega: function() {
-                var urlBodega = 'getBodega';
-                axios.get(urlBodega).then(response => {
-                    this.bodegas = response.data
-                });
+            var urlBodega = 'getBodega';
+            axios.get(urlBodega).then(response => {
+                this.bodegas = response.data
+            });
         },
         createBodega: function() {
             var urlGuardarBodega = 'storeBodega';
             axios.post(urlGuardarBodega, this.newbodega).then((response) => {
                 this.getBodega();
-                this.nombre_bod='';
-                this.direcc_bod='';
-                this.telef_bod='';
-                this.cel_bod='';
-                this.nomb_contac_bod='';
-                this.estado_bod='';
-                this.fechaini_bod='';
-                this.fechafin_bod='';
-                this.id_ciu='';
-                this.id_pais='';
-                this.id_prov='';
+                this.nombre_bod = '';
+                this.direcc_bod = '';
+                this.telef_bod = '';
+                this.cel_bod = '';
+                this.nomb_contac_bod = '';
+                this.estado_bod = '';
+                this.fechaini_bod = '';
+                this.fechafin_bod = '';
+                this.id_ciu = '';
+                this.id_pais = '';
+                this.id_prov = '';
                 this.errors = [];
                 $('#crearBodega').modal('hide');
                 toastr.success('Se ha añadido una nueva Bodega');
@@ -1165,35 +1202,35 @@ const app = new Vue({
             });
         },
         editBodega: function(bodegas) {
-            this.fillBodega.id_bod=bodegas.id_bod;
-            this.fillBodega.nombre_bod=bodegas.nombre_bod;
-            this.fillBodega.direcc_bod=bodegas.direcc_bod;
-            this.fillBodega.telef_bod=bodegas.telef_bod;
-            this.fillBodega.cel_bod=bodegas.cel_bod;
-            this.fillBodega.nomb_contac_bod=bodegas.nomb_contac_bod;
-            this.fillBodega.fechaini_bod=bodegas.fechaini_bod;
-            this.fillBodega.fechafin_bod=bodegas.fechafin_bod;
-            this.fillBodega.estado_bod=bodegas.estado_bod;
-            this.fillBodega.id_ciu=bodegas.id_ciu;
-            this.fillBodega.id_pais=bodegas.id_pais;
-            this.fillBodega.id_prov=bodegas.id_prov;
+            this.fillBodega.id_bod = bodegas.id_bod;
+            this.fillBodega.nombre_bod = bodegas.nombre_bod;
+            this.fillBodega.direcc_bod = bodegas.direcc_bod;
+            this.fillBodega.telef_bod = bodegas.telef_bod;
+            this.fillBodega.cel_bod = bodegas.cel_bod;
+            this.fillBodega.nomb_contac_bod = bodegas.nomb_contac_bod;
+            this.fillBodega.fechaini_bod = bodegas.fechaini_bod;
+            this.fillBodega.fechafin_bod = bodegas.fechafin_bod;
+            this.fillBodega.estado_bod = bodegas.estado_bod;
+            this.fillBodega.id_ciu = bodegas.id_ciu;
+            this.fillBodega.id_pais = bodegas.id_pais;
+            this.fillBodega.id_prov = bodegas.id_prov;
             $('#editBodega').modal('show');
         },
         updateBodega: function(id) {
             var url = 'updateBodega/' + id;
             axios.post(url, this.fillBodega).then(response => {
                 this.getBodega();
-                this.nombre_bod='';
-                this.direcc_bod='';
-                this.telef_bod='';
-                this.cel_bod='';
-                this.nomb_contac_bod='';
-                this.estado_bod='';
-                this.fechaini_bod='';
-                this.fechafin_bod='';
-                this.id_ciu='';
-                this.id_pais='';
-                this.id_prov='';
+                this.nombre_bod = '';
+                this.direcc_bod = '';
+                this.telef_bod = '';
+                this.cel_bod = '';
+                this.nomb_contac_bod = '';
+                this.estado_bod = '';
+                this.fechaini_bod = '';
+                this.fechafin_bod = '';
+                this.id_ciu = '';
+                this.id_pais = '';
+                this.id_prov = '';
                 this.errors = [];
                 $('#editBodega').modal('hide');
                 toastr.success('Bodega actualizada con éxito');
@@ -1208,22 +1245,19 @@ const app = new Vue({
                 toastr.success('Bodega eliminada con éxito');
             });
         },
-
-
-
         ///Metodos de Pais
         getPais: function() {
-                var urlPais = 'getPais';
-                axios.get(urlPais).then(response => {
-                    this.paises = response.data
-                });
+            var urlPais = 'getPais';
+            axios.get(urlPais).then(response => {
+                this.paises = response.data
+            });
         },
         createPais: function() {
             var urlGuardarPais = 'storePais';
             axios.post(urlGuardarPais, this.newPais).then((response) => {
                 this.getPais();
-                this.nomb_pais='';
-                this.estado_pais='';
+                this.nomb_pais = '';
+                this.estado_pais = '';
                 this.errors = [];
                 $('#crearPais').modal('hide');
                 toastr.success('Se ha añadido un nuevo Pais');
@@ -1232,17 +1266,17 @@ const app = new Vue({
             });
         },
         editPais: function(paises) {
-            this.fillPais.id_pais=paises.id_pais;
-            this.fillPais.nomb_pais=paises.nomb_pais;
-            this.fillPais.estado_pais=paises.estado_pais;
+            this.fillPais.id_pais = paises.id_pais;
+            this.fillPais.nomb_pais = paises.nomb_pais;
+            this.fillPais.estado_pais = paises.estado_pais;
             $('#editPais').modal('show');
         },
         updatePais: function(id) {
             var url = 'updatePais/' + id;
             axios.post(url, this.fillPais).then(response => {
                 this.getPais();
-                this.nomb_pais='';
-                this.estado_pais='';
+                this.nomb_pais = '';
+                this.estado_pais = '';
                 this.errors = [];
                 $('#editPais').modal('hide');
                 toastr.success('Pais actualizado con éxito');
@@ -1257,21 +1291,19 @@ const app = new Vue({
                 toastr.success('Pais eliminado con éxito');
             });
         },
-
-
         ///Metodos de Provincias
         getProvincia: function() {
-                var urlProvincia = 'getProvincia';
-                axios.get(urlProvincia).then(response => {
-                    this.provincias = response.data
-                });
+            var urlProvincia = 'getProvincia';
+            axios.get(urlProvincia).then(response => {
+                this.provincias = response.data
+            });
         },
         createProvincia: function() {
             var urlGuardarProvincia = 'storeProvincia';
             axios.post(urlGuardarProvincia, this.newProvincia).then((response) => {
                 this.getProvincia();
-                this.nomb_prov='';
-                this.estado_prov='';
+                this.nomb_prov = '';
+                this.estado_prov = '';
                 this.errors = [];
                 $('#crearProvincia').modal('hide');
                 toastr.success('Se ha añadido una nueva Provincia');
@@ -1280,19 +1312,19 @@ const app = new Vue({
             });
         },
         editProvincia: function(provincias) {
-            this.fillProvincia.id_prov=provincias.id_prov;
-            this.fillProvincia.id_pais=provincias.id_pais;
-            this.fillProvincia.nomb_prov=provincias.nomb_prov;
-            this.fillProvincia.estado_prov=provincias.estado_prov;
+            this.fillProvincia.id_prov = provincias.id_prov;
+            this.fillProvincia.id_pais = provincias.id_pais;
+            this.fillProvincia.nomb_prov = provincias.nomb_prov;
+            this.fillProvincia.estado_prov = provincias.estado_prov;
             $('#editProvincia').modal('show');
         },
         updateProvincia: function(id) {
             var url = 'updateProvincia/' + id;
             axios.post(url, this.fillProvincia).then(response => {
                 this.getProvincia();
-                this.id_pais='';
-                this.nomb_prov='';
-                this.estado_prov='';
+                this.id_pais = '';
+                this.nomb_prov = '';
+                this.estado_prov = '';
                 this.errors = [];
                 $('#editProvincia').modal('hide');
                 toastr.success('Provincia actualizada con éxito');
@@ -1307,8 +1339,8 @@ const app = new Vue({
                 toastr.success('Provincia eliminada con éxito');
             });
         },
-         ///Empresa
-         getEmpresa: function() {
+        ///Empresa
+        getEmpresa: function() {
             var urlEmpresa = 'getEmpresa';
             axios.get(urlEmpresa).then(response => {
                 this.empresas = response.data;
@@ -1334,7 +1366,7 @@ const app = new Vue({
                 this.newEmpresa.contador_emp = '';
                 this.newEmpresa.tipcontrib_emp = '';
                 this.newEmpresa.fechaini_emp = '';
-                this.newEmpresa.fechafin_emp= '';
+                this.newEmpresa.fechafin_emp = '';
                 this.errors = [];
                 $('#crearEmpresa').modal('hide');
                 toastr.success('Se añadido una nueva empresa');
@@ -1343,30 +1375,30 @@ const app = new Vue({
             });
         },
         editEmpresa: function(empresa) {
-                this.fillEmpresa.id_ciu = empresa.id_ciu;
-                this.fillEmpresa.totestab_emp = empresa.totestab_emp;
-                this.fillEmpresa.rucempresa_emp =empresa.rucempresa_emp;
-                this.fillEmpresa.razon_emp = empresa.razon_emp;
-                this.fillEmpresa.nombre_emp = empresa.nombre_emp;
-                this.fillEmpresa.apellido_emp = empresa.apellido_emp;
-                this.fillEmpresa.contacto_emp = empresa.contacto_emp;
-                this.fillEmpresa.direcc_emp = empresa.direcc_emp;
-                this.fillEmpresa.telefono_emp =empresa.telefono_emp;
-                this.fillEmpresa.celular_emp = empresa.celular_emp;
-                this.fillEmpresa.fax_emp = empresa.fax_emp;
-                this.fillEmpresa.email_emp = empresa.email_emp;
-                this.fillEmpresa.estado_emp =empresa.estado_emp;
-                this.fillEmpresa.contador_emp =empresa.contador_emp;
-                this.fillEmpresa.tipcontrib_emp =empresa.tipcontrib_emp;
-                this.fillEmpresa.fechaini_emp =empresa.fechaini_emp;
-                this.fillEmpresa.fechafin_emp= empresa.fechafin_emp;
+            this.fillEmpresa.id_ciu = empresa.id_ciu;
+            this.fillEmpresa.totestab_emp = empresa.totestab_emp;
+            this.fillEmpresa.rucempresa_emp = empresa.rucempresa_emp;
+            this.fillEmpresa.razon_emp = empresa.razon_emp;
+            this.fillEmpresa.nombre_emp = empresa.nombre_emp;
+            this.fillEmpresa.apellido_emp = empresa.apellido_emp;
+            this.fillEmpresa.contacto_emp = empresa.contacto_emp;
+            this.fillEmpresa.direcc_emp = empresa.direcc_emp;
+            this.fillEmpresa.telefono_emp = empresa.telefono_emp;
+            this.fillEmpresa.celular_emp = empresa.celular_emp;
+            this.fillEmpresa.fax_emp = empresa.fax_emp;
+            this.fillEmpresa.email_emp = empresa.email_emp;
+            this.fillEmpresa.estado_emp = empresa.estado_emp;
+            this.fillEmpresa.contador_emp = empresa.contador_emp;
+            this.fillEmpresa.tipcontrib_emp = empresa.tipcontrib_emp;
+            this.fillEmpresa.fechaini_emp = empresa.fechaini_emp;
+            this.fillEmpresa.fechafin_emp = empresa.fechafin_emp;
             $('#editEmpresa').modal('show');
         },
         updateEmpresa: function(id) {
             var url = 'updateEmpresa/' + id;
             axios.post(url, this.fillEmpresa).then(response => {
                 this.getEmpresa();
-               this.fillEmpresa.id_ciu = '';
+                this.fillEmpresa.id_ciu = '';
                 this.fillEmpresa.totestab_emp = '';
                 this.fillEmpresa.rucempresa_emp = '';
                 this.fillEmpresa.razon_emp = '';
@@ -1382,7 +1414,7 @@ const app = new Vue({
                 this.fillEmpresa.contador_emp = '';
                 this.fillEmpresa.tipcontrib_emp = '';
                 this.newProducto.fechaini_emp = '';
-                this.fillEmpresa.fechafin_emp= '';
+                this.fillEmpresa.fechafin_emp = '';
                 this.errors = [];
                 $('#editEmpresa').modal('hide');
                 toastr.success('Empresa actualizada con éxito');
@@ -1398,7 +1430,7 @@ const app = new Vue({
             });
         },
         //Roles
-          getRoles: function() {
+        getRoles: function() {
             var urlEmpresa = 'getRol';
             axios.get(urlEmpresa).then(response => {
                 this.roles = response.data;
@@ -1423,13 +1455,13 @@ const app = new Vue({
             });
         },
         editRol: function(rol) {
-                this.fillRol.id_emp = rol.id_emp;
-                this.fillRol.id_fec = rol.id_fec;
-                this.fillRol.nomb_rol =rol.nomb_rol;
-                this.fillRol.observ_rol = rol.observ_rol;
-                this.fillRol.estado_rol = rol.estado_rol;
-                this.fillRol.fechaini_rol = rol.fechaini_rol;
-                this.fillRol.fechafin_rol = rol.fechafin_rol;
+            this.fillRol.id_emp = rol.id_emp;
+            this.fillRol.id_fec = rol.id_fec;
+            this.fillRol.nomb_rol = rol.nomb_rol;
+            this.fillRol.observ_rol = rol.observ_rol;
+            this.fillRol.estado_rol = rol.estado_rol;
+            this.fillRol.fechaini_rol = rol.fechaini_rol;
+            this.fillRol.fechafin_rol = rol.fechafin_rol;
             $('#editRol').modal('show');
         },
         updateEmpresa: function(id) {
@@ -1457,27 +1489,24 @@ const app = new Vue({
                 toastr.success('Rol eliminado con éxito');
             });
         },
-
-
-
         ///Metodos de Cliente
         getCliente: function() {
-                var urlCliente = 'getCliente';
-                axios.get(urlCliente).then(response => {
-                    this.clientes = response.data
-                });
+            var urlCliente = 'getCliente';
+            axios.get(urlCliente).then(response => {
+                this.clientes = response.data
+            });
         },
         createCliente: function() {
             var urlGuardarCliente = 'storeCliente';
             axios.post(urlGuardarCliente, this.newCliente).then((response) => {
                 this.getCliente();
-                this.cod_cli='';
-                this.observ_cli='';
-                this.estado_cli='';
-                this.fechaini_cli='';
-                this.fechafin_cli='';
-                this.id_emp='';
-                this.id_fec='';
+                this.cod_cli = '';
+                this.observ_cli = '';
+                this.estado_cli = '';
+                this.fechaini_cli = '';
+                this.fechafin_cli = '';
+                this.id_emp = '';
+                this.id_fec = '';
                 this.errors = [];
                 $('#crearCliente').modal('hide');
                 toastr.success('Se ha añadido un nuevo Cliente');
@@ -1485,7 +1514,44 @@ const app = new Vue({
                 this.errors = error.response.data;
             });
         },
-        editCliente: function(clientes) {
+        editCliente: function(cliente) {
+            this.fillCliente.id_cli = cliente.id_cli;
+            this.fillCliente.id_emp = cliente.id_emp;
+            this.fillCliente.id_fec = cliente.id_fec;
+            this.fillCliente.doc_per = cliente.doc_per;
+            this.fillCliente.cod_cli = cliente.cod_cli;
+            this.fillCliente.id_per = cliente.id_per;
+            this.fillCliente.observ_cli = cliente.observ_cli;
+            this.fillCliente.estado_cli = cliente.estado_cli;
+            this.fillCliente.fechaini_cli = cliente.fechaini_cli;
+            this.fillCliente.fechafin_cli = cliente.fechafin_cli;
+            //persona
+            this.fillPersona.id_per = cliente.id_per;
+            this.fillPersona.id_contrib = cliente.id_contrib;
+            this.fillPersona.id_ident = cliente.id_ident;
+            this.fillPersona.id_ciu = cliente.id_ciu;
+            this.fillPersona.doc_per = cliente.doc_per;
+            this.fillPersona.organiz_per = cliente.organiz_per;
+            this.fillPersona.nombre_per = cliente.nombre_per;
+            this.fillPersona.apel_per = cliente.apel_per;
+            this.fillPersona.direc_per = cliente.direc_per;
+            this.fillPersona.fono1_per = cliente.fono1_per;
+            this.fillPersona.fono2_per = cliente.fono2_per;
+            this.fillPersona.cel1_per = cliente.cel1_per;
+            this.fillPersona.cel2_per = cliente.cel2_per;
+            this.fillPersona.fecnac_per = cliente.fecnac_per;
+            this.fillPersona.correo_per = cliente.correo_per;
+            this.fillPersona.estado_per = cliente.estado_per;
+            this.fillPersona.fechaini_per = cliente.fechaini_per;
+            this.fillPersona.fechafin_per = cliente.fechafin_per;
+            $('#editPersonaCli').modal('show');
+        },
+        updateCliente: function(id) {
+            var url = 'updateCliente/' + id;
+            axios.post(url, this.fillCliente).then(response => {
+                this.getCliente();
+                //persona
+                this.fillPersona.id_per = '';
                 this.fillPersona.id_contrib = '';
                 this.fillPersona.id_ident = '';
                 this.fillPersona.id_ciu = '';
@@ -1503,58 +1569,14 @@ const app = new Vue({
                 this.fillPersona.estado_per = '';
                 this.fillPersona.fechaini_per = '';
                 this.fillPersona.fechafin_per = '';
-//persona
-             this.fillPersona.id_per = proveedor.id_per;
-            this.fillPersona.id_contrib = proveedor.id_contrib;
-            this.fillPersona.id_ident = proveedor.id_ident;
-            this.fillPersona.id_ciu = proveedor.id_ciu;
-            this.fillPersona.doc_per = proveedor.doc_per;
-            this.fillPersona.organiz_per = proveedor.organiz_per;
-            this.fillPersona.nombre_per = proveedor.nombre_per;
-            this.fillPersona.apel_per = proveedor.apel_per;
-            this.fillPersona.direc_per = proveedor.direc_per;
-            this.fillPersona.fono1_per = proveedor.fono1_per;
-            this.fillPersona.fono2_per = proveedor.fono2_per;
-            this.fillPersona.cel1_per = proveedor.cel1_per;
-            this.fillPersona.cel2_per = proveedor.cel2_per;
-            this.fillPersona.fecnac_per = proveedor.fecnac_per;
-            this.fillPersona.correo_per = proveedor.correo_per;
-            this.fillPersona.estado_per = proveedor.estado_per;
-            this.fillPersona.fechaini_per = proveedor.fechaini_per;
-            this.fillPersona.fechafin_per = proveedor.fechafin_per;
-            $('#editPersona').modal('show');
-        },
-        updateCliente: function(id) {
-            var url = 'updateCliente/' + id;
-            axios.post(url, this.fillCliente).then(response => {
-                this.getCliente();
-                //persona
-             this.fillPersona.id_per = proveedor.id_per;
-            this.fillPersona.id_contrib = proveedor.id_contrib;
-            this.fillPersona.id_ident = proveedor.id_ident;
-            this.fillPersona.id_ciu = proveedor.id_ciu;
-            this.fillPersona.doc_per = proveedor.doc_per;
-            this.fillPersona.organiz_per = proveedor.organiz_per;
-            this.fillPersona.nombre_per = proveedor.nombre_per;
-            this.fillPersona.apel_per = proveedor.apel_per;
-            this.fillPersona.direc_per = proveedor.direc_per;
-            this.fillPersona.fono1_per = proveedor.fono1_per;
-            this.fillPersona.fono2_per = proveedor.fono2_per;
-            this.fillPersona.cel1_per = proveedor.cel1_per;
-            this.fillPersona.cel2_per = proveedor.cel2_per;
-            this.fillPersona.fecnac_per = proveedor.fecnac_per;
-            this.fillPersona.correo_per = proveedor.correo_per;
-            this.fillPersona.estado_per = proveedor.estado_per;
-            this.fillPersona.fechaini_per = proveedor.fechaini_per;
-            this.fillPersona.fechafin_per = proveedor.fechafin_per;
-                this.cod_cli='';
-                this.observ_cli='';
-                this.estado_cli='';
-                this.fechaini_cli='';
-                this.fechafin_cli='';
-                this.id_emp='';
-                this.id_fec='';
-                this.id_per='';
+                this.cod_cli = '';
+                this.observ_cli = '';
+                this.estado_cli = '';
+                this.fechaini_cli = '';
+                this.fechafin_cli = '';
+                this.id_emp = '';
+                this.id_fec = '';
+                this.id_per = '';
                 this.errors = [];
                 $('#editCliente').modal('hide');
                 toastr.success('Cliente actualizado con éxito');
@@ -1575,7 +1597,7 @@ const app = new Vue({
                 this.newPersona.id_contrib = '';
                 this.newPersona.id_ident = '';
                 this.newPersona.id_ciu = '';
-                this.newCliente.doc_per='';
+                this.newCliente.doc_per = '';
                 this.newPersona.organiz_per = '';
                 this.newPersona.nombre_per = '';
                 this.newPersona.apel_per = '';
@@ -1590,33 +1612,31 @@ const app = new Vue({
                 this.newPersona.fechaini_per = '';
                 this.newPersona.fechafin_per = '';
                 this.errors = [];
-                $('#crearPersona').modal('hide');
+                $('#crearPersonaCli').modal('hide');
                 this.newCliente.id_per = response.data;
                 $('#crearCliente').modal('show');
             }).catch(error => {
                 this.errors = error.response.data;
             });
         },
-
-
         ///Metodos de Descuento
         getDescuento: function() {
-                var urlDescuento = 'getDescuento';
-                axios.get(urlDescuento).then(response => {
-                    this.descuentos = response.data
-                });
+            var urlDescuento = 'getDescuento';
+            axios.get(urlDescuento).then(response => {
+                this.descuentos = response.data
+            });
         },
         createDescuento: function() {
             var urlGuardarDescuento = 'storeDescuento';
             axios.post(urlGuardarDescuento, this.newDescuento).then((response) => {
                 this.getDescuento();
-                this.nomb_desc='';
-                this.observ_desc='';
-                this.estado_desc='';
-                this.fechaini_desc='';
-                this.fechafin_desc='';
-                this.id_emp='';
-                this.id_fec='';
+                this.nomb_desc = '';
+                this.observ_desc = '';
+                this.estado_desc = '';
+                this.fechaini_desc = '';
+                this.fechafin_desc = '';
+                this.id_emp = '';
+                this.id_fec = '';
                 this.errors = [];
                 $('#crearDescuento').modal('hide');
                 toastr.success('Se ha añadido un nuevo Descuento');
@@ -1625,27 +1645,27 @@ const app = new Vue({
             });
         },
         editDescuento: function(descuentos) {
-            this.fillDescuento.id_desc=descuentos.id_desc;
-            this.fillDescuento.nomb_desc=descuentos.nomb_desc;
-            this.fillDescuento.observ_desc=descuentos.observ_desc;
-            this.fillDescuento.estado_desc=descuentos.estado_desc;
-            this.fillDescuento.fechaini_desc=descuentos.fechaini_desc;
-            this.fillDescuento.fechafin_desc=descuentos.fechafin_desc;
-            this.fillDescuento.id_emp=descuentos.id_emp;
-            this.fillDescuento.id_fec=descuentos.id_fec;
+            this.fillDescuento.id_desc = descuentos.id_desc;
+            this.fillDescuento.nomb_desc = descuentos.nomb_desc;
+            this.fillDescuento.observ_desc = descuentos.observ_desc;
+            this.fillDescuento.estado_desc = descuentos.estado_desc;
+            this.fillDescuento.fechaini_desc = descuentos.fechaini_desc;
+            this.fillDescuento.fechafin_desc = descuentos.fechafin_desc;
+            this.fillDescuento.id_emp = descuentos.id_emp;
+            this.fillDescuento.id_fec = descuentos.id_fec;
             $('#editDescuento').modal('show');
         },
         updateDescuento: function(id) {
             var url = 'updateDescuento/' + id;
             axios.post(url, this.fillDescuento).then(response => {
                 this.getDescuento();
-                this.nomb_desc='';
-                this.observ_desc='';
-                this.estado_desc='';
-                this.fechaini_desc='';
-                this.fechafin_desc='';
-                this.id_emp='';
-                this.id_fec='';
+                this.nomb_desc = '';
+                this.observ_desc = '';
+                this.estado_desc = '';
+                this.fechaini_desc = '';
+                this.fechafin_desc = '';
+                this.id_emp = '';
+                this.id_fec = '';
                 this.errors = [];
                 $('#editDescuento').modal('hide');
                 toastr.success('Descuento actualizado con éxito');
@@ -1660,6 +1680,128 @@ const app = new Vue({
                 toastr.success('Descuento eliminado con éxito');
             });
         },
-
+        //Metodos de Formulario
+        getFormulario: function() {
+            var urlFormulario = 'getFormulario';
+            axios.get(urlFormulario).then(response => {
+                this.formularios = response.data;
+            });
+        },
+        createFormulario: function() {
+            var urlGuardarFormulario = 'storeFormulario';
+            axios.post(urlGuardarFormulario, this.newFormulario).then((response) => {
+                this.getFormulario();
+                this.newFormulario.id_padcodform = '';
+                this.newFormulario.id_emp = '';
+                this.newFormulario.id_fec = '';
+                this.newFormulario.nomb_codform = '';
+                this.newFormulario.observ_codform = '';
+                this.newFormulario.estado_codform = '';
+                this.newFormulario.fechaini_codform = '';
+                this.newFormulario.fechafin_codform = '';
+                this.errors = [];
+                $('#crearFormulario').modal('hide');
+                toastr.success('Se añadido una nuevo formulario');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editFormulario: function(formulario) {
+            this.fillFormulario.id_padcodform = formulario.id_padcodform;
+            this.fillFormulario.id_emp = formulario.id_emp;
+            this.fillFormulario.id_fec = formulario.id_fec;
+            this.fillFormulario.nomb_codform = formulario.nomb_codform;
+            this.fillFormulario.observ_codform = formulario.observ_codform;
+            this.fillFormulario.estado_codform = formulario.estado_codform;
+            this.fillFormulario.fechaini_codform = formulario.fechaini_codform;
+            this.fillFormulario.fechafin_codform = formulario.fechafin_codform;
+            $('#editFormulario').modal('show');
+        },
+        updateFormulario: function(id) {
+            var url = 'updateFormulario/' + id;
+            axios.post(url, this.fillFormulario).then(response => {
+                this.getFormulario();
+                this.fillFormulario.id_padcodform = '';
+                this.fillFormulario.id_emp = '';
+                this.fillFormulario.id_fec = '';
+                this.fillFormulario.nomb_codform = '';
+                this.fillFormulario.observ_codform = '';
+                this.fillFormulario.estado_codform = '';
+                this.fillFormulario.fechaini_codform = '';
+                this.fillFormulario.fechafin_codform = '';
+                this.errors = [];
+                $('#editFormulario').modal('hide');
+                toastr.success('Formulario actualizado con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteFormulario: function(formulario) {
+            var url = 'deleteFormulario/' + formulario.id_codform;
+            axios.post(url).then(response => {
+                this.getFormulario();
+                toastr.success('Formulario eliminado con éxito');
+            });
+        },
+        //Metodos Forma de Pago
+        getFormaPago: function() {
+            var urlFormaPago = 'getFormaPago';
+            axios.get(urlFormaPago).then(response => {
+                this.formaPago = response.data;
+            });
+        },
+        createFormaPago: function() {
+            var urlGuardarFormaPago = 'storeFormaPago';
+            axios.post(urlGuardarFormaPago, this.newFormaPago).then((response) => {
+                this.getFormaPago();
+                this.newFormaPago.id_emp = '';
+                this.newFormaPago.id_fec = '';
+                this.newFormaPago.nomb_formapago = '';
+                this.newFormaPago.observ_formapago = '';
+                this.newFormaPago.estado_formapago = '';
+                this.newFormaPago.fechaini_formapago = '';
+                this.newFormaPago.fechafin_formapago = '';
+                this.errors = [];
+                $('#crearFormaPago').modal('hide');
+                toastr.success('Se añadido una nueva forma de pago');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        editFormaPago: function(formaPago) {
+            this.fillFormaPago.id_emp = formaPago.id_emp;
+            this.fillFormaPago.id_fec = formaPago.id_fec;
+            this.fillFormaPago.nomb_formapago = formaPago.nomb_formapago;
+            this.fillFormaPago.observ_formapago = formaPago.observ_formapago;
+            this.fillFormaPago.estado_formapago = formaPago.estado_formapago;
+            this.fillFormaPago.fechaini_formapago = formaPago.fechaini_formapago;
+            this.fillFormaPago.fechafin_formapago = formaPago.fechafin_formapago;
+            $('#editFormaPago').modal('show');
+        },
+        updateFormaPago: function(id) {
+            var url = 'updateFormaPago/' + id;
+            axios.post(url, this.fillFormaPago).then(response => {
+                this.getFormaPago();
+                this.fillFormaPago.id_emp = '';
+                this.fillFormaPago.id_fec = '';
+                this.fillFormaPago.nomb_formapago = '';
+                this.fillFormaPago.observ_formapago = '';
+                this.fillFormaPago.estado_formapago = '';
+                this.fillFormaPago.fechaini_formapago = '';
+                this.fillFormaPago.fechafin_formapago = '';
+                this.errors = [];
+                $('#editFormaPago').modal('hide');
+                toastr.success('Forma de pago actualizada con éxito');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });
+        },
+        deleteFormaPago: function(formaPago) {
+            var url = 'deleteFormaPago/' + formaPago.id_codform;
+            axios.post(url).then(response => {
+                this.getFormaPago();
+                toastr.success('Forma de Pago eliminada con éxito');
+            });
+        },
     }
 });

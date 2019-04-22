@@ -46,6 +46,9 @@ Route::get('getEmpresa','AdminController@getEmpresa');
 Route::get('getRol','AdminController@getRoles');
 Route::get('getCliente','AdminController@getCliente');
 Route::get('getDescuento','AdminController@getDescuento');
+Route::get('getFormulario','AdminController@getFormulario');
+Route::get('getFormaPago','AdminController@getFormaPago');
+
 //Ruta Guardar
 Route::post('storeCategoria','AdminController@guardarCategoria');
 Route::post('storeMarca','AdminController@guardarMarca');
@@ -62,6 +65,8 @@ Route::post('storeProvincia','AdminController@guardarProvincia');
 Route::post('storeEmpresa','AdminController@guardarEmpresa');
 Route::post('storeCliente','AdminController@guardarCliente');
 Route::post('storeDescuento','AdminController@guardarDescuento');
+Route::post('storeFormulario','AdminController@guardarFormulario');
+Route::post('storeFormaPago','AdminController@guardarFormapago');
 //Ruta Modificar
 Route::post('updateCategoria/{id}','AdminController@modificarCategoria');
 Route::post('updateMarca/{id}','AdminController@modificarMarca');
@@ -79,6 +84,8 @@ Route::post('updateEmpresa/{id}','AdminController@modificarEmpresa');
 Route::post('updateRol/{id}','AdminController@modificarRol');
 Route::post('updateCliente/{id}','AdminController@modificarCliente');
 Route::post('updateDescuento/{id}','AdminController@modificarDescuento');
+Route::post('updateFormulario/{id}','AdminController@modificarFormulario');
+Route::post('updateFormaPago/{id}','AdminController@modificarFormaPago');
 //Ruta Eliminar
 Route::post('deleteMarca/{id}','AdminController@eliminarMarca');
 Route::post('deleteUnidad/{id}','AdminController@eliminarUnidad');
@@ -95,6 +102,8 @@ Route::post('deleteEmpresa/{id}','AdminController@eliminarEmpresa');
 Route::post('deleteRol/{id}','AdminController@eliminarRol');
 Route::post('deleteCliente/{id}','AdminController@eliminarCliente');
 Route::post('deleteDescuento/{id}','AdminController@eliminarDescuento');
+Route::post('deleteFormulario/{id}','AdminController@eliminarFormulario');
+Route::post('deleteFormaPago/{id}','AdminController@eliminarFormaPago');
 
 
 

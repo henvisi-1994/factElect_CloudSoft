@@ -42,13 +42,13 @@
     </div>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade in active" id="nav-formulario">
-
+             @include('admin.Formulario.index')
         </div>
         <div class="tab-pane fade" id="nav-periodo">
 
         </div>
         <div class="tab-pane fade" id="nav-formPago">
-
+             @include('admin.FormaPago.index')
         </div>
         <div class="tab-pane fade" id="nav-identificacion">
             @include('admin.Identificaciones.index')

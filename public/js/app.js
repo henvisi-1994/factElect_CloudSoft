@@ -49051,6 +49051,8 @@ var app = new Vue({
     this.getRoles();
     this.getCliente();
     this.getDescuento();
+    this.getFormulario();
+    this.getFormaPago();
   },
   data: (_data = {
     categorias: [],
@@ -49420,6 +49422,40 @@ var app = new Vue({
     'estado_rol': '',
     'fechaini_rol': '',
     'fechafin_rol': ''
+  }), _defineProperty(_data, "formularios", []), _defineProperty(_data, "newFormulario", {
+    'id_padcodform': '',
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_codform': '',
+    'observ_codform': '',
+    'estado_codform': '',
+    'fechaini_codform': '',
+    'fechafin_codform': ''
+  }), _defineProperty(_data, "fillFormulario", {
+    'id_padcodform': '',
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_codform': '',
+    'observ_codform': '',
+    'estado_codform': '',
+    'fechaini_codform': '',
+    'fechafin_codform': ''
+  }), _defineProperty(_data, "formaPago", []), _defineProperty(_data, "newFormaPago", {
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_formapago': '',
+    'observ_formapago': '',
+    'estado_formapago': '',
+    'fechaini_formapago': '',
+    'fechafin_formapago': ''
+  }), _defineProperty(_data, "fillFormaPago", {
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_formapago': '',
+    'observ_formapago': '',
+    'estado_formapago': '',
+    'fechaini_formapago': '',
+    'fechafin_formapago': ''
   }), _defineProperty(_data, "errors", []), _defineProperty(_data, "buscar_cat", ''), _defineProperty(_data, "numregistros", 10), _defineProperty(_data, "src", ''), _data),
   computed: {
     buscarCategoria: function buscarCategoria() {
@@ -50635,44 +50671,37 @@ var app = new Vue({
     })["catch"](function (error) {
       _this59.errors = error.response.data;
     });
-  }), _defineProperty(_methods, "editCliente", function editCliente(clientes) {
-    this.fillPersona.id_contrib = '';
-    this.fillPersona.id_ident = '';
-    this.fillPersona.id_ciu = '';
-    this.fillPersona.doc_per = '';
-    this.fillPersona.organiz_per = '';
-    this.fillPersona.nombre_per = '';
-    this.fillPersona.apel_per = '';
-    this.fillPersona.direc_per = '';
-    this.fillPersona.fono1_per = '';
-    this.fillPersona.fono2_per = '';
-    this.fillPersona.cel1_per = '';
-    this.fillPersona.cel2_per = '';
-    this.fillPersona.fecnac_per = '';
-    this.fillPersona.correo_per = '';
-    this.fillPersona.estado_per = '';
-    this.fillPersona.fechaini_per = '';
-    this.fillPersona.fechafin_per = ''; //persona
+  }), _defineProperty(_methods, "editCliente", function editCliente(cliente) {
+    this.fillCliente.id_cli = cliente.id_cli;
+    this.fillCliente.id_emp = cliente.id_emp;
+    this.fillCliente.id_fec = cliente.id_fec;
+    this.fillCliente.doc_per = cliente.doc_per;
+    this.fillCliente.cod_cli = cliente.cod_cli;
+    this.fillCliente.id_per = cliente.id_per;
+    this.fillCliente.observ_cli = cliente.observ_cli;
+    this.fillCliente.estado_cli = cliente.estado_cli;
+    this.fillCliente.fechaini_cli = cliente.fechaini_cli;
+    this.fillCliente.fechafin_cli = cliente.fechafin_cli; //persona
 
-    this.fillPersona.id_per = proveedor.id_per;
-    this.fillPersona.id_contrib = proveedor.id_contrib;
-    this.fillPersona.id_ident = proveedor.id_ident;
-    this.fillPersona.id_ciu = proveedor.id_ciu;
-    this.fillPersona.doc_per = proveedor.doc_per;
-    this.fillPersona.organiz_per = proveedor.organiz_per;
-    this.fillPersona.nombre_per = proveedor.nombre_per;
-    this.fillPersona.apel_per = proveedor.apel_per;
-    this.fillPersona.direc_per = proveedor.direc_per;
-    this.fillPersona.fono1_per = proveedor.fono1_per;
-    this.fillPersona.fono2_per = proveedor.fono2_per;
-    this.fillPersona.cel1_per = proveedor.cel1_per;
-    this.fillPersona.cel2_per = proveedor.cel2_per;
-    this.fillPersona.fecnac_per = proveedor.fecnac_per;
-    this.fillPersona.correo_per = proveedor.correo_per;
-    this.fillPersona.estado_per = proveedor.estado_per;
-    this.fillPersona.fechaini_per = proveedor.fechaini_per;
-    this.fillPersona.fechafin_per = proveedor.fechafin_per;
-    $('#editPersona').modal('show');
+    this.fillPersona.id_per = cliente.id_per;
+    this.fillPersona.id_contrib = cliente.id_contrib;
+    this.fillPersona.id_ident = cliente.id_ident;
+    this.fillPersona.id_ciu = cliente.id_ciu;
+    this.fillPersona.doc_per = cliente.doc_per;
+    this.fillPersona.organiz_per = cliente.organiz_per;
+    this.fillPersona.nombre_per = cliente.nombre_per;
+    this.fillPersona.apel_per = cliente.apel_per;
+    this.fillPersona.direc_per = cliente.direc_per;
+    this.fillPersona.fono1_per = cliente.fono1_per;
+    this.fillPersona.fono2_per = cliente.fono2_per;
+    this.fillPersona.cel1_per = cliente.cel1_per;
+    this.fillPersona.cel2_per = cliente.cel2_per;
+    this.fillPersona.fecnac_per = cliente.fecnac_per;
+    this.fillPersona.correo_per = cliente.correo_per;
+    this.fillPersona.estado_per = cliente.estado_per;
+    this.fillPersona.fechaini_per = cliente.fechaini_per;
+    this.fillPersona.fechafin_per = cliente.fechafin_per;
+    $('#editPersonaCli').modal('show');
   }), _defineProperty(_methods, "updateCliente", function updateCliente(id) {
     var _this60 = this;
 
@@ -50681,24 +50710,24 @@ var app = new Vue({
       _this60.getCliente(); //persona
 
 
-      _this60.fillPersona.id_per = proveedor.id_per;
-      _this60.fillPersona.id_contrib = proveedor.id_contrib;
-      _this60.fillPersona.id_ident = proveedor.id_ident;
-      _this60.fillPersona.id_ciu = proveedor.id_ciu;
-      _this60.fillPersona.doc_per = proveedor.doc_per;
-      _this60.fillPersona.organiz_per = proveedor.organiz_per;
-      _this60.fillPersona.nombre_per = proveedor.nombre_per;
-      _this60.fillPersona.apel_per = proveedor.apel_per;
-      _this60.fillPersona.direc_per = proveedor.direc_per;
-      _this60.fillPersona.fono1_per = proveedor.fono1_per;
-      _this60.fillPersona.fono2_per = proveedor.fono2_per;
-      _this60.fillPersona.cel1_per = proveedor.cel1_per;
-      _this60.fillPersona.cel2_per = proveedor.cel2_per;
-      _this60.fillPersona.fecnac_per = proveedor.fecnac_per;
-      _this60.fillPersona.correo_per = proveedor.correo_per;
-      _this60.fillPersona.estado_per = proveedor.estado_per;
-      _this60.fillPersona.fechaini_per = proveedor.fechaini_per;
-      _this60.fillPersona.fechafin_per = proveedor.fechafin_per;
+      _this60.fillPersona.id_per = '';
+      _this60.fillPersona.id_contrib = '';
+      _this60.fillPersona.id_ident = '';
+      _this60.fillPersona.id_ciu = '';
+      _this60.fillPersona.doc_per = '';
+      _this60.fillPersona.organiz_per = '';
+      _this60.fillPersona.nombre_per = '';
+      _this60.fillPersona.apel_per = '';
+      _this60.fillPersona.direc_per = '';
+      _this60.fillPersona.fono1_per = '';
+      _this60.fillPersona.fono2_per = '';
+      _this60.fillPersona.cel1_per = '';
+      _this60.fillPersona.cel2_per = '';
+      _this60.fillPersona.fecnac_per = '';
+      _this60.fillPersona.correo_per = '';
+      _this60.fillPersona.estado_per = '';
+      _this60.fillPersona.fechaini_per = '';
+      _this60.fillPersona.fechafin_per = '';
       _this60.cod_cli = '';
       _this60.observ_cli = '';
       _this60.estado_cli = '';
@@ -50745,7 +50774,7 @@ var app = new Vue({
       _this62.newPersona.fechaini_per = '';
       _this62.newPersona.fechafin_per = '';
       _this62.errors = [];
-      $('#crearPersona').modal('hide');
+      $('#crearPersonaCli').modal('hide');
       _this62.newCliente.id_per = response.data;
       $('#crearCliente').modal('show');
     })["catch"](function (error) {
@@ -50816,6 +50845,139 @@ var app = new Vue({
       _this66.getDescuento();
 
       toastr.success('Descuento eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "getFormulario", function getFormulario() {
+    var _this67 = this;
+
+    var urlFormulario = 'getFormulario';
+    axios.get(urlFormulario).then(function (response) {
+      _this67.formularios = response.data;
+    });
+  }), _defineProperty(_methods, "createFormulario", function createFormulario() {
+    var _this68 = this;
+
+    var urlGuardarFormulario = 'storeFormulario';
+    axios.post(urlGuardarFormulario, this.newFormulario).then(function (response) {
+      _this68.getFormulario();
+
+      _this68.newFormulario.id_padcodform = '';
+      _this68.newFormulario.id_emp = '';
+      _this68.newFormulario.id_fec = '';
+      _this68.newFormulario.nomb_codform = '';
+      _this68.newFormulario.observ_codform = '';
+      _this68.newFormulario.estado_codform = '';
+      _this68.newFormulario.fechaini_codform = '';
+      _this68.newFormulario.fechafin_codform = '';
+      _this68.errors = [];
+      $('#crearFormulario').modal('hide');
+      toastr.success('Se añadido una nuevo formulario');
+    })["catch"](function (error) {
+      _this68.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editFormulario", function editFormulario(formulario) {
+    this.fillFormulario.id_padcodform = formulario.id_padcodform;
+    this.fillFormulario.id_emp = formulario.id_emp;
+    this.fillFormulario.id_fec = formulario.id_fec;
+    this.fillFormulario.nomb_codform = formulario.nomb_codform;
+    this.fillFormulario.observ_codform = formulario.observ_codform;
+    this.fillFormulario.estado_codform = formulario.estado_codform;
+    this.fillFormulario.fechaini_codform = formulario.fechaini_codform;
+    this.fillFormulario.fechafin_codform = formulario.fechafin_codform;
+    $('#editFormulario').modal('show');
+  }), _defineProperty(_methods, "updateFormulario", function updateFormulario(id) {
+    var _this69 = this;
+
+    var url = 'updateFormulario/' + id;
+    axios.post(url, this.fillFormulario).then(function (response) {
+      _this69.getFormulario();
+
+      _this69.fillFormulario.id_padcodform = '';
+      _this69.fillFormulario.id_emp = '';
+      _this69.fillFormulario.id_fec = '';
+      _this69.fillFormulario.nomb_codform = '';
+      _this69.fillFormulario.observ_codform = '';
+      _this69.fillFormulario.estado_codform = '';
+      _this69.fillFormulario.fechaini_codform = '';
+      _this69.fillFormulario.fechafin_codform = '';
+      _this69.errors = [];
+      $('#editFormulario').modal('hide');
+      toastr.success('Formulario actualizado con éxito');
+    })["catch"](function (error) {
+      _this69.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteFormulario", function deleteFormulario(formulario) {
+    var _this70 = this;
+
+    var url = 'deleteFormulario/' + formulario.id_codform;
+    axios.post(url).then(function (response) {
+      _this70.getFormulario();
+
+      toastr.success('Formulario eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "getFormaPago", function getFormaPago() {
+    var _this71 = this;
+
+    var urlFormaPago = 'getFormaPago';
+    axios.get(urlFormaPago).then(function (response) {
+      _this71.formaPago = response.data;
+    });
+  }), _defineProperty(_methods, "createFormaPago", function createFormaPago() {
+    var _this72 = this;
+
+    var urlGuardarFormaPago = 'storeFormaPago';
+    axios.post(urlGuardarFormaPago, this.newFormaPago).then(function (response) {
+      _this72.getFormaPago();
+
+      _this72.newFormaPago.id_emp = '';
+      _this72.newFormaPago.id_fec = '';
+      _this72.newFormaPago.nomb_formapago = '';
+      _this72.newFormaPago.observ_formapago = '';
+      _this72.newFormaPago.estado_formapago = '';
+      _this72.newFormaPago.fechaini_formapago = '';
+      _this72.newFormaPago.fechafin_formapago = '';
+      _this72.errors = [];
+      $('#crearFormaPago').modal('hide');
+      toastr.success('Se añadido una nueva forma de pago');
+    })["catch"](function (error) {
+      _this72.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editFormaPago", function editFormaPago(formaPago) {
+    this.fillFormaPago.id_emp = formaPago.id_emp;
+    this.fillFormaPago.id_fec = formaPago.id_fec;
+    this.fillFormaPago.nomb_formapago = formaPago.nomb_formapago;
+    this.fillFormaPago.observ_formapago = formaPago.observ_formapago;
+    this.fillFormaPago.estado_formapago = formaPago.estado_formapago;
+    this.fillFormaPago.fechaini_formapago = formaPago.fechaini_formapago;
+    this.fillFormaPago.fechafin_formapago = formaPago.fechafin_formapago;
+    $('#editFormaPago').modal('show');
+  }), _defineProperty(_methods, "updateFormaPago", function updateFormaPago(id) {
+    var _this73 = this;
+
+    var url = 'updateFormaPago/' + id;
+    axios.post(url, this.fillFormaPago).then(function (response) {
+      _this73.getFormaPago();
+
+      _this73.fillFormaPago.id_emp = '';
+      _this73.fillFormaPago.id_fec = '';
+      _this73.fillFormaPago.nomb_formapago = '';
+      _this73.fillFormaPago.observ_formapago = '';
+      _this73.fillFormaPago.estado_formapago = '';
+      _this73.fillFormaPago.fechaini_formapago = '';
+      _this73.fillFormaPago.fechafin_formapago = '';
+      _this73.errors = [];
+      $('#editFormaPago').modal('hide');
+      toastr.success('Forma de pago actualizada con éxito');
+    })["catch"](function (error) {
+      _this73.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteFormaPago", function deleteFormaPago(formaPago) {
+    var _this74 = this;
+
+    var url = 'deleteFormaPago/' + formaPago.id_codform;
+    axios.post(url).then(function (response) {
+      _this74.getFormaPago();
+
+      toastr.success('Forma de Pago eliminada con éxito');
     });
   }), _methods)
 });
