@@ -24,8 +24,17 @@
                 </a>
             </li>
             <li>
-                <a data-toggle="tab" href="#nav-parametros">
-                    Parametros
+                <a data-toggle="tab" href="#nav-parametrosDocumentos">
+                    <i class="fa fa-cogs">
+                    </i>
+                    Parámetros de Documentos
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#nav-parametrosPorcentajes">
+                    <i class="fa fa-cogs">
+                    </i>
+                    Parámetros de Porcentajes
                 </a>
             </li>
             <li>
@@ -53,7 +62,11 @@
         <div class="tab-pane fade" id="nav-identificacion">
             @include('admin.Identificaciones.index')
         </div>
-        <div class="tab-pane fade" id="nav-parametros">
+        <div class="tab-pane fade" id="nav-parametrosDocumentos">
+            @include('admin.Param_Docs.index')
+        </div>
+        <div class="tab-pane fade" id="nav-parametrosPorcentajes">
+            @include('admin.Param_Porc.index')
         </div>
         <div class="tab-pane fade" id="nav-tipDocumento">
         </div>

@@ -30,6 +30,8 @@ Route::get('Pais','AdminController@Pais');
 Route::get('Provincia','AdminController@Provincia');
 Route::get('Cliente','AdminController@Cliente');
 Route::get('Descuento','AdminController@Descuento');
+Route::get('Param_Docs','AdminController@Param_Docs');
+Route::get('Param_Porc','AdminController@Param_Porc');
 //Obtener
 Route::get('getProveedor','AdminController@getProveedor');
 Route::get('getProductos','AdminController@getProducto');
@@ -48,6 +50,8 @@ Route::get('getCliente','AdminController@getCliente');
 Route::get('getDescuento','AdminController@getDescuento');
 Route::get('getFormulario','AdminController@getFormulario');
 Route::get('getFormaPago','AdminController@getFormaPago');
+Route::get('getParam_Docs','AdminController@getParam_Docs');
+Route::get('getParam_Porc','AdminController@getParam_Porc');
 
 //Ruta Guardar
 Route::post('storeCategoria','AdminController@guardarCategoria');
@@ -67,6 +71,8 @@ Route::post('storeCliente','AdminController@guardarCliente');
 Route::post('storeDescuento','AdminController@guardarDescuento');
 Route::post('storeFormulario','AdminController@guardarFormulario');
 Route::post('storeFormaPago','AdminController@guardarFormapago');
+Route::post('storeParam_Docs','AdminController@guardarParam_Docs');
+Route::post('storeParam_Porc','AdminController@guardarParam_Porc');
 //Ruta Modificar
 Route::post('updateCategoria/{id}','AdminController@modificarCategoria');
 Route::post('updateMarca/{id}','AdminController@modificarMarca');
@@ -86,6 +92,8 @@ Route::post('updateCliente/{id}','AdminController@modificarCliente');
 Route::post('updateDescuento/{id}','AdminController@modificarDescuento');
 Route::post('updateFormulario/{id}','AdminController@modificarFormulario');
 Route::post('updateFormaPago/{id}','AdminController@modificarFormaPago');
+Route::post('updateParam_Docs/{id}','AdminController@modificarParam_Docs');
+Route::post('updateParam_Porc/{id}','AdminController@modificarParam_Porc');
 //Ruta Eliminar
 Route::post('deleteMarca/{id}','AdminController@eliminarMarca');
 Route::post('deleteUnidad/{id}','AdminController@eliminarUnidad');
@@ -104,6 +112,8 @@ Route::post('deleteCliente/{id}','AdminController@eliminarCliente');
 Route::post('deleteDescuento/{id}','AdminController@eliminarDescuento');
 Route::post('deleteFormulario/{id}','AdminController@eliminarFormulario');
 Route::post('deleteFormaPago/{id}','AdminController@eliminarFormaPago');
+Route::post('deleteParam_Docs/{id}','AdminController@eliminarParam_Docs');
+Route::post('deleteParam_Porc/{id}','AdminController@eliminarParam_Porc');
 
 
 

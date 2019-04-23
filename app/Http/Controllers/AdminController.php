@@ -24,6 +24,8 @@ use App\Descuento;
 use App\Usuario;
 use App\Formulario;
 use App\FormaPago;
+use App\Param_Docs;
+use App\Param_Porc;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
@@ -104,7 +106,10 @@ class AdminController extends Controller
     $formularios = Formulario::get();
      $empresas = Empresa::get();
      $fechas = Fecha_periodo::get();
-   return view('admin.contabilidad',compact('formularios','empresas','fechas'));
+     $param_docs = Param_Docs::get();
+     $param_porc = Param_Porc::get();
+     
+   return view('admin.contabilidad',compact('formularios','empresas','fechas','param_docs','param_porc'));
   }
   
   public function getCategoria()
@@ -1662,5 +1667,201 @@ public function getFormaPago()
             ->update(['estado_formapago' => $estado_formapago]
           );
         return;
+    }
+
+        /////////////////////////////
+    //// Metodos Param_DOCS
+
+     public function Param_Docs()
+    {
+        $param_docs = Param_Docs::get();
+        return view('admin.Param_Docs.index',compact('param_docs'));
+    }
+    public function CargarParam_Docs()
+    {
+
+        return view('admin.Param_Docs.Crear');
+    }
+        //Guardar Param_docs
+     public function  guardarParam_Docs(Request $request)
+    {
+        
+        $v =$this->validate(request(), [
+            
+            'nomb_param_docs' => 'required',
+            'observ_param_docs' => 'required',
+            'estado_param_docs' => 'required',
+            'fechaini_param_docs' => 'required',
+            'fechafin_param_docs' => 'required'
+        ]);
+        if ($v)
+        {
+            $param_docs= new Param_Docs();
+            $param_docs->id_emp=$request->input('id_emp');
+            $param_docs->id_fec=$request->input('id_fec');
+            $param_docs->nomb_param_docs=$request->input('nomb_param_docs');
+            $param_docs->observ_param_docs=$request->input('observ_param_docs');
+            $param_docs->estado_param_docs=$request->input('estado_param_docs');
+            $param_docs->fechaini_param_docs=$request->input('fechaini_param_docs');
+            $param_docs->fechafin_param_docs=$request->input('fechafin_param_docs');
+            $param_docs->save();
+            return;
+        }
+        else
+        {
+          return back()->withInput($request->all());
+        }
+
+    }
+     //Modificar Param_Docs
+    public function  modificarParam_Docs(Request $request,$id)
+    {
+
+       $v =$this->validate(request(), [
+            
+            'nomb_param_docs' => 'required',
+            'observ_param_docs' => 'required',
+            'estado_param_docs' => 'required',
+            'fechaini_param_docs' => 'required',
+            'fechafin_param_docs' => 'required'
+        ]);
+        if ($v)
+        {
+            $id_emp=$request->input('id_emp');
+            $id_fec=$request->input('id_fec');
+            $nomb_param_docs=$request->input('nomb_param_docs');
+            $observ_param_docs=$request->input('observ_param_docs');
+            $estado_param_docs=$request->input('estado_param_docs');
+            $fechaini_param_docs=$request->input('fechaini_param_docs');
+            $fechafin_param_docs=$request->input('fechafin_param_docs');
+            DB::table('param_docs')
+            ->where('id_param_docs', $id)
+            ->update(['nomb_param_docs' => $nomb_param_docs, 'observ_param_docs' => $observ_param_docs , 'estado_param_docs' => $estado_param_docs, 'fechaini_param_docs' => $fechaini_param_docs,'fechafin_param_docs'=> $fechafin_param_docs,'id_emp'=> $id_emp,'id_fec'=> $id_fec]
+          );
+        return;
+      }
+      else
+        {
+          return back()->withInput($request->all());
+        }
+    }
+    //EliminarParamDOcs
+    public function  eliminarParam_Docs($id)
+    { 
+        $estado_param_docs= 'I';
+        DB::table('param_docs')
+            ->where('id_param_docs', $id)
+            ->update(['estado_param_docs' => $estado_param_docs]
+          );
+        return;
+    }
+
+
+     public function getParam_Docs()
+    {
+      $param_docs = DB::table('param_docs as p')
+      ->join('empresa', 'p.id_emp', '=', 'empresa.id_emp')
+      ->join('fecha_periodo', 'p.id_fec', '=', 'fecha_periodo.id_fec')
+      ->orderBy("d.id_param_docs","desc")
+      ->get();
+      return $param_docs;
+    }
+
+
+       //// Metodos Param_Porc
+
+     public function Param_Porc()
+    {
+        $param_porc = Param_Porc::get();
+        return view('admin.Param_Porc.index',compact('param_porc'));
+    }
+    public function CargarParam_Porc()
+    {
+
+        return view('admin.Param_Porc.Crear');
+    }
+        //Guardar Param_Porc
+     public function  guardarParam_Porc(Request $request)
+    {
+        
+        $v =$this->validate(request(), [
+            
+            'nomb_param_porc' => 'required',
+            'observ_param_porc' => 'required',
+            'estado_param_porc' => 'required',
+            'fechaini_param_porc' => 'required',
+            'fechafin_param_porc' => 'required'
+        ]);
+        if ($v)
+        {
+            $param_porc= new Param_Porc();
+            $param_porc->id_emp=$request->input('id_emp');
+            $param_porc->id_fec=$request->input('id_fec');
+            $param_porc->nomb_param_porc=$request->input('nomb_param_porc');
+            $param_porc->observ_param_porc=$request->input('observ_param_porc');
+            $param_porc->estado_param_porc=$request->input('estado_param_porc');
+            $param_porc->fechaini_param_porc=$request->input('fechaini_param_porc');
+            $param_porc->fechafin_param_porc=$request->input('fechafin_param_porc');
+            $param_porc->save();
+            return;
+        }
+        else
+        {
+          return back()->withInput($request->all());
+        }
+
+    }
+     //Modificar Param_Porc
+    public function  modificarParam_Porc(Request $request,$id)
+    {
+
+       $v =$this->validate(request(), [
+            
+            'nomb_param_porc' => 'required',
+            'observ_param_porc' => 'required',
+            'estado_param_porc' => 'required',
+            'fechaini_param_porc' => 'required',
+            'fechafin_param_porc' => 'required'
+        ]);
+        if ($v)
+        {
+            $id_emp=$request->input('id_emp');
+            $id_fec=$request->input('id_fec');
+            $nomb_param_porc=$request->input('nomb_param_porc');
+            $observ_param_porc=$request->input('observ_param_porc');
+            $estado_param_porc=$request->input('estado_param_porc');
+            $fechaini_param_porc=$request->input('fechaini_param_porc');
+            $fechafin_param_porc=$request->input('fechafin_param_porc');
+            DB::table('param_porc')
+            ->where('id_param_porc', $id)
+            ->update(['nomb_param_porc' => $nomb_param_porc, 'observ_param_porc' => $observ_param_porc , 'estado_param_porc' => $estado_param_porc, 'fechaini_param_porc' => $fechaini_param_porc,'fechafin_param_porc'=> $fechafin_param_porc,'id_emp'=> $id_emp,'id_fec'=> $id_fec]
+          );
+        return;
+      }
+      else
+        {
+          return back()->withInput($request->all());
+        }
+    }
+    //EliminarParam_Porc
+    public function  eliminarParam_Porc($id)
+    { 
+        $estado_param_porc= 'I';
+        DB::table('param_porc')
+            ->where('id_param_porc', $id)
+            ->update(['estado_param_porc' => $estado_param_porc]
+          );
+        return;
+    }
+
+
+     public function getParam_Porc()
+    {
+      $param_porc = DB::table('param_porc as p')
+      ->join('empresa', 'p.id_emp', '=', 'empresa.id_emp')
+      ->join('fecha_periodo', 'p.id_fec', '=', 'fecha_periodo.id_fec')
+      ->orderBy("d.id_param_porc","desc")
+      ->get();
+      return $param_porc;
     }
 }

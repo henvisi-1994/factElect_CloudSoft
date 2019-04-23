@@ -49053,6 +49053,8 @@ var app = new Vue({
     this.getDescuento();
     this.getFormulario();
     this.getFormaPago();
+    this.getParam_Docs();
+    this.getParam_Porc();
   },
   data: (_data = {
     categorias: [],
@@ -49118,6 +49120,46 @@ var app = new Vue({
       'estado_desc': '',
       'fechaini_desc': '',
       'fechafin_desc': '',
+      'id_emp': '',
+      'id_fec': ''
+    },
+    param_docs: [],
+    newParam_Docs: {
+      'nomb_param_docs': '',
+      'observ_param_docs': '',
+      'estado_param_docs': '',
+      'fechaini_param_docs': '',
+      'fechafin_param_docs': '',
+      'id_emp': '',
+      'id_fec': ''
+    },
+    fillParam_Docs: {
+      'id_param_docs': '',
+      'nomb_param_docs': '',
+      'observ_param_docs': '',
+      'estado_param_docs': '',
+      'fechaini_param_docs': '',
+      'fechafin_param_docs': '',
+      'id_emp': '',
+      'id_fec': ''
+    },
+    param_porc: [],
+    newParam_Porc: {
+      'nomb_param_porc': '',
+      'observ_param_porc': '',
+      'estado_param_porc': '',
+      'fechaini_param_porc': '',
+      'fechafin_param_porc': '',
+      'id_emp': '',
+      'id_fec': ''
+    },
+    fillParam_Porc: {
+      'id_param_porc': '',
+      'nomb_param_porc': '',
+      'observ_param_porc': '',
+      'estado_param_porc': '',
+      'fechaini_param_porc': '',
+      'fechafin_param_porc': '',
       'id_emp': '',
       'id_fec': ''
     },
@@ -50978,6 +51020,138 @@ var app = new Vue({
       _this74.getFormaPago();
 
       toastr.success('Forma de Pago eliminada con éxito');
+    });
+  }), _defineProperty(_methods, "getParam_Docs", function getParam_Docs() {
+    var _this75 = this;
+
+    var urlParam_Docs = 'getParam_Docs';
+    axios.get(urlParam_Docs).then(function (response) {
+      _this75.param_docs = response.data;
+    });
+  }), _defineProperty(_methods, "createParam_Docs", function createParam_Docs() {
+    var _this76 = this;
+
+    var urlGuardarParam_Docs = 'storeParam_Docs';
+    axios.post(urlGuardarParam_Docs, this.newParam_Docs).then(function (response) {
+      _this76.getParam_Docs();
+
+      _this76.nomb_param_docs = '';
+      _this76.observ_param_docs = '';
+      _this76.estado_param_docs = '';
+      _this76.fechaini_param_docs = '';
+      _this76.fechafin_param_docs = '';
+      _this76.id_emp = '';
+      _this76.id_fec = '';
+      _this76.errors = [];
+      $('#crearParam_Docs').modal('hide');
+      toastr.success('Se ha añadido un nuevo Parámetro de Documento');
+    })["catch"](function (error) {
+      _this76.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editParam_Docs", function editParam_Docs(param_docs) {
+    this.fillParam_Docs.id_param_docs = param_docs.id_param_docs;
+    this.fillParam_Docs.nomb_param_docs = param_docs.nomb_param_docs;
+    this.fillParam_Docs.observ_param_docs = param_docs.observ_param_docs;
+    this.fillParam_Docs.estado_param_docs = param_docs.estado_param_docs;
+    this.fillParam_Docs.fechaini_param_docs = param_docs.fechaini_param_docs;
+    this.fillParam_Docs.fechafin_param_docs = param_docs.fechafin_param_docs;
+    this.fillParam_Docs.id_emp = param_docs.id_emp;
+    this.fillParam_Docs.id_fec = param_docs.id_fec;
+    $('#editParam_Docs').modal('show');
+  }), _defineProperty(_methods, "updateParam_Docs", function updateParam_Docs(id) {
+    var _this77 = this;
+
+    var url = 'updateParam_Docs/' + id;
+    axios.post(url, this.fillParam_Docs).then(function (response) {
+      _this77.getParam_Docs();
+
+      _this77.nomb_param_docs = '';
+      _this77.observ_param_docs = '';
+      _this77.estado_param_docs = '';
+      _this77.fechaini_param_docs = '';
+      _this77.fechafin_param_docs = '';
+      _this77.id_emp = '';
+      _this77.id_fec = '';
+      _this77.errors = [];
+      $('#editParam_Docs').modal('hide');
+      toastr.success('Parámetro de Documento actualizado con éxito');
+    })["catch"](function (error) {
+      _this77.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteParam_Docs", function deleteParam_Docs(param_docs) {
+    var _this78 = this;
+
+    var url = 'deleteParam_Docs/' + param_docs.id_param_docs;
+    axios.post(url).then(function (response) {
+      _this78.getParam_Docs();
+
+      toastr.success('Parámetro de Documento eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "getParam_Porc", function getParam_Porc() {
+    var _this79 = this;
+
+    var urlParam_Porc = 'getParam_Porc';
+    axios.get(urlParam_Porc).then(function (response) {
+      _this79.param_porc = response.data;
+    });
+  }), _defineProperty(_methods, "createParam_Porc", function createParam_Porc() {
+    var _this80 = this;
+
+    var urlGuardarParam_Porc = 'storeParam_Porc';
+    axios.post(urlGuardarParam_Porc, this.newParam_Porc).then(function (response) {
+      _this80.getParam_Porc();
+
+      _this80.nomb_param_porc = '';
+      _this80.observ_param_porc = '';
+      _this80.estado_param_porc = '';
+      _this80.fechaini_param_porc = '';
+      _this80.fechafin_param_porc = '';
+      _this80.id_emp = '';
+      _this80.id_fec = '';
+      _this80.errors = [];
+      $('#crearParam_Porc').modal('hide');
+      toastr.success('Se ha añadido un nuevo Parámetro de Porcentaje');
+    })["catch"](function (error) {
+      _this80.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editParam_Porc", function editParam_Porc(param_porc) {
+    this.fillParam_Porc.id_param_porc = param_docs.id_param_porc;
+    this.fillParam_Porc.nomb_param_porc = param_docs.nomb_param_porc;
+    this.fillParam_Porc.oPorcbserv_param_porc = param_docs.observ_param_porc;
+    this.fillParam_Porc.estado_param_porc = param_docs.estado_param_porc;
+    this.fillParam_Porc.fechaini_param_porc = param_docs.fechaini_param_porc;
+    this.fillParam_Porc.fechafin_param_porc = param_docs.fechafin_param_porc;
+    this.fillParam_Porc.id_emp = param_porc.id_emp;
+    this.fillParam_Porc.id_fec = param_porc.id_fec;
+    $('#editParam_Porc').modal('show');
+  }), _defineProperty(_methods, "updateParam_Porc", function updateParam_Porc(id) {
+    var _this81 = this;
+
+    var url = 'updateParam_Porc/' + id;
+    axios.post(url, this.fillParam_Porc).then(function (response) {
+      _this81.getParam_Porc();
+
+      _this81.nomb_param_porc = '';
+      _this81.observ_param_porc = '';
+      _this81.estado_param_porc = '';
+      _this81.fechaini_param_porc = '';
+      _this81.fechafin_param_porc = '';
+      _this81.id_emp = '';
+      _this81.id_fec = '';
+      _this81.errors = [];
+      $('#editParam_Porc').modal('hide');
+      toastr.success('Parámetro de Porcentaje actualizado con éxito');
+    })["catch"](function (error) {
+      _this81.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteParam_Porc", function deleteParam_Porc(param_porc) {
+    var _this82 = this;
+
+    var url = 'deleteParam_Porc/' + param_porc.id_param_porc;
+    axios.post(url).then(function (response) {
+      _this82.getParam_Porc();
+
+      toastr.success('Parámetro de Porcentaje eliminado con éxito');
     });
   }), _methods)
 });
