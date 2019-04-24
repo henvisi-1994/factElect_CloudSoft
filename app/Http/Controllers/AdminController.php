@@ -26,8 +26,12 @@ use App\Formulario;
 use App\FormaPago;
 use App\Param_Docs;
 use App\Param_Porc;
+use App\TipoDocumento;
+use App\User;
+use App\Factura;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Hash;
 
 
 class AdminController extends Controller
@@ -1762,7 +1766,7 @@ public function getFormaPago()
       $param_docs = DB::table('param_docs as p')
       ->join('empresa', 'p.id_emp', '=', 'empresa.id_emp')
       ->join('fecha_periodo', 'p.id_fec', '=', 'fecha_periodo.id_fec')
-      ->orderBy("d.id_param_docs","desc")
+      ->orderBy("p.id_param_docs","desc")
       ->get();
       return $param_docs;
     }
@@ -1860,8 +1864,221 @@ public function getFormaPago()
       $param_porc = DB::table('param_porc as p')
       ->join('empresa', 'p.id_emp', '=', 'empresa.id_emp')
       ->join('fecha_periodo', 'p.id_fec', '=', 'fecha_periodo.id_fec')
-      ->orderBy("d.id_param_porc","desc")
+      ->orderBy("p.id_param_porc","desc")
       ->get();
       return $param_porc;
+    }
+    /////Periodo
+public function getPeriodo()
+    {
+      $periodo = DB::table('fecha_periodo as fpe')
+      ->orderBy("fpe.id_fec","des")
+      ->get();
+      return $periodo;
+    }
+     public function guardarPeriodo(Request $request)
+    {
+      $v= $this->validate(request(),[
+            'nomb_fec' => 'required|string'
+        ]);
+       if($v)
+      {
+        $periodo= new Fecha_periodo();
+        $periodo->create($request->all());
+       return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+    public function modificarPeriodo(Request $request,$id)
+    {
+        $v= $this->validate(request(),[
+            'nomb_fec' => 'required|string'
+        ]);
+       if($v)
+      {
+        $nomb_fec  =  $request->input('nomb_fec');
+        $mesidentif_fec = $request->input('mesidentif_fec');
+        $observ_fec  =  $request->input('observ_fec');
+        $estado_fec  =  $request->input('estado_fec');
+        $fechaini_fec  =  $request->input('fechaini_fec');
+        $fechafin_fec  =  $request->input('fechafin_fec');
+       
+        DB::table('fecha_periodo')
+            ->where('id_fec', $id)
+            ->update(  ['nomb_fec' => $nomb_fec,'observ_fec' => $observ_fec , 'mesidentif_fec' => $mesidentif_fec,
+  'estado_fec' => $estado_fec ,'fechaini_fec' => $fechaini_fec,'fechafin_fec' => $fechafin_fec]
+          );
+         return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+      public function eliminarPeriodo($id)
+    {
+        $estado_fec='I';
+        DB::table('fecha_periodo')
+            ->where('id_fec', $id)
+            ->update(['estado_fec' => $estado_fec]
+          );
+        return;
+    }
+//Tipo de Documento
+    public function getTipoDocumento()
+    {
+      $periodo = DB::table('tipo_docum as td')
+      ->orderBy("td.id_doc","des")
+      ->get();
+      return $periodo;
+    }
+     public function guardarTipoDocumento(Request $request)
+    {
+      $v= $this->validate(request(),[
+            'nomb_doc' => 'required|string'
+        ]);
+       if($v)
+      {
+        $periodo= new TipoDocumento();
+        $periodo->create($request->all());
+       return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+    public function modificarTipoDocumento(Request $request,$id)
+    {
+        $v= $this->validate(request(),[
+            'nomb_doc' => 'required|string'
+        ]);
+       if($v)
+      {
+        $nomb_doc  =  $request->input('nomb_doc');
+        $id_emp = $request->input('id_emp');
+        $id_fec = $request->input('id_fec');
+        $observ_doc  =  $request->input('observ_doc');
+        $estado_doc  =  $request->input('estado_doc');
+        $fechaini_doc  =  $request->input('fechaini_doc');
+        $fechafin_doc  =  $request->input('fechafin_doc');
+       
+        DB::table('tipo_docum')
+            ->where('id_doc', $id)
+            ->update(  ['nomb_doc' => $nomb_doc,'observ_doc' => $observ_doc , 'id_emp' => $id_emp, 'id_fec' => $id_fec,
+  'estado_doc' => $estado_doc ,'fechaini_doc' => $fechaini_doc,'fechafin_doc' => $fechafin_doc]
+          );
+         return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+      public function eliminarTipoDocumento($id)
+    {
+        $estado_doc='I';
+        DB::table('tipo_docum')
+            ->where('id_doc', $id)
+            ->update(['estado_doc' => $estado_doc]
+          );
+        return;
+    }
+    //Usuario
+     public function getUsuario()
+    {
+      $periodo = DB::table('usuario as u')
+       ->join('fecha_periodo','u.id_fec','=','fecha_periodo.id_fec')
+      ->join('empresa','u.id_emp','=','empresa.id_emp')
+      ->join('roles','u.id_rol','=','roles.id_rol')
+      ->orderBy("u.id_usu","des")
+      ->get();
+      return $periodo;
+    }
+     public function guardarUsuario(Request $request)
+    {
+      $v= $this->validate(request(),[
+            'nomb_usu' => ['required', 'string', 'max:255'],
+            'clave_usu' => ['required', 'string', 'min:6'],
+        ]);
+       if($v)
+      {
+        $usuario= new User();
+        $usuario->id_rol=  $request->input('id_rol');
+        $usuario->id_emp=  $request->input('id_emp');
+        $usuario->id_fec=  $request->input('id_fec');
+        $usuario->nomb_usu=  $request->input('nomb_usu');
+        $usuario->clave_usu=  Hash::make( $request->input('clave_usu'));
+        $usuario->observ_usu=  $request->input('observ_usu');
+        $usuario->estado_usu=  $request->input('estado_usu');
+        $usuario->fechaini_usu=  $request->input('fechaini_usu');
+        $usuario->fechafin_usu=  $request->input('fechafin_usu');
+        $usuario->save();
+       return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+    public function modificarUsuario(Request $request,$id)
+    {
+        $v= $this->validate(request(),[
+             'nomb_usu' => ['required', 'string', 'max:255'],
+            'clave_usu' => ['required', 'string', 'min:6'],
+        ]);
+       if($v)
+      {
+        $id_rol  =  $request->input('id_rol');
+        $id_emp = $request->input('id_emp');
+        $id_fec = $request->input('id_fec');
+        $nomb_usu  =  $request->input('nomb_usu');
+        $observ_usu  =  $request->input('observ_usu');
+        $estado_usu  =  $request->input('estado_usu');
+        $fechaini_usu  =  $request->input('fechaini_usu');
+        $fechafin_usu  =  $request->input('fechafin_usu');
+       
+        DB::table('usuario')
+            ->where('id_usu', $id)
+            ->update(  ['id_rol' => $id_rol,'id_emp' => $id_emp , 'id_fec' => $id_fec, 'nomb_usu' => $nomb_usu,'observ_usu' => $observ_usu,'estado_usu' => $estado_usu,'fechaini_usu' => $fechaini_usu,'fechafin_usu' => $fechafin_usu]
+          );
+         return ;     
+          }
+          else
+      {
+        return back()->withInput($request->all());
+      }
+    }
+      public function eliminarUsuario($id)
+    {
+        $estado_usu='I';
+        DB::table('usuario')
+            ->where('id_usu', $id)
+            ->update(['estado_usu' => $estado_usu]
+          );
+        return;
+    }
+    public function  getFacturaCompra()
+    {
+       $facturas = DB::table('factura as fac')
+       ->join('formapago','fac.id_formapago','=','formapago.id_formapago')
+      ->join('persona','fac.id_per','=','persona.id_per')
+      ->where('tipo_fact','=','Compra')
+      ->orderBy("fac.id_fact","des")
+      ->get();
+      return $facturas;
+    }
+    public function  getFacturaVenta()
+    {
+       $facturas = DB::table('factura as fac')
+       ->join('formapago','fac.id_formapago','=','formapago.id_formapago')
+      ->join('persona','fac.id_per','=','persona.id_per')
+      ->where('tipo_fact','=','Venta')
+      ->orderBy("fac.id_fact","des")
+      ->get();
+      return $facturas;
     }
 }

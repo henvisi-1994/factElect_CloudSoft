@@ -106,6 +106,7 @@
              @include('admin.Provincia.index')
         </div>
         <div class="tab-pane fade" id="nav-usuario">
+            @include('admin.Usuario.index')
         </div>
         <div class="tab-pane fade" id="nav-rol">
             @include('admin.Rol.index')

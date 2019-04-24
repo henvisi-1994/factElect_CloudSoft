@@ -49055,6 +49055,10 @@ var app = new Vue({
     this.getFormaPago();
     this.getParam_Docs();
     this.getParam_Porc();
+    this.getPeriodo();
+    this.getUsuario();
+    this.getFacturaCompra();
+    this.getFacturaVenta();
   },
   data: (_data = {
     categorias: [],
@@ -49143,7 +49147,7 @@ var app = new Vue({
       'id_emp': '',
       'id_fec': ''
     },
-    param_porc: [],
+    param_porcs: [],
     newParam_Porc: {
       'nomb_param_porc': '',
       'observ_param_porc': '',
@@ -49498,6 +49502,78 @@ var app = new Vue({
     'estado_formapago': '',
     'fechaini_formapago': '',
     'fechafin_formapago': ''
+  }), _defineProperty(_data, "periodos", []), _defineProperty(_data, "newPeriodo", {
+    'nomb_fec': '',
+    'mesidentif_fec': '',
+    'observ_fec': '',
+    'estado_fec': '',
+    'fechaini_fec': '',
+    'fechafin_fec': ''
+  }), _defineProperty(_data, "fillPeriodo", {
+    'id_fec': '',
+    'nomb_fec': '',
+    'mesidentif_fec': '',
+    'observ_fec': '',
+    'estado_fec': '',
+    'fechaini_fec': '',
+    'fechafin_fec': ''
+  }), _defineProperty(_data, "tipoDocumento", []), _defineProperty(_data, "newTipoDocumento", {
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_doc': '',
+    'observ_doc': '',
+    'estado_doc': '',
+    'fechaini_doc': '',
+    'fechafin_doc': ''
+  }), _defineProperty(_data, "fillTipoDocumento", {
+    'id_doc': '',
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_doc': '',
+    'observ_doc': '',
+    'estado_doc': '',
+    'fechaini_doc': '',
+    'fechafin_doc': ''
+  }), _defineProperty(_data, "usuarios", []), _defineProperty(_data, "newUsuario", {
+    'id_rol': '',
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_usu': '',
+    'clave_usu': '',
+    'observ_usu': '',
+    'estado_usu': '',
+    'fechaini_usu': '',
+    'fechafin_usu': ''
+  }), _defineProperty(_data, "fillUsuario", {
+    'id_rol': '',
+    'id_emp': '',
+    'id_fec': '',
+    'nomb_usu': '',
+    'clave_usu': '',
+    'observ_usu': '',
+    'estado_usu': '',
+    'fechaini_usu': '',
+    'fechafin_usu': ''
+  }), _defineProperty(_data, "facturasCompra", []), _defineProperty(_data, "facturasVenta", []), _defineProperty(_data, "newFactura", {
+    'id_formapago': '',
+    'id_per': '',
+    'num_fact': '',
+    'fecha_emision_fact': '',
+    'hora_emision_fact': '',
+    'vencimiento_fact': '',
+    'tipo_fact': '',
+    'observ_fact': '',
+    'total_fact': ''
+  }), _defineProperty(_data, "fillFactura", {
+    'id_formapago': '',
+    'id_per': '',
+    'num_fact': '',
+    'fecha_emision_fact': '',
+    'hora_emision_fact': '',
+    'vencimiento_fact': '',
+    'tipo_fact': '',
+    'observ_fact': '',
+    'total_fact': ''
   }), _defineProperty(_data, "errors", []), _defineProperty(_data, "buscar_cat", ''), _defineProperty(_data, "numregistros", 10), _defineProperty(_data, "src", ''), _data),
   computed: {
     buscarCategoria: function buscarCategoria() {
@@ -51152,6 +51228,224 @@ var app = new Vue({
       _this82.getParam_Porc();
 
       toastr.success('Parámetro de Porcentaje eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "getPeriodo", function getPeriodo() {
+    var _this83 = this;
+
+    var urlPeriodo = 'getPeriodo';
+    axios.get(urlPeriodo).then(function (response) {
+      _this83.periodos = response.data;
+    });
+  }), _defineProperty(_methods, "createPeriodo", function createPeriodo() {
+    var _this84 = this;
+
+    var urlPeriodo = 'storePeriodo';
+    axios.post(urlPeriodo, this.newPeriodo).then(function (response) {
+      _this84.getPeriodo();
+
+      _this84.newPeriodo.nomb_fec = '';
+      _this84.newPeriodo.mesidentif_fec = '';
+      _this84.newPeriodo.observ_fec = '';
+      _this84.newPeriodo.estado_fec = '';
+      _this84.newPeriodo.fechaini_fec = '';
+      _this84.newPeriodo.fechafin_fec = '';
+      _this84.errors = [];
+      $('#crearPeriodo').modal('hide');
+      toastr.success('Se añadido una nuevo periodo');
+    })["catch"](function (error) {
+      _this84.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editPeriodo", function editPeriodo(periodo) {
+    this.fillPeriodo.id_fec = periodo.id_fec;
+    this.fillPeriodo.nomb_fec = periodo.nomb_fec;
+    this.fillPeriodo.mesidentif_fec = periodo.mesidentif_fec;
+    this.fillPeriodo.observ_fec = periodo.observ_fec;
+    this.fillPeriodo.estado_fec = periodo.estado_fec;
+    this.fillPeriodo.fechaini_fec = periodo.fechaini_fec;
+    this.fillPeriodo.fechafin_fec = periodo.fechafin_fec;
+    $('#editPeriodo').modal('show');
+  }), _defineProperty(_methods, "updatePeriodo", function updatePeriodo(id) {
+    var _this85 = this;
+
+    var url = 'updateFormaPago/' + id;
+    axios.post(url, this.fillPeriodo).then(function (response) {
+      _this85.getPeriodo();
+
+      _this85.fillPeriodo.id_fec = '';
+      _this85.fillPeriodo.nomb_fec = '';
+      _this85.fillPeriodo.mesidentif_fec = '';
+      _this85.fillPeriodo.observ_fec = '';
+      _this85.fillPeriodo.estado_fec = '';
+      _this85.fillPeriodo.fechaini_fec = '';
+      _this85.fillPeriodo.fechafin_fec = '';
+      _this85.errors = [];
+      $('#editPeriodo').modal('hide');
+      toastr.success('Periodo actualizado con éxito');
+    })["catch"](function (error) {
+      _this85.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deletePeriodp", function deletePeriodp(periodo) {
+    var _this86 = this;
+
+    var url = 'deletePeriodo/' + periodo.id_fec;
+    axios.post(url).then(function (response) {
+      _this86.getTipoDocumento();
+
+      toastr.success('Periodo eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "getTipoDocumento", function getTipoDocumento() {
+    var _this87 = this;
+
+    var urlTipoDocumento = 'getTipoDocumento';
+    axios.get(urlTipoDocumento).then(function (response) {
+      _this87.tipoDocumento = response.data;
+    });
+  }), _defineProperty(_methods, "createTipoDocumento", function createTipoDocumento() {
+    var _this88 = this;
+
+    var urlPeriodo = 'storeTipoDocumento';
+    axios.post(urlPeriodo, this.newTipoDocumento).then(function (response) {
+      _this88.getTipoDocumento();
+
+      _this88.newTipoDocumento.id_emp = '';
+      _this88.newTipoDocumento.id_fec = '';
+      _this88.newTipoDocumento.nomb_doc = '';
+      _this88.newTipoDocumento.estado_doc = '';
+      _this88.newTipoDocumento.fechaini_doc = '';
+      _this88.newTipoDocumento.fechafin_doc = '';
+      _this88.errors = [];
+      $('#crearTipoDocumento').modal('hide');
+      toastr.success('Se añadido un nuevo Tipo de Documento');
+    })["catch"](function (error) {
+      _this88.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editTipoDocumento", function editTipoDocumento(tipoDocumento) {
+    this.fillTipoDocumento.id_doc = tipoDocumento.id_doc;
+    this.fillTipoDocumento.id_emp = tipoDocumento.id_emp;
+    this.fillTipoDocumento.id_fec = tipoDocumento.id_fec;
+    this.fillTipoDocumento.observ_doc = tipoDocumento.observ_doc;
+    this.fillTipoDocumento.nomb_doc = tipoDocumento.nomb_doc;
+    this.fillTipoDocumento.estado_doc = tipoDocumento.estado_doc;
+    this.fillTipoDocumento.fechaini_doc = tipoDocumento.fechaini_doc;
+    this.fillTipoDocumento.fechafin_doc = tipoDocumento.fechafin_doc;
+    $('#editTipoDocumento').modal('show');
+  }), _defineProperty(_methods, "updateTipoDocumento", function updateTipoDocumento(id) {
+    var _this89 = this;
+
+    var url = 'updateTipoDocumento/' + id;
+    axios.post(url, this.fillTipoDocumento).then(function (response) {
+      _this89.getTipoDocumento();
+
+      _this89.fillTipoDocumento.id_emp = '';
+      _this89.fillTipoDocumento.id_fec = '';
+      _this89.fillTipoDocumento.nomb_doc = '';
+      _this89.fillTipoDocumento.estado_doc = '';
+      _this89.fillTipoDocumento.fechaini_doc = '';
+      _this89.fillTipoDocumento.fechafin_doc = '';
+      _this89.errors = [];
+      $('#editTipoDocumento').modal('hide');
+      toastr.success('Tipo de documento actualizado con éxito');
+    })["catch"](function (error) {
+      _this89.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteTipoDocumento", function deleteTipoDocumento(tipoDocumento) {
+    var _this90 = this;
+
+    var url = 'deleteTipoDocumento/' + tipoDocumento.id_doc;
+    axios.post(url).then(function (response) {
+      _this90.getTipoDocumento();
+
+      toastr.success('Tipo de documento eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "getUsuario", function getUsuario() {
+    var _this91 = this;
+
+    var urlUsuario = 'getUsuario';
+    axios.get(urlUsuario).then(function (response) {
+      _this91.usuarios = response.data;
+    });
+  }), _defineProperty(_methods, "createUsuario", function createUsuario() {
+    var _this92 = this;
+
+    var urlUsuario = 'storeUsuario';
+    axios.post(urlUsuario, this.newUsuario).then(function (response) {
+      _this92.getUsuario();
+
+      _this92.newUsuario.id_rol = '';
+      _this92.newUsuario.id_emp = '';
+      _this92.newUsuario.id_fec = '';
+      _this92.newUsuario.nomb_usu = '';
+      _this92.newUsuario.clave_usu = '';
+      _this92.newUsuario.observ_usu = '';
+      _this92.newUsuario.estado_usu = '';
+      _this92.newUsuario.fechaini_usu = '';
+      _this92.newUsuario.fechafin_usu = '';
+      _this92.errors = [];
+      $('#crearUsuario').modal('hide');
+      toastr.success('Se añadido un nuevo Usuario');
+    })["catch"](function (error) {
+      _this92.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editUsuario", function editUsuario(usuario) {
+    this.fillUsuario.id_rol = usuario.id_rol;
+    this.fillUsuario.id_emp = usuario.id_emp;
+    this.fillUsuario.id_fec = usuario.id_fec;
+    this.fillUsuario.nomb_usu = usuario.nomb_usu;
+    this.fillUsuario.observ_usu = usuario.observ_usu;
+    this.fillUsuario.estado_usu = usuario.estado_usu;
+    this.fillUsuario.fechaini_usu = usuario.fechaini_usu;
+    this.fillUsuario.fechafin_usu = usuario.fechafin_usu;
+    $('#editUsuario').modal('show');
+  }), _defineProperty(_methods, "updateUsuario", function updateUsuario(id) {
+    var _this93 = this;
+
+    var url = 'updateUsaurio/' + id;
+    axios.post(url, this.fillUsuario).then(function (response) {
+      _this93.getUsuario();
+
+      _this93.fillUsuario.id_rol = '';
+      _this93.fillUsuario.id_emp = '';
+      _this93.fillUsuario.id_fec = '';
+      _this93.fillUsuario.nomb_usu = '';
+      _this93.fillUsuario.observ_usu = '';
+      _this93.fillUsuario.estado_usu = '';
+      _this93.fillUsuario.fechaini_usu = '';
+      _this93.fillUsuario.fechafin_usu = '';
+      _this93.errors = [];
+      $('#editUsuario').modal('hide');
+      toastr.success('Usuario actualizado con éxito');
+    })["catch"](function (error) {
+      _this93.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteUsuario", function deleteUsuario(usuario) {
+    var _this94 = this;
+
+    var url = 'deleteUsuario/' + usuario.id_usu;
+    axios.post(url).then(function (response) {
+      _this94.getUsuario();
+
+      toastr.success('Usuario eliminado con éxito');
+    });
+  }), _defineProperty(_methods, "changePage", function changePage(page) {
+    this.pagination.current_page = page;
+    this.getCategorias(page);
+  }), _defineProperty(_methods, "registros", function registros(page) {
+    this.pagination.current_page = page;
+    this.pagination.per_page = this.numregistros;
+    this.getCategorias(page);
+  }), _defineProperty(_methods, "getFacturaCompra", function getFacturaCompra() {
+    var _this95 = this;
+
+    var urlFactura = 'getFacturaCompra';
+    axios.get(urlFactura).then(function (response) {
+      _this95.facturasCompra = response.data;
+    });
+  }), _defineProperty(_methods, "getFacturaVenta", function getFacturaVenta() {
+    var _this96 = this;
+
+    var urlFactura = 'getFacturaVenta';
+    axios.get(urlFactura).then(function (response) {
+      _this96.facturasVenta = response.data;
     });
   }), _methods)
 });

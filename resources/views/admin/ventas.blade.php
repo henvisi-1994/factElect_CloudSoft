@@ -21,6 +21,7 @@
     </div>
     </div>
     <div class="tab-pane fade" id="nav-factura">
+        @include('admin.FacturaVenta.index') 
     </div>
     <div class="tab-pane fade" id="nav-guiaRem">
     </div>
