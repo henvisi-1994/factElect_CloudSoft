@@ -12,6 +12,7 @@
             </a>
         </div>
         <br>
+            <br/>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -67,6 +68,5 @@
             </table>
             @include('admin.TipoContribuyente.Crear')
             @include('admin.TipoContribuyente.Modificar')
-        </br>
     </div>
 </div>

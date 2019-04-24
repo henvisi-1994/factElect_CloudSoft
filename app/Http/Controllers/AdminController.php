@@ -114,8 +114,7 @@ class AdminController extends Controller
      $param_porc = Param_Porc::get();
      
    return view('admin.contabilidad',compact('formularios','empresas','fechas','param_docs','param_porc'));
-  }
-  
+  } 
   public function getCategoria()
   {
    $categorias = DB::table('categoria as c')

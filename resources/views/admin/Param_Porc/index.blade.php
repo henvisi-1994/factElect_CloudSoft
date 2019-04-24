@@ -9,7 +9,7 @@
             Crear
         </a>
         <br>
-            <br>
+            </br>
                 <div class="container-fluid">
                     <div class="col-xs-12 col-lg-8">
                         <label>
@@ -132,10 +132,7 @@
                         </tr>
                     </tbody>
                 </table>
-               
-                @include('admin.Param_Porc.Crear')
+            @include('admin.Param_Porc.Crear')
             @include('admin.Param_Porc.Modificar')
-            </br>
-        </br>
     </div>
 </div>

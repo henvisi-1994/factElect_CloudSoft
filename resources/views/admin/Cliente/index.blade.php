@@ -9,7 +9,7 @@
             Crear
         </a>
         <br>
-            <br>
+            </br>
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
@@ -105,7 +105,5 @@
                 @include('admin.Cliente.CrearCliente')
             @include('admin.Cliente.Modificar')
             @include('admin.Cliente.ModificarCliente')
-            </br>
-        </br>
     </div>
 </div>

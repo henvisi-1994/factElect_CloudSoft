@@ -9,7 +9,7 @@
             Crear
         </a>
         <br>
-            <br>
+            </br>
                 <div class="container-fluid">
                     <div class="col-xs-12 col-lg-8">
                         <label>
@@ -135,7 +135,5 @@
                
                 @include('admin.Param_Docs.Crear')
             @include('admin.Param_Docs.Modificar')
-            </br>
-        </br>
     </div>
 </div>

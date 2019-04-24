@@ -19,7 +19,8 @@
             </li>
             <li>
                 <a data-toggle="tab" href="#nav-unidad">
-                    <i class="fa fa-puzzle-piece"></i> 
+                    <i class="fa fa-puzzle-piece">
+                    </i>
                     Unidad
                 </a>
             </li>
@@ -31,10 +32,8 @@
                 </a>
             </li>
             <li>
-                <a data-toggle="tab" href="#nav-ciudad">
-                    <i class="fa  fa-map-o">
-                    </i>
-                    Ciudad
+                <a data-toggle="tab" href="#nav-ubicacion">
+                    Ubicacion
                 </a>
             </li>
             <li>
@@ -45,27 +44,6 @@
                 </a>
             </li>
             <li>
-                <a data-toggle="tab" href="#nav-provincia">
-                    <i class="fa   fa-globe">
-                    </i>
-                    Provincia
-                </a>
-            </li>
-             <li>
-                <a data-toggle="tab" href="#nav-usuario">
-                    <i class="fa fa-users">
-                    </i>
-                    Usuarios
-                </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="#nav-rol">
-                    <i class="fa fa-user-times">
-                    </i>
-                    Roles
-                </a>
-            </li>
-             <li>
                 <a data-toggle="tab" href="#nav-bodega">
                     <i class="fa fa-building">
                     </i>
@@ -73,14 +51,11 @@
                 </a>
             </li>
             <li>
-                <a data-toggle="tab" href="#nav-pais">
-                    <i class="fa   fa-globe">
-                    </i>
-                    País
-                </a>
+              <a data-toggle="tab" href="#nav-usuarios">
+                     <i class="fa fa-users"></i>
+                    Usuarios
+                </a>  
             </li>
-           
-            
         </ul>
     </div>
     <div class="tab-content" id="nav-tabContent">
@@ -96,32 +71,18 @@
         <div class="tab-pane fade" id="nav-descuentos">
             @include('admin.Descuento.index')
         </div>
-        <div class="tab-pane fade" id="nav-ciudad">
-             @include('admin.Ciudad.index')
+        <div class="tab-pane fade" id="nav-ubicacion">
+            @include('admin.ubicacion')
         </div>
         <div class="tab-pane fade" id="nav-empresa">
             @include('admin.Empresa.index')
         </div>
-        <div class="tab-pane fade"  id="nav-provincia">
-             @include('admin.Provincia.index')
-        </div>
-        <div class="tab-pane fade" id="nav-usuario">
-            @include('admin.Usuario.index')
-        </div>
-        <div class="tab-pane fade" id="nav-rol">
-            @include('admin.Rol.index')
-        </div>
         <div class="tab-pane fade" id="nav-bodega">
-             @include('admin.Bodega.index')
+            @include('admin.Bodega.index')
         </div>
-        <div class="tab-pane fade" id="nav-pais">
-             @include('admin.Pais.index')
+        <div class="tab-pane fade" id="nav-usuarios">
+            @include('admin.usuarios')
         </div>
     </div>
 </div>
 @endsection
-
-
-
-
-

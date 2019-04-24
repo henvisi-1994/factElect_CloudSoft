@@ -5,13 +5,13 @@
         </h1>
     </div>
     <div class="box-body">
-         <!-- <div class="card-body d-flex justify-content-between align-items-center">
+        <!-- <div class="card-body d-flex justify-content-between align-items-center">
             <a class="btn btn-primary btn-sm"  data-target="#crearFormaPago" data-toggle="modal" href="#">
                 Crear
             </a>
         </div> -->
         <br>
-            <br>
+            </br>
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
@@ -22,7 +22,7 @@
                                 Cliente
                             </th>
                             <th>
-                            	Estado
+                                Estado
                             </th>
                             <th>
                                 Forma de Pago
@@ -37,10 +37,10 @@
                                 Vencimiento
                             </th>
                             <th>
-                            	Observación
+                                Observación
                             </th>
                             <th>
-                            	Total
+                                Total
                             </th>
                             <th>
                                 Configuración
@@ -90,13 +90,13 @@
                                 @{{factura.vencimiento_fact}}
                             </td>
                             <td>
-                            	@{{factura.observ_fact}}
+                                @{{factura.observ_fact}}
                             </td>
                             <td>
-                            	@{{factura.total_fact}}
+                                @{{factura.total_fact}}
                             </td>
                             <td>
-                               <!-- <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editformaPago(formapago)">
+                                <!-- <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editformaPago(formapago)">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o">
                                     </i>
                                 </a>
@@ -108,7 +108,5 @@
                         </tr>
                     </tbody>
                 </table>
-            </br>
-        </br>
     </div>
 </div>
