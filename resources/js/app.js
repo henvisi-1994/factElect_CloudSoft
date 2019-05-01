@@ -134,7 +134,6 @@ const app = new Vue({
             'id_emp': '',
             'id_fec': ''
         },
-
         param_porcs: [],
         newParam_Porc: {
             'nomb_param_porc': '',
@@ -259,14 +258,16 @@ const app = new Vue({
             'fechaini_marca': '',
             'fechafin_marca': ''
         },
-        productos: [],
+          productos: [],
         newProducto: {
             'id_emp': '',
             'id_fec': '',
+            'id_bod': '',
             'codigo_prod': '',
             'codbarra_prod': '',
             'descripcion_prod': '',
             'id_marca': '',
+            'id_cat': '',
             'present_prod': '',
             'precio_prod': '',
             'ubicacion_prod': '',
@@ -286,13 +287,14 @@ const app = new Vue({
             'fechafin_prod': ''
         },
         fillProducto: {
-            'id_prod': '',
             'id_emp': '',
             'id_fec': '',
+            'id_bod': '',
             'codigo_prod': '',
             'codbarra_prod': '',
             'descripcion_prod': '',
             'id_marca': '',
+            'id_cat': '',
             'present_prod': '',
             'precio_prod': '',
             'ubicacion_prod': '',
@@ -502,99 +504,108 @@ const app = new Vue({
             'fechaini_formapago': '',
             'fechafin_formapago': ''
         },
-         periodos:[],
-        newPeriodo:{
-            'nomb_fec':'',
-            'mesidentif_fec':'', 
-            'observ_fec':'',
-            'estado_fec':'',
-            'fechaini_fec':'',
-            'fechafin_fec':''
+        periodos: [],
+        newPeriodo: {
+            'nomb_fec': '',
+            'mesidentif_fec': '',
+            'observ_fec': '',
+            'estado_fec': '',
+            'fechaini_fec': '',
+            'fechafin_fec': ''
         },
-        fillPeriodo:{
-            'id_fec':'',
-            'nomb_fec':'',
-            'mesidentif_fec':'', 
-            'observ_fec':'',
-            'estado_fec':'',
-            'fechaini_fec':'',
-            'fechafin_fec':''
+        fillPeriodo: {
+            'id_fec': '',
+            'nomb_fec': '',
+            'mesidentif_fec': '',
+            'observ_fec': '',
+            'estado_fec': '',
+            'fechaini_fec': '',
+            'fechafin_fec': ''
         },
-        tipoDocumento:[],
-        newTipoDocumento:{
-            'id_emp':'',
-            'id_fec':'', 
-            'nomb_doc':'',
-            'observ_doc':'',
-            'estado_doc':'',
-            'fechaini_doc':'',
-            'fechafin_doc':''
+        tipoDocumento: [],
+        newTipoDocumento: {
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_doc': '',
+            'observ_doc': '',
+            'estado_doc': '',
+            'fechaini_doc': '',
+            'fechafin_doc': ''
         },
-        fillTipoDocumento:{
-            'id_doc':'',
-            'id_emp':'',
-            'id_fec':'', 
-            'nomb_doc':'',
-            'observ_doc':'',
-            'estado_doc':'',
-            'fechaini_doc':'',
-            'fechafin_doc':''
+        fillTipoDocumento: {
+            'id_doc': '',
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_doc': '',
+            'observ_doc': '',
+            'estado_doc': '',
+            'fechaini_doc': '',
+            'fechafin_doc': ''
         },
-        usuarios:[],
-        newUsuario:{
-            'id_rol':'',
-            'id_emp':'',
-            'id_fec':'',
-            'nomb_usu':'',
-            'clave_usu':'',
-            'observ_usu':'',
-            'estado_usu':'',
-            'fechaini_usu':'',
-            'fechafin_usu':''
+        usuarios: [],
+        newUsuario: {
+            'id_rol': '',
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_usu': '',
+            'clave_usu': '',
+            'observ_usu': '',
+            'estado_usu': '',
+            'fechaini_usu': '',
+            'fechafin_usu': ''
         },
-        fillUsuario:{
-             'id_rol':'',
-            'id_emp':'',
-            'id_fec':'',
-            'nomb_usu':'',
-            'clave_usu':'',
-            'observ_usu':'',
-            'estado_usu':'',
-            'fechaini_usu':'',
-            'fechafin_usu':'' 
+        fillUsuario: {
+            'id_rol': '',
+            'id_emp': '',
+            'id_fec': '',
+            'nomb_usu': '',
+            'clave_usu': '',
+            'observ_usu': '',
+            'estado_usu': '',
+            'fechaini_usu': '',
+            'fechafin_usu': ''
         },
-        facturasCompra:[],
-        facturasVenta:[],
-        newFactura:{
-            'id_formapago':'',
-            'id_per':'', 
-            'num_fact':'', 
-            'fecha_emision_fact':'',
-            'hora_emision_fact':'', 
-            'vencimiento_fact':'',
-            'tipo_fact':'',
-            'observ_fact':'',
-            'total_fact':''
+        facturasCompra: [],
+        facturasVenta: [],
+        newFactura: {
+            'id_formapago': '',
+            'id_per': '',
+            'num_fact': '',
+            'fecha_emision_fact': '',
+            'hora_emision_fact': '',
+            'vencimiento_fact': '',
+            'tipo_fact': '',
+            'observ_fact': '',
+            'total_fact': ''
         },
-        fillFactura:{
-            'id_formapago':'',
-            'id_per':'', 
-            'num_fact':'', 
-            'fecha_emision_fact':'',
-            'hora_emision_fact':'', 
-            'vencimiento_fact':'',
-            'tipo_fact':'',
-            'observ_fact':'',
-            'total_fact':''
+        fillFactura: {
+            'id_formapago': '',
+            'id_per': '',
+            'num_fact': '',
+            'fecha_emision_fact': '',
+            'hora_emision_fact': '',
+            'vencimiento_fact': '',
+            'tipo_fact': '',
+            'observ_fact': '',
+            'total_fact': ''
         },
         errors: [],
         buscar_cat: '',
+        buscar_prod: '',
+        buscar_marca: '',
+        buscar_categoria: '',
+        menu: {
+            'item': 0
+        },
         numregistros: 10,
         src: '',
     },
     computed: {
         buscarCategoria: function() {
             return this.categorias.filter((categoria) => categoria.nomb_cat.includes(this.buscar_cat));
+        },
+          buscarProducto: function() {
+            return this.productos.filter((producto) => producto.descripcion_prod.includes(this.buscar_prod) & producto.nomb_marca.includes(this.buscar_marca) & producto.nomb_cat.includes(this.buscar_categoria));
         }
     },
     methods: {
@@ -971,7 +982,7 @@ const app = new Vue({
         removeImage: function(event) {
             this.image = '';
         },
-        getProductos: function() {
+         getProductos: function() {
             var urlProducto = 'getProductos';
             axios.get(urlProducto).then(response => {
                 this.productos = response.data;
@@ -990,10 +1001,12 @@ const app = new Vue({
                 this.getProductos();
                 this.newProducto.id_emp = '';
                 this.newProducto.id_fec = '';
+                this.newProducto.id_bod = '';
                 this.newProducto.codigo_prod = '';
                 this.newProducto.codbarra_prod = '';
                 this.newProducto.descripcion_prod = '';
                 this.newProducto.id_marca = '';
+                this.newProducto.id_cat = '';
                 this.newProducto.present_prod = '';
                 this.newProducto.precio_prod = '';
                 this.newProducto.ubicacion_prod = '';
@@ -1022,10 +1035,12 @@ const app = new Vue({
             this.fillProducto.id_prod = producto.id_prod;
             this.fillProducto.id_emp = producto.id_emp;
             this.fillProducto.id_fec = producto.id_fec;
+            this.fillProducto.id_bod = producto.id_bod;
             this.fillProducto.codigo_prod = producto.codigo_prod;
             this.fillProducto.codbarra_prod = producto.codbarra_prod;
             this.fillProducto.descripcion_prod = producto.descripcion_prod;
             this.fillProducto.id_marca = producto.id_marca;
+            this.fillProducto.id_cat = producto.id_cat;
             this.fillProducto.present_prod = producto.present_prod;
             this.fillProducto.precio_prod = producto.precio_prod;
             this.fillProducto.ubicacion_prod = producto.ubicacion_prod;
@@ -1935,7 +1950,6 @@ const app = new Vue({
                 toastr.success('Forma de Pago eliminada con éxito');
             });
         },
-
         ///Metodos de Param_Docs
         getParam_Docs: function() {
             var urlParam_Docs = 'getParam_Docs';
@@ -1997,9 +2011,7 @@ const app = new Vue({
                 toastr.success('Parámetro de Documento eliminado con éxito');
             });
         },
-
-
-                ///Metodos de Param_Porc
+        ///Metodos de Param_Porc
         getParam_Porc: function() {
             var urlParam_Porc = 'getParam_Porc';
             axios.get(urlParam_Porc).then(response => {
@@ -2060,7 +2072,7 @@ const app = new Vue({
                 toastr.success('Parámetro de Porcentaje eliminado con éxito');
             });
         },
-         getPeriodo: function() {
+        getPeriodo: function() {
             var urlPeriodo = 'getPeriodo';
             axios.get(urlPeriodo).then(response => {
                 this.periodos = response.data;
@@ -2069,7 +2081,7 @@ const app = new Vue({
         createPeriodo: function() {
             var urlPeriodo = 'storePeriodo';
             axios.post(urlPeriodo, this.newPeriodo).then((response) => {
-                this. getPeriodo();
+                this.getPeriodo();
                 this.newPeriodo.nomb_fec = '';
                 this.newPeriodo.mesidentif_fec = '';
                 this.newPeriodo.observ_fec = '';
@@ -2084,19 +2096,19 @@ const app = new Vue({
             });
         },
         editPeriodo: function(periodo) {
-                this.fillPeriodo.id_fec = periodo.id_fec;
-                this.fillPeriodo.nomb_fec = periodo.nomb_fec;
-                this.fillPeriodo.mesidentif_fec =periodo.mesidentif_fec;
-                this.fillPeriodo.observ_fec = periodo.observ_fec;
-                this.fillPeriodo.estado_fec = periodo.estado_fec;
-                this.fillPeriodo.fechaini_fec = periodo.fechaini_fec;
-                this.fillPeriodo.fechafin_fec = periodo.fechafin_fec;
-           $('#editPeriodo').modal('show');
+            this.fillPeriodo.id_fec = periodo.id_fec;
+            this.fillPeriodo.nomb_fec = periodo.nomb_fec;
+            this.fillPeriodo.mesidentif_fec = periodo.mesidentif_fec;
+            this.fillPeriodo.observ_fec = periodo.observ_fec;
+            this.fillPeriodo.estado_fec = periodo.estado_fec;
+            this.fillPeriodo.fechaini_fec = periodo.fechaini_fec;
+            this.fillPeriodo.fechafin_fec = periodo.fechafin_fec;
+            $('#editPeriodo').modal('show');
         },
         updatePeriodo: function(id) {
             var url = 'updateFormaPago/' + id;
             axios.post(url, this.fillPeriodo).then(response => {
-                this. getPeriodo();
+                this.getPeriodo();
                 this.fillPeriodo.id_fec = '';
                 this.fillPeriodo.nomb_fec = '';
                 this.fillPeriodo.mesidentif_fec = '';
@@ -2114,7 +2126,7 @@ const app = new Vue({
         deletePeriodp: function(periodo) {
             var url = 'deletePeriodo/' + periodo.id_fec;
             axios.post(url).then(response => {
-                this. getTipoDocumento();
+                this.getTipoDocumento();
                 toastr.success('Periodo eliminado con éxito');
             });
         },
@@ -2127,7 +2139,7 @@ const app = new Vue({
         createTipoDocumento: function() {
             var urlPeriodo = 'storeTipoDocumento';
             axios.post(urlPeriodo, this.newTipoDocumento).then((response) => {
-                this. getTipoDocumento();
+                this.getTipoDocumento();
                 this.newTipoDocumento.id_emp = '';
                 this.newTipoDocumento.id_fec = '';
                 this.newTipoDocumento.nomb_doc = '';
@@ -2142,20 +2154,20 @@ const app = new Vue({
             });
         },
         editTipoDocumento: function(tipoDocumento) {
-                this.fillTipoDocumento.id_doc = tipoDocumento.id_doc;
-                this.fillTipoDocumento.id_emp = tipoDocumento.id_emp;
-                this.fillTipoDocumento.id_fec = tipoDocumento.id_fec;
-                 this.fillTipoDocumento.observ_doc = tipoDocumento.observ_doc;
-                this.fillTipoDocumento.nomb_doc = tipoDocumento.nomb_doc;
-                this.fillTipoDocumento.estado_doc = tipoDocumento.estado_doc;
-                this.fillTipoDocumento.fechaini_doc = tipoDocumento.fechaini_doc;
-                this.fillTipoDocumento.fechafin_doc = tipoDocumento.fechafin_doc;
-           $('#editTipoDocumento').modal('show');
+            this.fillTipoDocumento.id_doc = tipoDocumento.id_doc;
+            this.fillTipoDocumento.id_emp = tipoDocumento.id_emp;
+            this.fillTipoDocumento.id_fec = tipoDocumento.id_fec;
+            this.fillTipoDocumento.observ_doc = tipoDocumento.observ_doc;
+            this.fillTipoDocumento.nomb_doc = tipoDocumento.nomb_doc;
+            this.fillTipoDocumento.estado_doc = tipoDocumento.estado_doc;
+            this.fillTipoDocumento.fechaini_doc = tipoDocumento.fechaini_doc;
+            this.fillTipoDocumento.fechafin_doc = tipoDocumento.fechafin_doc;
+            $('#editTipoDocumento').modal('show');
         },
         updateTipoDocumento: function(id) {
             var url = 'updateTipoDocumento/' + id;
             axios.post(url, this.fillTipoDocumento).then(response => {
-                this. getTipoDocumento();
+                this.getTipoDocumento();
                 this.fillTipoDocumento.id_emp = '';
                 this.fillTipoDocumento.id_fec = '';
                 this.fillTipoDocumento.nomb_doc = '';
@@ -2172,11 +2184,11 @@ const app = new Vue({
         deleteTipoDocumento: function(tipoDocumento) {
             var url = 'deleteTipoDocumento/' + tipoDocumento.id_doc;
             axios.post(url).then(response => {
-                this. getTipoDocumento();
+                this.getTipoDocumento();
                 toastr.success('Tipo de documento eliminado con éxito');
             });
         },
-         getUsuario: function() {
+        getUsuario: function() {
             var urlUsuario = 'getUsuario';
             axios.get(urlUsuario).then(response => {
                 this.usuarios = response.data;
@@ -2185,7 +2197,7 @@ const app = new Vue({
         createUsuario: function() {
             var urlUsuario = 'storeUsuario';
             axios.post(urlUsuario, this.newUsuario).then((response) => {
-                this. getUsuario();
+                this.getUsuario();
                 this.newUsuario.id_rol = '';
                 this.newUsuario.id_emp = '';
                 this.newUsuario.id_fec = '';
@@ -2203,20 +2215,20 @@ const app = new Vue({
             });
         },
         editUsuario: function(usuario) {
-                this.fillUsuario.id_rol = usuario.id_rol;
-                this.fillUsuario.id_emp = usuario.id_emp;
-                this.fillUsuario.id_fec = usuario.id_fec;
-                this.fillUsuario.nomb_usu = usuario.nomb_usu;
-                this.fillUsuario.observ_usu = usuario.observ_usu;
-                this.fillUsuario.estado_usu = usuario.estado_usu;
-                this.fillUsuario.fechaini_usu = usuario.fechaini_usu;
-                this.fillUsuario.fechafin_usu = usuario.fechafin_usu;
-           $('#editUsuario').modal('show');
+            this.fillUsuario.id_rol = usuario.id_rol;
+            this.fillUsuario.id_emp = usuario.id_emp;
+            this.fillUsuario.id_fec = usuario.id_fec;
+            this.fillUsuario.nomb_usu = usuario.nomb_usu;
+            this.fillUsuario.observ_usu = usuario.observ_usu;
+            this.fillUsuario.estado_usu = usuario.estado_usu;
+            this.fillUsuario.fechaini_usu = usuario.fechaini_usu;
+            this.fillUsuario.fechafin_usu = usuario.fechafin_usu;
+            $('#editUsuario').modal('show');
         },
         updateUsuario: function(id) {
             var url = 'updateUsaurio/' + id;
             axios.post(url, this.fillUsuario).then(response => {
-                this. getUsuario();
+                this.getUsuario();
                 this.fillUsuario.id_rol = '';
                 this.fillUsuario.id_emp = '';
                 this.fillUsuario.id_fec = '';
@@ -2235,7 +2247,7 @@ const app = new Vue({
         deleteUsuario: function(usuario) {
             var url = 'deleteUsuario/' + usuario.id_usu;
             axios.post(url).then(response => {
-                this. getUsuario();
+                this.getUsuario();
                 toastr.success('Usuario eliminado con éxito');
             });
         },
@@ -2248,13 +2260,13 @@ const app = new Vue({
             this.pagination.per_page = this.numregistros;
             this.getCategorias(page);
         },
-         getFacturaCompra: function() {
+        getFacturaCompra: function() {
             var urlFactura = 'getFacturaCompra';
             axios.get(urlFactura).then(response => {
                 this.facturasCompra = response.data;
             });
         },
-         getFacturaVenta: function() {
+        getFacturaVenta: function() {
             var urlFactura = 'getFacturaVenta';
             axios.get(urlFactura).then(response => {
                 this.facturasVenta = response.data;

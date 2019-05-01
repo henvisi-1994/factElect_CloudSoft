@@ -19,19 +19,25 @@ Route::get('Ciudad','AdminController@Ciudad');
 Route::get('Persona', 'AdminController@Persona');
 Route::get('/admin', 'AdminController@inicio');
 Route::get('Compras','AdminController@Compras');
-Route::get('Compras','AdminController@Compras');
 Route::get('Ventas','AdminController@ventas');
 Route::get('Configuracion','AdminController@configuracion');
 Route::get('Contabilidad','AdminController@contabilidad');
 Route::get('TipoContribuyente','AdminController@TipoContribuyente');
 Route::get('Identificaciones','AdminController@Identificaciones');
-Route::get('Bodega','AdminController@Bodega');
 Route::get('Pais','AdminController@Pais');
 Route::get('Provincia','AdminController@Provincia');
 Route::get('Cliente','AdminController@Cliente');
-Route::get('Descuento','AdminController@Descuento');
 Route::get('Param_Docs','AdminController@Param_Docs');
 Route::get('Param_Porc','AdminController@Param_Porc');
+//Configuracion
+Route::get('Categoria','AdminController@Categoria');
+Route::get('Marca','AdminController@Marca');
+Route::get('Unidad','AdminController@Unidad');
+Route::get('Descuento','AdminController@Descuento');
+Route::get('Ubicacion','AdminController@Ubicacion');
+Route::get('Empresa','AdminController@Empresa');
+Route::get('Bodega','AdminController@Bodega');
+Route::get('Usuarios','AdminController@Usuarios');
 //Obtener
 Route::get('getProveedor','AdminController@getProveedor');
 Route::get('getProductos','AdminController@getProducto');

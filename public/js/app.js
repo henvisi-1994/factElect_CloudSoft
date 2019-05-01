@@ -49275,10 +49275,12 @@ var app = new Vue({
     newProducto: {
       'id_emp': '',
       'id_fec': '',
+      'id_bod': '',
       'codigo_prod': '',
       'codbarra_prod': '',
       'descripcion_prod': '',
       'id_marca': '',
+      'id_cat': '',
       'present_prod': '',
       'precio_prod': '',
       'ubicacion_prod': '',
@@ -49298,13 +49300,14 @@ var app = new Vue({
       'fechafin_prod': ''
     },
     fillProducto: {
-      'id_prod': '',
       'id_emp': '',
       'id_fec': '',
+      'id_bod': '',
       'codigo_prod': '',
       'codbarra_prod': '',
       'descripcion_prod': '',
       'id_marca': '',
+      'id_cat': '',
       'present_prod': '',
       'precio_prod': '',
       'ubicacion_prod': '',
@@ -49574,7 +49577,9 @@ var app = new Vue({
     'tipo_fact': '',
     'observ_fact': '',
     'total_fact': ''
-  }), _defineProperty(_data, "errors", []), _defineProperty(_data, "buscar_cat", ''), _defineProperty(_data, "numregistros", 10), _defineProperty(_data, "src", ''), _data),
+  }), _defineProperty(_data, "errors", []), _defineProperty(_data, "buscar_cat", ''), _defineProperty(_data, "buscar_prod", ''), _defineProperty(_data, "buscar_marca", ''), _defineProperty(_data, "buscar_categoria", ''), _defineProperty(_data, "menu", {
+    'item': 0
+  }), _defineProperty(_data, "numregistros", 10), _defineProperty(_data, "src", ''), _data),
   computed: {
     buscarCategoria: function buscarCategoria() {
       var _this = this;
@@ -49582,23 +49587,30 @@ var app = new Vue({
       return this.categorias.filter(function (categoria) {
         return categoria.nomb_cat.includes(_this.buscar_cat);
       });
+    },
+    buscarProducto: function buscarProducto() {
+      var _this2 = this;
+
+      return this.productos.filter(function (producto) {
+        return producto.descripcion_prod.includes(_this2.buscar_prod) & producto.nomb_marca.includes(_this2.buscar_marca) & producto.nomb_cat.includes(_this2.buscar_categoria);
+      });
     }
   },
   methods: (_methods = {
     getCategorias: function getCategorias() {
-      var _this2 = this;
+      var _this3 = this;
 
       var urlCategorias = 'getCategorias';
       axios.get(urlCategorias).then(function (response) {
-        _this2.categorias = response.data;
+        _this3.categorias = response.data;
       });
     },
     createCategoria: function createCategoria() {
-      var _this3 = this;
+      var _this4 = this;
 
       var urlGuardarCategoria = 'storeCategoria';
       axios.post(urlGuardarCategoria, this.newcategoria).then(function (response) {
-        _this3.getCategorias();
+        _this4.getCategorias();
 
         newcategoria = {
           'nomb_cat': '',
@@ -49609,11 +49621,11 @@ var app = new Vue({
           'id_emp': '',
           'id_fec': ''
         };
-        _this3.errors = [];
+        _this4.errors = [];
         $('#crearCategoria').modal('hide');
         toastr.success('Se añadido una nueva categoria');
       })["catch"](function (error) {
-        _this3.errors = error.response.data;
+        _this4.errors = error.response.data;
       });
     },
     editCategoria: function editCategoria(categoria) {
@@ -49628,13 +49640,13 @@ var app = new Vue({
       $('#editCategoria').modal('show');
     },
     updateCategoria: function updateCategoria(id) {
-      var _this4 = this;
+      var _this5 = this;
 
       var url = 'updateCategoria/' + id;
       axios.post(url, this.fillCategoria).then(function (response) {
-        _this4.getCategorias();
+        _this5.getCategorias();
 
-        _this4.fillCategoria = {
+        _this5.fillCategoria = {
           'id_cat': '',
           'nomb_cat': '',
           'observ_cat': '',
@@ -49644,50 +49656,50 @@ var app = new Vue({
           'id_emp': '',
           'id_fec': ''
         };
-        _this4.errors = [];
+        _this5.errors = [];
         $('#editCategoria').modal('hide');
         toastr.success('Categoria actualizada con éxito');
       })["catch"](function (error) {
-        _this4.errors = error.response.data;
+        _this5.errors = error.response.data;
       });
     },
     deleteCategoria: function deleteCategoria(categoria) {
-      var _this5 = this;
+      var _this6 = this;
 
       var url = 'deleteCategoria/' + categoria.id_cat;
       axios.post(url).then(function (response) {
-        _this5.getCategorias();
+        _this6.getCategorias();
 
         toastr.success('Categoria eliminada con éxito');
       });
     },
     //MEtodos de Identificacion
     getIdentificacion: function getIdentificacion() {
-      var _this6 = this;
+      var _this7 = this;
 
       var urlIdentificacion = 'getIdentificacion';
       axios.get(urlIdentificacion).then(function (response) {
-        _this6.identificaciones = response.data;
+        _this7.identificaciones = response.data;
       });
     },
     createIdentificacion: function createIdentificacion() {
-      var _this7 = this;
+      var _this8 = this;
 
       var urlGuardarIdentificacion = 'storeIdentificaciones';
       axios.post(urlGuardarIdentificacion, this.newIdentificacion).then(function (response) {
-        _this7.getIdentificacion();
+        _this8.getIdentificacion();
 
-        _this7.newIdentificacion.sri_ident = '';
-        _this7.newIdentificacion.descrip_ident = '';
-        _this7.newIdentificacion.observ_ident = '';
-        _this7.newIdentificacion.estado_ident = '';
-        _this7.newIdentificacion.fechaini_ident = '';
-        _this7.newIdentificacion.fechafin_ident = '';
-        _this7.errors = [];
+        _this8.newIdentificacion.sri_ident = '';
+        _this8.newIdentificacion.descrip_ident = '';
+        _this8.newIdentificacion.observ_ident = '';
+        _this8.newIdentificacion.estado_ident = '';
+        _this8.newIdentificacion.fechaini_ident = '';
+        _this8.newIdentificacion.fechafin_ident = '';
+        _this8.errors = [];
         $('#crearIdentificaciones').modal('hide');
         toastr.success('Se añadido una nueva Identificacion');
       })["catch"](function (error) {
-        _this7.errors = error.response.data;
+        _this8.errors = error.response.data;
       });
     },
     editIdentificacion: function editIdentificacion(identificacion) {
@@ -49701,61 +49713,61 @@ var app = new Vue({
       $('#editIdentificacion').modal('show');
     },
     updateIdentificacion: function updateIdentificacion(id) {
-      var _this8 = this;
+      var _this9 = this;
 
       var url = 'updateIdentificacion/' + id;
       axios.post(url, this.fillIdentificacion).then(function (response) {
-        _this8.getIdentificacion();
+        _this9.getIdentificacion();
 
-        _this8.fillIdentificacion.sri_ident = '';
-        _this8.fillIdentificacion.descrip_ident = '';
-        _this8.fillIdentificacion.observ_ident = '';
-        _this8.fillIdentificacion.estado_ident = '';
-        _this8.fillIdentificacion.fechaini_ident = '';
-        _this8.fillIdentificacion.fechaini_ident = '';
-        _this8.errors = [];
+        _this9.fillIdentificacion.sri_ident = '';
+        _this9.fillIdentificacion.descrip_ident = '';
+        _this9.fillIdentificacion.observ_ident = '';
+        _this9.fillIdentificacion.estado_ident = '';
+        _this9.fillIdentificacion.fechaini_ident = '';
+        _this9.fillIdentificacion.fechaini_ident = '';
+        _this9.errors = [];
         $('#editIdentificacion').modal('hide');
         toastr.success('Identficación actualizada con éxito');
       })["catch"](function (error) {
-        _this8.errors = error.response.data;
+        _this9.errors = error.response.data;
       });
     },
     deleteIdentificacion: function deleteIdentificacion(identificacion) {
-      var _this9 = this;
+      var _this10 = this;
 
       var url = 'deleteIdentificacion/' + identificacion.id_ident;
       axios.post(url).then(function (response) {
-        _this9.getIdentificacion();
+        _this10.getIdentificacion();
 
         toastr.success('Identficación eliminada con éxito');
       });
     },
     //MEtodos de Marca
     getMarcas: function getMarcas() {
-      var _this10 = this;
+      var _this11 = this;
 
       var urlMarca = 'getMarca';
       axios.get(urlMarca).then(function (response) {
-        _this10.marcas = response.data;
+        _this11.marcas = response.data;
       });
     },
     createMarca: function createMarca() {
-      var _this11 = this;
+      var _this12 = this;
 
       var urlGuardarMarca = 'storeMarca';
       axios.post(urlGuardarMarca, this.newMarca).then(function (response) {
-        _this11.getMarca();
+        _this12.getMarca();
 
-        _this11.newMarca.nomb_marca = '';
-        _this11.newMarca.observ_marca = '';
-        _this11.newMarca.estado_marca = '';
-        _this11.newMarca.fechaini_marca = '';
-        _this11.newMarca.fechafin_marca = '';
-        _this11.errors = [];
+        _this12.newMarca.nomb_marca = '';
+        _this12.newMarca.observ_marca = '';
+        _this12.newMarca.estado_marca = '';
+        _this12.newMarca.fechaini_marca = '';
+        _this12.newMarca.fechafin_marca = '';
+        _this12.errors = [];
         $('#crearMarca').modal('hide');
         toastr.success('Se ha añadido una nueva Marca');
       })["catch"](function (error) {
-        _this11.errors = error.response.data;
+        _this12.errors = error.response.data;
       });
     },
     editMarca: function editMarca(marca) {
@@ -49768,13 +49780,13 @@ var app = new Vue({
       $('#editMarca').modal('show');
     },
     updateMarca: function updateMarca(id) {
-      var _this12 = this;
+      var _this13 = this;
 
       var url = 'updateMarca/' + id;
       axios.post(url, this.fillMarca).then(function (response) {
-        _this12.getMarcas();
+        _this13.getMarcas();
 
-        _this12.fillMarca = {
+        _this13.fillMarca = {
           'id_marca': '',
           'nomb_marca': '',
           'observ_marca': '',
@@ -49782,49 +49794,49 @@ var app = new Vue({
           'fechaini_marca': '',
           'fechafin_marca': ''
         };
-        _this12.errors = [];
+        _this13.errors = [];
         $('#editMarca').modal('hide');
         toastr.success('Marca actualizada con éxito');
       })["catch"](function (error) {
-        _this12.errors = error.response.data;
+        _this13.errors = error.response.data;
       });
     },
     deleteMarca: function deleteMarca(marca) {
-      var _this13 = this;
+      var _this14 = this;
 
       var url = 'deleteMarca/' + marca.id_marca;
       axios.post(url).then(function (response) {
-        _this13.getMarcas();
+        _this14.getMarcas();
 
         toastr.success('Marca eliminada con éxito');
       });
     },
     //MEtodos de Unidad
     getUnidad: function getUnidad() {
-      var _this14 = this;
+      var _this15 = this;
 
       var urlUnidad = 'getUnidad';
       axios.get(urlUnidad).then(function (response) {
-        _this14.unidades = response.data;
+        _this15.unidades = response.data;
       });
     },
     createUnidad: function createUnidad() {
-      var _this15 = this;
+      var _this16 = this;
 
       var urlGuardarUnidad = 'storeUnidad';
       axios.post(urlGuardarUnidad, this.newUnidad).then(function (response) {
-        _this15.getUnidad();
+        _this16.getUnidad();
 
-        _this15.newUnidad.nomb_unidad = '';
-        _this15.newUnidad.observ_unidad = '';
-        _this15.newUnidad.estado_unidad = '';
-        _this15.newUnidad.fechaini_unidad = '';
-        _this15.newUnidad.fechafin_unidad = '';
-        _this15.errors = [];
+        _this16.newUnidad.nomb_unidad = '';
+        _this16.newUnidad.observ_unidad = '';
+        _this16.newUnidad.estado_unidad = '';
+        _this16.newUnidad.fechaini_unidad = '';
+        _this16.newUnidad.fechafin_unidad = '';
+        _this16.errors = [];
         $('#crearUnidad').modal('hide');
         toastr.success('Se ha añadido una nueva Unidad');
       })["catch"](function (error) {
-        _this15.errors = error.response.data;
+        _this16.errors = error.response.data;
       });
     },
     editUnidad: function editUnidad(unidades) {
@@ -49837,60 +49849,60 @@ var app = new Vue({
       $('#editUnidad').modal('show');
     },
     updateUnidad: function updateUnidad(id) {
-      var _this16 = this;
+      var _this17 = this;
 
       var urlEditarUnidad = 'updateUnidad/' + id;
       axios.post(urlEditarUnidad, this.fillUnidad).then(function (response) {
-        _this16.getUnidad();
+        _this17.getUnidad();
 
-        _this16.fillUnidad.nomb_unidad = '';
-        _this16.fillUnidad.observ_unidad = '';
-        _this16.fillUnidad.estado_unidad = '';
-        _this16.fillUnidad.fechaini_unidad = '';
-        _this16.fillUnidad.fechafin_unidad = '';
-        _this16.errors = [];
+        _this17.fillUnidad.nomb_unidad = '';
+        _this17.fillUnidad.observ_unidad = '';
+        _this17.fillUnidad.estado_unidad = '';
+        _this17.fillUnidad.fechaini_unidad = '';
+        _this17.fillUnidad.fechafin_unidad = '';
+        _this17.errors = [];
         $('#editUnidad').modal('hide');
         toastr.success('Unidad actualizada con éxito');
       })["catch"](function (error) {
-        _this16.errors = error.response.data;
+        _this17.errors = error.response.data;
       });
     },
     deleteUnidad: function deleteUnidad(unidades) {
-      var _this17 = this;
+      var _this18 = this;
 
       var url = 'deleteUnidad/' + unidades.id_unidad;
       axios.post(url).then(function (response) {
-        _this17.getUnidad();
+        _this18.getUnidad();
 
         toastr.success('Unidad eliminada con éxito');
       });
     },
     //MEtodos de TipoContribuyente
     getTipoContribuyente: function getTipoContribuyente() {
-      var _this18 = this;
+      var _this19 = this;
 
       var urlContribuyente = 'getTipoContribuyente';
       axios.get(urlContribuyente).then(function (response) {
-        _this18.tipoContribuyentes = response.data;
+        _this19.tipoContribuyentes = response.data;
       });
     },
     createTipoContribuyente: function createTipoContribuyente() {
-      var _this19 = this;
+      var _this20 = this;
 
       var urlGuardarContribuyente = 'storeTipoContribuyente';
       axios.post(urlGuardarContribuyente, this.newTipoContribuyente).then(function (response) {
-        _this19.getTipoContribuyente();
+        _this20.getTipoContribuyente();
 
-        _this19.newTipoContribuyente.nomb_contrib = '';
-        _this19.newTipoContribuyente.obser_contrib = '';
-        _this19.newTipoContribuyente.estado_contrib = '';
-        _this19.newTipoContribuyente.fechaini_contrib = '';
-        _this19.newTipoContribuyente.fechafin_contrib = '';
-        _this19.errors = [];
+        _this20.newTipoContribuyente.nomb_contrib = '';
+        _this20.newTipoContribuyente.obser_contrib = '';
+        _this20.newTipoContribuyente.estado_contrib = '';
+        _this20.newTipoContribuyente.fechaini_contrib = '';
+        _this20.newTipoContribuyente.fechafin_contrib = '';
+        _this20.errors = [];
         $('#crearTipoContribuyente').modal('hide');
         toastr.success('Se ha añadido un Nuevo Tipo de Contribuyente');
       })["catch"](function (error) {
-        _this19.errors = error.response.data;
+        _this20.errors = error.response.data;
       });
     },
     editTipoContribuyente: function editTipoContribuyente(tipoContribuyentes) {
@@ -49903,63 +49915,63 @@ var app = new Vue({
       $('#editTipoContribuyente').modal('show');
     },
     updateTipoContribuyente: function updateTipoContribuyente(id) {
-      var _this20 = this;
+      var _this21 = this;
 
       var url = 'updateTipoContribuyente/' + id;
       axios.post(url, this.fillTipoContribuyente).then(function (response) {
-        _this20.getTipoContribuyente();
+        _this21.getTipoContribuyente();
 
-        _this20.fillTipoContribuyente.nomb_contrib = '';
-        _this20.fillTipoContribuyente.obser_contrib = '';
-        _this20.fillTipoContribuyente.estado_contrib = '';
-        _this20.fillTipoContribuyente.fechaini_contrib = '';
-        _this20.fillTipoContribuyente.fechafin_contrib = '';
-        _this20.errors = [];
+        _this21.fillTipoContribuyente.nomb_contrib = '';
+        _this21.fillTipoContribuyente.obser_contrib = '';
+        _this21.fillTipoContribuyente.estado_contrib = '';
+        _this21.fillTipoContribuyente.fechaini_contrib = '';
+        _this21.fillTipoContribuyente.fechafin_contrib = '';
+        _this21.errors = [];
         $('#editTipoContribuyente').modal('hide');
         toastr.success('Tipo de Contribuyente actualizado con éxito');
       })["catch"](function (error) {
-        _this20.errors = error.response.data;
+        _this21.errors = error.response.data;
       });
     },
     deleteTipoContribuyente: function deleteTipoContribuyente(tipoContribuyentes) {
-      var _this21 = this;
+      var _this22 = this;
 
       var url = 'deleteTipoContribuyente/' + tipoContribuyentes.id_contrib;
       axios.post(url).then(function (response) {
-        _this21.getTipoContribuyente();
+        _this22.getTipoContribuyente();
 
         toastr.success('Tipo de Contribuyente eliminado con éxito');
       });
     },
     //MEtodos de Ciudad
     getCiudad: function getCiudad() {
-      var _this22 = this;
+      var _this23 = this;
 
       var urlCiudad = 'getCiudad';
       axios.get(urlCiudad).then(function (response) {
-        _this22.ciudades = response.data;
+        _this23.ciudades = response.data;
       });
     },
     createCiudad: function createCiudad() {
-      var _this23 = this;
+      var _this24 = this;
 
       var urlGuardarCiudad = 'storeCiudad';
       axios.post(urlGuardarCiudad, this.newciudad).then(function (response) {
-        _this23.getCiudad();
+        _this24.getCiudad();
 
-        _this23.newciudad.nomb_ciu = '';
-        _this23.newciudad.estado_ciu = '';
-        _this23.newciudad.fechaini_ciu = '';
-        _this23.newciudad.fechafin_ciu = '';
-        _this23.newciudad.observ_ciu = '';
-        _this23.newciudad.id_emp = '';
-        _this23.newciudad.id_prov = '';
-        _this23.newciudad.id_fec = '';
-        _this23.errors = [];
+        _this24.newciudad.nomb_ciu = '';
+        _this24.newciudad.estado_ciu = '';
+        _this24.newciudad.fechaini_ciu = '';
+        _this24.newciudad.fechafin_ciu = '';
+        _this24.newciudad.observ_ciu = '';
+        _this24.newciudad.id_emp = '';
+        _this24.newciudad.id_prov = '';
+        _this24.newciudad.id_fec = '';
+        _this24.errors = [];
         $('#crearCiudad').modal('hide');
         toastr.success('Se ha añadido una Nueva Ciudad');
       })["catch"](function (error) {
-        _this23.errors = error.response.data;
+        _this24.errors = error.response.data;
       });
     },
     editCiudad: function editCiudad(ciudades) {
@@ -49975,32 +49987,32 @@ var app = new Vue({
       $('#editCiudad').modal('show');
     },
     updateCiudad: function updateCiudad(id) {
-      var _this24 = this;
+      var _this25 = this;
 
       var url = 'updateCiudad/' + id;
       axios.post(url, this.fillCiudad).then(function (response) {
-        _this24.getCiudad();
+        _this25.getCiudad();
 
-        _this24.fillCiudad.nomb_ciu = '';
-        _this24.fillCiudad.estado_ciu = '';
-        _this24.fillCiudad.fechaini_ciu = '';
-        _this24.fillCiudad.fechafin_ciu = '';
-        _this24.fillCiudad.observ_ciu = '';
-        _this24.fillCiudad.id_emp = '';
-        _this24.fillCiudad.id_fec = '';
-        _this24.errors = [];
+        _this25.fillCiudad.nomb_ciu = '';
+        _this25.fillCiudad.estado_ciu = '';
+        _this25.fillCiudad.fechaini_ciu = '';
+        _this25.fillCiudad.fechafin_ciu = '';
+        _this25.fillCiudad.observ_ciu = '';
+        _this25.fillCiudad.id_emp = '';
+        _this25.fillCiudad.id_fec = '';
+        _this25.errors = [];
         $('#editCiudad').modal('hide');
         toastr.success('Ciudad actualizada con éxito');
       })["catch"](function (error) {
-        _this24.errors = error.response.data;
+        _this25.errors = error.response.data;
       });
     },
     deleteCiudad: function deleteCiudad(ciudades) {
-      var _this25 = this;
+      var _this26 = this;
 
       var url = 'deleteCiudad/' + ciudades.id_ciu;
       axios["delete"](url).then(function (response) {
-        _this25.getCiudad();
+        _this26.getCiudad();
 
         toastr.success('Ciudad eliminada con éxito');
       });
@@ -50027,15 +50039,15 @@ var app = new Vue({
       this.image = '';
     },
     getProductos: function getProductos() {
-      var _this26 = this;
+      var _this27 = this;
 
       var urlProducto = 'getProductos';
       axios.get(urlProducto).then(function (response) {
-        _this26.productos = response.data;
+        _this27.productos = response.data;
       });
     },
     createProducto: function createProducto() {
-      var _this27 = this;
+      var _this28 = this;
 
       var urlGuardarProducto = 'storeProducto';
       var image = new Image();
@@ -50048,46 +50060,50 @@ var app = new Vue({
 
       this.newProducto.imagen_prod = vm.image;
       axios.post(urlGuardarProducto, this.newProducto).then(function (response) {
-        _this27.getProductos();
+        _this28.getProductos();
 
-        _this27.newProducto.id_emp = '';
-        _this27.newProducto.id_fec = '';
-        _this27.newProducto.codigo_prod = '';
-        _this27.newProducto.codbarra_prod = '';
-        _this27.newProducto.descripcion_prod = '';
-        _this27.newProducto.id_marca = '';
-        _this27.newProducto.present_prod = '';
-        _this27.newProducto.precio_prod = '';
-        _this27.newProducto.ubicacion_prod = '';
-        _this27.newProducto.stockmin_prod = '';
-        _this27.newProducto.stockmax_prod = '';
-        _this27.newProducto.fechaing_prod = '';
-        _this27.newProducto.fechaelab_prod = '';
-        _this27.newProducto.fechacad_prod = '';
-        _this27.newProducto.aplicaiva_prod = '';
-        _this27.newProducto.aplicaice_prod = '';
-        _this27.newProducto.util_prod = '';
-        _this27.newProducto.comision_prod = '';
-        _this27.newProducto.imagen_prod = '';
-        _this27.newProducto.observ_prod = '';
-        _this27.newProducto.estado_prod = '';
-        _this27.newProducto.fechaini_prod = '';
-        _this27.newProducto.fechafin_prod = '';
-        _this27.errors = [];
+        _this28.newProducto.id_emp = '';
+        _this28.newProducto.id_fec = '';
+        _this28.newProducto.id_bod = '';
+        _this28.newProducto.codigo_prod = '';
+        _this28.newProducto.codbarra_prod = '';
+        _this28.newProducto.descripcion_prod = '';
+        _this28.newProducto.id_marca = '';
+        _this28.newProducto.id_cat = '';
+        _this28.newProducto.present_prod = '';
+        _this28.newProducto.precio_prod = '';
+        _this28.newProducto.ubicacion_prod = '';
+        _this28.newProducto.stockmin_prod = '';
+        _this28.newProducto.stockmax_prod = '';
+        _this28.newProducto.fechaing_prod = '';
+        _this28.newProducto.fechaelab_prod = '';
+        _this28.newProducto.fechacad_prod = '';
+        _this28.newProducto.aplicaiva_prod = '';
+        _this28.newProducto.aplicaice_prod = '';
+        _this28.newProducto.util_prod = '';
+        _this28.newProducto.comision_prod = '';
+        _this28.newProducto.imagen_prod = '';
+        _this28.newProducto.observ_prod = '';
+        _this28.newProducto.estado_prod = '';
+        _this28.newProducto.fechaini_prod = '';
+        _this28.newProducto.fechafin_prod = '';
+        _this28.errors = [];
         $('#crearProducto').modal('hide');
         toastr.success('Se añadido una nueva producto');
       })["catch"](function (error) {
-        _this27.errors = error.response.data;
+        _this28.errors = error.response.data;
       });
     },
     editProducto: function editProducto(producto) {
       this.fillProducto.id_prod = producto.id_prod;
       this.fillProducto.id_emp = producto.id_emp;
       this.fillProducto.id_fec = producto.id_fec;
+      this.fillProducto.id_bod = producto.id_bod;
       this.fillProducto.codigo_prod = producto.codigo_prod;
       this.fillProducto.codbarra_prod = producto.codbarra_prod;
       this.fillProducto.descripcion_prod = producto.descripcion_prod;
       this.fillProducto.id_marca = producto.id_marca;
+      this.fillProducto.id_cat = producto.id_cat;
       this.fillProducto.present_prod = producto.present_prod;
       this.fillProducto.precio_prod = producto.precio_prod;
       this.fillProducto.ubicacion_prod = producto.ubicacion_prod;
@@ -50135,90 +50151,90 @@ var app = new Vue({
       $('#viewProducto').modal('show');
     },
     updateProducto: function updateProducto(id, imagen_prod) {
-      var _this28 = this;
+      var _this29 = this;
 
       var url = 'updateProducto/' + id;
       this.fillProducto.imagen_prod = imagen_prod;
       axios.post(url, this.fillProducto).then(function (response) {
-        _this28.getProductos();
+        _this29.getProductos();
 
-        _this28.fillProducto.id_emp = '';
-        _this28.fillProducto.id_fec = '';
-        _this28.fillProducto.codigo_prod = '';
-        _this28.fillProducto.codbarra_prod = '';
-        _this28.fillProducto.descripcion_prod = '';
-        _this28.fillProducto.id_marca = '';
-        _this28.fillProducto.present_prod = '';
-        _this28.fillProducto.precio_prod = '';
-        _this28.fillProducto.ubicacion_prod = '';
-        _this28.fillProducto.stockmin_prod = '';
-        _this28.fillProducto.stockmax_prod = '';
-        _this28.fillProducto.fechaing_prod = '';
-        _this28.fillProducto.fechaelab_prod = '';
-        _this28.fillProducto.fechacad_prod = '';
-        _this28.fillProducto.aplicaiva_prod = '';
-        _this28.fillProducto.aplicaice_prod = '';
-        _this28.fillProducto.util_prod = '';
-        _this28.fillProducto.comision_prod = '';
-        _this28.fillProducto.imagen_prod = '';
-        _this28.fillProducto.observ_prod = '';
-        _this28.fillProducto.estado_prod = '';
-        _this28.fillProducto.fechaini_prod = '';
-        _this28.fillProducto.fechafin_prod = '';
-        _this28.errors = [];
+        _this29.fillProducto.id_emp = '';
+        _this29.fillProducto.id_fec = '';
+        _this29.fillProducto.codigo_prod = '';
+        _this29.fillProducto.codbarra_prod = '';
+        _this29.fillProducto.descripcion_prod = '';
+        _this29.fillProducto.id_marca = '';
+        _this29.fillProducto.present_prod = '';
+        _this29.fillProducto.precio_prod = '';
+        _this29.fillProducto.ubicacion_prod = '';
+        _this29.fillProducto.stockmin_prod = '';
+        _this29.fillProducto.stockmax_prod = '';
+        _this29.fillProducto.fechaing_prod = '';
+        _this29.fillProducto.fechaelab_prod = '';
+        _this29.fillProducto.fechacad_prod = '';
+        _this29.fillProducto.aplicaiva_prod = '';
+        _this29.fillProducto.aplicaice_prod = '';
+        _this29.fillProducto.util_prod = '';
+        _this29.fillProducto.comision_prod = '';
+        _this29.fillProducto.imagen_prod = '';
+        _this29.fillProducto.observ_prod = '';
+        _this29.fillProducto.estado_prod = '';
+        _this29.fillProducto.fechaini_prod = '';
+        _this29.fillProducto.fechafin_prod = '';
+        _this29.errors = [];
         $('#editProducto').modal('hide');
         toastr.success('Producto actualizado con éxito');
       })["catch"](function (error) {
-        _this28.errors = error.response.data;
+        _this29.errors = error.response.data;
       });
     },
     deleteProducto: function deleteProducto(producto) {
-      var _this29 = this;
+      var _this30 = this;
 
       var url = 'deleteProducto/' + producto.id_prod;
       axios.post(url).then(function (response) {
-        _this29.getProductos();
+        _this30.getProductos();
 
         toastr.success('Producto eliminado con éxito');
       });
     },
     //Persona
     getPersonas: function getPersonas() {
-      var _this30 = this;
+      var _this31 = this;
 
       var urlPersona = 'getProductos';
       axios.get(urlPersona).then(function (response) {
-        _this30.productos = response.data;
+        _this31.productos = response.data;
       });
     },
     createPersonaProveedor: function createPersonaProveedor() {
-      var _this31 = this;
+      var _this32 = this;
 
       var urlGuardarPersona = 'storePersona';
       axios.post(urlGuardarPersona, this.newPersona).then(function (response) {
-        _this31.newPersona.id_contrib = '';
-        _this31.newPersona.id_ident = '';
-        _this31.newPersona.id_ciu = '';
-        _this31.newProveedor.doc_per = '';
-        _this31.newPersona.organiz_per = '';
-        _this31.newPersona.nombre_per = '';
-        _this31.newPersona.apel_per = '';
-        _this31.newPersona.direc_per = '';
-        _this31.newPersona.fono1_per = '';
-        _this31.newPersona.fono2_per = '';
-        _this31.newPersona.cel1_per = '';
-        _this31.newPersona.cel2_per = '';
-        _this31.newPersona.fecnac_per = '';
-        _this31.newPersona.correo_per = '';
-        _this31.newPersona.estado_per = '';
-        _this31.newPersona.fechaini_per = '';
-        _this31.newPersona.fechafin_per = '';
-        _this31.errors = [];
+        _this32.newPersona.id_contrib = '';
+        _this32.newPersona.id_ident = '';
+        _this32.newPersona.id_ciu = '';
+        _this32.newProveedor.doc_per = '';
+        _this32.newPersona.organiz_per = '';
+        _this32.newPersona.nombre_per = '';
+        _this32.newPersona.apel_per = '';
+        _this32.newPersona.direc_per = '';
+        _this32.newPersona.fono1_per = '';
+        _this32.newPersona.fono2_per = '';
+        _this32.newPersona.cel1_per = '';
+        _this32.newPersona.cel2_per = '';
+        _this32.newPersona.fecnac_per = '';
+        _this32.newPersona.correo_per = '';
+        _this32.newPersona.estado_per = '';
+        _this32.newPersona.fechaini_per = '';
+        _this32.newPersona.fechafin_per = '';
+        _this32.errors = [];
         $('#crearPersona').modal('hide');
-        _this31.newProveedor.id_per = response.data;
+        _this32.newProveedor.id_per = response.data;
         $('#crearProveedor').modal('show');
       })["catch"](function (error) {
-        _this31.errors = error.response.data;
+        _this32.errors = error.response.data;
       });
     },
     editPersona: function editPersona(persona) {
@@ -50242,112 +50258,112 @@ var app = new Vue({
       $('#editPersona').modal('show');
     },
     updatePersona: function updatePersona(id) {
-      var _this32 = this;
+      var _this33 = this;
 
       var url = 'updatePersona/' + id;
       axios.post(url, this.fillPersona).then(function (response) {
-        _this32.fillPersona.id_contrib = '';
-        _this32.fillPersona.id_ident = '';
-        _this32.fillPersona.id_ciu = '';
-        _this32.fillPersona.doc_per = '';
-        _this32.fillPersona.organiz_per = '';
-        _this32.fillPersona.nombre_per = '';
-        _this32.fillPersona.apel_per = '';
-        _this32.fillPersona.direc_per = '';
-        _this32.fillPersona.fono1_per = '';
-        _this32.fillPersona.fono2_per = '';
-        _this32.fillPersona.cel1_per = '';
-        _this32.fillPersona.cel2_per = '';
-        _this32.fillPersona.fecnac_per = '';
-        _this32.fillPersona.correo_per = '';
-        _this32.fillPersona.estado_per = '';
-        _this32.fillPersona.fechaini_per = '';
-        _this32.fillPersona.fechafin_per = '';
-        _this32.errors = [];
+        _this33.fillPersona.id_contrib = '';
+        _this33.fillPersona.id_ident = '';
+        _this33.fillPersona.id_ciu = '';
+        _this33.fillPersona.doc_per = '';
+        _this33.fillPersona.organiz_per = '';
+        _this33.fillPersona.nombre_per = '';
+        _this33.fillPersona.apel_per = '';
+        _this33.fillPersona.direc_per = '';
+        _this33.fillPersona.fono1_per = '';
+        _this33.fillPersona.fono2_per = '';
+        _this33.fillPersona.cel1_per = '';
+        _this33.fillPersona.cel2_per = '';
+        _this33.fillPersona.fecnac_per = '';
+        _this33.fillPersona.correo_per = '';
+        _this33.fillPersona.estado_per = '';
+        _this33.fillPersona.fechaini_per = '';
+        _this33.fillPersona.fechafin_per = '';
+        _this33.errors = [];
         $('#editPersona').modal('hide');
         $('#editProveedor').modal('show');
         $('#editCliente').modal('show');
       })["catch"](function (error) {
-        _this32.errors = error.response.data;
+        _this33.errors = error.response.data;
       });
     },
     deletePersona: function deletePersona(persona) {
-      var _this33 = this;
+      var _this34 = this;
 
       var url = 'deletePersona/' + persona.id_per;
       axios.post(url).then(function (response) {
-        _this33.getProductos();
+        _this34.getProductos();
 
         toastr.success('Persona eliminado con éxito');
       });
     },
     //Proveedores
     getProveedores: function getProveedores() {
-      var _this34 = this;
+      var _this35 = this;
 
       var urlProveedor = 'getProveedor';
       axios.get(urlProveedor).then(function (response) {
-        _this34.proveedores = response.data;
+        _this35.proveedores = response.data;
       });
     },
     createProveedor: function createProveedor() {
-      var _this35 = this;
+      var _this36 = this;
 
       var urlGuardarProveedor = 'storeProveedor';
       axios.post(urlGuardarProveedor, this.newProveedor).then(function (response) {
-        _this35.getProveedores();
+        _this36.getProveedores();
 
-        _this35.newProveedor.id_emp = '';
-        _this35.newProveedor.id_fec = '';
-        _this35.newProveedor.cod_prov = '';
-        _this35.newProveedor.obser_prov = '';
-        _this35.newProveedor.estado_prov = '';
-        _this35.newProveedor.fechaini_prov = '';
-        _this35.newProveedor.fechafin_prov = '';
-        _this35.errors = [];
+        _this36.newProveedor.id_emp = '';
+        _this36.newProveedor.id_fec = '';
+        _this36.newProveedor.cod_prov = '';
+        _this36.newProveedor.obser_prov = '';
+        _this36.newProveedor.estado_prov = '';
+        _this36.newProveedor.fechaini_prov = '';
+        _this36.newProveedor.fechafin_prov = '';
+        _this36.errors = [];
         $('#crearProveedor').modal('hide');
         toastr.success('Se añadido una nuevo Proveedor');
       })["catch"](function (error) {
-        _this35.errors = error.response.data;
+        _this36.errors = error.response.data;
       });
     },
     updateProveedor: function updateProveedor(id) {
-      var _this36 = this;
+      var _this37 = this;
 
       var url = 'updateProveedor/' + id;
       axios.post(url, this.fillProveedor).then(function (response) {
-        _this36.getProveedores();
+        _this37.getProveedores();
 
-        _this36.fillPersona.id_contrib = '';
-        _this36.fillPersona.id_ident = '';
-        _this36.fillPersona.id_ciu = '';
-        _this36.fillPersona.doc_per = '';
-        _this36.fillPersona.organiz_per = '';
-        _this36.fillPersona.nombre_per = '';
-        _this36.fillPersona.apel_per = '';
-        _this36.fillPersona.direc_per = '';
-        _this36.fillPersona.fono1_per = '';
-        _this36.fillPersona.fono2_per = '';
-        _this36.fillPersona.cel1_per = '';
-        _this36.fillPersona.cel2_per = '';
-        _this36.fillPersona.fecnac_per = '';
-        _this36.fillPersona.correo_per = '';
-        _this36.fillPersona.estado_per = '';
-        _this36.fillPersona.fechaini_per = '';
-        _this36.fillPersona.fechafin_per = '';
-        _this36.fillProveedor.id_emp = '';
-        _this36.fillProveedor.id_fec = '';
-        _this36.fillProveedor.cod_prov = '';
-        _this36.fillProveedor.id_per = id;
-        _this36.fillProveedor.obser_prov = '';
-        _this36.fillProveedor.estado_prov = '';
-        _this36.fillProveedor.fechaini_prov = '';
-        _this36.fillProveedor.fechafin_prov = '';
-        _this36.errors = [];
+        _this37.fillPersona.id_contrib = '';
+        _this37.fillPersona.id_ident = '';
+        _this37.fillPersona.id_ciu = '';
+        _this37.fillPersona.doc_per = '';
+        _this37.fillPersona.organiz_per = '';
+        _this37.fillPersona.nombre_per = '';
+        _this37.fillPersona.apel_per = '';
+        _this37.fillPersona.direc_per = '';
+        _this37.fillPersona.fono1_per = '';
+        _this37.fillPersona.fono2_per = '';
+        _this37.fillPersona.cel1_per = '';
+        _this37.fillPersona.cel2_per = '';
+        _this37.fillPersona.fecnac_per = '';
+        _this37.fillPersona.correo_per = '';
+        _this37.fillPersona.estado_per = '';
+        _this37.fillPersona.fechaini_per = '';
+        _this37.fillPersona.fechafin_per = '';
+        _this37.fillProveedor.id_emp = '';
+        _this37.fillProveedor.id_fec = '';
+        _this37.fillProveedor.cod_prov = '';
+        _this37.fillProveedor.id_per = id;
+        _this37.fillProveedor.obser_prov = '';
+        _this37.fillProveedor.estado_prov = '';
+        _this37.fillProveedor.fechaini_prov = '';
+        _this37.fillProveedor.fechafin_prov = '';
+        _this37.errors = [];
         $('#editProveedor').modal('hide');
         toastr.success('Proveedor actualizado con éxito');
       })["catch"](function (error) {
-        _this36.errors = error.response.data;
+        _this37.errors = error.response.data;
       });
     },
     editProveedor: function editProveedor(proveedor) {
@@ -50382,48 +50398,48 @@ var app = new Vue({
       $('#editPersona').modal('show');
     },
     deleteProveedor: function deleteProveedor(proveedor) {
-      var _this37 = this;
+      var _this38 = this;
 
       var url = 'deleteProveedor/' + proveedor.id_prov;
       this.deletePersona(proveedor);
       axios.post(url).then(function (response) {
-        _this37.getProveedores();
+        _this38.getProveedores();
 
         toastr.success('Proveedor eliminado con éxito');
       });
     },
     ///Metodos de Bodega
     getBodega: function getBodega() {
-      var _this38 = this;
+      var _this39 = this;
 
       var urlBodega = 'getBodega';
       axios.get(urlBodega).then(function (response) {
-        _this38.bodegas = response.data;
+        _this39.bodegas = response.data;
       });
     },
     createBodega: function createBodega() {
-      var _this39 = this;
+      var _this40 = this;
 
       var urlGuardarBodega = 'storeBodega';
       axios.post(urlGuardarBodega, this.newbodega).then(function (response) {
-        _this39.getBodega();
+        _this40.getBodega();
 
-        _this39.nombre_bod = '';
-        _this39.direcc_bod = '';
-        _this39.telef_bod = '';
-        _this39.cel_bod = '';
-        _this39.nomb_contac_bod = '';
-        _this39.estado_bod = '';
-        _this39.fechaini_bod = '';
-        _this39.fechafin_bod = '';
-        _this39.id_ciu = '';
-        _this39.id_pais = '';
-        _this39.id_prov = '';
-        _this39.errors = [];
+        _this40.nombre_bod = '';
+        _this40.direcc_bod = '';
+        _this40.telef_bod = '';
+        _this40.cel_bod = '';
+        _this40.nomb_contac_bod = '';
+        _this40.estado_bod = '';
+        _this40.fechaini_bod = '';
+        _this40.fechafin_bod = '';
+        _this40.id_ciu = '';
+        _this40.id_pais = '';
+        _this40.id_prov = '';
+        _this40.errors = [];
         $('#crearBodega').modal('hide');
         toastr.success('Se ha añadido una nueva Bodega');
       })["catch"](function (error) {
-        _this39.errors = error.response.data;
+        _this40.errors = error.response.data;
       });
     },
     editBodega: function editBodega(bodegas) {
@@ -50442,63 +50458,63 @@ var app = new Vue({
       $('#editBodega').modal('show');
     },
     updateBodega: function updateBodega(id) {
-      var _this40 = this;
+      var _this41 = this;
 
       var url = 'updateBodega/' + id;
       axios.post(url, this.fillBodega).then(function (response) {
-        _this40.getBodega();
+        _this41.getBodega();
 
-        _this40.nombre_bod = '';
-        _this40.direcc_bod = '';
-        _this40.telef_bod = '';
-        _this40.cel_bod = '';
-        _this40.nomb_contac_bod = '';
-        _this40.estado_bod = '';
-        _this40.fechaini_bod = '';
-        _this40.fechafin_bod = '';
-        _this40.id_ciu = '';
-        _this40.id_pais = '';
-        _this40.id_prov = '';
-        _this40.errors = [];
+        _this41.nombre_bod = '';
+        _this41.direcc_bod = '';
+        _this41.telef_bod = '';
+        _this41.cel_bod = '';
+        _this41.nomb_contac_bod = '';
+        _this41.estado_bod = '';
+        _this41.fechaini_bod = '';
+        _this41.fechafin_bod = '';
+        _this41.id_ciu = '';
+        _this41.id_pais = '';
+        _this41.id_prov = '';
+        _this41.errors = [];
         $('#editBodega').modal('hide');
         toastr.success('Bodega actualizada con éxito');
       })["catch"](function (error) {
-        _this40.errors = error.response.data;
+        _this41.errors = error.response.data;
       });
     },
     deleteBodega: function deleteBodega(bodegas) {
-      var _this41 = this;
+      var _this42 = this;
 
       var url = 'deleteBodega/' + bodegas.id_bod;
       axios.post(url).then(function (response) {
-        _this41.getBodega();
+        _this42.getBodega();
 
         toastr.success('Bodega eliminada con éxito');
       });
     },
     ///Metodos de Pais
     getPais: function getPais() {
-      var _this42 = this;
+      var _this43 = this;
 
       var urlPais = 'getPais';
       axios.get(urlPais).then(function (response) {
-        _this42.paises = response.data;
+        _this43.paises = response.data;
       });
     },
     createPais: function createPais() {
-      var _this43 = this;
+      var _this44 = this;
 
       var urlGuardarPais = 'storePais';
       axios.post(urlGuardarPais, this.newPais).then(function (response) {
-        _this43.getPais();
+        _this44.getPais();
 
-        _this43.nomb_pais = '';
-        _this43.estado_pais = '';
-        _this43.errors = [];
+        _this44.nomb_pais = '';
+        _this44.estado_pais = '';
+        _this44.errors = [];
         $('#crearPais').modal('hide');
         toastr.success('Se ha añadido un nuevo Pais');
       })["catch"](function (error) {
-        _this43.errors = error.response.data;
+        _this44.errors = error.response.data;
       });
     },
     editPais: function editPais(paises) {
@@ -50508,54 +50524,54 @@ var app = new Vue({
       $('#editPais').modal('show');
     },
     updatePais: function updatePais(id) {
-      var _this44 = this;
+      var _this45 = this;
 
       var url = 'updatePais/' + id;
       axios.post(url, this.fillPais).then(function (response) {
-        _this44.getPais();
+        _this45.getPais();
 
-        _this44.nomb_pais = '';
-        _this44.estado_pais = '';
-        _this44.errors = [];
+        _this45.nomb_pais = '';
+        _this45.estado_pais = '';
+        _this45.errors = [];
         $('#editPais').modal('hide');
         toastr.success('Pais actualizado con éxito');
       })["catch"](function (error) {
-        _this44.errors = error.response.data;
+        _this45.errors = error.response.data;
       });
     },
     deletePais: function deletePais(bodegas) {
-      var _this45 = this;
+      var _this46 = this;
 
       var url = 'deletePais/' + paises.id_pais;
       axios.post(url).then(function (response) {
-        _this45.getPais();
+        _this46.getPais();
 
         toastr.success('Pais eliminado con éxito');
       });
     },
     ///Metodos de Provincias
     getProvincia: function getProvincia() {
-      var _this46 = this;
+      var _this47 = this;
 
       var urlProvincia = 'getProvincia';
       axios.get(urlProvincia).then(function (response) {
-        _this46.provincias = response.data;
+        _this47.provincias = response.data;
       });
     },
     createProvincia: function createProvincia() {
-      var _this47 = this;
+      var _this48 = this;
 
       var urlGuardarProvincia = 'storeProvincia';
       axios.post(urlGuardarProvincia, this.newProvincia).then(function (response) {
-        _this47.getProvincia();
+        _this48.getProvincia();
 
-        _this47.nomb_prov = '';
-        _this47.estado_prov = '';
-        _this47.errors = [];
+        _this48.nomb_prov = '';
+        _this48.estado_prov = '';
+        _this48.errors = [];
         $('#crearProvincia').modal('hide');
         toastr.success('Se ha añadido una nueva Provincia');
       })["catch"](function (error) {
-        _this47.errors = error.response.data;
+        _this48.errors = error.response.data;
       });
     },
     editProvincia: function editProvincia(provincias) {
@@ -50566,70 +50582,70 @@ var app = new Vue({
       $('#editProvincia').modal('show');
     },
     updateProvincia: function updateProvincia(id) {
-      var _this48 = this;
+      var _this49 = this;
 
       var url = 'updateProvincia/' + id;
       axios.post(url, this.fillProvincia).then(function (response) {
-        _this48.getProvincia();
+        _this49.getProvincia();
 
-        _this48.id_pais = '';
-        _this48.nomb_prov = '';
-        _this48.estado_prov = '';
-        _this48.errors = [];
+        _this49.id_pais = '';
+        _this49.nomb_prov = '';
+        _this49.estado_prov = '';
+        _this49.errors = [];
         $('#editProvincia').modal('hide');
         toastr.success('Provincia actualizada con éxito');
       })["catch"](function (error) {
-        _this48.errors = error.response.data;
+        _this49.errors = error.response.data;
       });
     },
     deleteProvincia: function deleteProvincia(provincias) {
-      var _this49 = this;
+      var _this50 = this;
 
       var url = 'deleteProvincia/' + provincias.id_prov;
       axios.post(url).then(function (response) {
-        _this49.getProvincia();
+        _this50.getProvincia();
 
         toastr.success('Provincia eliminada con éxito');
       });
     },
     ///Empresa
     getEmpresa: function getEmpresa() {
-      var _this50 = this;
+      var _this51 = this;
 
       var urlEmpresa = 'getEmpresa';
       axios.get(urlEmpresa).then(function (response) {
-        _this50.empresas = response.data;
+        _this51.empresas = response.data;
       });
     },
     createEmpresa: function createEmpresa() {
-      var _this51 = this;
+      var _this52 = this;
 
       var urlGuardarProducto = 'storeEmpresa';
       axios.post(urlGuardarEmpresa, this.newEmpresa).then(function (response) {
-        _this51.getEmpresa();
+        _this52.getEmpresa();
 
-        _this51.newEmpresa.id_ciu = '';
-        _this51.newEmpresa.totestab_emp = '';
-        _this51.newEmpresa.rucempresa_emp = '';
-        _this51.newEmpresa.razon_emp = '';
-        _this51.newEmpresa.nombre_emp = '';
-        _this51.newEmpresa.apellido_emp = '';
-        _this51.newEmpresa.contacto_emp = '';
-        _this51.newEmpresa.direcc_emp = '';
-        _this51.newEmpresa.telefono_emp = '';
-        _this51.newEmpresa.celular_emp = '';
-        _this51.newEmpresa.fax_emp = '';
-        _this51.newEmpresa.email_emp = '';
-        _this51.newEmpresa.estado_emp = '';
-        _this51.newEmpresa.contador_emp = '';
-        _this51.newEmpresa.tipcontrib_emp = '';
-        _this51.newEmpresa.fechaini_emp = '';
-        _this51.newEmpresa.fechafin_emp = '';
-        _this51.errors = [];
+        _this52.newEmpresa.id_ciu = '';
+        _this52.newEmpresa.totestab_emp = '';
+        _this52.newEmpresa.rucempresa_emp = '';
+        _this52.newEmpresa.razon_emp = '';
+        _this52.newEmpresa.nombre_emp = '';
+        _this52.newEmpresa.apellido_emp = '';
+        _this52.newEmpresa.contacto_emp = '';
+        _this52.newEmpresa.direcc_emp = '';
+        _this52.newEmpresa.telefono_emp = '';
+        _this52.newEmpresa.celular_emp = '';
+        _this52.newEmpresa.fax_emp = '';
+        _this52.newEmpresa.email_emp = '';
+        _this52.newEmpresa.estado_emp = '';
+        _this52.newEmpresa.contador_emp = '';
+        _this52.newEmpresa.tipcontrib_emp = '';
+        _this52.newEmpresa.fechaini_emp = '';
+        _this52.newEmpresa.fechafin_emp = '';
+        _this52.errors = [];
         $('#crearEmpresa').modal('hide');
         toastr.success('Se añadido una nueva empresa');
       })["catch"](function (error) {
-        _this51.errors = error.response.data;
+        _this52.errors = error.response.data;
       });
     },
     editEmpresa: function editEmpresa(empresa) {
@@ -50653,74 +50669,74 @@ var app = new Vue({
       $('#editEmpresa').modal('show');
     },
     updateEmpresa: function updateEmpresa(id) {
-      var _this52 = this;
+      var _this53 = this;
 
       var url = 'updateEmpresa/' + id;
       axios.post(url, this.fillEmpresa).then(function (response) {
-        _this52.getEmpresa();
+        _this53.getEmpresa();
 
-        _this52.fillEmpresa.id_ciu = '';
-        _this52.fillEmpresa.totestab_emp = '';
-        _this52.fillEmpresa.rucempresa_emp = '';
-        _this52.fillEmpresa.razon_emp = '';
-        _this52.fillEmpresa.nombre_emp = '';
-        _this52.fillEmpresa.apellido_emp = '';
-        _this52.fillEmpresa.contacto_emp = '';
-        _this52.fillEmpresa.direcc_emp = '';
-        _this52.fillEmpresa.telefono_emp = '';
-        _this52.fillEmpresa.celular_emp = '';
-        _this52.fillEmpresa.fax_emp = '';
-        _this52.fillEmpresa.email_emp = '';
-        _this52.fillEmpresa.estado_emp = '';
-        _this52.fillEmpresa.contador_emp = '';
-        _this52.fillEmpresa.tipcontrib_emp = '';
-        _this52.newProducto.fechaini_emp = '';
-        _this52.fillEmpresa.fechafin_emp = '';
-        _this52.errors = [];
+        _this53.fillEmpresa.id_ciu = '';
+        _this53.fillEmpresa.totestab_emp = '';
+        _this53.fillEmpresa.rucempresa_emp = '';
+        _this53.fillEmpresa.razon_emp = '';
+        _this53.fillEmpresa.nombre_emp = '';
+        _this53.fillEmpresa.apellido_emp = '';
+        _this53.fillEmpresa.contacto_emp = '';
+        _this53.fillEmpresa.direcc_emp = '';
+        _this53.fillEmpresa.telefono_emp = '';
+        _this53.fillEmpresa.celular_emp = '';
+        _this53.fillEmpresa.fax_emp = '';
+        _this53.fillEmpresa.email_emp = '';
+        _this53.fillEmpresa.estado_emp = '';
+        _this53.fillEmpresa.contador_emp = '';
+        _this53.fillEmpresa.tipcontrib_emp = '';
+        _this53.newProducto.fechaini_emp = '';
+        _this53.fillEmpresa.fechafin_emp = '';
+        _this53.errors = [];
         $('#editEmpresa').modal('hide');
         toastr.success('Empresa actualizada con éxito');
       })["catch"](function (error) {
-        _this52.errors = error.response.data;
+        _this53.errors = error.response.data;
       });
     },
     deleteEmpresa: function deleteEmpresa(empresa) {
-      var _this53 = this;
+      var _this54 = this;
 
       var url = 'deleteEmpresa/' + empresa.id_emp;
       axios.post(url).then(function (response) {
-        _this53.getEmpresa();
+        _this54.getEmpresa();
 
         toastr.success('Empresaa eliminada con éxito');
       });
     },
     //Roles
     getRoles: function getRoles() {
-      var _this54 = this;
+      var _this55 = this;
 
       var urlEmpresa = 'getRol';
       axios.get(urlEmpresa).then(function (response) {
-        _this54.roles = response.data;
+        _this55.roles = response.data;
       });
     },
     createRol: function createRol() {
-      var _this55 = this;
+      var _this56 = this;
 
       var urlGuardarRol = 'storeRol';
       axios.post(urlGuardarRol, this.newRol).then(function (response) {
-        _this55.getRoles();
+        _this56.getRoles();
 
-        _this55.newRol.id_emp = '';
-        _this55.newRol.id_fec = '';
-        _this55.newRol.nomb_rol = '';
-        _this55.newRol.observ_rol = '';
-        _this55.newRol.estado_rol = '';
-        _this55.newRol.fechaini_rol = '';
-        _this55.newRol.fechafin_rol = '';
-        _this55.errors = [];
+        _this56.newRol.id_emp = '';
+        _this56.newRol.id_fec = '';
+        _this56.newRol.nomb_rol = '';
+        _this56.newRol.observ_rol = '';
+        _this56.newRol.estado_rol = '';
+        _this56.newRol.fechaini_rol = '';
+        _this56.newRol.fechafin_rol = '';
+        _this56.errors = [];
         $('#crearEmpresa').modal('hide');
         toastr.success('Se añadido una nuevo rol');
       })["catch"](function (error) {
-        _this55.errors = error.response.data;
+        _this56.errors = error.response.data;
       });
     },
     editRol: function editRol(rol) {
@@ -50734,60 +50750,60 @@ var app = new Vue({
       $('#editRol').modal('show');
     }
   }, _defineProperty(_methods, "updateEmpresa", function updateEmpresa(id) {
-    var _this56 = this;
+    var _this57 = this;
 
     var url = 'updateEmpresa/' + id;
     axios.post(url, this.fillRol).then(function (response) {
-      _this56.getRoles();
+      _this57.getRoles();
 
-      _this56.fillRol.id_emp = '';
-      _this56.fillRol.id_fec = '';
-      _this56.fillRol.nomb_rol = '';
-      _this56.fillRol.observ_rol = '';
-      _this56.fillRol.estado_rol = '';
-      _this56.fillRol.fechaini_rol = '';
-      _this56.fillRol.fechafin_rol = '';
-      _this56.errors = [];
+      _this57.fillRol.id_emp = '';
+      _this57.fillRol.id_fec = '';
+      _this57.fillRol.nomb_rol = '';
+      _this57.fillRol.observ_rol = '';
+      _this57.fillRol.estado_rol = '';
+      _this57.fillRol.fechaini_rol = '';
+      _this57.fillRol.fechafin_rol = '';
+      _this57.errors = [];
       $('#editRol').modal('hide');
       toastr.success('Rol actualizado con éxito');
     })["catch"](function (error) {
-      _this56.errors = error.response.data;
+      _this57.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteRol", function deleteRol(rol) {
-    var _this57 = this;
+    var _this58 = this;
 
     var url = 'deleteProducto/' + rol.id_rol;
     axios.post(url).then(function (response) {
-      _this57.getRoles();
+      _this58.getRoles();
 
       toastr.success('Rol eliminado con éxito');
     });
   }), _defineProperty(_methods, "getCliente", function getCliente() {
-    var _this58 = this;
+    var _this59 = this;
 
     var urlCliente = 'getCliente';
     axios.get(urlCliente).then(function (response) {
-      _this58.clientes = response.data;
+      _this59.clientes = response.data;
     });
   }), _defineProperty(_methods, "createCliente", function createCliente() {
-    var _this59 = this;
+    var _this60 = this;
 
     var urlGuardarCliente = 'storeCliente';
     axios.post(urlGuardarCliente, this.newCliente).then(function (response) {
-      _this59.getCliente();
+      _this60.getCliente();
 
-      _this59.cod_cli = '';
-      _this59.observ_cli = '';
-      _this59.estado_cli = '';
-      _this59.fechaini_cli = '';
-      _this59.fechafin_cli = '';
-      _this59.id_emp = '';
-      _this59.id_fec = '';
-      _this59.errors = [];
+      _this60.cod_cli = '';
+      _this60.observ_cli = '';
+      _this60.estado_cli = '';
+      _this60.fechaini_cli = '';
+      _this60.fechafin_cli = '';
+      _this60.id_emp = '';
+      _this60.id_fec = '';
+      _this60.errors = [];
       $('#crearCliente').modal('hide');
       toastr.success('Se ha añadido un nuevo Cliente');
     })["catch"](function (error) {
-      _this59.errors = error.response.data;
+      _this60.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editCliente", function editCliente(cliente) {
     this.fillCliente.id_cli = cliente.id_cli;
@@ -50821,109 +50837,109 @@ var app = new Vue({
     this.fillPersona.fechafin_per = cliente.fechafin_per;
     $('#editPersonaCli').modal('show');
   }), _defineProperty(_methods, "updateCliente", function updateCliente(id) {
-    var _this60 = this;
+    var _this61 = this;
 
     var url = 'updateCliente/' + id;
     axios.post(url, this.fillCliente).then(function (response) {
-      _this60.getCliente(); //persona
+      _this61.getCliente(); //persona
 
 
-      _this60.fillPersona.id_per = '';
-      _this60.fillPersona.id_contrib = '';
-      _this60.fillPersona.id_ident = '';
-      _this60.fillPersona.id_ciu = '';
-      _this60.fillPersona.doc_per = '';
-      _this60.fillPersona.organiz_per = '';
-      _this60.fillPersona.nombre_per = '';
-      _this60.fillPersona.apel_per = '';
-      _this60.fillPersona.direc_per = '';
-      _this60.fillPersona.fono1_per = '';
-      _this60.fillPersona.fono2_per = '';
-      _this60.fillPersona.cel1_per = '';
-      _this60.fillPersona.cel2_per = '';
-      _this60.fillPersona.fecnac_per = '';
-      _this60.fillPersona.correo_per = '';
-      _this60.fillPersona.estado_per = '';
-      _this60.fillPersona.fechaini_per = '';
-      _this60.fillPersona.fechafin_per = '';
-      _this60.cod_cli = '';
-      _this60.observ_cli = '';
-      _this60.estado_cli = '';
-      _this60.fechaini_cli = '';
-      _this60.fechafin_cli = '';
-      _this60.id_emp = '';
-      _this60.id_fec = '';
-      _this60.id_per = '';
-      _this60.errors = [];
+      _this61.fillPersona.id_per = '';
+      _this61.fillPersona.id_contrib = '';
+      _this61.fillPersona.id_ident = '';
+      _this61.fillPersona.id_ciu = '';
+      _this61.fillPersona.doc_per = '';
+      _this61.fillPersona.organiz_per = '';
+      _this61.fillPersona.nombre_per = '';
+      _this61.fillPersona.apel_per = '';
+      _this61.fillPersona.direc_per = '';
+      _this61.fillPersona.fono1_per = '';
+      _this61.fillPersona.fono2_per = '';
+      _this61.fillPersona.cel1_per = '';
+      _this61.fillPersona.cel2_per = '';
+      _this61.fillPersona.fecnac_per = '';
+      _this61.fillPersona.correo_per = '';
+      _this61.fillPersona.estado_per = '';
+      _this61.fillPersona.fechaini_per = '';
+      _this61.fillPersona.fechafin_per = '';
+      _this61.cod_cli = '';
+      _this61.observ_cli = '';
+      _this61.estado_cli = '';
+      _this61.fechaini_cli = '';
+      _this61.fechafin_cli = '';
+      _this61.id_emp = '';
+      _this61.id_fec = '';
+      _this61.id_per = '';
+      _this61.errors = [];
       $('#editCliente').modal('hide');
       toastr.success('Cliente actualizado con éxito');
     })["catch"](function (error) {
-      _this60.errors = error.response.data;
+      _this61.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteCliente", function deleteCliente(clientes) {
-    var _this61 = this;
+    var _this62 = this;
 
     var url = 'deleteCliente/' + clientes.id_cli;
     axios.post(url).then(function (response) {
-      _this61.getCliente();
+      _this62.getCliente();
 
       toastr.success('Cliente eliminado con éxito');
     });
   }), _defineProperty(_methods, "createPersonaCliente", function createPersonaCliente() {
-    var _this62 = this;
+    var _this63 = this;
 
     var urlGuardarPersona = 'storePersona';
     axios.post(urlGuardarPersona, this.newPersona).then(function (response) {
-      _this62.newPersona.id_contrib = '';
-      _this62.newPersona.id_ident = '';
-      _this62.newPersona.id_ciu = '';
-      _this62.newCliente.doc_per = '';
-      _this62.newPersona.organiz_per = '';
-      _this62.newPersona.nombre_per = '';
-      _this62.newPersona.apel_per = '';
-      _this62.newPersona.direc_per = '';
-      _this62.newPersona.fono1_per = '';
-      _this62.newPersona.fono2_per = '';
-      _this62.newPersona.cel1_per = '';
-      _this62.newPersona.cel2_per = '';
-      _this62.newPersona.fecnac_per = '';
-      _this62.newPersona.correo_per = '';
-      _this62.newPersona.estado_per = '';
-      _this62.newPersona.fechaini_per = '';
-      _this62.newPersona.fechafin_per = '';
-      _this62.errors = [];
+      _this63.newPersona.id_contrib = '';
+      _this63.newPersona.id_ident = '';
+      _this63.newPersona.id_ciu = '';
+      _this63.newCliente.doc_per = '';
+      _this63.newPersona.organiz_per = '';
+      _this63.newPersona.nombre_per = '';
+      _this63.newPersona.apel_per = '';
+      _this63.newPersona.direc_per = '';
+      _this63.newPersona.fono1_per = '';
+      _this63.newPersona.fono2_per = '';
+      _this63.newPersona.cel1_per = '';
+      _this63.newPersona.cel2_per = '';
+      _this63.newPersona.fecnac_per = '';
+      _this63.newPersona.correo_per = '';
+      _this63.newPersona.estado_per = '';
+      _this63.newPersona.fechaini_per = '';
+      _this63.newPersona.fechafin_per = '';
+      _this63.errors = [];
       $('#crearPersonaCli').modal('hide');
-      _this62.newCliente.id_per = response.data;
+      _this63.newCliente.id_per = response.data;
       $('#crearCliente').modal('show');
     })["catch"](function (error) {
-      _this62.errors = error.response.data;
+      _this63.errors = error.response.data;
     });
   }), _defineProperty(_methods, "getDescuento", function getDescuento() {
-    var _this63 = this;
+    var _this64 = this;
 
     var urlDescuento = 'getDescuento';
     axios.get(urlDescuento).then(function (response) {
-      _this63.descuentos = response.data;
+      _this64.descuentos = response.data;
     });
   }), _defineProperty(_methods, "createDescuento", function createDescuento() {
-    var _this64 = this;
+    var _this65 = this;
 
     var urlGuardarDescuento = 'storeDescuento';
     axios.post(urlGuardarDescuento, this.newDescuento).then(function (response) {
-      _this64.getDescuento();
+      _this65.getDescuento();
 
-      _this64.nomb_desc = '';
-      _this64.observ_desc = '';
-      _this64.estado_desc = '';
-      _this64.fechaini_desc = '';
-      _this64.fechafin_desc = '';
-      _this64.id_emp = '';
-      _this64.id_fec = '';
-      _this64.errors = [];
+      _this65.nomb_desc = '';
+      _this65.observ_desc = '';
+      _this65.estado_desc = '';
+      _this65.fechaini_desc = '';
+      _this65.fechafin_desc = '';
+      _this65.id_emp = '';
+      _this65.id_fec = '';
+      _this65.errors = [];
       $('#crearDescuento').modal('hide');
       toastr.success('Se ha añadido un nuevo Descuento');
     })["catch"](function (error) {
-      _this64.errors = error.response.data;
+      _this65.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editDescuento", function editDescuento(descuentos) {
     this.fillDescuento.id_desc = descuentos.id_desc;
@@ -50936,61 +50952,61 @@ var app = new Vue({
     this.fillDescuento.id_fec = descuentos.id_fec;
     $('#editDescuento').modal('show');
   }), _defineProperty(_methods, "updateDescuento", function updateDescuento(id) {
-    var _this65 = this;
+    var _this66 = this;
 
     var url = 'updateDescuento/' + id;
     axios.post(url, this.fillDescuento).then(function (response) {
-      _this65.getDescuento();
+      _this66.getDescuento();
 
-      _this65.nomb_desc = '';
-      _this65.observ_desc = '';
-      _this65.estado_desc = '';
-      _this65.fechaini_desc = '';
-      _this65.fechafin_desc = '';
-      _this65.id_emp = '';
-      _this65.id_fec = '';
-      _this65.errors = [];
+      _this66.nomb_desc = '';
+      _this66.observ_desc = '';
+      _this66.estado_desc = '';
+      _this66.fechaini_desc = '';
+      _this66.fechafin_desc = '';
+      _this66.id_emp = '';
+      _this66.id_fec = '';
+      _this66.errors = [];
       $('#editDescuento').modal('hide');
       toastr.success('Descuento actualizado con éxito');
     })["catch"](function (error) {
-      _this65.errors = error.response.data;
+      _this66.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteDescuento", function deleteDescuento(descuentos) {
-    var _this66 = this;
+    var _this67 = this;
 
     var url = 'deleteDescuento/' + descuentos.id_desc;
     axios.post(url).then(function (response) {
-      _this66.getDescuento();
+      _this67.getDescuento();
 
       toastr.success('Descuento eliminado con éxito');
     });
   }), _defineProperty(_methods, "getFormulario", function getFormulario() {
-    var _this67 = this;
+    var _this68 = this;
 
     var urlFormulario = 'getFormulario';
     axios.get(urlFormulario).then(function (response) {
-      _this67.formularios = response.data;
+      _this68.formularios = response.data;
     });
   }), _defineProperty(_methods, "createFormulario", function createFormulario() {
-    var _this68 = this;
+    var _this69 = this;
 
     var urlGuardarFormulario = 'storeFormulario';
     axios.post(urlGuardarFormulario, this.newFormulario).then(function (response) {
-      _this68.getFormulario();
+      _this69.getFormulario();
 
-      _this68.newFormulario.id_padcodform = '';
-      _this68.newFormulario.id_emp = '';
-      _this68.newFormulario.id_fec = '';
-      _this68.newFormulario.nomb_codform = '';
-      _this68.newFormulario.observ_codform = '';
-      _this68.newFormulario.estado_codform = '';
-      _this68.newFormulario.fechaini_codform = '';
-      _this68.newFormulario.fechafin_codform = '';
-      _this68.errors = [];
+      _this69.newFormulario.id_padcodform = '';
+      _this69.newFormulario.id_emp = '';
+      _this69.newFormulario.id_fec = '';
+      _this69.newFormulario.nomb_codform = '';
+      _this69.newFormulario.observ_codform = '';
+      _this69.newFormulario.estado_codform = '';
+      _this69.newFormulario.fechaini_codform = '';
+      _this69.newFormulario.fechafin_codform = '';
+      _this69.errors = [];
       $('#crearFormulario').modal('hide');
       toastr.success('Se añadido una nuevo formulario');
     })["catch"](function (error) {
-      _this68.errors = error.response.data;
+      _this69.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editFormulario", function editFormulario(formulario) {
     this.fillFormulario.id_padcodform = formulario.id_padcodform;
@@ -51003,61 +51019,61 @@ var app = new Vue({
     this.fillFormulario.fechafin_codform = formulario.fechafin_codform;
     $('#editFormulario').modal('show');
   }), _defineProperty(_methods, "updateFormulario", function updateFormulario(id) {
-    var _this69 = this;
+    var _this70 = this;
 
     var url = 'updateFormulario/' + id;
     axios.post(url, this.fillFormulario).then(function (response) {
-      _this69.getFormulario();
+      _this70.getFormulario();
 
-      _this69.fillFormulario.id_padcodform = '';
-      _this69.fillFormulario.id_emp = '';
-      _this69.fillFormulario.id_fec = '';
-      _this69.fillFormulario.nomb_codform = '';
-      _this69.fillFormulario.observ_codform = '';
-      _this69.fillFormulario.estado_codform = '';
-      _this69.fillFormulario.fechaini_codform = '';
-      _this69.fillFormulario.fechafin_codform = '';
-      _this69.errors = [];
+      _this70.fillFormulario.id_padcodform = '';
+      _this70.fillFormulario.id_emp = '';
+      _this70.fillFormulario.id_fec = '';
+      _this70.fillFormulario.nomb_codform = '';
+      _this70.fillFormulario.observ_codform = '';
+      _this70.fillFormulario.estado_codform = '';
+      _this70.fillFormulario.fechaini_codform = '';
+      _this70.fillFormulario.fechafin_codform = '';
+      _this70.errors = [];
       $('#editFormulario').modal('hide');
       toastr.success('Formulario actualizado con éxito');
     })["catch"](function (error) {
-      _this69.errors = error.response.data;
+      _this70.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteFormulario", function deleteFormulario(formulario) {
-    var _this70 = this;
+    var _this71 = this;
 
     var url = 'deleteFormulario/' + formulario.id_codform;
     axios.post(url).then(function (response) {
-      _this70.getFormulario();
+      _this71.getFormulario();
 
       toastr.success('Formulario eliminado con éxito');
     });
   }), _defineProperty(_methods, "getFormaPago", function getFormaPago() {
-    var _this71 = this;
+    var _this72 = this;
 
     var urlFormaPago = 'getFormaPago';
     axios.get(urlFormaPago).then(function (response) {
-      _this71.formaPago = response.data;
+      _this72.formaPago = response.data;
     });
   }), _defineProperty(_methods, "createFormaPago", function createFormaPago() {
-    var _this72 = this;
+    var _this73 = this;
 
     var urlGuardarFormaPago = 'storeFormaPago';
     axios.post(urlGuardarFormaPago, this.newFormaPago).then(function (response) {
-      _this72.getFormaPago();
+      _this73.getFormaPago();
 
-      _this72.newFormaPago.id_emp = '';
-      _this72.newFormaPago.id_fec = '';
-      _this72.newFormaPago.nomb_formapago = '';
-      _this72.newFormaPago.observ_formapago = '';
-      _this72.newFormaPago.estado_formapago = '';
-      _this72.newFormaPago.fechaini_formapago = '';
-      _this72.newFormaPago.fechafin_formapago = '';
-      _this72.errors = [];
+      _this73.newFormaPago.id_emp = '';
+      _this73.newFormaPago.id_fec = '';
+      _this73.newFormaPago.nomb_formapago = '';
+      _this73.newFormaPago.observ_formapago = '';
+      _this73.newFormaPago.estado_formapago = '';
+      _this73.newFormaPago.fechaini_formapago = '';
+      _this73.newFormaPago.fechafin_formapago = '';
+      _this73.errors = [];
       $('#crearFormaPago').modal('hide');
       toastr.success('Se añadido una nueva forma de pago');
     })["catch"](function (error) {
-      _this72.errors = error.response.data;
+      _this73.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editFormaPago", function editFormaPago(formaPago) {
     this.fillFormaPago.id_emp = formaPago.id_emp;
@@ -51069,60 +51085,60 @@ var app = new Vue({
     this.fillFormaPago.fechafin_formapago = formaPago.fechafin_formapago;
     $('#editFormaPago').modal('show');
   }), _defineProperty(_methods, "updateFormaPago", function updateFormaPago(id) {
-    var _this73 = this;
+    var _this74 = this;
 
     var url = 'updateFormaPago/' + id;
     axios.post(url, this.fillFormaPago).then(function (response) {
-      _this73.getFormaPago();
+      _this74.getFormaPago();
 
-      _this73.fillFormaPago.id_emp = '';
-      _this73.fillFormaPago.id_fec = '';
-      _this73.fillFormaPago.nomb_formapago = '';
-      _this73.fillFormaPago.observ_formapago = '';
-      _this73.fillFormaPago.estado_formapago = '';
-      _this73.fillFormaPago.fechaini_formapago = '';
-      _this73.fillFormaPago.fechafin_formapago = '';
-      _this73.errors = [];
+      _this74.fillFormaPago.id_emp = '';
+      _this74.fillFormaPago.id_fec = '';
+      _this74.fillFormaPago.nomb_formapago = '';
+      _this74.fillFormaPago.observ_formapago = '';
+      _this74.fillFormaPago.estado_formapago = '';
+      _this74.fillFormaPago.fechaini_formapago = '';
+      _this74.fillFormaPago.fechafin_formapago = '';
+      _this74.errors = [];
       $('#editFormaPago').modal('hide');
       toastr.success('Forma de pago actualizada con éxito');
     })["catch"](function (error) {
-      _this73.errors = error.response.data;
+      _this74.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteFormaPago", function deleteFormaPago(formaPago) {
-    var _this74 = this;
+    var _this75 = this;
 
     var url = 'deleteFormaPago/' + formaPago.id_codform;
     axios.post(url).then(function (response) {
-      _this74.getFormaPago();
+      _this75.getFormaPago();
 
       toastr.success('Forma de Pago eliminada con éxito');
     });
   }), _defineProperty(_methods, "getParam_Docs", function getParam_Docs() {
-    var _this75 = this;
+    var _this76 = this;
 
     var urlParam_Docs = 'getParam_Docs';
     axios.get(urlParam_Docs).then(function (response) {
-      _this75.param_docs = response.data;
+      _this76.param_docs = response.data;
     });
   }), _defineProperty(_methods, "createParam_Docs", function createParam_Docs() {
-    var _this76 = this;
+    var _this77 = this;
 
     var urlGuardarParam_Docs = 'storeParam_Docs';
     axios.post(urlGuardarParam_Docs, this.newParam_Docs).then(function (response) {
-      _this76.getParam_Docs();
+      _this77.getParam_Docs();
 
-      _this76.nomb_param_docs = '';
-      _this76.observ_param_docs = '';
-      _this76.estado_param_docs = '';
-      _this76.fechaini_param_docs = '';
-      _this76.fechafin_param_docs = '';
-      _this76.id_emp = '';
-      _this76.id_fec = '';
-      _this76.errors = [];
+      _this77.nomb_param_docs = '';
+      _this77.observ_param_docs = '';
+      _this77.estado_param_docs = '';
+      _this77.fechaini_param_docs = '';
+      _this77.fechafin_param_docs = '';
+      _this77.id_emp = '';
+      _this77.id_fec = '';
+      _this77.errors = [];
       $('#crearParam_Docs').modal('hide');
       toastr.success('Se ha añadido un nuevo Parámetro de Documento');
     })["catch"](function (error) {
-      _this76.errors = error.response.data;
+      _this77.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editParam_Docs", function editParam_Docs(param_docs) {
     this.fillParam_Docs.id_param_docs = param_docs.id_param_docs;
@@ -51135,60 +51151,60 @@ var app = new Vue({
     this.fillParam_Docs.id_fec = param_docs.id_fec;
     $('#editParam_Docs').modal('show');
   }), _defineProperty(_methods, "updateParam_Docs", function updateParam_Docs(id) {
-    var _this77 = this;
+    var _this78 = this;
 
     var url = 'updateParam_Docs/' + id;
     axios.post(url, this.fillParam_Docs).then(function (response) {
-      _this77.getParam_Docs();
+      _this78.getParam_Docs();
 
-      _this77.nomb_param_docs = '';
-      _this77.observ_param_docs = '';
-      _this77.estado_param_docs = '';
-      _this77.fechaini_param_docs = '';
-      _this77.fechafin_param_docs = '';
-      _this77.id_emp = '';
-      _this77.id_fec = '';
-      _this77.errors = [];
+      _this78.nomb_param_docs = '';
+      _this78.observ_param_docs = '';
+      _this78.estado_param_docs = '';
+      _this78.fechaini_param_docs = '';
+      _this78.fechafin_param_docs = '';
+      _this78.id_emp = '';
+      _this78.id_fec = '';
+      _this78.errors = [];
       $('#editParam_Docs').modal('hide');
       toastr.success('Parámetro de Documento actualizado con éxito');
     })["catch"](function (error) {
-      _this77.errors = error.response.data;
+      _this78.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteParam_Docs", function deleteParam_Docs(param_docs) {
-    var _this78 = this;
+    var _this79 = this;
 
     var url = 'deleteParam_Docs/' + param_docs.id_param_docs;
     axios.post(url).then(function (response) {
-      _this78.getParam_Docs();
+      _this79.getParam_Docs();
 
       toastr.success('Parámetro de Documento eliminado con éxito');
     });
   }), _defineProperty(_methods, "getParam_Porc", function getParam_Porc() {
-    var _this79 = this;
+    var _this80 = this;
 
     var urlParam_Porc = 'getParam_Porc';
     axios.get(urlParam_Porc).then(function (response) {
-      _this79.param_porc = response.data;
+      _this80.param_porc = response.data;
     });
   }), _defineProperty(_methods, "createParam_Porc", function createParam_Porc() {
-    var _this80 = this;
+    var _this81 = this;
 
     var urlGuardarParam_Porc = 'storeParam_Porc';
     axios.post(urlGuardarParam_Porc, this.newParam_Porc).then(function (response) {
-      _this80.getParam_Porc();
+      _this81.getParam_Porc();
 
-      _this80.nomb_param_porc = '';
-      _this80.observ_param_porc = '';
-      _this80.estado_param_porc = '';
-      _this80.fechaini_param_porc = '';
-      _this80.fechafin_param_porc = '';
-      _this80.id_emp = '';
-      _this80.id_fec = '';
-      _this80.errors = [];
+      _this81.nomb_param_porc = '';
+      _this81.observ_param_porc = '';
+      _this81.estado_param_porc = '';
+      _this81.fechaini_param_porc = '';
+      _this81.fechafin_param_porc = '';
+      _this81.id_emp = '';
+      _this81.id_fec = '';
+      _this81.errors = [];
       $('#crearParam_Porc').modal('hide');
       toastr.success('Se ha añadido un nuevo Parámetro de Porcentaje');
     })["catch"](function (error) {
-      _this80.errors = error.response.data;
+      _this81.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editParam_Porc", function editParam_Porc(param_porc) {
     this.fillParam_Porc.id_param_porc = param_docs.id_param_porc;
@@ -51201,59 +51217,59 @@ var app = new Vue({
     this.fillParam_Porc.id_fec = param_porc.id_fec;
     $('#editParam_Porc').modal('show');
   }), _defineProperty(_methods, "updateParam_Porc", function updateParam_Porc(id) {
-    var _this81 = this;
+    var _this82 = this;
 
     var url = 'updateParam_Porc/' + id;
     axios.post(url, this.fillParam_Porc).then(function (response) {
-      _this81.getParam_Porc();
+      _this82.getParam_Porc();
 
-      _this81.nomb_param_porc = '';
-      _this81.observ_param_porc = '';
-      _this81.estado_param_porc = '';
-      _this81.fechaini_param_porc = '';
-      _this81.fechafin_param_porc = '';
-      _this81.id_emp = '';
-      _this81.id_fec = '';
-      _this81.errors = [];
+      _this82.nomb_param_porc = '';
+      _this82.observ_param_porc = '';
+      _this82.estado_param_porc = '';
+      _this82.fechaini_param_porc = '';
+      _this82.fechafin_param_porc = '';
+      _this82.id_emp = '';
+      _this82.id_fec = '';
+      _this82.errors = [];
       $('#editParam_Porc').modal('hide');
       toastr.success('Parámetro de Porcentaje actualizado con éxito');
     })["catch"](function (error) {
-      _this81.errors = error.response.data;
+      _this82.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteParam_Porc", function deleteParam_Porc(param_porc) {
-    var _this82 = this;
+    var _this83 = this;
 
     var url = 'deleteParam_Porc/' + param_porc.id_param_porc;
     axios.post(url).then(function (response) {
-      _this82.getParam_Porc();
+      _this83.getParam_Porc();
 
       toastr.success('Parámetro de Porcentaje eliminado con éxito');
     });
   }), _defineProperty(_methods, "getPeriodo", function getPeriodo() {
-    var _this83 = this;
+    var _this84 = this;
 
     var urlPeriodo = 'getPeriodo';
     axios.get(urlPeriodo).then(function (response) {
-      _this83.periodos = response.data;
+      _this84.periodos = response.data;
     });
   }), _defineProperty(_methods, "createPeriodo", function createPeriodo() {
-    var _this84 = this;
+    var _this85 = this;
 
     var urlPeriodo = 'storePeriodo';
     axios.post(urlPeriodo, this.newPeriodo).then(function (response) {
-      _this84.getPeriodo();
+      _this85.getPeriodo();
 
-      _this84.newPeriodo.nomb_fec = '';
-      _this84.newPeriodo.mesidentif_fec = '';
-      _this84.newPeriodo.observ_fec = '';
-      _this84.newPeriodo.estado_fec = '';
-      _this84.newPeriodo.fechaini_fec = '';
-      _this84.newPeriodo.fechafin_fec = '';
-      _this84.errors = [];
+      _this85.newPeriodo.nomb_fec = '';
+      _this85.newPeriodo.mesidentif_fec = '';
+      _this85.newPeriodo.observ_fec = '';
+      _this85.newPeriodo.estado_fec = '';
+      _this85.newPeriodo.fechaini_fec = '';
+      _this85.newPeriodo.fechafin_fec = '';
+      _this85.errors = [];
       $('#crearPeriodo').modal('hide');
       toastr.success('Se añadido una nuevo periodo');
     })["catch"](function (error) {
-      _this84.errors = error.response.data;
+      _this85.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editPeriodo", function editPeriodo(periodo) {
     this.fillPeriodo.id_fec = periodo.id_fec;
@@ -51265,59 +51281,59 @@ var app = new Vue({
     this.fillPeriodo.fechafin_fec = periodo.fechafin_fec;
     $('#editPeriodo').modal('show');
   }), _defineProperty(_methods, "updatePeriodo", function updatePeriodo(id) {
-    var _this85 = this;
+    var _this86 = this;
 
     var url = 'updateFormaPago/' + id;
     axios.post(url, this.fillPeriodo).then(function (response) {
-      _this85.getPeriodo();
+      _this86.getPeriodo();
 
-      _this85.fillPeriodo.id_fec = '';
-      _this85.fillPeriodo.nomb_fec = '';
-      _this85.fillPeriodo.mesidentif_fec = '';
-      _this85.fillPeriodo.observ_fec = '';
-      _this85.fillPeriodo.estado_fec = '';
-      _this85.fillPeriodo.fechaini_fec = '';
-      _this85.fillPeriodo.fechafin_fec = '';
-      _this85.errors = [];
+      _this86.fillPeriodo.id_fec = '';
+      _this86.fillPeriodo.nomb_fec = '';
+      _this86.fillPeriodo.mesidentif_fec = '';
+      _this86.fillPeriodo.observ_fec = '';
+      _this86.fillPeriodo.estado_fec = '';
+      _this86.fillPeriodo.fechaini_fec = '';
+      _this86.fillPeriodo.fechafin_fec = '';
+      _this86.errors = [];
       $('#editPeriodo').modal('hide');
       toastr.success('Periodo actualizado con éxito');
     })["catch"](function (error) {
-      _this85.errors = error.response.data;
+      _this86.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deletePeriodp", function deletePeriodp(periodo) {
-    var _this86 = this;
+    var _this87 = this;
 
     var url = 'deletePeriodo/' + periodo.id_fec;
     axios.post(url).then(function (response) {
-      _this86.getTipoDocumento();
+      _this87.getTipoDocumento();
 
       toastr.success('Periodo eliminado con éxito');
     });
   }), _defineProperty(_methods, "getTipoDocumento", function getTipoDocumento() {
-    var _this87 = this;
+    var _this88 = this;
 
     var urlTipoDocumento = 'getTipoDocumento';
     axios.get(urlTipoDocumento).then(function (response) {
-      _this87.tipoDocumento = response.data;
+      _this88.tipoDocumento = response.data;
     });
   }), _defineProperty(_methods, "createTipoDocumento", function createTipoDocumento() {
-    var _this88 = this;
+    var _this89 = this;
 
     var urlPeriodo = 'storeTipoDocumento';
     axios.post(urlPeriodo, this.newTipoDocumento).then(function (response) {
-      _this88.getTipoDocumento();
+      _this89.getTipoDocumento();
 
-      _this88.newTipoDocumento.id_emp = '';
-      _this88.newTipoDocumento.id_fec = '';
-      _this88.newTipoDocumento.nomb_doc = '';
-      _this88.newTipoDocumento.estado_doc = '';
-      _this88.newTipoDocumento.fechaini_doc = '';
-      _this88.newTipoDocumento.fechafin_doc = '';
-      _this88.errors = [];
+      _this89.newTipoDocumento.id_emp = '';
+      _this89.newTipoDocumento.id_fec = '';
+      _this89.newTipoDocumento.nomb_doc = '';
+      _this89.newTipoDocumento.estado_doc = '';
+      _this89.newTipoDocumento.fechaini_doc = '';
+      _this89.newTipoDocumento.fechafin_doc = '';
+      _this89.errors = [];
       $('#crearTipoDocumento').modal('hide');
       toastr.success('Se añadido un nuevo Tipo de Documento');
     })["catch"](function (error) {
-      _this88.errors = error.response.data;
+      _this89.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editTipoDocumento", function editTipoDocumento(tipoDocumento) {
     this.fillTipoDocumento.id_doc = tipoDocumento.id_doc;
@@ -51330,61 +51346,61 @@ var app = new Vue({
     this.fillTipoDocumento.fechafin_doc = tipoDocumento.fechafin_doc;
     $('#editTipoDocumento').modal('show');
   }), _defineProperty(_methods, "updateTipoDocumento", function updateTipoDocumento(id) {
-    var _this89 = this;
+    var _this90 = this;
 
     var url = 'updateTipoDocumento/' + id;
     axios.post(url, this.fillTipoDocumento).then(function (response) {
-      _this89.getTipoDocumento();
+      _this90.getTipoDocumento();
 
-      _this89.fillTipoDocumento.id_emp = '';
-      _this89.fillTipoDocumento.id_fec = '';
-      _this89.fillTipoDocumento.nomb_doc = '';
-      _this89.fillTipoDocumento.estado_doc = '';
-      _this89.fillTipoDocumento.fechaini_doc = '';
-      _this89.fillTipoDocumento.fechafin_doc = '';
-      _this89.errors = [];
+      _this90.fillTipoDocumento.id_emp = '';
+      _this90.fillTipoDocumento.id_fec = '';
+      _this90.fillTipoDocumento.nomb_doc = '';
+      _this90.fillTipoDocumento.estado_doc = '';
+      _this90.fillTipoDocumento.fechaini_doc = '';
+      _this90.fillTipoDocumento.fechafin_doc = '';
+      _this90.errors = [];
       $('#editTipoDocumento').modal('hide');
       toastr.success('Tipo de documento actualizado con éxito');
     })["catch"](function (error) {
-      _this89.errors = error.response.data;
+      _this90.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteTipoDocumento", function deleteTipoDocumento(tipoDocumento) {
-    var _this90 = this;
+    var _this91 = this;
 
     var url = 'deleteTipoDocumento/' + tipoDocumento.id_doc;
     axios.post(url).then(function (response) {
-      _this90.getTipoDocumento();
+      _this91.getTipoDocumento();
 
       toastr.success('Tipo de documento eliminado con éxito');
     });
   }), _defineProperty(_methods, "getUsuario", function getUsuario() {
-    var _this91 = this;
+    var _this92 = this;
 
     var urlUsuario = 'getUsuario';
     axios.get(urlUsuario).then(function (response) {
-      _this91.usuarios = response.data;
+      _this92.usuarios = response.data;
     });
   }), _defineProperty(_methods, "createUsuario", function createUsuario() {
-    var _this92 = this;
+    var _this93 = this;
 
     var urlUsuario = 'storeUsuario';
     axios.post(urlUsuario, this.newUsuario).then(function (response) {
-      _this92.getUsuario();
+      _this93.getUsuario();
 
-      _this92.newUsuario.id_rol = '';
-      _this92.newUsuario.id_emp = '';
-      _this92.newUsuario.id_fec = '';
-      _this92.newUsuario.nomb_usu = '';
-      _this92.newUsuario.clave_usu = '';
-      _this92.newUsuario.observ_usu = '';
-      _this92.newUsuario.estado_usu = '';
-      _this92.newUsuario.fechaini_usu = '';
-      _this92.newUsuario.fechafin_usu = '';
-      _this92.errors = [];
+      _this93.newUsuario.id_rol = '';
+      _this93.newUsuario.id_emp = '';
+      _this93.newUsuario.id_fec = '';
+      _this93.newUsuario.nomb_usu = '';
+      _this93.newUsuario.clave_usu = '';
+      _this93.newUsuario.observ_usu = '';
+      _this93.newUsuario.estado_usu = '';
+      _this93.newUsuario.fechaini_usu = '';
+      _this93.newUsuario.fechafin_usu = '';
+      _this93.errors = [];
       $('#crearUsuario').modal('hide');
       toastr.success('Se añadido un nuevo Usuario');
     })["catch"](function (error) {
-      _this92.errors = error.response.data;
+      _this93.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editUsuario", function editUsuario(usuario) {
     this.fillUsuario.id_rol = usuario.id_rol;
@@ -51397,32 +51413,32 @@ var app = new Vue({
     this.fillUsuario.fechafin_usu = usuario.fechafin_usu;
     $('#editUsuario').modal('show');
   }), _defineProperty(_methods, "updateUsuario", function updateUsuario(id) {
-    var _this93 = this;
+    var _this94 = this;
 
     var url = 'updateUsaurio/' + id;
     axios.post(url, this.fillUsuario).then(function (response) {
-      _this93.getUsuario();
+      _this94.getUsuario();
 
-      _this93.fillUsuario.id_rol = '';
-      _this93.fillUsuario.id_emp = '';
-      _this93.fillUsuario.id_fec = '';
-      _this93.fillUsuario.nomb_usu = '';
-      _this93.fillUsuario.observ_usu = '';
-      _this93.fillUsuario.estado_usu = '';
-      _this93.fillUsuario.fechaini_usu = '';
-      _this93.fillUsuario.fechafin_usu = '';
-      _this93.errors = [];
+      _this94.fillUsuario.id_rol = '';
+      _this94.fillUsuario.id_emp = '';
+      _this94.fillUsuario.id_fec = '';
+      _this94.fillUsuario.nomb_usu = '';
+      _this94.fillUsuario.observ_usu = '';
+      _this94.fillUsuario.estado_usu = '';
+      _this94.fillUsuario.fechaini_usu = '';
+      _this94.fillUsuario.fechafin_usu = '';
+      _this94.errors = [];
       $('#editUsuario').modal('hide');
       toastr.success('Usuario actualizado con éxito');
     })["catch"](function (error) {
-      _this93.errors = error.response.data;
+      _this94.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteUsuario", function deleteUsuario(usuario) {
-    var _this94 = this;
+    var _this95 = this;
 
     var url = 'deleteUsuario/' + usuario.id_usu;
     axios.post(url).then(function (response) {
-      _this94.getUsuario();
+      _this95.getUsuario();
 
       toastr.success('Usuario eliminado con éxito');
     });
@@ -51434,18 +51450,18 @@ var app = new Vue({
     this.pagination.per_page = this.numregistros;
     this.getCategorias(page);
   }), _defineProperty(_methods, "getFacturaCompra", function getFacturaCompra() {
-    var _this95 = this;
+    var _this96 = this;
 
     var urlFactura = 'getFacturaCompra';
     axios.get(urlFactura).then(function (response) {
-      _this95.facturasCompra = response.data;
+      _this96.facturasCompra = response.data;
     });
   }), _defineProperty(_methods, "getFacturaVenta", function getFacturaVenta() {
-    var _this96 = this;
+    var _this97 = this;
 
     var urlFactura = 'getFacturaVenta';
     axios.get(urlFactura).then(function (response) {
-      _this96.facturasVenta = response.data;
+      _this97.facturasVenta = response.data;
     });
   }), _methods)
 });

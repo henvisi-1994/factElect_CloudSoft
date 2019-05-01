@@ -21,7 +21,7 @@
                             <label for="exampleInputEmail1">
                                 Nombre
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="nombre_bod" placeholder="Ingrese Nombre" type="text" v-model="newbodega.nombre_bod">
+                            <input class="form-control"  name="nombre_bod" placeholder="Ingrese Nombre" type="text" v-model="newbodega.nombre_bod">
                             </input>
                         </div>
 
@@ -29,7 +29,7 @@
                             <label for="exampleInputEmail1">
                                 Teléfono
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="telef_bod" placeholder="Ingrese Número de Teléfono" type="text" v-model="newbodega.telef_bod">
+                            <input class="form-control"  name="telef_bod" placeholder="Ingrese Número de Teléfono" type="text" v-model="newbodega.telef_bod">
                             </input>
                         </div>
 
@@ -37,7 +37,7 @@
                             <label for="exampleInputEmail1">
                                 Célular
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="cel_bod" placeholder="Ingrese Número de Célular" type="text" v-model="newbodega.cel_bod">
+                            <input class="form-control"  name="cel_bod" placeholder="Ingrese Número de Célular" type="text" v-model="newbodega.cel_bod">
                             </input>
                         </div>
 
@@ -46,7 +46,7 @@
                             <label for="exampleInputEmail1">
                                 Contacto
                             </label>
-                            <input class="form-control" id="exampleInputEmail1" name="nomb_contac_bod" placeholder="Ingrese Nombre de Contacto" type="text" v-model="newbodega.nomb_contac_bod">
+                            <input class="form-control"  name="nomb_contac_bod" placeholder="Ingrese Nombre de Contacto" type="text" v-model="newbodega.nomb_contac_bod">
                             </input>
                         </div>
                         <div class="form-group">

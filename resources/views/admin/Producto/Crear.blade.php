@@ -45,7 +45,37 @@
                             <textarea class="form-control" name="descripcion_prod" placeholder="Ingrese Observación" rows="3" v-model="newProducto.descripcion_prod">
                             </textarea>
                         </div>
+                         <div class="form-group">
+                            <label>
+                                Bodega
+                            </label>
+                            <select class="form-control" name="id_marca" v-model="newProducto.id_bod">
+                                <option disabled="" selected="" value="none">
+                                    Selecione una Bodega
+                                </option>
+                                @foreach($bodegas as $bodega)
+                                <option value="{{$bodega->id_bod}}">
+                                    {{$bodega->nombre_bod}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group">
+                            <label>
+                                Categoria
+                            </label>
+                            <select class="form-control" name="id_marca" v-model="newProducto.id_cat">
+                                <option disabled="" selected="" value="none">
+                                    Selecione una Categoria
+                                </option>
+                                @foreach($categorias as $categoria)
+                                <option value="{{$categoria->id_cat}}">
+                                    {{$categoria->nomb_cat}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                         <div class="form-group">
                             <label>
                                 Marca
                             </label>

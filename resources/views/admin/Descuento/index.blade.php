@@ -1,3 +1,5 @@
+@extends('admin.layouts.app')
+@section('content')
 <div class="box">
     <div class="box-header">
         <h1 class="box-title">
@@ -100,3 +102,4 @@
         @include('admin.Descuento.Modificar')
     </div>
 </div>
+@endsection

@@ -1,3 +1,5 @@
+@extends('admin.layouts.app')
+@section('content')
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">
@@ -91,5 +93,4 @@
         </div>
     </div>
 </div>
-
-<!-- /.box-body -->
+@endsection
