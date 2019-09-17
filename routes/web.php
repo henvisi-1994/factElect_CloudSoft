@@ -63,7 +63,8 @@ Route::get('getTipoDocumento','AdminController@getTipoDocumento');
 Route::get('getUsuario','AdminController@getUsuario');
 Route::get('getFacturaCompra','AdminController@getFacturaCompra');
 Route::get('getFacturaVenta','AdminController@getFacturaVenta');
-
+Route::get('getIvaActual','AdminController@ivaActual');
+Route::get('getNumFactVent','AdminController@ultimonumFactVenta');
 //Ruta Guardar
 Route::post('storeCategoria','AdminController@guardarCategoria');
 Route::post('storeMarca','AdminController@guardarMarca');
@@ -87,7 +88,10 @@ Route::post('storeParam_Porc','AdminController@guardarParam_Porc');
 Route::post('storePeriodo','AdminController@guardarPeriodo');
 Route::post('storeTipoDocumento','AdminController@guardarTipoDocumento');
 Route::post('storeUsuario','AdminController@guardarUsuario');
+Route::post('storeFactura','AdminController@guardarFacturaVenta');
+Route::post('storeFacturaDetalle/{num_fact}','AdminController@gurdarDetalleFacturaVenta');
 //Ruta Modificar
+Route::post('preguardarFacturaVenta','AdminController@preguardarFacturaVenta');
 Route::post('updateCategoria/{id}','AdminController@modificarCategoria');
 Route::post('updateMarca/{id}','AdminController@modificarMarca');
 Route::post('updateUnidad/{id}','AdminController@modificarUnidad');

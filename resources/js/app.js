@@ -46,6 +46,9 @@ const app = new Vue({
         this.getUsuario();
         this.getFacturaCompra();
         this.getFacturaVenta();
+        this.getIva();
+        this.getNumfactV();
+        this.existeDF = "False";
     },
     data: {
         categorias: [],
@@ -567,6 +570,8 @@ const app = new Vue({
         },
         facturasCompra: [],
         facturasVenta: [],
+        detallefactura: {},
+        detallesFactura: [],
         newFactura: {
             'id_formapago': '',
             'id_per': '',
@@ -589,11 +594,39 @@ const app = new Vue({
             'observ_fact': '',
             'total_fact': ''
         },
+        buscarCli: {
+            'id_per': '',
+            'nom_cli': '',
+            'ruc_cli': '',
+            'organiz_per': ''
+        },
+        factura: {
+            'id_formapago': '',
+            'id_per': '',
+            'num_fact': '',
+            'fecha_emision_fact': '',
+            'hora_emision_fact': '',
+            'vencimiento_fact': '',
+            'estado_fact': '',
+            'tipo_fact': '',
+            'observ_fact': '',
+            'subtotal_fact': '',
+            'subcero_fact': '',
+            'subiva_fact': '',
+            'subice_fact': '',
+            'total_fact': ''
+        },
+        existeDF: '',
+        numFactv: '',
         errors: [],
         buscar_cat: '',
+        buscar_cli: '0',
         buscar_prod: '',
         buscar_marca: '',
         buscar_categoria: '',
+        iva: [],
+        cantidadP: 1,
+        totalf: 0,
         menu: {
             'item': 0
         },
@@ -606,9 +639,60 @@ const app = new Vue({
         },
           buscarProducto: function() {
             return this.productos.filter((producto) => producto.descripcion_prod.includes(this.buscar_prod) & producto.nomb_marca.includes(this.buscar_marca) & producto.nomb_cat.includes(this.buscar_categoria));
+        },
+        buscarCliente: function() {
+            return this.clientes.filter((cliente) => cliente.nombre_per.includes(this.buscar_cli) || cliente.apel_per.includes(this.buscar_cli) || cliente.doc_per.includes(this.buscar_cli) || cliente.organiz_per.includes(this.buscar_cli) || cliente.cod_cli.includes(this.buscar_cli));
+        },
+        subtotal: function() {
+            return this.detallefactura.reduce((total, item) => {
+                return total + parseFloat(item.neto);
+            }, 0);
+        },
+        subtotalIva: function() {
+            return this.detallefactura.reduce((total, item) => {
+                return total + parseFloat(item.iva)
+            }, 0);
+        },
+        total: function() {
+            return this.detallefactura.reduce((total, item) => {
+                return total + parseFloat(item.total);
+            }, 0);
+        },
+        fecha_act: function() {
+            var hoy = new Date();
+            var dd = hoy.getDate();
+            var mm = hoy.getMonth() + 1;
+            var yyyy = hoy.getFullYear();
+            dd = this.addZero(dd);
+            mm = this.addZero(mm);
+            return yyyy + '-' + mm + '-' + dd;
+        },
+        numFactVent: function() {
+            var numFact = parseInt(this.numFactv);
+            var num = this.zeroFill((numFact + 1), 10);
+            return num;
         }
     },
     methods: {
+        addZero: function(i) {
+            if (i < 10) {
+                i = '0' + i;
+            }
+            return i;
+        },
+        zeroFill: function(number, width) {
+            // make sure it's a string
+            var fillZeroes = "00000000000000000000";
+            var input = number + "";
+            var prefix = "";
+            if (input.charAt(0) === '-') {
+                prefix = "-";
+                input = input.slice(1);
+                --width;
+            }
+            var fillAmt = Math.max(width - input.length, 0);
+            return prefix + fillZeroes.slice(0, fillAmt) + input;
+        },
         getCategorias: function() {
             var urlCategorias = 'getCategorias';
             axios.get(urlCategorias).then(response => {
@@ -2272,5 +2356,136 @@ const app = new Vue({
                 this.facturasVenta = response.data;
             });
         },
+        cargarFacturaVenta: function() {
+            var urlFactura = 'preguardarFacturaVenta/';
+            axios.post(urlFactura, this.buscarCli).then((response) => {
+                this.existeDF = "True";
+                this.factura = response.data;
+                $('#crearFacturaVenta').modal('hide');
+            });
+        },
+        getIva: function() {
+            var urlIva = 'getIvaActual';
+            axios.get(urlIva).then(response => {
+                this.iva = response.data;
+            });
+        },
+        deletedetalleFact: function(detalle) {
+            var index = this.detallefactura.indexOf(detalle);
+            this.detallefactura.splice(index, 1);
+        },
+        adddetalleFact: function(producto) {
+            var IVA = 0;
+            var cantidad = this.cantidadP;
+            if (producto.aplicaiva_prod = 'S') {
+                IVA = this.iva[0].porcentaje_iva;
+            } else if (producto.aplicaiva_prod = 'N') {
+                IVA = 0;
+            }
+            var descuento = parseFloat((cantidad * producto.precio_prod) * 5 / 100).toFixed(2);
+            var neto = parseFloat((cantidad * producto.precio_prod) - descuento).toFixed(2);
+            var subiva = parseFloat(neto * IVA / 100).toFixed(2);
+            var total = parseFloat(neto + subiva).toFixed(2);
+            this.detallesfactura.push({
+                'id_prod': producto.id_prod,
+                'codigo_prod': producto.codigo_prod,
+                'cantidad': cantidad,
+                'descripcion': producto.descripcion_prod,
+                'precio_prod': producto.precio_prod,
+                'descuento': descuento,
+                'aplicaiva_prod': producto.aplicaiva_prod,
+                'neto': neto,
+                'iva': subiva,
+                'total': total
+            });
+            $('#addProducto').modal('hide');
+            this.buscar_prod = '';
+        },
+        cambiarCantidad: function(detalle) {
+            var index = this.detallefactura.indexOf(detalle);
+            var precio = this.detallefactura[index].precio_prod
+            var cantidad = this.detallefactura[index].cantidad;
+            var descuento = parseFloat((cantidad * precio) - 5 / 100).toFixed(2);
+            var IVA = 0;
+            if (this.detallefactura[index].aplicaiva_prod = 'S') {
+                IVA = this.iva[0].porcentaje_iva;
+            } else if (this.detallefactura[index].aplicaiva_prod = 'N') {
+                IVA = 0;
+            }
+            var neto = parseFloat((cantidad * precio) - descuento).toFixed(2);
+            var subiva = parseFloat(neto * IVA / 100).toFixed(2);
+            var total = parseFloat(neto + subiva).toFixed(2);
+            this.detallefactura[index].neto = neto;
+            this.detallefactura[index].iva = subiva;
+            this.detallefactura[index].total = total;
+        },
+        getNumfactV: function() {
+            var url = 'getNumFactVent';
+            axios.get(url).then(response => {
+                this.numFactv = response.data;
+            });
+        },
+        CalcularFacturaVenta: function() {
+            var hoy = new Date();
+            var hours = hoy.getHours();
+            var minutes = hoy.getMinutes();
+            var seconds = hoy.getSeconds();
+            var dd = hoy.getDate();
+            var mm = hoy.getMonth() + 1;
+            var yyyy = hoy.getFullYear();
+            dd = this.addZero(dd);
+            mm = this.addZero(mm + 1);
+            this.factura.subtotal_fact = this.subtotal;
+            this.factura.subcero_fact = 0;
+            this.factura.subiva_fact = this.subtotalIva;
+            this.factura.subice_fact = 0;
+            this.factura.total_fact = this.total;
+            this.factura.id_per = App.id_persona;
+            this.factura.fecha_emision_fact = this.fecha_act;
+            this.factura.hora_emision_fact = hours + ':' + minutes + ':' + seconds;
+            this.factura.vencimiento_fact = yyyy + '-' + mm + '-' + dd;
+            this.factura.tipo_fact = 'Venta';
+            this.factura.estado_fact = 'PA';
+            if (this.numFactv) {
+                this.factura.num_fact = '001-001-' + this.numFactVent;
+            } else {
+                this.factura.num_fact = '001-001-' + this.serie;
+            }
+            if (!this.factura.observ_fact) {
+                this.factura.observ_fact = '-';
+            }
+        },
+        mostarCliente: function(persona) {
+            this.buscarCli.nom_cli = persona.nombre_per + ' ' + persona.apel_per;
+            this.buscarCli.ruc_cli = persona.doc_per;
+            this.buscarCli.organiz_per = persona.organiz_per;
+            this.buscar_cli = this.buscarCli.ruc_cli;
+        },
+        createFacturaVenta: function() {
+            this.CalcularFacturaVenta();
+            var urlFactV = 'storeFactura';
+            axios.post(urlFactV, this.factura).then((response) => {}).catch(error => {
+                this.errors = error.response.data;
+            });
+            this.guardaritem(this.factura.num_fact);
+        },
+        guardaritem: function(id_fact) {
+            var urlFacturaDetalle = 'storeFacturaDetalle/' + id_fact;
+            /*axios.post(urlFacturaDetalle, {       
+                detallesFactura: this.detallefactura
+            }).then((response) => {
+                this.testArray = response.data;
+                toastr.success('Se ha guardado la Factura Exitosamente');
+            }).catch(error => {
+                this.errors = error.response.data;
+            });*/
+            axios({
+                method: 'post',
+                url:  urlFacturaDetalle,
+                data: {
+                    detallesFactura: this.detallesFactura
+                }
+            });
+        }
     }
 });
