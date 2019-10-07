@@ -49560,7 +49560,7 @@ var app = new Vue({
     'estado_usu': '',
     'fechaini_usu': '',
     'fechafin_usu': ''
-  }), _defineProperty(_data, "facturasCompra", []), _defineProperty(_data, "facturasVenta", []), _defineProperty(_data, "detallefactura", {}), _defineProperty(_data, "detallesFactura", []), _defineProperty(_data, "newFactura", {
+  }), _defineProperty(_data, "facturasCompra", []), _defineProperty(_data, "facturasVenta", []), _defineProperty(_data, "newFactura", {
     'id_formapago': '',
     'id_per': '',
     'num_fact': '',
@@ -49600,9 +49600,9 @@ var app = new Vue({
     'subiva_fact': '',
     'subice_fact': '',
     'total_fact': ''
-  }), _defineProperty(_data, "existeDF", ''), _defineProperty(_data, "numFactv", ''), _defineProperty(_data, "errors", []), _defineProperty(_data, "buscar_cat", ''), _defineProperty(_data, "buscar_cli", '0'), _defineProperty(_data, "buscar_prod", ''), _defineProperty(_data, "buscar_marca", ''), _defineProperty(_data, "buscar_categoria", ''), _defineProperty(_data, "iva", []), _defineProperty(_data, "cantidadP", 1), _defineProperty(_data, "totalf", 0), _defineProperty(_data, "menu", {
+  }), _defineProperty(_data, "detallefactura", []), _defineProperty(_data, "detallesFactura", {}), _defineProperty(_data, "existeDF", ''), _defineProperty(_data, "numFactv", ''), _defineProperty(_data, "errors", []), _defineProperty(_data, "buscar_id_cat", ''), _defineProperty(_data, "buscar_id_marca", ''), _defineProperty(_data, "buscar_cat", ''), _defineProperty(_data, "buscar_cli", '0'), _defineProperty(_data, "buscar_prod", ''), _defineProperty(_data, "buscar_marca", ''), _defineProperty(_data, "buscar_categoria", ''), _defineProperty(_data, "iva", []), _defineProperty(_data, "cantidadP", 1), _defineProperty(_data, "totalf", 0), _defineProperty(_data, "menu", {
     'item': 0
-  }), _defineProperty(_data, "numregistros", 10), _defineProperty(_data, "src", ''), _data),
+  }), _defineProperty(_data, "numregistros", 10), _defineProperty(_data, "src", ''), _defineProperty(_data, "subtotal", ''), _defineProperty(_data, "subtotalIva", ''), _defineProperty(_data, "total", ''), _data),
   computed: {
     buscarCategoria: function buscarCategoria() {
       var _this = this;
@@ -49624,21 +49624,6 @@ var app = new Vue({
       return this.clientes.filter(function (cliente) {
         return cliente.nombre_per.includes(_this3.buscar_cli) || cliente.apel_per.includes(_this3.buscar_cli) || cliente.doc_per.includes(_this3.buscar_cli) || cliente.organiz_per.includes(_this3.buscar_cli) || cliente.cod_cli.includes(_this3.buscar_cli);
       });
-    },
-    subtotal: function subtotal() {
-      return this.detallefactura.reduce(function (total, item) {
-        return total + parseFloat(item.neto);
-      }, 0);
-    },
-    subtotalIva: function subtotalIva() {
-      return this.detallefactura.reduce(function (total, item) {
-        return total + parseFloat(item.iva);
-      }, 0);
-    },
-    total: function total() {
-      return this.detallefactura.reduce(function (total, item) {
-        return total + parseFloat(item.total);
-      }, 0);
     },
     fecha_act: function fecha_act() {
       var hoy = new Date();
@@ -51563,6 +51548,7 @@ var app = new Vue({
   }), _defineProperty(_methods, "deletedetalleFact", function deletedetalleFact(detalle) {
     var index = this.detallefactura.indexOf(detalle);
     this.detallefactura.splice(index, 1);
+    this.calcular();
   }), _defineProperty(_methods, "adddetalleFact", function adddetalleFact(producto) {
     var IVA = 0;
     var cantidad = this.cantidadP;
@@ -51577,7 +51563,7 @@ var app = new Vue({
     var neto = parseFloat(cantidad * producto.precio_prod - descuento).toFixed(2);
     var subiva = parseFloat(neto * IVA / 100).toFixed(2);
     var total = parseFloat(neto + subiva).toFixed(2);
-    this.detallesfactura.push({
+    this.detallefactura.push({
       'id_prod': producto.id_prod,
       'codigo_prod': producto.codigo_prod,
       'cantidad': cantidad,
@@ -51591,6 +51577,17 @@ var app = new Vue({
     });
     $('#addProducto').modal('hide');
     this.buscar_prod = '';
+    this.calcular();
+  }), _defineProperty(_methods, "calcular", function calcular() {
+    this.subtotal = this.detallefactura.reduce(function (total, item) {
+      return total + parseFloat(item.neto);
+    }, 0);
+    this.subtotalIva = this.detallefactura.reduce(function (total, item) {
+      return total + parseFloat(item.iva);
+    }, 0);
+    this.total = this.detallefactura.reduce(function (total, item) {
+      return total + parseFloat(item.total);
+    }, 0);
   }), _defineProperty(_methods, "cambiarCantidad", function cambiarCantidad(detalle) {
     var index = this.detallefactura.indexOf(detalle);
     var precio = this.detallefactura[index].precio_prod;
@@ -51610,6 +51607,7 @@ var app = new Vue({
     this.detallefactura[index].neto = neto;
     this.detallefactura[index].iva = subiva;
     this.detallefactura[index].total = total;
+    this.calcular();
   }), _defineProperty(_methods, "getNumfactV", function getNumfactV() {
     var _this101 = this;
 
@@ -51664,7 +51662,7 @@ var app = new Vue({
     this.guardaritem(this.factura.num_fact);
   }), _defineProperty(_methods, "guardaritem", function guardaritem(id_fact) {
     var urlFacturaDetalle = 'storeFacturaDetalle/' + id_fact;
-    /*axios.post(urlFacturaDetalle, {       
+    /*axios.post(urlFacturaDetalle, {
         detallesFactura: this.detallefactura
     }).then((response) => {
         this.testArray = response.data;

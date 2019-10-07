@@ -570,8 +570,6 @@ const app = new Vue({
         },
         facturasCompra: [],
         facturasVenta: [],
-        detallefactura: {},
-        detallesFactura: [],
         newFactura: {
             'id_formapago': '',
             'id_per': '',
@@ -616,9 +614,13 @@ const app = new Vue({
             'subice_fact': '',
             'total_fact': ''
         },
+        detallefactura: [],
+        detallesFactura: {},
         existeDF: '',
         numFactv: '',
         errors: [],
+        buscar_id_cat: '',
+        buscar_id_marca:'',
         buscar_cat: '',
         buscar_cli: '0',
         buscar_prod: '',
@@ -632,6 +634,9 @@ const app = new Vue({
         },
         numregistros: 10,
         src: '',
+        subtotal:'',
+        subtotalIva:'',
+        total:'',
     },
     computed: {
         buscarCategoria: function() {
@@ -642,21 +647,6 @@ const app = new Vue({
         },
         buscarCliente: function() {
             return this.clientes.filter((cliente) => cliente.nombre_per.includes(this.buscar_cli) || cliente.apel_per.includes(this.buscar_cli) || cliente.doc_per.includes(this.buscar_cli) || cliente.organiz_per.includes(this.buscar_cli) || cliente.cod_cli.includes(this.buscar_cli));
-        },
-        subtotal: function() {
-            return this.detallefactura.reduce((total, item) => {
-                return total + parseFloat(item.neto);
-            }, 0);
-        },
-        subtotalIva: function() {
-            return this.detallefactura.reduce((total, item) => {
-                return total + parseFloat(item.iva)
-            }, 0);
-        },
-        total: function() {
-            return this.detallefactura.reduce((total, item) => {
-                return total + parseFloat(item.total);
-            }, 0);
         },
         fecha_act: function() {
             var hoy = new Date();
@@ -2373,6 +2363,7 @@ const app = new Vue({
         deletedetalleFact: function(detalle) {
             var index = this.detallefactura.indexOf(detalle);
             this.detallefactura.splice(index, 1);
+            this.calcular();
         },
         adddetalleFact: function(producto) {
             var IVA = 0;
@@ -2386,7 +2377,7 @@ const app = new Vue({
             var neto = parseFloat((cantidad * producto.precio_prod) - descuento).toFixed(2);
             var subiva = parseFloat(neto * IVA / 100).toFixed(2);
             var total = parseFloat(neto + subiva).toFixed(2);
-            this.detallesfactura.push({
+            this.detallefactura.push({
                 'id_prod': producto.id_prod,
                 'codigo_prod': producto.codigo_prod,
                 'cantidad': cantidad,
@@ -2400,6 +2391,19 @@ const app = new Vue({
             });
             $('#addProducto').modal('hide');
             this.buscar_prod = '';
+            this.calcular();
+
+        },
+        calcular: function(){
+            this.subtotal = this.detallefactura.reduce((total, item) => {
+                return total + parseFloat(item.neto);
+            }, 0);
+            this.subtotalIva = this.detallefactura.reduce((total, item) => {
+                return total + parseFloat(item.iva)
+            }, 0);
+            this.total = this.detallefactura.reduce((total, item) => {
+                return total + parseFloat(item.total);
+            }, 0);
         },
         cambiarCantidad: function(detalle) {
             var index = this.detallefactura.indexOf(detalle);
@@ -2418,6 +2422,7 @@ const app = new Vue({
             this.detallefactura[index].neto = neto;
             this.detallefactura[index].iva = subiva;
             this.detallefactura[index].total = total;
+            this.calcular();
         },
         getNumfactV: function() {
             var url = 'getNumFactVent';
@@ -2471,7 +2476,7 @@ const app = new Vue({
         },
         guardaritem: function(id_fact) {
             var urlFacturaDetalle = 'storeFacturaDetalle/' + id_fact;
-            /*axios.post(urlFacturaDetalle, {       
+            /*axios.post(urlFacturaDetalle, {
                 detallesFactura: this.detallefactura
             }).then((response) => {
                 this.testArray = response.data;
