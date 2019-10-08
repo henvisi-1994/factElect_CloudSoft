@@ -26,6 +26,7 @@ use App\TipoDocumento;
 use App\User;
 use App\Bodega;
 use App\Iva;
+use App\DetalleFactura;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Carbon\Carbon;
@@ -101,7 +102,7 @@ class AdminController extends Controller
      $descuentos = Descuento::get();
      $bodegas = Bodega::get();
      $roles = Roles::get();
-     
+
     return view('admin.configuracion',compact('categorias','paises','provincias','unidades','marcas','empresas','fechas','ciudades','tipoContribuyentes','identificaciones','descuentos','bodegas','empresas','roles'));
   }
   public function Categoria()
@@ -146,9 +147,9 @@ class AdminController extends Controller
      $fechas = Fecha_periodo::get();
      $param_docs = Param_Docs::get();
      $param_porc = Param_Porc::get();
-     
+
    return view('admin.contabilidad',compact('formularios','empresas','fechas','param_docs','param_porc'));
-  } 
+  }
   public function getCategoria()
   {
    $categorias = DB::table('categoria as c')
@@ -232,9 +233,9 @@ public function getUnidad()
     //Guardar Marca
      public function  guardarMarca(Request $request)
     {
-        
+
         $v =$this->validate(request(), [
-            
+
             'nomb_marca' => 'required',
             'observ_marca' => 'required',
             'estado_marca' => 'required',
@@ -275,7 +276,7 @@ public function getUnidad()
     }
     //Eliminar Marca
     public function  eliminarMarca($id)
-    { 
+    {
         $estado_marca= 'I';
         DB::table('marca')
             ->where('id_marca', $id)
@@ -287,7 +288,7 @@ public function getUnidad()
       public function  guardarUnidad(Request $request)
     {
         $v =$this->validate(request(), [
-            
+
             'nomb_unidad' => 'required',
             'observ_unidad' => 'required',
             'estado_unidad' => 'required',
@@ -328,7 +329,7 @@ public function getUnidad()
     }
         //Eliminar Unidad
     public function  eliminarUnidad($id)
-    { 
+    {
         $estado_unidad= 'I';
         DB::table('unidad')
             ->where('id_unidad', $id)
@@ -358,7 +359,7 @@ public function getUnidad()
     {
 
          $v =$this->validate(request(), [
-            
+
             'nomb_ciu' => 'required',
             'id_emp' => 'required',
             'id_fec' => 'required',
@@ -391,7 +392,7 @@ public function getUnidad()
             ->update(['id_emp' => $id_emp,'id_fec' => $id_fec,'nomb_ciu' => $nomb_ciu, 'estado_ciu' => $estado_ciu , 'fechaini_ciu' => $fechaini_ciu, 'fechafin_ciu' => $fechafin_ciu,'observ_ciu'=> $observ_ciu]
           );
         return;
-    }  
+    }
     public function getProveedor()
     {
        $proveedores = DB::table('proveedor as pro')
@@ -412,7 +413,7 @@ public function getUnidad()
     public function guardarProveedor(Request $request)
     {
       $v =$this->validate(request(), [
-            
+
             'id_emp' => 'required',
             'id_fec' => 'required',
             'cod_prov' => 'required',
@@ -423,13 +424,13 @@ public function getUnidad()
         {
           $proveedor = new Proveedor;
            $proveedor->create($request->all());
-          return ;       
+          return ;
         }
         else
         {
           return back()->withInput($request->all());
         }
-     
+
 
     }
     public function premodificarProveedor(Request $request,$id)
@@ -443,7 +444,7 @@ public function getUnidad()
     public function modificarProveedor(Request $request,$id)
     {
       $v =$this->validate(request(), [
-            
+
             'id_emp' => 'required',
             'id_fec' => 'required',
             'cod_prov' => 'required',
@@ -479,7 +480,7 @@ public function getUnidad()
                 ->update(['estado_prov' => $estado_prov]
               );
            return;
-          
+
     }
 //Persona
   public function Persona()
@@ -504,7 +505,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     public function  guardarPersona(Request $request)
     {
            $v =$this->validate(request(), [
-            
+
             'doc_per' => 'required | Numeric',
             'organiz_per' => 'required',
             'nombre_per' => 'required',
@@ -516,26 +517,26 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             'fono1_per' => 'required',
             'cel1_per' => 'required'
         ]);
- 
+
         if ($v)
         {
         $persona = new Persona();
         $persona->id_contrib=$request->input('id_contrib');
         $persona->id_ident=$request->input('id_ident');
-        $persona->id_ciu=$request->input('id_ciu'); 
-        $persona->doc_per=$request->input('doc_per'); 
-        $persona->organiz_per=$request->input('organiz_per'); 
-        $persona->nombre_per=$request->input('nombre_per'); 
-        $persona->apel_per=$request->input('apel_per'); 
-        $persona->direc_per=$request->input('direc_per'); 
-        $persona->fono1_per=$request->input('fono1_per'); 
-        $persona->fono2_per=$request->input('fono2_per'); 
-        $persona->cel1_per=$request->input('cel1_per'); 
-        $persona->cel2_per=$request->input('cel2_per'); 
-        $persona->fecnac_per=$request->input('fecnac_per'); 
-        $persona->correo_per=$request->input('correo_per'); 
-        $persona->estado_per=$request->input('estado_per'); 
-        $persona->fechaini_per=$request->input('fechaini_per'); 
+        $persona->id_ciu=$request->input('id_ciu');
+        $persona->doc_per=$request->input('doc_per');
+        $persona->organiz_per=$request->input('organiz_per');
+        $persona->nombre_per=$request->input('nombre_per');
+        $persona->apel_per=$request->input('apel_per');
+        $persona->direc_per=$request->input('direc_per');
+        $persona->fono1_per=$request->input('fono1_per');
+        $persona->fono2_per=$request->input('fono2_per');
+        $persona->cel1_per=$request->input('cel1_per');
+        $persona->cel2_per=$request->input('cel2_per');
+        $persona->fecnac_per=$request->input('fecnac_per');
+        $persona->correo_per=$request->input('correo_per');
+        $persona->estado_per=$request->input('estado_per');
+        $persona->fechaini_per=$request->input('fechaini_per');
         $persona->fechafin_per=$request->input('fechafin_per');
         $persona->save();
         $persona_ced =Persona::where('doc_per',$persona->doc_per)->first();
@@ -561,7 +562,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     public function  modificarPersona(Request $request,$id)
     {
        $v =$this->validate(request(), [
-            
+
             'doc_per' => 'required | Numeric',
             'organiz_per' => 'required',
             'nombre_per' => 'required',
@@ -573,7 +574,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             'fono1_per' => 'required',
             'cel1_per' => 'required'
         ]);
- 
+
         if ($v)
         {
         $id_contrib =  $request->input('id_contrib');
@@ -625,9 +626,9 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar TipoContribuyente
      public function  guardarTipoContribuyente(Request $request)
     {
-        
+
         $v =$this->validate(request(), [
-            
+
             'nomb_contrib' => 'required',
             'obser_contrib' => 'required',
             'estado_contrib' => 'required',
@@ -656,7 +657,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     {
 
        $v =$this->validate(request(), [
-            
+
             'nomb_contrib' => 'required',
             'obser_contrib' => 'required',
             'estado_contrib' => 'required',
@@ -683,7 +684,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
     //EliminarTipoContribuyente
     public function  eliminarTipoContribuyente($id)
-    { 
+    {
         $estado_contrib= 'I';
         DB::table('tip_contrib')
             ->where('id_contrib', $id)
@@ -706,9 +707,9 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar Identificacion
      public function  guardarIdentificacion(Request $request)
     {
-         
+
         $v =$this->validate(request(), [
-            
+
             'sri_ident' => 'required',
             'descrip_ident' => 'required',
             'observ_ident' => 'required',
@@ -736,7 +737,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     public function  modificarIdentificacion(Request $request,$id)
     {
       $v =$this->validate(request(), [
-            
+
             'sri_ident' => 'required',
             'descrip_ident' => 'required',
             'observ_ident' => 'required',
@@ -764,7 +765,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
      //Eliminar Unidad
     public function  eliminarIdentificacion($id)
-    { 
+    {
         $estado_ident= 'I';
         DB::table('identificacion')
             ->where('id_ident', $id)
@@ -928,12 +929,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
       $fechafin_prod =  $request->input('fechafin_prod');
        DB::table('producto')
             ->where('id_prod', $id)
-            ->update(  ['id_emp' => $id_emp,'id_fec' => $id_fec,'id_bod'=> $id_bod,'codigo_prod' => $codigo_prod,'codbarra_prod' => $codbarra_prod , 
+            ->update(  ['id_emp' => $id_emp,'id_fec' => $id_fec,'id_bod'=> $id_bod,'codigo_prod' => $codigo_prod,'codbarra_prod' => $codbarra_prod ,
   'descripcion_prod' => $descripcion_prod ,'id_marca' => $id_marca,'id_cat'=> $id_cat,'present_prod' => $present_prod ,  'precio_prod' => $precio_prod ,
   'ubicacion_prod' => $ubicacion_prod ,  'stockmin_prod' => $stockmin_prod ,  'stockmax_prod' => $stockmax_prod ,'fechaing_prod'  => $fechaing_prod ,  'fechaelab_prod' => $fechaelab_prod ,'fechacad_prod' => $fechacad_prod ,'aplicaiva_prod' => $aplicaiva_prod,'aplicaice_prod' => $aplicaice_prod,'util_prod' => $util_prod ,  'comision_prod' => $comision_prod,'imagen_prod' => $imagen_prod ,
   'observ_prod' => $observ_prod ,'estado_prod' => $estado_prod , 'fechaini_prod' => $fechaini_prod ,'fechafin_prod' => $fechafin_prod]
           );
-            return ;     
+            return ;
           }
           else
       {
@@ -949,12 +950,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
           );
         return;
     }
-    
+
     public function getIdentificacion()
     {
         $identificacion = Identificaciones::get();
         return $identificacion;
-        
+
     }
 
     public function getTipoContribuyente()
@@ -996,9 +997,9 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar Bodega
      public function  guardarBodega(Request $request)
     {
-        
+
         $v =$this->validate(request(), [
-            
+
             'nombre_bod' => 'required',
             'direcc_bod' => 'required',
             'telef_bod' => 'required',
@@ -1036,7 +1037,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     {
 
        $v =$this->validate(request(), [
-            
+
            'nombre_bod' => 'required',
             'direcc_bod' => 'required',
             'telef_bod' => 'required',
@@ -1072,7 +1073,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
     //EliminarBodega
     public function  eliminarBodega($id)
-    { 
+    {
         $estado_bod= 'I';
         DB::table('bodega')
             ->where('id_bod', $id)
@@ -1110,12 +1111,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar Pais
      public function  guardarPais(Request $request)
     {
-        
+
         $v =$this->validate(request(), [
-            
+
             'nomb_pais' => 'required',
             'estado_pais' => 'required'
-            
+
         ]);
         if ($v)
         {
@@ -1136,7 +1137,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     {
 
        $v =$this->validate(request(), [
-            
+
             'nomb_pais' => 'required',
             'estado_pais' => 'required'
         ]);
@@ -1157,7 +1158,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
     //EliminarPais
     public function  eliminarPais($id)
-    { 
+    {
         $estado_pais= 'I';
         DB::table('pais')
             ->where('id_pais', $id)
@@ -1189,12 +1190,12 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar Provincia
      public function  guardarProvincia(Request $request)
     {
-        
+
          $v =$this->validate(request(), [
-            
+
             'nomb_prov' => 'required',
             'estado_prov' => 'required'
-            
+
         ]);
         if ($v)
         {
@@ -1216,7 +1217,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     {
 
        $v =$this->validate(request(), [
-            
+
             'nomb_prov' => 'required',
             'estado_prov' => 'required'
         ]);
@@ -1238,7 +1239,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
     //EliminarProvincia
     public function  eliminarProvincia($id)
-    { 
+    {
         $estado_prov= 'I';
         DB::table('provincia')
             ->where('id_prov', $id)
@@ -1280,7 +1281,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
       {
         $empresa= new Empresa();
         $empresa->create($request->all());
-       return ;     
+       return ;
           }
           else
       {
@@ -1319,11 +1320,11 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         $fechafin_emp  =  $request->input('fechafin_emp');
         DB::table('empresa')
             ->where('id_emp', $id)
-            ->update(  ['id_ciu' => $id_ciu,'totestab_emp' => $totestab_emp,'rucempresa_emp' => $rucempresa_emp,'razon_emp' => $razon_emp , 
+            ->update(  ['id_ciu' => $id_ciu,'totestab_emp' => $totestab_emp,'rucempresa_emp' => $rucempresa_emp,'razon_emp' => $razon_emp ,
   'nombre_emp' => $nombre_emp ,'apellido_emp' => $apellido_emp,'contacto_emp' => $contacto_emp ,  'direcc_emp' => $direcc_emp ,
   'telefono_emp' => $telefono_emp ,  'celular_emp' => $celular_emp ,  'fax_emp' => $fax_emp ,'email_emp'  => $email_emp ,  'estado_emp' => $estado_emp ,'contador_emp' => $contador_emp ,'tipcontrib_emp' => $tipcontrib_emp,'fechaini_emp' => $fechaini_emp,'fechafin_emp' => $fechafin_emp ,  'comision_prod' => $comision_prod]
           );
-         return ;     
+         return ;
           }
           else
       {
@@ -1358,7 +1359,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
       {
         $roles= new Roles();
         $roles->create($request->all());
-       return ;     
+       return ;
           }
           else
       {
@@ -1379,13 +1380,13 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         $estado_rol  =  $request->input('estado_rol');
         $fechaini_rol  =  $request->input('fechaini_rol');
         $fechafin_rol  =  $request->input('fechafin_rol');
-       
+
         DB::table('roles')
             ->where('id_rol', $id)
-            ->update(  ['id_emp' => $id_emp,'id_fec' => $id_fec,'nomb_rol' => $nomb_rol,'observ_rol' => $observ_rol , 
+            ->update(  ['id_emp' => $id_emp,'id_fec' => $id_fec,'nomb_rol' => $nomb_rol,'observ_rol' => $observ_rol ,
   'estado_rol' => $estado_rol ,'fechaini_rol' => $fechaini_rol,'fechafin_rol' => $fechafin_rol]
           );
-         return ;     
+         return ;
           }
           else
       {
@@ -1418,9 +1419,9 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar Cliente
      public function  guardarCliente(Request $request)
     {
-        
+
         $v =$this->validate(request(), [
-            
+
             'cod_cli' => 'required',
             'observ_cli' => 'required',
             'estado_cli' => 'required',
@@ -1452,7 +1453,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     {
 
        $v =$this->validate(request(), [
-            
+
            'cod_cli' => 'required',
             'observ_cli' => 'required',
             'estado_cli' => 'required',
@@ -1469,7 +1470,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
             $estado_cli=$request->input('estado_cli');
             $fechaini_cli=$request->input('fechaini_cli');
             $fechafin_cli=$request->input('fechafin_cli');
-            
+
             DB::table('cliente')
             ->where('id_cli', $id)
             ->update(['cod_cli' => $cod_cli, 'observ_cli' => $observ_cli , 'estado_cli' => $estado_cli, 'fechaini_cli' => $fechaini_cli,'fechafin_cli'=> $fechafin_cli,'id_emp'=> $id_emp,'id_fec'=> $id_fec,'id_per'=>$id_per]
@@ -1483,7 +1484,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
     //EliminarCliente
     public function  eliminarCliente($id)
-    { 
+    {
         $estado_cli= 'I';
         DB::table('cliente')
             ->where('id_cli', $id)
@@ -1522,9 +1523,9 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         //Guardar Descuento
      public function  guardarDescuento(Request $request)
     {
-        
+
         $v =$this->validate(request(), [
-            
+
             'nomb_desc' => 'required',
             'observ_desc' => 'required',
             'estado_desc' => 'required',
@@ -1555,7 +1556,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     {
 
        $v =$this->validate(request(), [
-            
+
             'nomb_desc' => 'required',
             'observ_desc' => 'required',
             'estado_desc' => 'required',
@@ -1584,7 +1585,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
     }
     //EliminarDescuento
     public function  eliminarDescuento($id)
-    { 
+    {
         $estado_desc= 'I';
         DB::table('descuento')
             ->where('id_desc', $id)
@@ -1623,7 +1624,7 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
       {
         $formulario= new Formulario();
         $formulario->create($request->all());
-       return ;     
+       return ;
           }
           else
       {
@@ -1645,13 +1646,13 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
         $estado_codform  =  $request->input('estado_codform');
         $fechaini_codform  =  $request->input('fechaini_codform');
         $fechafin_codform  =  $request->input('fechafin_codform');
-       
+
         DB::table('codformulario')
             ->where('id_codform', $id)
-            ->update(  ['id_padcodform' => $id_padcodform,'id_emp' => $id_emp,'nomb_codform' => $nomb_codform,'observ_codform' => $observ_codform , 
+            ->update(  ['id_padcodform' => $id_padcodform,'id_emp' => $id_emp,'nomb_codform' => $nomb_codform,'observ_codform' => $observ_codform ,
   'estado_codform' => $estado_codform ,'fechaini_codform' => $fechaini_codform,'fechafin_codform' => $fechafin_codform]
           );
-         return ;     
+         return ;
           }
           else
       {
@@ -1686,7 +1687,7 @@ public function getFormaPago()
       {
         $formulario= new FormaPago();
         $formulario->create($request->all());
-       return ;     
+       return ;
           }
           else
       {
@@ -1707,13 +1708,13 @@ public function getFormaPago()
         $estado_formapago  =  $request->input('estado_formapago');
         $fechaini_formapago  =  $request->input('fechaini_formapago');
         $fechafin_formapago  =  $request->input('fechafin_formapago');
-       
+
         DB::table('formapago')
             ->where('id_formapago', $id)
-            ->update(  ['id_emp' => $id_emp,'nomb_formapago' => $nomb_formapago,'observ_formapago' => $observ_formapago , 
+            ->update(  ['id_emp' => $id_emp,'nomb_formapago' => $nomb_formapago,'observ_formapago' => $observ_formapago ,
   'estado_formapago' => $estado_formapago ,'fechaini_formapago' => $fechaini_formapago,'fechafin_formapago' => $fechafin_formapago]
           );
-         return ;     
+         return ;
           }
           else
       {
@@ -1746,9 +1747,9 @@ public function getFormaPago()
         //Guardar Param_docs
      public function  guardarParam_Docs(Request $request)
     {
-        
+
         $v =$this->validate(request(), [
-            
+
             'nomb_param_docs' => 'required',
             'observ_param_docs' => 'required',
             'estado_param_docs' => 'required',
@@ -1779,7 +1780,7 @@ public function getFormaPago()
     {
 
        $v =$this->validate(request(), [
-            
+
             'nomb_param_docs' => 'required',
             'observ_param_docs' => 'required',
             'estado_param_docs' => 'required',
@@ -1808,7 +1809,7 @@ public function getFormaPago()
     }
     //EliminarParamDOcs
     public function  eliminarParam_Docs($id)
-    { 
+    {
         $estado_param_docs= 'I';
         DB::table('param_docs')
             ->where('id_param_docs', $id)
@@ -1844,9 +1845,9 @@ public function getFormaPago()
         //Guardar Param_Porc
      public function  guardarParam_Porc(Request $request)
     {
-        
+
         $v =$this->validate(request(), [
-            
+
             'nomb_param_porc' => 'required',
             'observ_param_porc' => 'required',
             'estado_param_porc' => 'required',
@@ -1877,7 +1878,7 @@ public function getFormaPago()
     {
 
        $v =$this->validate(request(), [
-            
+
             'nomb_param_porc' => 'required',
             'observ_param_porc' => 'required',
             'estado_param_porc' => 'required',
@@ -1906,7 +1907,7 @@ public function getFormaPago()
     }
     //EliminarParam_Porc
     public function  eliminarParam_Porc($id)
-    { 
+    {
         $estado_param_porc= 'I';
         DB::table('param_porc')
             ->where('id_param_porc', $id)
@@ -1942,7 +1943,7 @@ public function getPeriodo()
       {
         $periodo= new Fecha_periodo();
         $periodo->create($request->all());
-       return ;     
+       return ;
           }
           else
       {
@@ -1962,13 +1963,13 @@ public function getPeriodo()
         $estado_fec  =  $request->input('estado_fec');
         $fechaini_fec  =  $request->input('fechaini_fec');
         $fechafin_fec  =  $request->input('fechafin_fec');
-       
+
         DB::table('fecha_periodo')
             ->where('id_fec', $id)
             ->update(  ['nomb_fec' => $nomb_fec,'observ_fec' => $observ_fec , 'mesidentif_fec' => $mesidentif_fec,
   'estado_fec' => $estado_fec ,'fechaini_fec' => $fechaini_fec,'fechafin_fec' => $fechafin_fec]
           );
-         return ;     
+         return ;
           }
           else
       {
@@ -2001,7 +2002,7 @@ public function getPeriodo()
       {
         $periodo= new TipoDocumento();
         $periodo->create($request->all());
-       return ;     
+       return ;
           }
           else
       {
@@ -2022,13 +2023,13 @@ public function getPeriodo()
         $estado_doc  =  $request->input('estado_doc');
         $fechaini_doc  =  $request->input('fechaini_doc');
         $fechafin_doc  =  $request->input('fechafin_doc');
-       
+
         DB::table('tipo_docum')
             ->where('id_doc', $id)
             ->update(  ['nomb_doc' => $nomb_doc,'observ_doc' => $observ_doc , 'id_emp' => $id_emp, 'id_fec' => $id_fec,
   'estado_doc' => $estado_doc ,'fechaini_doc' => $fechaini_doc,'fechafin_doc' => $fechafin_doc]
           );
-         return ;     
+         return ;
           }
           else
       {
@@ -2074,7 +2075,7 @@ public function getPeriodo()
         $usuario->fechaini_usu=  $request->input('fechaini_usu');
         $usuario->fechafin_usu=  $request->input('fechafin_usu');
         $usuario->save();
-       return ;     
+       return ;
           }
           else
       {
@@ -2097,12 +2098,12 @@ public function getPeriodo()
         $estado_usu  =  $request->input('estado_usu');
         $fechaini_usu  =  $request->input('fechaini_usu');
         $fechafin_usu  =  $request->input('fechafin_usu');
-       
+
         DB::table('usuario')
             ->where('id_usu', $id)
             ->update(  ['id_rol' => $id_rol,'id_emp' => $id_emp , 'id_fec' => $id_fec, 'nomb_usu' => $nomb_usu,'observ_usu' => $observ_usu,'estado_usu' => $estado_usu,'fechaini_usu' => $fechaini_usu,'fechafin_usu' => $fechafin_usu]
           );
-         return ;     
+         return ;
           }
           else
       {
@@ -2152,7 +2153,7 @@ public function getPeriodo()
         $factura->subice_fact=  $request->input('subice_fact');
         $factura->total_fact=  $request->input('total_fact');
        $factura->save();
-        return;     
+        return;
           }
           else
       {
@@ -2207,26 +2208,18 @@ public function getPeriodo()
     {
        $idFactura = DB::table('factura as fac')
         ->select ('id_fact')
-        ->where('num_fact','=',$num_fact)
-        ->get();
-       $detalleFactura = $request->get('detallefactura');
-     /*foreach ($detalleFactura as $detalle) {
-      $this->GuardarItem($detalleFactura,$idFactura);
-     }*/
-     $first = head($detalleFactura);
-     return $first;
-    }
-    public function GuardarItem($detalleFactura,$id_fact)
-    {
-       DetalleFactura::create(['id_fact'=>$id_fact,
-        'id_prod'=>$detalleFactura->id_prod,
-         'cantidad'=>$detalleFactura->cantidad, 
-         'descripcion'=>$detalleFactura->descripcion,
-         'precio_prod'=>$detalleFactura->precio_prod,
-         'descuento'=>$detalleFactura->descuento, 
-        'neto'=>$detalleFactura->neto, 
-        'iva'=>$detalleFactura->iva,
-        'total'=>$detalleFactura->total]);
-       return ;
+        ->where('num_fact','=',$num_fact)->first();
+        $detalleFact = new DetalleFactura();
+        $detalleFact->id_fact=$idFactura->id_fact;
+        $detalleFact->id_prod=$request->input('id_prod');
+        $detalleFact->cantidad=$request->input('cantidad');
+        $detalleFact->descripcion=$request->input('descripcion');
+        $detalleFact->precio_prod=$request->input('precio_prod');
+        $detalleFact->descuento=$request->input('descuento');
+        $detalleFact->neto=$request->input('neto');
+        $detalleFact->iva= $request->input('iva');
+        $detalleFact->total=$request->input('total');
+        $detalleFact->save();
+        return ;
     }
 }

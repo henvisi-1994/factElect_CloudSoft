@@ -49027,12 +49027,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 var app = new Vue({
   el: '#crud',
   created: function created() {
@@ -51656,28 +51650,22 @@ var app = new Vue({
 
     this.CalcularFacturaVenta();
     var urlFactV = 'storeFactura';
-    axios.post(urlFactV, this.factura).then(function (response) {})["catch"](function (error) {
+    axios.post(urlFactV, this.factura).then(function (response) {
+      _this102.guardaritem(_this102.factura.num_fact);
+
+      window.location = "/Ventas";
+    })["catch"](function (error) {
       _this102.errors = error.response.data;
     });
-    this.guardaritem(this.factura.num_fact);
   }), _defineProperty(_methods, "guardaritem", function guardaritem(id_fact) {
-    var urlFacturaDetalle = 'storeFacturaDetalle/' + id_fact;
-    /*axios.post(urlFacturaDetalle, {
-        detallesFactura: this.detallefactura
-    }).then((response) => {
-        this.testArray = response.data;
-        toastr.success('Se ha guardado la Factura Exitosamente');
-    }).catch(error => {
-        this.errors = error.response.data;
-    });*/
+    var _this103 = this;
 
-    axios({
-      method: 'post',
-      url: urlFacturaDetalle,
-      data: {
-        detallesFactura: this.detallesFactura
-      }
-    });
+    var urlFacturaDetalle = 'storeFacturaDetalle/' + id_fact;
+    this.detallefactura.reduce(function (total, item) {
+      axios.post(urlFacturaDetalle, item).then(function (response) {})["catch"](function (error) {
+        _this103.errors = error.response.data;
+      });
+    }, 0);
   }), _methods)
 });
 
