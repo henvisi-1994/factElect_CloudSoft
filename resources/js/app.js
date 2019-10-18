@@ -2361,36 +2361,53 @@ const app = new Vue({
             this.detallefactura.splice(index, 1);
             this.calcular();
         },
-        adddetalleFact: function(producto) {
-            var IVA = 0;
+        adddetalleFact: function (producto) {
+            var IVA = this.PorcentajeIVA(producto);
             var cantidad = this.cantidadP;
-            if (producto.aplicaiva_prod = 'S') {
-                IVA = this.iva[0].porcentaje_iva;
-            } else if (producto.aplicaiva_prod = 'N') {
-                IVA = 0;
-            }
-            var descuento = parseFloat((cantidad * producto.precio_prod) * 5 / 100).toFixed(2);
-            var neto = parseFloat((cantidad * producto.precio_prod) - descuento).toFixed(2);
-            var subiva = parseFloat(neto * IVA / 100).toFixed(2);
-            var total = parseFloat(neto + subiva).toFixed(2);
             this.detallefactura.push({
                 'id_prod': producto.id_prod,
                 'codigo_prod': producto.codigo_prod,
                 'cantidad': cantidad,
                 'descripcion': producto.descripcion_prod,
                 'precio_prod': producto.precio_prod,
-                'descuento': descuento,
+                'descuento': this.calcularItem(producto,cantidad,IVA)[0].descuento,
                 'aplicaiva_prod': producto.aplicaiva_prod,
-                'neto': neto,
-                'iva': subiva,
-                'total': total
+                'neto': this.calcularItem(producto,cantidad,IVA)[0].neto,
+                'iva': this.calcularItem(producto,cantidad,IVA)[0].subiva,
+                'total': this.calcularItem(producto,cantidad,IVA)[0].total
             });
             $('#addProducto').modal('hide');
             this.buscar_prod = '';
-            this.calcular();
+            this.calcularTotalesFact();
 
         },
-        calcular: function(){
+        PorcentajeIVA: function(producto){
+            var IVA =0;
+            if (producto.aplicaiva_prod = 'S') {
+                if (this.iva[0].vigente = 'S') {
+                    IVA = this.iva[0].porcentaje_iva;
+                }
+
+            } else if (producto.aplicaiva_prod = 'N') {
+                IVA = 0;
+            }
+            return IVA;
+        },
+        calcularItem: function(producto,cantidad,IVA){
+            var calculoItem = [];
+            var descuento = 0.00;
+            var neto =(cantidad * producto.precio_prod) - descuento;
+            var subiva =neto * IVA / 100;
+            var total = neto + subiva;
+            calculoItem.push({
+                'descuento': descuento,
+                'neto':parseFloat(neto).toFixed(2),
+                'subiva':parseFloat(subiva).toFixed(2),
+                'total':parseFloat(total).toFixed(2),
+            })
+            return calculoItem;
+        },
+        calcularTotalesFact: function () {
             this.subtotal = this.detallefactura.reduce((total, item) => {
                 return total + parseFloat(item.neto);
             }, 0);
@@ -2401,24 +2418,15 @@ const app = new Vue({
                 return total + parseFloat(item.total);
             }, 0);
         },
-        cambiarCantidad: function(detalle) {
+        cambiarCantidad: function (detalle) {
             var index = this.detallefactura.indexOf(detalle);
-            var precio = this.detallefactura[index].precio_prod
-            var cantidad = this.detallefactura[index].cantidad;
-            var descuento = parseFloat((cantidad * precio) - 5 / 100).toFixed(2);
-            var IVA = 0;
-            if (this.detallefactura[index].aplicaiva_prod = 'S') {
-                IVA = this.iva[0].porcentaje_iva;
-            } else if (this.detallefactura[index].aplicaiva_prod = 'N') {
-                IVA = 0;
-            }
-            var neto = parseFloat((cantidad * precio) - descuento).toFixed(2);
-            var subiva = parseFloat(neto * IVA / 100).toFixed(2);
-            var total = parseFloat(neto + subiva).toFixed(2);
-            this.detallefactura[index].neto = neto;
-            this.detallefactura[index].iva = subiva;
-            this.detallefactura[index].total = total;
-            this.calcular();
+            var producto =this.detallefactura[index];
+            var cantidad = producto.cantidad;
+            var IVA = this.PorcentajeIVA(producto);
+            this.detallefactura[index].neto = this.calcularItem(producto,cantidad,IVA)[0].neto;
+            this.detallefactura[index].iva = this.calcularItem(producto,cantidad,IVA)[0].subiva;
+            this.detallefactura[index].total = this.calcularItem(producto,cantidad,IVA)[0].total;
+            this.calcularTotalesFact();
         },
         getNumfactV: function() {
             var url = 'getNumFactVent';
