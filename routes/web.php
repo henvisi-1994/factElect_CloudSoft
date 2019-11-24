@@ -91,7 +91,7 @@ Route::post('storePeriodo','PeriodoController@guardarPeriodo');
 Route::post('storeTipoDocumento','TipoDocumentoController@guardarTipoDocumento');
 Route::post('storeUsuario','UserController@guardarUsuario');
 Route::post('storeFactura','FacturaController@guardarFacturaVenta');
-Route::post('storeFacturaDetalle/{num_fact}','FacturaController@gurdarDetalleFacturaVenta');
+Route::post('storeFacturaDetalle/{num_fact}','FacturaController@guardarDetalleFacturaVenta');
 //Ruta Modificar
 Route::post('preguardarFacturaVenta','FacturaController@preguardarFacturaVenta');
 Route::post('updateCategoria/{id}','CategoriaController@modificarCategoria');
