@@ -15,7 +15,7 @@
             </div>
             <div class="modal-body">
                 <div class="card" style="width: 18rem;">
-                    <img alt="Card image cap" class="card-img-top"  v-bind:src="src">
+                    <img alt="Card image cap" class="imagenproducto"  v-bind:src="src">
                         <div class="card-body">
                             <h5 class="card-title">
                                 @{{fillProducto.codigo_prod}}

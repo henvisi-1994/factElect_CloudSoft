@@ -50,7 +50,26 @@
                             @{{identificacion.observ_ident}}
                         </td>
                         <td>
-                            @{{identificacion.estado_ident}}
+                            <div v-if="identificacion.estado_ident == 'A'">
+                                    <span class="label label-success">
+                                        Activo
+                                    </span>
+                                </div>
+                                <div v-else-if="identificacion.estado_ident == 'P'">
+                                    <span class="label label-warning">
+                                        Pendiente
+                                    </span>
+                                </div>
+                                <div v-else-if="identificacion.estado_ident == 'I'">
+                                    <span class="label label-danger">
+                                        Inactivo
+                                    </span>
+                                </div>
+                                <div v-else="">
+                                    <span class="label label-warning">
+                                        En proceso
+                                    </span>
+                                </div>
                         </td>
                         <td>
                             @{{identificacion.fechaini_ident}}

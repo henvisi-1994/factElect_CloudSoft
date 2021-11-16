@@ -9,7 +9,7 @@
     <!-- /.box-header -->
     <div class="box-body">
         <div class="card-body d-flex justify-content-between align-items-center">
-            <a class="btn btn-primary btn-sm" data-target="#crearMarca" data-toggle="modal">
+            <a class="btn btn-primary btn-sm" data-target="#crearEmpresa" data-toggle="modal">
                 Crear
             </a>
         </div>
@@ -17,6 +17,9 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                                                <th>
+                                ID
+                            </th>
                         <th>
                                 Nombre
                             </th>
@@ -45,7 +48,7 @@
                                 Estado
                             </th>
                             <th>
-                                Total de Establecimientos    
+                                Total de Establecimientos
                             </th>
                             <th>
                                 Fecha Inicio
@@ -60,6 +63,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="empresa in empresas">
+                        <td>
+                                @{{empresa.id_emp}}
+                            </td>
                         <td>
                                 @{{empresa.nombre_emp}}
                             </td>

@@ -6,7 +6,7 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body" style="overflow-x: auto">
-        <div class="card-body d-flex justify-content-between align-items-center">
+        <div class="card-body d-flex justify-content-between align-items-ce00000nter">
             <a class="btn btn-primary btn-sm" data-target="#crearProducto" data-toggle="modal" href="#">
                 Crear
             </a>

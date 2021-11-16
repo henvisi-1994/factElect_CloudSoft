@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Factura;
+use App\DetalleFactura;
 use App\Fecha_periodo;
 use App\FormaPago;
 use App\Marca;
@@ -140,5 +141,20 @@ class FacturaController extends Controller
                 ->orderByRaw('Month(fecha_emision_fact)ASC')
                 ->get();
         return $ventas;
+    }
+    public function guardarDetalleFacturaVenta (Request $request){
+        $detalle_factura= new DetalleFactura();
+        $detalle_factura->id_fact=  $request->input('id_fact');
+        $detalle_factura->id_prod=  $request->input('id_prod');
+        $detalle_factura->cantidad=  $request->input('cantidad');
+        $detalle_factura->descripcion=  $request->input('descripcion');
+        $detalle_factura->precio_prod=  $request->input('precio_prod');
+        $detalle_factura->descuento=  $request->input('descuento');
+        $detalle_factura->neto=  $request->input('neto');
+        $detalle_factura->iva=  $request->input('iva');
+        $detalle_factura->total=  $request->input('total');
+        $detalle_factura->tipo_fact=  $request->input('tipo_fact');
+       $detalle_factura->save();
+        return;
     }
 }

@@ -84,11 +84,11 @@
                                 @{{formapago.nomb_fec}}
                             </td>
                             <td>
-                                <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editformaPago(formapago)">
+                                <a class="pd-setting-ed btn btn-success" data-toggle="tooltip" href="#" title="Edit" v-on:click.prevent="editFormaPago(formapago)">
                                     <i aria-hidden="true" class="fa fa-pencil-square-o">
                                     </i>
                                 </a>
-                                <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deleteformaPago(formapago)">
+                                <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deleteFormaPago(formapago)">
                                     <i aria-hidden="true" class="fa fa-trash-o">
                                     </i>
                                 </a>

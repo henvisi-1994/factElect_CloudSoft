@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Empresa;
 
 class BodegaController extends Controller
 {
@@ -22,21 +23,21 @@ class BodegaController extends Controller
         $bodegas = Bodega::get();
         $empresas = Empresa::get();
         $fechas = Fecha_periodo::get();
-        $paises=Pais::get();
-        $provincias=Provincia::get();
+        $paises = Pais::get();
+        $provincias = Provincia::get();
         $ciudades = Ciudad::get();
-        return view('admin.Bodega.index',compact('bodegas','empresas','fechas','paises','provincias','ciudades'));
+        return view('admin.Bodega.index', compact('bodegas', 'empresas', 'fechas', 'paises', 'provincias', 'ciudades'));
     }
     public function CargarBodega()
     {
 
         return view('admin.Bodega.Crear');
     }
-        //Guardar Bodega
-     public function  guardarBodega(Request $request)
+    //Guardar Bodega
+    public function  guardarBodega(Request $request)
     {
 
-        $v =$this->validate(request(), [
+        $v = $this->validate(request(), [
 
             'nombre_bod' => 'required',
             'direcc_bod' => 'required',
@@ -47,36 +48,32 @@ class BodegaController extends Controller
             'fechaini_bod' => 'required',
             'fechafin_bod' => 'required'
         ]);
-        if ($v)
-        {
-            $bodegas= new Bodega();
-            $bodegas->id_ciu=$request->input('id_ciu');
-            $bodegas->id_pais=$request->input('id_pais');
-            $bodegas->id_prov=$request->input('id_prov');
-            $bodegas->nombre_bod=$request->input('nombre_bod');
-            $bodegas->direcc_bod=$request->input('direcc_bod');
-            $bodegas->telef_bod=$request->input('telef_bod');
-            $bodegas->cel_bod=$request->input('cel_bod');
-            $bodegas->estado_bod=$request->input('estado_bod');
-            $bodegas->nomb_contac_bod=$request->input('nomb_contac_bod');
-            $bodegas->fechaini_bod=$request->input('fechaini_bod');
-            $bodegas->fechafin_bod=$request->input('fechafin_bod');
+        if ($v) {
+            $bodegas = new Bodega();
+            $bodegas->id_ciu = $request->input('id_ciu');
+            $bodegas->id_pais = $request->input('id_pais');
+            $bodegas->id_prov = $request->input('id_prov');
+            $bodegas->nombre_bod = $request->input('nombre_bod');
+            $bodegas->direcc_bod = $request->input('direcc_bod');
+            $bodegas->telef_bod = $request->input('telef_bod');
+            $bodegas->cel_bod = $request->input('cel_bod');
+            $bodegas->estado_bod = $request->input('estado_bod');
+            $bodegas->nomb_contac_bod = $request->input('nomb_contac_bod');
+            $bodegas->fechaini_bod = $request->input('fechaini_bod');
+            $bodegas->fechafin_bod = $request->input('fechafin_bod');
             $bodegas->save();
             return;
+        } else {
+            return back()->withInput($request->all());
         }
-        else
-        {
-          return back()->withInput($request->all());
-        }
-
     }
-     //Modificar Bodega
-    public function  modificarBodega(Request $request,$id)
+    //Modificar Bodega
+    public function  modificarBodega(Request $request, $id)
     {
 
-       $v =$this->validate(request(), [
+        $v = $this->validate(request(), [
 
-           'nombre_bod' => 'required',
+            'nombre_bod' => 'required',
             'direcc_bod' => 'required',
             'telef_bod' => 'required',
             'cel_bod' => 'required',
@@ -85,51 +82,49 @@ class BodegaController extends Controller
             'fechaini_bod' => 'required',
             'fechafin_bod' => 'required'
         ]);
-        if ($v)
-        {
-            $id_ciu=$request->input('id_ciu');
-            $id_pais=$request->input('id_pais');
-            $id_prov=$request->input('id_prov');
-            $nombre_bod=$request->input('nombre_bod');
-            $direcc_bod=$request->input('direcc_bod');
-            $telef_bod=$request->input('telef_bod');
-            $cel_bod=$request->input('cel_bod');
-            $estado_bod=$request->input('estado_bod');
-            $nomb_contac_bod=$request->input('nomb_contac_bod');
-            $fechaini_bod=$request->input('fechaini_bod');
-            $fechafin_bod=$request->input('fechafin_bod');
+        if ($v) {
+            $id_ciu = $request->input('id_ciu');
+            $id_pais = $request->input('id_pais');
+            $id_prov = $request->input('id_prov');
+            $nombre_bod = $request->input('nombre_bod');
+            $direcc_bod = $request->input('direcc_bod');
+            $telef_bod = $request->input('telef_bod');
+            $cel_bod = $request->input('cel_bod');
+            $estado_bod = $request->input('estado_bod');
+            $nomb_contac_bod = $request->input('nomb_contac_bod');
+            $fechaini_bod = $request->input('fechaini_bod');
+            $fechafin_bod = $request->input('fechafin_bod');
             DB::table('bodega')
-            ->where('id_bod', $id)
-            ->update(['nombre_bod' => $nombre_bod, 'direcc_bod' => $direcc_bod , 'telef_bod' => $telef_bod, 'cel_bod' => $cel_bod,'estado_bod'=> $estado_bod,'nomb_contac_bod'=> $nomb_contac_bod,'fechaini_bod'=> $fechaini_bod,'fechafin_bod'=> $fechafin_bod,'id_ciu'=> $id_ciu,'id_pais'=> $id_pais,'id_prov'=> $id_prov]
-          );
-        return;
-      }
-      else
-        {
-          return back()->withInput($request->all());
+                ->where('id_bod', $id)
+                ->update(
+                    ['nombre_bod' => $nombre_bod, 'direcc_bod' => $direcc_bod, 'telef_bod' => $telef_bod, 'cel_bod' => $cel_bod, 'estado_bod' => $estado_bod, 'nomb_contac_bod' => $nomb_contac_bod, 'fechaini_bod' => $fechaini_bod, 'fechafin_bod' => $fechafin_bod, 'id_ciu' => $id_ciu, 'id_pais' => $id_pais, 'id_prov' => $id_prov]
+                );
+            return;
+        } else {
+            return back()->withInput($request->all());
         }
     }
     //EliminarBodega
     public function  eliminarBodega($id)
     {
-        $estado_bod= 'I';
+        $estado_bod = 'I';
         DB::table('bodega')
             ->where('id_bod', $id)
-            ->update(['estado_bod' => $estado_bod]
-          );
+            ->update(
+                ['estado_bod' => $estado_bod]
+            );
         return;
     }
 
 
-     public function getBodega()
+    public function getBodega()
     {
-      $bodegas = DB::table('bodega as b')
-      ->join('pais', 'b.id_pais', '=', 'pais.id_pais')
-      ->join('provincia', 'b.id_prov', '=', 'provincia.id_prov')
-      ->join('ciudad', 'b.id_ciu', '=', 'ciudad.id_ciu')
-      ->orderBy("b.id_bod","desc")
-      ->get();
-      return $bodegas;
+        $bodegas = DB::table('bodega as b')
+            ->join('pais', 'b.id_pais', '=', 'pais.id_pais')
+            ->join('provincia', 'b.id_prov', '=', 'provincia.id_prov')
+            ->join('ciudad', 'b.id_ciu', '=', 'ciudad.id_ciu')
+            ->orderBy("b.id_bod", "desc")
+            ->get();
+        return $bodegas;
     }
-
 }

@@ -44,8 +44,28 @@
                         <td>
                             @{{tipoContribuyente.obser_contrib}}
                         </td>
-                        <td>
-                            @{{tipoContribuyente.estado_contrib}}
+
+                         <td>
+                            <div v-if="tipoContribuyente.estado_contrib == 'A'">
+                                    <span class="label label-success">
+                                        Activo
+                                    </span>
+                                </div>
+                                <div v-else-if="tipoContribuyente.estado_contrib == 'P'">
+                                    <span class="label label-warning">
+                                        Pendiente
+                                    </span>
+                                </div>
+                                <div v-else-if="tipoContribuyente.estado_contrib == 'I'">
+                                    <span class="label label-danger">
+                                        Inactivo
+                                    </span>
+                                </div>
+                                <div v-else="">
+                                    <span class="label label-warning">
+                                        En proceso
+                                    </span>
+                                </div>
                         </td>
                         <td>
                             @{{tipoContribuyente.fechaini_contrib}}

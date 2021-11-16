@@ -82,7 +82,7 @@
                                     <i aria-hidden="true" class="fa fa-pencil-square-o">
                                     </i>
                                 </a>
-                                <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deletePerioso(periodo)">
+                                <a class="pd-setting-ed btn btn-danger" data-toggle="tooltip" href="#" title="Trash" v-on:click.prevent="deletePeriodo(periodo)">
                                     <i aria-hidden="true" class="fa fa-trash-o">
                                     </i>
                                 </a>

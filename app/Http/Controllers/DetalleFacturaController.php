@@ -26,7 +26,6 @@ class DetalleFacturaController extends Controller
         $detalleFact->neto=$request->input('neto');
         $detalleFact->iva= $request->input('iva');
         $detalleFact->total=$request->input('total');
-        $detalleFact->total='Venta';
         $detalleFact->save();
         return ;
     }
@@ -45,7 +44,6 @@ class DetalleFacturaController extends Controller
         $detalleFact->neto=$request->input('neto');
         $detalleFact->iva= $request->input('iva');
         $detalleFact->total=$request->input('total');
-        $detalleFact->total='Compra';
         $detalleFact->save();
         return ;
     }

@@ -15,6 +15,9 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
+                     <th>
+                        ID
+                    </th>
                     <th>
                         Nombre
                     </th>
@@ -47,6 +50,9 @@
             <tbody>
                 <tr v-for="ciudad in ciudades">
                     <td>
+                        @{{ciudad.id_ciu}}
+                    </td>
+                    <td>
                         @{{ciudad.nomb_ciu}}
                     </td>
                     <td>
@@ -56,8 +62,27 @@
                         @{{ciudad.nomb_prov}}
                     </td>
                     <td>
-                        @{{ciudad.estado_ciu}}
-                    </td>
+                            <div v-if="ciudad.estado_ciu == 'A'">
+                                    <span class="label label-success">
+                                        Activo
+                                    </span>
+                                </div>
+                                <div v-else-if="ciudad.estado_ciu == 'P'">
+                                    <span class="label label-warning">
+                                        Pendiente
+                                    </span>
+                                </div>
+                                <div v-else-if="ciudad.estado_ciu == 'I'">
+                                    <span class="label label-danger">
+                                        Inactivo
+                                    </span>
+                                </div>
+                                <div v-else="">
+                                    <span class="label label-warning">
+                                        En proceso
+                                    </span>
+                                </div>
+                        </td>
                     <td>
                         @{{ciudad.fechaini_ciu}}
                     </td>

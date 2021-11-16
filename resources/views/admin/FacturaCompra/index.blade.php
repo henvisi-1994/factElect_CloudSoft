@@ -5,11 +5,11 @@
         </h1>
     </div>
     <div class="box-body">
-         <!-- <div class="card-body d-flex justify-content-between align-items-center">
+         <div class="card-body d-flex justify-content-between align-items-center">
             <a class="btn btn-primary btn-sm"  data-target="#crearFormaPago" data-toggle="modal" href="#">
                 Crear
             </a>
-        </div> -->
+        </div>
         <br>
             <br>
                 <table class="table table-hover table-striped">
