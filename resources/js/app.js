@@ -2684,7 +2684,7 @@ const app = new Vue({
                 .post(urlFactV, this.factura)
                 .then(response => {
                     this.guardaritem(this.factura.num_fact);
-                    //window.location = "/Ventas";
+                    window.location = "/Ventas";
                 })
                 .catch(error => {
                     this.errors = error.response.data;

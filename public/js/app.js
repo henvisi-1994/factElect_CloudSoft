@@ -51770,8 +51770,9 @@ var app = new Vue({
       this.CalcularFacturaVenta();
       var urlFactV = "storeFactura";
       axios.post(urlFactV, this.factura).then(function (response) {
-        _this102.guardaritem(_this102.factura.num_fact); //window.location = "/Ventas";
+        _this102.guardaritem(_this102.factura.num_fact);
 
+        window.location = "/Ventas";
       })["catch"](function (error) {
         _this102.errors = error.response.data;
       });
