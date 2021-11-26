@@ -8,6 +8,7 @@ use App\DetalleFactura;
 use App\Fecha_periodo;
 use App\FormaPago;
 use App\Marca;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Carbon\Carbon;
@@ -156,5 +157,17 @@ class FacturaController extends Controller
         $detalle_factura->tipo_fact=  $request->input('tipo_fact');
        $detalle_factura->save();
         return;
+    }
+    public function leer_xml(){
+        /*$fullpath=__DIR__."\dfacturas\prueba.xml";
+        $factura = simplexml_load_file($fullpath);
+         // Ruta del archivo XML
+         return $factura;*/
+        $url = "http://factelect_cloudsoft.net/dfacturas/prueba.xml";
+        $xml = simplexml_load_file($url);
+
+        /* Aquí lo mejor es manipular la información de tu XML de acuerdo a lo que se mostrará en la vista */
+
+        return view('xml', ['xmlContent' => $xml]);
     }
 }

@@ -68,6 +68,8 @@ Route::get('getIvaActual', 'IvaController@ivaActual');
 Route::get('getNumFactVent', 'FacturaController@ultimonumFactVenta');
 Route::get('DVentas', 'FacturaController@getVentas');
 Route::get('DCompras', 'FacturaController@getCompras');
+Route::get('ObtenerFactura', 'FacturaController@leer_xml');
+
 //Ruta Guardar
 Route::post('storeCategoria', 'CategoriaController@guardarCategoria');
 Route::post('storeMarca', 'MarcaController@guardarMarca');

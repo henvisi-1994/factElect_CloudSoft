@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<autorizacion>
+  <estado>AUTORIZADO</estado>
+  <numeroAutorizacion>0811202101070209168700120010020000066510000197511</numeroAutorizacion>
+  <fechaAutorizacion class="fechaAutorizacion">08/11/2021 11:06:17</fechaAutorizacion>
+  <comprobante>
+<factura id="comprobante" version="1.1.0">
+  <infotributaria>
+    <ambiente>2</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>SANDRA DEL PILAR YAGUANA ZAMBRANO</razonSocial>
+    <nombreComercial>IMPRENTA PEÑALOZA</nombreComercial>
+    <ruc>0702091687001</ruc>
+    <claveAcceso>0811202101070209168700120010020000066510000197511</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>002</ptoEmi>
+    <secuencial>000006651</secuencial>
+    <dirMatriz>ROCAFUERTE S/N Y AVENIDA LAS PALMERAS ESQUINA</dirMatriz>
+    <regimenMicroempresas>CONTRIBUYENTE RÉGIMEN MICROEMPRESAS</regimenMicroempresas>
+    <agenteRetencion>1</agenteRetencion>
+  </infotributaria>
+  <infoFactura>
+    <fechaEmision>08/11/2021</fechaEmision>
+    <dirEstablecimiento>ROCAFUERTE S/N Y AVENIDA LAS PALMERAS ESQUINA</dirEstablecimiento>
+    <obligadoContabilidad>SI</obligadoContabilidad>
+    <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
+    <razonSocialComprador>SIMBAÑA CRUZ HENRY VINICIO</razonSocialComprador>
+    <identificacionComprador>0704265099001</identificacionComprador>
+    <direccionComprador>av.pichincha s/n y septima oeste</direccionComprador>
+    <totalSinImpuestos>8.81</totalSinImpuestos>
+    <totalDescuento>0.00</totalDescuento>
+    <totalConImpuestos>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>2</codigoPorcentaje>
+        <baseImponible>8.81</baseImponible>
+        <valor>1.06</valor>
+      </totalImpuesto>
+    </totalConImpuestos>
+    <propina>0.00</propina>
+    <importeTotal>9.87</importeTotal>
+    <moneda>DOLAR</moneda>
+    <pagos>
+      <pago>
+        <formaPago>01</formaPago>
+        <total>9.87</total>
+        <plazo>0</plazo>
+        <unidadTiempo>dias</unidadTiempo>
+      </pago>
+    </pagos>
+  </infoFactura>
+  <detalles>
+    <detalle>
+      <codigoPrincipal>ITEM 001</codigoPrincipal>
+      <descripcion>elaboracion de factura 50x2 1/2 of p.normal serie 001-001</descripcion>
+      <cantidad>1.00</cantidad>
+      <precioUnitario>8.8100</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>8.81</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>2</codigoPorcentaje>
+          <tarifa>12.00</tarifa>
+          <baseImponible>8.81</baseImponible>
+          <valor>1.06</valor>
+        </impuesto>
+      </impuestos>
+    </detalle>
+  </detalles>
+  <infoAdicional>
+    <campoAdicional nombre="Dirección">av.pichincha s/n y septima oeste</campoAdicional>
+    <campoAdicional nombre="Email">henvisi1994@gmail.com</campoAdicional>
+  </infoAdicional>
+</factura></comprobante>
+</autorizacion>
