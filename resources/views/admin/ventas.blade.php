@@ -11,16 +11,29 @@
         </ul>
     </div>
 <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade in active" id="nav-ventas">         
+    <div class="tab-pane fade in active" id="nav-ventas">
+                  <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+              <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+              <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+            </ul>
+            <div class="tab-content no-padding">
+              <!-- Morris chart - Sales -->
+              <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+              <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+            </div>
+          </div>
     </div>
     <div class="tab-pane fade" id="nav-producto">
-        @include('admin.Producto.index') 
+        @include('admin.Producto.index')
     </div>
     <div class="tab-pane fade" id="nav-cliente">
-        @include('admin.Cliente.index') 
+        @include('admin.Cliente.index')
     </div>
     <div class="tab-pane fade" id="nav-factura">
-       @include('admin.FacturaVenta.index') 
+       @include('admin.FacturaVenta.index')
     </div>
     <div class="tab-pane fade" id="nav-guiaRem">
     </div>
