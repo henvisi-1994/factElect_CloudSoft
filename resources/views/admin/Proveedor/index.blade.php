@@ -10,6 +10,9 @@
             <a class="btn btn-primary pull-left" data-target="#crearPersona" data-toggle="modal" href="#">
                 Crear
             </a>
+            &nbsp;&nbsp;<a class="btn btn-primary ml-6" data-target="#crearProveedor" data-toggle="modal" href="#">
+                Asignar Proveedor
+            </a>
             <br>
             </br>
         </div>

@@ -26,6 +26,21 @@
                         </div>
                         <div class="form-group">
                             <label>
+                                Persona
+                            </label>
+                            <select class="form-control" name="id_per" v-model="newProveedor.id_per">
+                                <option disabled="" selected="" value="none">
+                                    Selecione una Persona
+                                </option>
+                                @foreach($personas as $persona)
+                                <option value="{{$persona->id_per}}">
+                                    {{$persona->nombre_per}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
                                 Observacion
                             </label>
                             <textarea class="form-control" name="obser_prov" placeholder="Ingrese Observación" rows="3" v-model="newProveedor.obser_prov">

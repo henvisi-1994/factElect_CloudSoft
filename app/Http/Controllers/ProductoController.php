@@ -126,18 +126,18 @@ class ProductoController extends Controller
             'comision_prod' => 'required|numeric|between:0,9999.99',
         ]);
         if ($v) {
-            if (!empty($var)) {
-                list($type, $imageData) = explode(';', $request->imagen_prod);
-                list(, $extension) = explode('/', $type);
-                list(, $imageData) = explode(',', $imageData);
-                $name = $request->codbarra_prod . '.' . $extension;
-                $source = fopen($request->imagen_prod, 'r');
-                $destination = fopen(public_path() . '/img/producto/' . $name, 'w');
-                stream_copy_to_stream($source, $destination);
-                fclose($source);
-                fclose($destination);
+
+            list($type, $imageData) = explode(';', $request->imagen_prod);
+            list(, $extension) = explode('/', $type);
+            list(, $imageData) = explode(',', $imageData);
+            $name = $request->codbarra_prod . '.' . $extension;
+            $source = fopen($request->imagen_prod, 'r');
+            $destination = fopen(public_path() . '/img/producto/' . $name, 'w');
+            stream_copy_to_stream($source, $destination);
+            fclose($source);
+            fclose($destination);
                 $imagen_prod = $name;
-            }
+
             $id_emp  =  $request->input('id_emp');
             $id_fec =  $request->input('id_fec');
             $id_bod =  $request->input('id_bod');
@@ -158,7 +158,7 @@ class ProductoController extends Controller
             $aplicaice_prod =  $request->input('aplicaice_prod');
             $util_prod =  $request->input('util_prod');
             $comision_prod =  $request->input('comision_prod');
-            $imagen_prod =  $request->input('imagen_prod');
+            $imagen_prod =  $name;
             $estado_prod =  $request->input('estado_prod');
             $observ_prod =  $request->input('observ_prod');
             $fechaini_prod =  $request->input('fechaini_prod');

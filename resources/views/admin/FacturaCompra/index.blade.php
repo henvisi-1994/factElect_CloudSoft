@@ -6,9 +6,18 @@
     </div>
     <div class="box-body">
          <div class="card-body d-flex justify-content-between align-items-center">
-            <a class="btn btn-primary btn-sm"  data-target="#crearFormaPago" data-toggle="modal" href="#">
-                Crear
-            </a>
+             <form enctype="multipart/form-data" method="POST" v-on:submit.prevent="obtener_archivo">
+                            <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                Numero de Factura
+                            </label>
+                            <div class="input-group">
+                                <input class="form-control" name="num_fact" type="text" v-model="file_Factura.num_fact">
+                            </div>
+                        </div>
+            <input class="form-control"  name="imagen_prod" type="file" v-on:change="onFileChange"/>
+
+             </form>
         </div>
         <br>
             <br>

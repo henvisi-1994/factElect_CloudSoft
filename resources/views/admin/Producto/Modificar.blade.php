@@ -1,4 +1,4 @@
-<form enctype="multipart/form-data" method="POST" v-on:submit.prevent="updateProducto(fillProducto.id_prod,fillProducto.imagen_prod)">
+<form enctype="multipart/form-data" method="POST" v-on:submit.prevent="updateProducto(fillProducto.id_prod)">
     <div class="modal fade" id="editProducto">
         <div class="modal-dialog">
             <div class="modal-content">

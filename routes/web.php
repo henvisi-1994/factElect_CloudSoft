@@ -17,6 +17,7 @@ Route::get('/', function () {
 //Mostrar
 Route::get('Ciudad', 'CiudadController@Ciudad');
 Route::get('Persona', 'PersonaController@Persona');
+Route::get('PersonaSA', 'PersonaController@PersonaSA');
 Route::get('/admin', 'AdminController@inicio');
 Route::get('Compras', 'AdminController@Compras');
 Route::get('Ventas', 'AdminController@ventas');
@@ -95,6 +96,7 @@ Route::post('storePeriodo', 'PeriodoController@guardarPeriodo');
 Route::post('storeTipoDocumento', 'TipoDocumentoController@guardarTipoDocumento');
 Route::post('storeUsuario', 'UserController@guardarUsuario');
 Route::post('storeFactura', 'FacturaController@guardarFacturaVenta');
+Route::post('storeFacturaCompra', 'FacturaController@guardarFacturaCompra');
 Route::post('storeFacturaDetalle/{num_fact}', 'DetalleFacturaController@guardarDetalleFacturaVenta');
 //Ruta Modificar
 Route::post('preguardarFacturaVenta', 'FacturaController@preguardarFacturaVenta');

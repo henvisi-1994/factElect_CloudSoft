@@ -26,6 +26,15 @@ persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,person
       INNER JOIN identificacion ON persona.id_ident = identificacion.id_ident');
       return view('admin.Persona.index',compact('persona'));
   }
+  public function PersonaSA(){
+      $persona = DB::select('SELECT persona.id_per,persona.doc_per,persona.organiz_per,persona.nombre_per,persona.apel_per,persona.direc_per,persona.fono1_per,persona.fono2_per,persona.cel1_per,
+persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,persona.fechaini_per,persona.fechafin_per,tip_contrib.nomb_contrib,ciudad.nomb_ciu,identificacion.sri_ident
+ FROM persona
+      INNER JOIN tip_contrib ON persona.id_contrib= tip_contrib.id_contrib
+      INNER JOIN ciudad ON persona.id_ciu = ciudad.id_ciu
+      INNER JOIN identificacion ON persona.id_ident = identificacion.id_ident WHERE persona.apel_per IS NULL');
+      return $persona;
+  }
   //Funcion de Cargar Persona
    public function CargarPersona()
   {

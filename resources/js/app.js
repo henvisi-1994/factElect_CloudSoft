@@ -24,6 +24,7 @@ const app = new Vue({
     created: function() {
         this.getCategorias();
         this.getMarcas();
+        this.getPersonas();
         this.getProductos();
         this.getUnidad();
         this.getCiudad();
@@ -375,6 +376,7 @@ const app = new Vue({
             fechafin_prov: ""
         },
         tipoContribuyentes: [],
+        personas: [],
         newTipoContribuyente: {
             nomb_contrib: "",
             obser_contrib: "",
@@ -629,11 +631,16 @@ const app = new Vue({
         menu: {
             item: 0
         },
+        file_Factura: {
+            facturaC: "",
+            num_fact: ""
+        },
         numregistros: 10,
         src: "",
         subtotal: "",
         subtotalIva: "",
-        total: ""
+        total: "",
+        file: null
     },
     computed: {
         buscarCategoria: function() {
@@ -693,6 +700,12 @@ const app = new Vue({
             }
             var fillAmt = Math.max(width - input.length, 0);
             return prefix + fillZeroes.slice(0, fillAmt) + input;
+        },
+        getPersonas: function() {
+            var urlPersonas = "PersonaSA";
+            axios.get(urlPersonas).then(response => {
+                this.personas = response.data;
+            });
         },
         getCategorias: function() {
             var urlCategorias = "getCategorias";
@@ -1224,9 +1237,15 @@ const app = new Vue({
             this.fillProducto.fechafin_prod = producto.fechafin_prod;
             $("#viewProducto").modal("show");
         },
-        updateProducto: function(id, imagen_prod) {
+        updateProducto: function(id) {
             var url = "updateProducto/" + id;
-            this.fillProducto.imagen_prod = imagen_prod;
+            var image = new Image();
+            var reader = new FileReader();
+            var vm = this;
+            reader.onload = event => {
+                vm.image = event.target.result;
+            };
+            this.fillProducto.imagen_prod = vm.image;
             axios
                 .post(url, this.fillProducto)
                 .then(response => {
@@ -1386,12 +1405,14 @@ const app = new Vue({
                     this.newProveedor.fechafin_prov = "";
                     this.errors = [];
                     $("#crearPersona").modal("hide");
+                    $("#crearProveedor").modal("hide");
                     toastr.success("Se añadido una nuevo Proveedor");
                 })
                 .catch(error => {
                     this.errors = error.response.data;
                 });
         },
+
         updateProveedor: function(id) {
             var url = "updateProveedor/" + id;
             axios
@@ -2700,6 +2721,33 @@ const app = new Vue({
                         this.errors = error.response.data;
                     });
             }, 0);
+        },
+        onFileChange: function(event) {
+            if (event.target.files && event.target.files.length > 0) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function load() {
+                    //this.image = reader.result;
+                    this.obtener_archivo(reader.result);
+                }.bind(this);
+                this.file = file;
+            }
+        },
+        obtener_archivo: function(file) {
+            var urlGuardarArchFact = "storeFacturaCompra";
+            this.file_Factura.facturaC = file;
+            axios
+                .post(urlGuardarArchFact, this.file_Factura)
+                .then(response => {
+                    this.getFacturaCompra();
+                    this.errors = [];
+                    $("#crearProducto").modal("hide");
+                    toastr.success("Se ha registrado la Compra");
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
         }
     }
 });

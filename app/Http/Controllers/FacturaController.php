@@ -9,6 +9,7 @@ use App\Fecha_periodo;
 use App\FormaPago;
 use App\Marca;
 use App\Persona;
+use App\Producto;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -190,9 +191,27 @@ class FacturaController extends Controller
 
         return view('xml', ['xmlContent' => $xml]);
     }
-    public function guardarFacturaCompra()
+    public function guardarFacturaCompra(Request $request)
     {
-        $url = 'http://factelect_cloudsoft.net/dfacturas/prueba.xml';
+        /*if($request->hasFile('facturaC')){
+       //archivo
+        $archivo = $request->file('facturaC');
+        $url_archivo = 'http://factelect_cloudsoft.net';
+
+        $path_file = $archivo->store('dfacturas');
+        $path_archivo = $url_archivo.'/storage/'.$path_file;}*/
+        list($type, $imageData) = explode(';', $request->facturaC);
+            list(, $extension) = explode('/', $type);
+            list(, $imageData) = explode(',', $imageData);
+            $name = 'Fact001' . '.' . $extension;
+            $source = fopen($request->facturaC, 'r');
+            $destination = fopen(public_path() . '/dfacturas/' . $name, 'w');
+            stream_copy_to_stream($source, $destination);
+            fclose($source);
+            fclose($destination);
+            $url_archivo = 'http://factelect_cloudsoft.net';
+            $path_archivo = $url_archivo.'/dfacturas/'.$name;
+        $url = $path_archivo;
         $xmlContent = simplexml_load_file($url);
         $fechaAutorizacion = $xmlContent->fechaAutorizacion;
         $horaAutorizacion = explode(' ', $fechaAutorizacion)[1];
@@ -213,11 +232,9 @@ class FacturaController extends Controller
             $xmlContent->comprobante->factura->infotributaria
         );
         $factura->num_fact = $numFactura;
-        $factura->fecha_emision_fact =
-            $xmlContent->comprobante->factura->infoFactura->fechaEmision[0];
+        $factura->fecha_emision_fact =date('Y-m-d', strtotime( $xmlContent->comprobante->factura->infoFactura->fechaEmision[0]));
         $factura->hora_emision_fact = $horaAutorizacion;
-        // $factura->vencimiento_fact=  $request->input('vencimiento_fact');
-        $factura->estado_fact = 'A';
+        $factura->estado_fact = 'PA';
         $factura->tipo_fact = 'Compra';
         $factura->observ_fact = '';
         $factura->subtotal_fact =
@@ -233,7 +250,7 @@ class FacturaController extends Controller
             $xmlContent->comprobante->factura->detalles->detalle
             as $detalle
         ) {
-            $this->guardarDetalleFacturaCompra($detalle);
+            $this->guardarDetalleFacturaCompra($detalle,$numFactura);
         }
     }
     public function formaPago($codigo)
@@ -244,7 +261,7 @@ class FacturaController extends Controller
                 $formapago = 'SIN UTILIZACIÓN DEL SISTEMA FINANCIERO';
                 break;
             case '15':
-                $formapago = 'COMPENSACIÓN DE DEUDAS ';
+                $formapago = 'COMPENSACIÓN DE DEUDAS';
                 break;
             case '16':
                 $formapago = 'TARJETA DE DÉBITO';
@@ -259,57 +276,88 @@ class FacturaController extends Controller
                 $formapago = 'TARJETA DE CRÉDITO';
                 break;
             case '20':
-                $formapago = 'OTROS CON UTILIZACIÓN DEL SISTEMA FINANCIERO ';
+                $formapago = 'OTROS CON UTILIZACIÓN DEL SISTEMA FINANCIERO';
                 break;
             case '21':
-                $formapago = 'ENDOSO DE TÍTULOS ';
+                $formapago = 'ENDOSO DE TÍTULOS';
                 break;
         }
         $id_formapago = DB::table('formapago')
             ->where('nomb_formapago', 'like', $formapago . '%')
-            ->get();
+            ->first();
         return $id_formapago->id_formapago;
     }
     public function guardarPersona($infotributaria)
     {
         $persona = new Persona();
-        /* $persona->id_contrib=$request->input('id_contrib');
-        $persona->id_ident=$request->input('id_ident');
-        $persona->id_ciu=$request->input('id_ciu');*/
+        $persona->id_contrib=1;
+        $persona->id_ident=2;
+        $persona->id_ciu=1;
         $persona->doc_per = $infotributaria->ruc[0];
-        // $persona->organiz_per=$request->input('organiz_per');
+       $persona->organiz_per=$infotributaria->nombreComercial[0];
         $persona->nombre_per = $infotributaria->razonSocial[0];
         // $persona->apel_per=$request->input('apel_per');
         $persona->direc_per = $infotributaria->dirMatriz[0];
-        /* $persona->fono1_per=$request->input('fono1_per');
-        $persona->fono2_per=$request->input('fono2_per');
-        $persona->cel1_per=$request->input('cel1_per');
-        $persona->cel2_per=$request->input('cel2_per');
-        $persona->fecnac_per=$request->input('fecnac_per');
-        $persona->correo_per=$request->input('correo_per');
-        $persona->estado_per=$request->input('estado_per');
-        $persona->fechaini_per=$request->input('fechaini_per');
-        $persona->fechafin_per=$request->input('fechafin_per');*/
+        //$persona->fono1_per=$request->input('fono1_per');
+        //$persona->fono2_per=$request->input('fono2_per');
+        //$persona->cel1_per=$request->input('cel1_per');
+        //$persona->cel2_per=$request->input('cel2_per');
+        //$persona->fecnac_per=$request->input('fecnac_per');
+        //$persona->correo_per=$request->input('correo_per');
+        $persona->estado_per='P';
+        //$persona->fechaini_per=$request->input('fechaini_per');
+        //$persona->fechafin_per=$request->input('fechafin_per');
         $persona->save();
         $persona_ced = Persona::where('doc_per', $persona->doc_per)->first();
         $id_per = $persona_ced->id_per;
         return $id_per;
     }
-    public function guardarDetalleFacturaCompra($detalle)
+    public function guardarDetalleFacturaCompra($detalle,$num_fact)
     {
-        $total =
-            $detalle->precioTotalSinImpuesto +
-            $detalle->impuestos->impuesto->valor;
+         $idFactura = DB::table('factura as fac')
+        ->select ('id_fact')
+        ->where('num_fact','=',$num_fact)->first();
         $detalleFact = new DetalleFactura();
-        // $detalleFact->id_fact=$idFactura->id_fact;
-        // $detalleFact->id_prod=$request->input('id_prod');
+        $detalleFact->id_fact=$idFactura->id_fact;
+         $detalleFact->id_prod = $this->guardarProducto($detalle);
         $detalleFact->cantidad = $detalle->cantidad;
         $detalleFact->descripcion = $detalle->descripcion;
         $detalleFact->precio_prod = $detalle->precioUnitario;
         $detalleFact->descuento = $detalle->descuento;
         $detalleFact->neto = $detalle->precioTotalSinImpuesto;
         $detalleFact->iva = $detalle->impuestos->impuesto->valor;
-        $detalleFact->$total;
+        $detalleFact->total=$detalleFact->neto+$detalleFact->iva;
         $detalleFact->save();
+    }
+    public function guardarProducto($detalle){
+            $producto = new Producto();
+            $producto->id_emp  =  2;
+            $producto->id_fec =  2;
+            $producto->id_bod =  4;
+            $producto->codigo_prod =  $detalle->codigoPrincipal[0];
+            //$producto->codbarra_prod =  $detalle->input('codbarra_prod');
+            $producto->descripcion_prod = $detalle->descripcion[0];
+            $producto->id_marca = 5;
+            $producto->id_cat = 1;
+            //$producto->present_prod =  $detalle->input('present_prod');
+            $producto->precio_prod =  $detalle->precioUnitario[0];
+            /*$producto->ubicacion_prod =  $detalle->input('ubicacion_prod');
+            $producto->stockmin_prod =  $detalle->input('stockmin_prod');
+            $producto->stockmax_prod =  $detalle->input('stockmax_prod');
+            $producto->fechaing_prod =  $detalle->input('fechaing_prod');
+            $producto->fechaelab_prod =  $detalle->input('fechaelab_prod');
+            $producto->fechacad_prod =  $detalle->input('fechacad_prod');
+            $producto->aplicaiva_prod =  $detalle->input('aplicaiva_prod');
+            $producto->aplicaice_prod =  $detalle->input('aplicaice_prod');
+            $producto->util_prod =  $detalle->input('util_prod');
+            $producto->comision_prod =  $detalle->input('comision_prod');*/
+            $producto->estado_prod =  'A';
+            /*$producto->observ_prod =  $detalle->input('observ_prod');
+            $producto->fechaini_prod =  $detalle->input('fechaini_prod');
+            $producto->fechafin_prod =  $detalle->input('fechafin_prod');*/
+            $producto->save();
+            $codigo_prod = Producto::where('codigo_prod', $producto->codigo_prod)->first();
+            $id_prod = $codigo_prod->id_prod;
+            return $id_prod;
     }
 }

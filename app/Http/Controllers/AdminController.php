@@ -55,9 +55,15 @@ class AdminController extends Controller
       INNER JOIN empresa ON producto.id_emp= empresa.id_emp
       INNER JOIN fecha_periodo ON producto.id_fec= fecha_periodo.id_fec
       INNER JOIN marca ON producto.id_marca= marca.id_marca');
+       $personas = DB::select('SELECT persona.id_per,persona.doc_per,persona.organiz_per,persona.nombre_per,persona.apel_per,persona.direc_per,persona.fono1_per,persona.fono2_per,persona.cel1_per,
+        persona.cel2_per,persona.fecnac_per,persona.correo_per,persona.estado_per,persona.fechaini_per,persona.fechafin_per,tip_contrib.nomb_contrib,ciudad.nomb_ciu,identificacion.sri_ident
+        FROM persona
+      INNER JOIN tip_contrib ON persona.id_contrib= tip_contrib.id_contrib
+      INNER JOIN ciudad ON persona.id_ciu = ciudad.id_ciu
+      INNER JOIN identificacion ON persona.id_ident = identificacion.id_ident WHERE persona.apel_per IS NULL');
         $empresas = Empresa::get();
         $fechas = Fecha_periodo::get();
-        $personas = Persona::get();
+        //$personas = Persona::get();
         $tipoContribuyentes = TipoContribuyente::get();
         $identificaciones = Identificaciones::get();
         $ciudades = Ciudad::get();
