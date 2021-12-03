@@ -1,10 +1,3 @@
-/*
- * Author: Abdullah A Almsaeed
- * Date: 4 Jan 2014
- * Description:
- *      This is a demo file used only for the main dashboard (index.html)
- **/
-
 $(function() {
     ("use strict");
 
@@ -143,27 +136,6 @@ $(function() {
     // SLIMSCROLL FOR CHAT WIDGET
     $("#chat-box").slimScroll({
         height: "250px"
-    });
-
-    /* Morris.js Charts */
-    // Sales chart
-    var compras = [];
-    fetch("http://factelect_cloudsoft.net/Dashboard_Compras")
-        .then(response => response.json())
-        .then(data => {
-            localStorage.removeItem(data);
-            localStorage.setItem("data", JSON.stringify(data));
-        });
-    compras = JSON.parse(localStorage.getItem("data"));
-    var area_compras = new Morris.Area({
-        element: "revenue-compras",
-        resize: true,
-        data: compras,
-        xkey: "y",
-        ykeys: ["compras"],
-        labels: ["compras"],
-        lineColors: ["#a0d0e0"],
-        hideHover: "auto"
     });
 
     //Dashboard Ventas

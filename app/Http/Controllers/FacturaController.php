@@ -360,4 +360,15 @@ class FacturaController extends Controller
             $id_prod = $codigo_prod->id_prod;
             return $id_prod;
     }
+    public function dashboard_ventas(){
+         $ventas = DB::select('SELECT DATE_FORMAT(fecha_emision_fact,"%Y-%m") AS y, SUM(total_fact) AS ventas  from factura  WHERE tipo_fact="Venta" GROUP BY
+             DATE_FORMAT(fecha_emision_fact,"%Y-%m")');
+             return $ventas;
+    }
+        public function dashboard_compras(){
+         $compras = DB::select('SELECT DATE_FORMAT(fecha_emision_fact,"%Y-%m") AS y, SUM(total_fact) AS compras  from factura  WHERE tipo_fact="Compra" GROUP BY
+        DATE_FORMAT(fecha_emision_fact,"%Y-%m")');
+             return $compras;
+    }
+
 }

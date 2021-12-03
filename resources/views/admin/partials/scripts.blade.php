@@ -59,6 +59,8 @@
 <script src="{{ asset("Administrador/dist/js/adminlte.min.js") }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset("Administrador/dist/js/pages/dashboard.js") }}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{ asset("Administrador/dist/js/pages/dashboard_ventas.js") }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset("Administrador/dist/js/demo.js") }}"></script>
 <script src="{{ asset("Administrador/dist/js/toastr.js") }}"></script>

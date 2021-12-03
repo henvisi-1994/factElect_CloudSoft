@@ -30,6 +30,8 @@ Route::get('Provincia', 'ProvinciaController@Provincia');
 Route::get('Cliente', 'ClienteController@Cliente');
 Route::get('Param_Docs', 'Param_DocsController@Param_Docs');
 Route::get('Param_Porc', 'Param_PorcController@Param_Porc');
+Route::get('Dashboard_Ventas', 'FacturaController@dashboard_ventas');
+Route::get('Dashboard_Compras', 'FacturaController@dashboard_compras');
 //Configuracion
 Route::get('Categoria', 'CategoriaController@Categoria');
 Route::get('Marca', 'MarcaController@Marca');

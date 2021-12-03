@@ -33,6 +33,8 @@
     </div>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade in active" id="nav-compras">
+            <div class="chart" id="revenue-compras" style="position: relative; height: 300px;"></div>
+
         </div>
         <div class="tab-pane fade" id="nav-proveedor">
             @include('admin.Proveedor.index')
