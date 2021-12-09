@@ -10,6 +10,7 @@ use App\FormaPago;
 use App\Marca;
 use App\Persona;
 use App\Producto;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -48,7 +49,6 @@ class FacturaController extends Controller
                 'fecha_emision_fact'
             );
             $factura->hora_emision_fact = $request->input('hora_emision_fact');
-            $factura->vencimiento_fact = $request->input('vencimiento_fact');
             $factura->estado_fact = $request->input('estado_fact');
             $factura->tipo_fact = $request->input('tipo_fact');
             $factura->observ_fact = $request->input('observ_fact');
@@ -78,8 +78,24 @@ class FacturaController extends Controller
             ->get();
         return $facturas;
     }
+        public function getProforma()
+    {
+        $facturas = DB::table('factura as fac')
+            ->join(
+                'formapago',
+                'fac.id_formapago',
+                '=',
+                'formapago.id_formapago'
+            )
+            ->join('persona', 'fac.id_per', '=', 'persona.id_per')
+            ->where('tipo_fact', '=', 'Proforma')
+            ->orderBy('fac.id_fact', 'des')
+            ->get();
+        return $facturas;
+    }
     public function preguardarFacturaVenta(Request $request)
     {
+        $tipo_factura=$request->input('tipo_factura');
         $id = $request->input('buscar_cli');
         $factura = DB::table('cliente as c')
             ->join('empresa', 'c.id_emp', '=', 'empresa.id_emp')
@@ -94,18 +110,25 @@ class FacturaController extends Controller
         $formas_pago = FormaPago::get();
         return view(
             'admin.FacturaVenta.Detalle',
-            compact('factura', 'categorias', 'marcas', 'formas_pago')
+            compact('factura', 'categorias', 'marcas', 'formas_pago','tipo_factura')
         );
     }
     public function ultimonumFactVenta()
     {
-        $numFactVent = Factura::select('num_fact')
-            ->where('tipo_fact', '=', 'Venta')
-            ->latest()
-            ->get();
-        $num = substr($numFactVent, -13);
-        $num = substr($num, 0, -3);
-        return $num;
+        $numFactVent = DB::select('SELECT num_fact FROM factura WHERE tipo_fact="Venta" ORDER BY id_fact DESC LIMIT 1');
+        $num = substr($numFactVent[0]->num_fact, -21);
+        $num = explode("-", $numFactVent[0]->num_fact);
+        //$num = substr($num[2], 0, 0);
+        return $num[2];
+    }
+
+        public function ultimonumFacProforma()
+    {
+        $numFactprof = DB::select('SELECT num_fact FROM factura WHERE tipo_fact="Proforma" ORDER BY id_fact DESC LIMIT 1');
+        $num_p = substr($numFactprof[0]->num_fact, -21);
+        $num_p = explode("-", $numFactprof[0]->num_fact);
+        //$num = substr($num[2], 0, 0);
+        return $num_p[2];
     }
 
     public function getVentas()
@@ -369,6 +392,36 @@ class FacturaController extends Controller
          $compras = DB::select('SELECT DATE_FORMAT(fecha_emision_fact,"%Y-%m") AS y, SUM(total_fact) AS compras  from factura  WHERE tipo_fact="Compra" GROUP BY
         DATE_FORMAT(fecha_emision_fact,"%Y-%m")');
              return $compras;
+    }
+    public function download_factura($id_fact)
+    {
+
+        $factura = DB::select(
+            'SELECT *FROM v_factura WHERE id_fact=?',
+            [$id_fact]
+        )[0];
+                $detalle_factura = DB::select(
+            'SELECT *FROM detalle_factura WHERE id_fact=?',
+            [$id_fact]
+        );
+         $nombre_archivo=$factura->num_fact.".pdf";
+    $data = [
+        'detalle_factura'=>$detalle_factura,
+        'num_fact'=>$factura->num_fact,
+        'nombre_per'=>$factura->nombre_per,
+        'apel_per'=>$factura->apel_per,
+        'correo_per'=>$factura->correo_per,
+        'direc_per'=>$factura->direc_per,
+        'fecha_emision_fact'=>$factura->fecha_emision_fact,
+        'vencimiento_fact'=>$factura->vencimiento_fact,
+        'nomb_formapago'=>$factura->nomb_formapago,
+        'total_fact'=>$factura->total_fact,
+        'tipo_fact'=>$factura->tipo_fact
+    ];
+
+    $pdf = PDF::loadView('comprobantefactura', $data);
+
+    return $pdf->download($nombre_archivo);
     }
 
 }

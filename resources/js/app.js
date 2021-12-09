@@ -47,9 +47,15 @@ const app = new Vue({
         this.getUsuario();
         this.getFacturaCompra();
         this.getFacturaVenta();
+        this.getProforma();
         this.getIva();
         this.getNumfactV();
         this.existeDF = "False";
+        if (App.tipo_factura == "Venta") {
+            this.series = "001-001-";
+        } else {
+            this.series = "001-002-";
+        }
     },
     data: {
         categorias: [],
@@ -592,6 +598,7 @@ const app = new Vue({
             observ_fact: "",
             total_fact: ""
         },
+        proformas: [],
         buscarCli: {
             id_per: "",
             nom_cli: "",
@@ -641,7 +648,8 @@ const app = new Vue({
         subtotal: "",
         subtotalIva: "",
         total: "",
-        file: null
+        file: null,
+        series: ""
     },
     computed: {
         buscarCategoria: function() {
@@ -1796,7 +1804,7 @@ const app = new Vue({
                     this.newRol.fechaini_rol = "";
                     this.newRol.fechafin_rol = "";
                     this.errors = [];
-                    $("#crearEmpresa").modal("hide");
+                    $("#crearRol").modal("hide");
                     toastr.success("Se añadido una nuevo rol");
                 })
                 .catch(error => {
@@ -1804,6 +1812,7 @@ const app = new Vue({
                 });
         },
         editRol: function(rol) {
+            this.fillRol.id_rol = rol.id_rol;
             this.fillRol.id_emp = rol.id_emp;
             this.fillRol.id_fec = rol.id_fec;
             this.fillRol.nomb_rol = rol.nomb_rol;
@@ -1835,7 +1844,7 @@ const app = new Vue({
                 });
         },
         deleteRol: function(rol) {
-            var url = "deleteProducto/" + rol.id_rol;
+            var url = "deleteRol/" + rol.id_rol;
             axios.post(url).then(response => {
                 this.getRoles();
                 toastr.success("Rol eliminado con éxito");
@@ -2492,7 +2501,6 @@ const app = new Vue({
                 });
         },
         editUsuario: function(usuario) {
-            console.log(usuario);
             this.fillUsuario.id_rol = usuario.id_rol;
             this.fillUsuario.id_usu = usuario.id_usu;
 
@@ -2506,7 +2514,6 @@ const app = new Vue({
             $("#editUsuario").modal("show");
         },
         updateUsuario: function(id) {
-            console.log(id);
             var url = "updateUsuaurio/" + id;
             axios
                 .post(url, this.fillUsuario)
@@ -2556,6 +2563,12 @@ const app = new Vue({
                 this.facturasVenta = response.data;
             });
         },
+        getProforma: function() {
+            var urlProforma = "getProforma";
+            axios.get(urlProforma).then(response => {
+                this.proformas = response.data;
+            });
+        },
         cargarFacturaVenta: function() {
             var urlFactura = "preguardarFacturaVenta/";
             axios.post(urlFactura, this.buscarCli).then(response => {
@@ -2597,7 +2610,6 @@ const app = new Vue({
         },
         PorcentajeIVA: function(producto) {
             var IVA = 0;
-            console.log(producto);
             if ((producto.aplicaiva_prod = "S")) {
                 /*if ((this.iva[0].vigente = "S")) {
                     IVA = this.iva[0].porcentaje_iva;
@@ -2656,11 +2668,17 @@ const app = new Vue({
             this.calcularTotalesFact();
         },
         getNumfactV: function() {
-            var url = "getNumFactVent";
+            let url = "";
+            if (App.tipo_factura == "Venta") {
+                url = "getNumFactVent";
+            } else {
+                url = "getNumProfVenta";
+            }
             axios.get(url).then(response => {
                 this.numFactv = response.data;
             });
         },
+
         CalcularFacturaVenta: function() {
             var hoy = new Date();
             var hours = hoy.getHours();
@@ -2681,12 +2699,12 @@ const app = new Vue({
             this.factura.hora_emision_fact =
                 hours + ":" + minutes + ":" + seconds;
             this.factura.vencimiento_fact = yyyy + "-" + mm + "-" + dd;
-            this.factura.tipo_fact = "Venta";
+            this.factura.tipo_fact = App.tipo_factura;
             this.factura.estado_fact = "PA";
             if (this.numFactv) {
-                this.factura.num_fact = "001-001-" + this.numFactVent;
+                this.factura.num_fact = this.series + this.numFactVent;
             } else {
-                this.factura.num_fact = "001-001-" + this.serie;
+                this.factura.num_fact = this.series + this.serie;
             }
             if (!this.factura.observ_fact) {
                 this.factura.observ_fact = "-";

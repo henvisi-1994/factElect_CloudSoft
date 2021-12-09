@@ -1,5 +1,5 @@
 <form method="POST"  action="preguardarFacturaVenta" >
-    <div class="modal fade" id="crearFacturaVenta">
+    <div class="modal fade" id="crearProforma">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="box-body">
-                             <input class="form-control" name="tipo_factura" placeholder="Buscar" type="hidden" value="Venta">
+                         <input class="form-control" name="tipo_factura" placeholder="Buscar" type="hidden" value="Proforma">
                             </input>
                         <div class="form-group">
                             <label>

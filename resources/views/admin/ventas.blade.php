@@ -8,6 +8,8 @@
             <li><a  data-toggle="tab" href="#nav-cliente"><i class="fa fa-group "></i>Clientes</a></li>
             <li><a  data-toggle="tab" href="#nav-factura"><i class="fa fa-file-o"></i> Facturas</a></li>
             <li><a  data-toggle="tab" href="#nav-guiaRem"><i class="fa fa-truck"></i> Guia de Remision</a></li>
+             <li><a  data-toggle="tab" href="#nav-proforma"><i class="fa fa-file-o"></i> Proforma</a></li>
+
         </ul>
     </div>
 <div class="tab-content" id="nav-tabContent">
@@ -26,6 +28,9 @@
        @include('admin.FacturaVenta.index')
     </div>
     <div class="tab-pane fade" id="nav-guiaRem">
+    </div>
+    <div class="tab-pane fade" id="nav-proforma">
+        @include('admin.Proforma.index')
     </div>
 </div>
 @endsection

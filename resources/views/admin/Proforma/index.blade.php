@@ -1,12 +1,12 @@
 <div class="box">
     <div class="box-header">
         <h1 class="box-title">
-            Factura
+            Proforma
         </h1>
     </div>
     <div class="box-body">
         <div class="card-body d-flex justify-content-between align-items-center">
-            <a class="btn btn-primary btn-sm" data-target="#crearFacturaVenta" data-toggle="modal" href="#">
+            <a class="btn btn-primary btn-sm" data-target="#crearProforma" data-toggle="modal" href="#">
                 Crear
             </a>
         </div>
@@ -48,7 +48,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="factura in facturasVenta">
+                <tr v-for="factura in proformas">
                     <td>
                         @{{factura.num_fact}}
                     </td>
@@ -112,6 +112,6 @@
                 </tr>
             </tbody>
         </table>
-        @include('admin.FacturaVenta.Crear')
+        @include('admin.Proforma.Crear')
     </div>
 </div>

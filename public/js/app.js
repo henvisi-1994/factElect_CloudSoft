@@ -49054,9 +49054,16 @@ var app = new Vue({
     this.getUsuario();
     this.getFacturaCompra();
     this.getFacturaVenta();
+    this.getProforma();
     this.getIva();
     this.getNumfactV();
     this.existeDF = "False";
+
+    if (App.tipo_factura == "Venta") {
+      this.series = "001-001-";
+    } else {
+      this.series = "001-002-";
+    }
   },
   data: {
     categorias: [],
@@ -49598,6 +49605,7 @@ var app = new Vue({
       observ_fact: "",
       total_fact: ""
     },
+    proformas: [],
     buscarCli: {
       id_per: "",
       nom_cli: "",
@@ -49647,7 +49655,8 @@ var app = new Vue({
     subtotal: "",
     subtotalIva: "",
     total: "",
-    file: null
+    file: null,
+    series: ""
   },
   computed: {
     buscarCategoria: function buscarCategoria() {
@@ -50824,12 +50833,13 @@ var app = new Vue({
       _this58.newRol.fechaini_rol = "";
       _this58.newRol.fechafin_rol = "";
       _this58.errors = [];
-      $("#crearEmpresa").modal("hide");
+      $("#crearRol").modal("hide");
       toastr.success("Se añadido una nuevo rol");
     })["catch"](function (error) {
       _this58.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editRol", function editRol(rol) {
+    this.fillRol.id_rol = rol.id_rol;
     this.fillRol.id_emp = rol.id_emp;
     this.fillRol.id_fec = rol.id_fec;
     this.fillRol.nomb_rol = rol.nomb_rol;
@@ -50861,7 +50871,7 @@ var app = new Vue({
   }), _defineProperty(_methods, "deleteRol", function deleteRol(rol) {
     var _this60 = this;
 
-    var url = "deleteProducto/" + rol.id_rol;
+    var url = "deleteRol/" + rol.id_rol;
     axios.post(url).then(function (response) {
       _this60.getRoles();
 
@@ -51493,7 +51503,6 @@ var app = new Vue({
       _this95.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editUsuario", function editUsuario(usuario) {
-    console.log(usuario);
     this.fillUsuario.id_rol = usuario.id_rol;
     this.fillUsuario.id_usu = usuario.id_usu;
     this.fillUsuario.id_emp = usuario.id_emp;
@@ -51507,7 +51516,6 @@ var app = new Vue({
   }), _defineProperty(_methods, "updateUsuario", function updateUsuario(id) {
     var _this96 = this;
 
-    console.log(id);
     var url = "updateUsuaurio/" + id;
     axios.post(url, this.fillUsuario).then(function (response) {
       _this96.getUsuario();
@@ -51556,21 +51564,28 @@ var app = new Vue({
     axios.get(urlFactura).then(function (response) {
       _this99.facturasVenta = response.data;
     });
-  }), _defineProperty(_methods, "cargarFacturaVenta", function cargarFacturaVenta() {
+  }), _defineProperty(_methods, "getProforma", function getProforma() {
     var _this100 = this;
+
+    var urlProforma = "getProforma";
+    axios.get(urlProforma).then(function (response) {
+      _this100.proformas = response.data;
+    });
+  }), _defineProperty(_methods, "cargarFacturaVenta", function cargarFacturaVenta() {
+    var _this101 = this;
 
     var urlFactura = "preguardarFacturaVenta/";
     axios.post(urlFactura, this.buscarCli).then(function (response) {
-      _this100.existeDF = "True";
-      _this100.factura = response.data;
+      _this101.existeDF = "True";
+      _this101.factura = response.data;
       $("#crearFacturaVenta").modal("hide");
     });
   }), _defineProperty(_methods, "getIva", function getIva() {
-    var _this101 = this;
+    var _this102 = this;
 
     var urlIva = "getIvaActual";
     axios.get(urlIva).then(function (response) {
-      _this101.iva = response.data;
+      _this102.iva = response.data;
     });
   }), _defineProperty(_methods, "deletedetalleFact", function deletedetalleFact(detalle) {
     var index = this.detallefactura.indexOf(detalle);
@@ -51596,7 +51611,6 @@ var app = new Vue({
     this.calcularTotalesFact();
   }), _defineProperty(_methods, "PorcentajeIVA", function PorcentajeIVA(producto) {
     var IVA = 0;
-    console.log(producto);
 
     if (producto.aplicaiva_prod = "S") {
       /*if ((this.iva[0].vigente = "S")) {
@@ -51641,11 +51655,18 @@ var app = new Vue({
     this.detallefactura[index].total = this.calcularItem(producto, cantidad, IVA)[0].total;
     this.calcularTotalesFact();
   }), _defineProperty(_methods, "getNumfactV", function getNumfactV() {
-    var _this102 = this;
+    var _this103 = this;
 
-    var url = "getNumFactVent";
+    var url = "";
+
+    if (App.tipo_factura == "Venta") {
+      url = "getNumFactVent";
+    } else {
+      url = "getNumProfVenta";
+    }
+
     axios.get(url).then(function (response) {
-      _this102.numFactv = response.data;
+      _this103.numFactv = response.data;
     });
   }), _defineProperty(_methods, "CalcularFacturaVenta", function CalcularFacturaVenta() {
     var hoy = new Date();
@@ -51666,13 +51687,13 @@ var app = new Vue({
     this.factura.fecha_emision_fact = this.fecha_act;
     this.factura.hora_emision_fact = hours + ":" + minutes + ":" + seconds;
     this.factura.vencimiento_fact = yyyy + "-" + mm + "-" + dd;
-    this.factura.tipo_fact = "Venta";
+    this.factura.tipo_fact = App.tipo_factura;
     this.factura.estado_fact = "PA";
 
     if (this.numFactv) {
-      this.factura.num_fact = "001-001-" + this.numFactVent;
+      this.factura.num_fact = this.series + this.numFactVent;
     } else {
-      this.factura.num_fact = "001-001-" + this.serie;
+      this.factura.num_fact = this.series + this.serie;
     }
 
     if (!this.factura.observ_fact) {
@@ -51684,24 +51705,24 @@ var app = new Vue({
     this.buscarCli.organiz_per = persona.organiz_per;
     this.buscar_cli = this.buscarCli.ruc_cli;
   }), _defineProperty(_methods, "createFacturaVenta", function createFacturaVenta() {
-    var _this103 = this;
+    var _this104 = this;
 
     this.CalcularFacturaVenta();
     var urlFactV = "storeFactura";
     axios.post(urlFactV, this.factura).then(function (response) {
-      _this103.guardaritem(_this103.factura.num_fact);
+      _this104.guardaritem(_this104.factura.num_fact);
 
       window.location = "/Ventas";
     })["catch"](function (error) {
-      _this103.errors = error.response.data;
+      _this104.errors = error.response.data;
     });
   }), _defineProperty(_methods, "guardaritem", function guardaritem(id_fact) {
-    var _this104 = this;
+    var _this105 = this;
 
     var urlFacturaDetalle = "storeFacturaDetalle/" + id_fact;
     this.detallefactura.reduce(function (total, item) {
       axios.post(urlFacturaDetalle, item).then(function (response) {})["catch"](function (error) {
-        _this104.errors = error.response.data;
+        _this105.errors = error.response.data;
       });
     }, 0);
   }), _defineProperty(_methods, "onFileChange", function onFileChange(event) {
@@ -51718,18 +51739,18 @@ var app = new Vue({
       this.file = file;
     }
   }), _defineProperty(_methods, "obtener_archivo", function obtener_archivo(file) {
-    var _this105 = this;
+    var _this106 = this;
 
     var urlGuardarArchFact = "storeFacturaCompra";
     this.file_Factura.facturaC = file;
     axios.post(urlGuardarArchFact, this.file_Factura).then(function (response) {
-      _this105.getFacturaCompra();
+      _this106.getFacturaCompra();
 
-      _this105.errors = [];
+      _this106.errors = [];
       $("#crearProducto").modal("hide");
       toastr.success("Se ha registrado la Compra");
     })["catch"](function (error) {
-      _this105.errors = error.response.data;
+      _this106.errors = error.response.data;
     });
   }), _methods)
 });

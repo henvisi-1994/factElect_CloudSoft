@@ -44,7 +44,7 @@ class UserController extends Controller
             $usuario->id_emp =  $request->input('id_emp');
             $usuario->id_fec =  $request->input('id_fec');
             $usuario->nomb_usu =  $request->input('nomb_usu');
-            $usuario->clave_usu =  Hash::make($request->input('clave_usu'));
+            $usuario->password =  Hash::make($request->input('clave_usu'));
             $usuario->observ_usu =  $request->input('observ_usu');
             $usuario->estado_usu =  $request->input('estado_usu');
             $usuario->fechaini_usu =  $request->input('fechaini_usu');

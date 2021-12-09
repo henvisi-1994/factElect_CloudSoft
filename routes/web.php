@@ -18,11 +18,11 @@ Route::get('/', function () {
 Route::get('Ciudad', 'CiudadController@Ciudad');
 Route::get('Persona', 'PersonaController@Persona');
 Route::get('PersonaSA', 'PersonaController@PersonaSA');
-Route::get('/admin', 'AdminController@inicio');
-Route::get('Compras', 'AdminController@Compras');
-Route::get('Ventas', 'AdminController@ventas');
+Route::get('/admin', 'AdminController@inicio')->middleware('auth');
+Route::get('Compras', 'AdminController@Compras')->middleware('auth');
+Route::get('Ventas', 'AdminController@ventas')->middleware('auth');
 Route::get('Configuracion', 'AdminController@configuracion');
-Route::get('Contabilidad', 'AdminController@contabilidad');
+Route::get('Contabilidad', 'AdminController@contabilidad')->middleware('auth');
 Route::get('TipoContribuyente', 'TipoContribuyenteController@TipoContribuyente');
 Route::get('Identificaciones', 'IdentificacionesController@Identificaciones');
 Route::get('Pais', 'PaisController@Pais');
@@ -33,14 +33,14 @@ Route::get('Param_Porc', 'Param_PorcController@Param_Porc');
 Route::get('Dashboard_Ventas', 'FacturaController@dashboard_ventas');
 Route::get('Dashboard_Compras', 'FacturaController@dashboard_compras');
 //Configuracion
-Route::get('Categoria', 'CategoriaController@Categoria');
-Route::get('Marca', 'MarcaController@Marca');
-Route::get('Unidad', 'UnidadController@Unidad');
-Route::get('Descuento', 'DescuentoController@Descuento');
-Route::get('Ubicacion', 'AdminController@Ubicacion');
-Route::get('Empresa', 'EmpresaController@Empresa');
-Route::get('Bodega', 'BodegaController@Bodega');
-Route::get('/Usuarios', [App\Http\Controllers\UserController::class, 'Usuarios']);
+Route::get('Categoria', 'CategoriaController@Categoria')->middleware('auth');
+Route::get('Marca', 'MarcaController@Marca')->middleware('auth');
+Route::get('Unidad', 'UnidadController@Unidad')->middleware('auth');
+Route::get('Descuento', 'DescuentoController@Descuento')->middleware('auth');
+Route::get('Ubicacion', 'AdminController@Ubicacion')->middleware('auth');
+Route::get('Empresa', 'EmpresaController@Empresa')->middleware('auth');
+Route::get('Bodega', 'BodegaController@Bodega')->middleware('auth');
+Route::get('/Usuarios', [App\Http\Controllers\UserController::class, 'Usuarios'])->middleware('auth');
 
 //Obtener
 Route::get('getProveedor', 'ProveedorController@getProveedor');
@@ -69,9 +69,13 @@ Route::get('getFacturaCompra', 'FacturaController@getFacturaCompra');
 Route::get('getFacturaVenta', 'FacturaController@getFacturaVenta');
 Route::get('getIvaActual', 'IvaController@ivaActual');
 Route::get('getNumFactVent', 'FacturaController@ultimonumFactVenta');
+Route::get('getNumProfVenta', 'FacturaController@ultimonumFacProforma');
 Route::get('DVentas', 'FacturaController@getVentas');
 Route::get('DCompras', 'FacturaController@getCompras');
 Route::get('ObtenerFactura', 'FacturaController@leer_xml');
+Route::get('DescargaFactura/{id_fact}', 'FacturaController@download_factura');
+Route::get('getProforma', 'FacturaController@getProforma');
+
 
 //Ruta Guardar
 Route::post('storeCategoria', 'CategoriaController@guardarCategoria');
@@ -87,6 +91,7 @@ Route::post('/storeProducto', [App\Http\Controllers\ProductoController::class, '
 Route::post('storeBodega', 'BodegaController@guardarBodega');
 Route::post('storePais', 'PaisController@guardarPais');
 Route::post('storeProvincia', 'ProvinciaController@guardarProvincia');
+Route::post('storeRol', 'RolesController@guardarRol');
 Route::post('storeEmpresa', 'EmpresaController@guardarEmmpresa');
 Route::post('storeCliente', 'ClienteController@guardarCliente');
 Route::post('storeDescuento', 'DescuentoController@guardarDescuento');
@@ -149,3 +154,5 @@ Route::post('deletePeriodo/{id}', 'PeriodoController@eliminarPeriodo');
 Route::post('deleteTipoDocumento/{id}', 'TipoDocumentoController@eliminarTipoDocumento');
 Route::post('deleteUsuario/{id}', 'UserController@eliminarUsuario');
 Route::post('deleteCiudad/{id}', 'CiudadController@eliminarCiudad');
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
