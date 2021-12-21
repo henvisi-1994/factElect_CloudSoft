@@ -3,11 +3,11 @@
 <div class="panel with-nav-tabs panel-primary">
     <div class="panel-heading">
         <ul class="nav nav-tabs">
-            <li class="active">
+            <!--<li class="active">
                 <a data-toggle="tab" href="#nav-formulario">
                     Formulario
                 </a>
-            </li>
+            </li>-->
             <li>
                 <a data-toggle="tab" href="#nav-periodo">
                     Periodo
@@ -23,18 +23,18 @@
                     Identificación
                 </a>
             </li>
-            <li>
+            <!--<li>
                 <a data-toggle="tab" href="#nav-parametros">
                     <i class="fa fa-cogs">
                     </i>
-                    Parametros 
+                    Parametros
                 </a>
-            </li>
-            <li>
+            </li>-->
+            <!--<li>
                 <a data-toggle="tab" href="#nav-tipDocumento">
                     Tipo de Documento
                 </a>
-            </li>
+            </li>-->
             <li>
                 <a data-toggle="tab" href="#nav-tipContribuy">
                     Tipo de Contribuyente

@@ -23,9 +23,13 @@ Vue.component(
 const app = new Vue({
     el: "#crud",
     created: function() {
+        this.getReporte_Compras();
+        this.getReporte_Venta();
+        this.get_ultimo_usuario();
         this.getCategorias();
         this.getMarcas();
         this.getPersonas();
+        this.getEmpleados();
         this.getProductos();
         this.getUnidad();
         this.getCiudad();
@@ -50,12 +54,14 @@ const app = new Vue({
         this.getProforma();
         this.getIva();
         this.getNumfactV();
+
         this.existeDF = "False";
         if (App.tipo_factura == "Venta") {
             this.series = "001-001-";
         } else {
             this.series = "001-002-";
         }
+        this.id_usu = App.id_usuario;
     },
     data: {
         categorias: [],
@@ -560,6 +566,7 @@ const app = new Vue({
             clave_usu: "",
             observ_usu: "",
             estado_usu: "",
+            email: "",
             fechaini_usu: "",
             fechafin_usu: ""
         },
@@ -585,7 +592,8 @@ const app = new Vue({
             vencimiento_fact: "",
             tipo_fact: "",
             observ_fact: "",
-            total_fact: ""
+            total_fact: "",
+            id_usu: 0
         },
         fillFactura: {
             id_formapago: "",
@@ -596,7 +604,8 @@ const app = new Vue({
             vencimiento_fact: "",
             tipo_fact: "",
             observ_fact: "",
-            total_fact: ""
+            total_fact: "",
+            id_usu: 0
         },
         proformas: [],
         buscarCli: {
@@ -604,6 +613,22 @@ const app = new Vue({
             nom_cli: "",
             ruc_cli: "",
             organiz_per: ""
+        },
+        empleados: [],
+        newEmpleado: {
+            id_emp: 0,
+            id_per: 0,
+            id_usu: 0,
+            id_fec: 0,
+            id_rol: 0,
+            estado_empl: ""
+        },
+        fillEmpleado: {
+            id_empleado: 0,
+            id_emp: 0,
+            id_per: 0,
+            id_usu: 0,
+            estado_empl: ""
         },
         factura: {
             id_formapago: "",
@@ -619,7 +644,8 @@ const app = new Vue({
             subcero_fact: "",
             subiva_fact: "",
             subice_fact: "",
-            total_fact: ""
+            total_fact: "",
+            id_usu: 0
         },
         detallefactura: [],
         detallesFactura: {},
@@ -641,15 +667,20 @@ const app = new Vue({
         },
         file_Factura: {
             facturaC: "",
-            num_fact: ""
+            num_fact: "",
+            id_usu: 0
         },
+        r_ventas: [],
+        r_compras: [],
         numregistros: 10,
         src: "",
         subtotal: "",
         subtotalIva: "",
         total: "",
         file: null,
-        series: ""
+        series: "",
+        id_usu: 0,
+        id_usuario: 0
     },
     computed: {
         buscarCategoria: function() {
@@ -716,10 +747,28 @@ const app = new Vue({
                 this.personas = response.data;
             });
         },
+        getEmpleados: function() {
+            var urlEmpleados = "getEmpleado";
+            axios.get(urlEmpleados).then(response => {
+                this.empleados = response.data;
+            });
+        },
         getCategorias: function() {
             var urlCategorias = "getCategorias";
             axios.get(urlCategorias).then(response => {
                 this.categorias = response.data;
+            });
+        },
+        getReporte_Venta: function() {
+            var urlRepVenta = "getReporteVenta";
+            axios.get(urlRepVenta).then(response => {
+                this.r_ventas = response.data;
+            });
+        },
+        getReporte_Compras: function() {
+            var urlRepCompra = "getReporteCompra";
+            axios.get(urlRepCompra).then(response => {
+                this.r_compras = response.data;
             });
         },
         createCategoria: function() {
@@ -1334,6 +1383,45 @@ const app = new Vue({
                     this.errors = error.response.data;
                 });
         },
+        createPersonaEmpleado: function() {
+            var urlGuardarPersona = "storePersona";
+            axios
+                .post(urlGuardarPersona, this.newPersona)
+                .then(response => {
+                    this.newPersona.id_contrib = "";
+                    this.newPersona.id_ident = "";
+                    this.newPersona.id_ciu = "";
+                    this.newPersona.organiz_per = "";
+                    this.newPersona.direc_per = "";
+                    this.newPersona.fono1_per = "";
+                    this.newPersona.fono2_per = "";
+                    this.newPersona.cel1_per = "";
+                    this.newPersona.cel2_per = "";
+                    this.newPersona.fecnac_per = "";
+                    this.newUsuario.id_rol = this.newEmpleado.id_rol;
+                    this.newUsuario.id_emp = this.newEmpleado.id_emp;
+                    this.newUsuario.id_fec = this.newEmpleado.id_fec;
+                    this.newUsuario.email = this.newPersona.correo_per;
+                    this.newUsuario.nomb_usu =
+                        this.newPersona.nombre_per.charAt(0) +
+                        this.newPersona.apel_per;
+                    this.newUsuario.clave_usu = this.newPersona.doc_per;
+                    this.newUsuario.observ_usu = "Creacion de Empleado";
+                    this.newUsuario.estado_usu = "A";
+                    this.newUsuario.fechaini_usu = this.newPersona.fechaini_per;
+                    this.newUsuario.fechafin_usu = this.newPersona.fechafin_per;
+                    this.errors = [];
+                    this.newEmpleado.id_per = response.data;
+                    this.newEmpleado.estado_empl = this.newPersona.estado_per;
+                    //this.createUsuario();
+                    this.createUsuarioEmpleado();
+                    //this.createEmpleado();
+                    //localStorage.removeItem("id_usuario");
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
+        },
         editPersona: function(persona) {
             this.fillPersona.id_contrib = persona.id_contrib;
             this.fillPersona.id_ident = persona.id_ident;
@@ -1385,6 +1473,53 @@ const app = new Vue({
                     this.errors = error.response.data;
                 });
         },
+        updatePersonaEmpleado: function(id) {
+            var url = "updatePersona/" + id;
+            axios
+                .post(url, this.fillPersona)
+                .then(response => {
+                    this.fillPersona.id_contrib = "";
+                    this.fillPersona.id_ident = "";
+                    this.fillPersona.id_ciu = "";
+                    this.fillPersona.doc_per = "";
+                    this.fillPersona.organiz_per = "";
+                    this.fillPersona.nombre_per = "";
+                    this.fillPersona.apel_per = "";
+                    this.fillPersona.direc_per = "";
+                    this.fillPersona.fono1_per = "";
+                    this.fillPersona.fono2_per = "";
+                    this.fillPersona.cel1_per = "";
+                    this.fillPersona.cel2_per = "";
+                    this.fillPersona.fecnac_per = "";
+                    this.fillPersona.correo_per = "";
+                    this.fillPersona.fechaini_per = "";
+                    this.fillPersona.fechafin_per = "";
+                    this.errors = [];
+                    this.fillEmpleado.estado_empl = this.fillPersona.estado_per;
+                    this.updateEmpleado();
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
+        },
+        updateEmpleado: function() {
+            var url = "updateEmpleado/" + this.fillEmpleado.id_empleado;
+            axios
+                .post(url, this.fillEmpleado)
+                .then(response => {
+                    this.fillEmpleado.id_per = "";
+                    this.fillEmpleado.id_usu = "";
+                    this.fillEmpleado.id_emp = "";
+                    this.fillPersona.estado_per = "";
+                    this.errors = [];
+                    this.getEmpleados();
+                    $("#editPersona").modal("hide");
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
+        },
+
         deletePersona: function(persona) {
             var url = "deletePersona/" + persona.id_per;
             axios.post(url).then(response => {
@@ -1416,6 +1551,26 @@ const app = new Vue({
                     $("#crearPersona").modal("hide");
                     $("#crearProveedor").modal("hide");
                     toastr.success("Se añadido una nuevo Proveedor");
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
+        },
+        createEmpleado: function() {
+            var urlGuardarEmpleado = "storeEmpleado";
+            this.get_ultimo_usuario();
+            this.newEmpleado.id_usu = localStorage.getItem("id_usuario");
+            axios
+                .post(urlGuardarEmpleado, this.newEmpleado)
+                .then(response => {
+                    this.getEmpleados();
+                    this.newEmpleado.id_emp = "";
+                    this.newEmpleado.id_usu = "";
+                    this.newEmpleado.id_per = "";
+                    this.newPersona.estado_per = "";
+                    this.errors = [];
+                    $("#crearEmpleado").modal("hide");
+                    toastr.success("Se añadido una nuevo Empleado");
                 })
                 .catch(error => {
                     this.errors = error.response.data;
@@ -1492,12 +1647,47 @@ const app = new Vue({
             this.fillPersona.fechafin_per = proveedor.fechafin_per;
             $("#editPersona").modal("show");
         },
+        editEmpleado: function(empleado) {
+            this.fillEmpleado.id_usu = empleado.id_usu;
+            this.fillEmpleado.id_emp = empleado.id_emp;
+            this.fillEmpleado.id_per = empleado.id_per;
+            this.fillEmpleado.id_empleado = empleado.id_empleado;
+            this.fillEmpleado.estado_empl = empleado.estado_per;
+            //persona
+            this.fillPersona.id_per = empleado.id_per;
+            this.fillPersona.id_contrib = empleado.id_contrib;
+            this.fillPersona.id_ident = empleado.id_ident;
+            this.fillPersona.id_ciu = empleado.id_ciu;
+            this.fillPersona.doc_per = empleado.doc_per;
+            this.fillPersona.organiz_per = empleado.organiz_per;
+            this.fillPersona.nombre_per = empleado.nombre_per;
+            this.fillPersona.apel_per = empleado.apel_per;
+            this.fillPersona.direc_per = empleado.direc_per;
+            this.fillPersona.fono1_per = empleado.fono1_per;
+            this.fillPersona.fono2_per = empleado.fono2_per;
+            this.fillPersona.cel1_per = empleado.cel1_per;
+            this.fillPersona.cel2_per = empleado.cel2_per;
+            this.fillPersona.fecnac_per = empleado.fecnac_per;
+            this.fillPersona.correo_per = empleado.correo_per;
+            this.fillPersona.estado_per = empleado.estado_per;
+            this.fillPersona.fechaini_per = empleado.fechaini_per;
+            this.fillPersona.fechafin_per = empleado.fechafin_per;
+            $("#editPersona").modal("show");
+        },
         deleteProveedor: function(proveedor) {
             var url = "deleteProveedor/" + proveedor.id_prov;
             this.deletePersona(proveedor);
             axios.post(url).then(response => {
                 this.getProveedores();
                 toastr.success("Proveedor eliminado con éxito");
+            });
+        },
+        deleteEmpleado: function(empleado) {
+            var url = "deleteEmpleado/" + empleado.id_empleado;
+            this.deletePersona(empleado);
+            axios.post(url).then(response => {
+                this.getEmpleados();
+                toastr.success("Empleado eliminado con éxito");
             });
         },
         ///Metodos de Bodega
@@ -2492,6 +2682,13 @@ const app = new Vue({
                     this.newUsuario.estado_usu = "";
                     this.newUsuario.fechaini_usu = "";
                     this.newUsuario.fechafin_usu = "";
+                    this.newUsuario.email = "";
+                    this.newPersona.nombre_per = "";
+                    this.newPersona.apel_per = "";
+                    this.newPersona.doc_per = "";
+                    this.newPersona.correo_per = "";
+                    this.newPersona.fechaini_per = "";
+                    this.newPersona.fechafin_per = "";
                     this.errors = [];
                     $("#crearUsuario").modal("hide");
                     toastr.success("Se añadido un nuevo Usuario");
@@ -2500,6 +2697,39 @@ const app = new Vue({
                     this.errors = error.response.data;
                 });
         },
+
+        createUsuarioEmpleado: function() {
+            var urlUsuario = "storeUsuarioEmpleado";
+            axios
+                .post(urlUsuario, this.newUsuario)
+                .then(response => {
+                    this.getUsuario();
+                    this.newUsuario.id_rol = "";
+                    this.newUsuario.id_emp = "";
+                    this.newUsuario.id_fec = "";
+                    this.newUsuario.nomb_usu = "";
+                    this.newUsuario.clave_usu = "";
+                    this.newUsuario.observ_usu = "";
+                    this.newUsuario.estado_usu = "";
+                    this.newUsuario.fechaini_usu = "";
+                    this.newUsuario.fechafin_usu = "";
+                    this.newUsuario.email = "";
+                    this.newPersona.nombre_per = "";
+                    this.newPersona.apel_per = "";
+                    this.newPersona.doc_per = "";
+                    this.newPersona.correo_per = "";
+                    this.newPersona.fechaini_per = "";
+                    this.newPersona.fechafin_per = "";
+                    this.errors = [];
+                    this.newEmpleado.id_usu = response.data;
+                    this.createEmpleado();
+                    toastr.success("Se añadido un nuevo Usuario");
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
+        },
+
         editUsuario: function(usuario) {
             this.fillUsuario.id_rol = usuario.id_rol;
             this.fillUsuario.id_usu = usuario.id_usu;
@@ -2679,6 +2909,14 @@ const app = new Vue({
             });
         },
 
+        get_ultimo_usuario: function() {
+            let url = "getUltimoUsuario";
+            //localStorage.removeItem("id_usuario");
+            axios.get(url).then(response => {
+                localStorage.setItem("id_usuario", response.data + 1);
+            });
+        },
+
         CalcularFacturaVenta: function() {
             var hoy = new Date();
             var hours = hoy.getHours();
@@ -2718,6 +2956,7 @@ const app = new Vue({
             this.buscar_cli = this.buscarCli.ruc_cli;
         },
         createFacturaVenta: function() {
+            this.factura.id_usu = this.id_usu;
             this.CalcularFacturaVenta();
             var urlFactV = "storeFactura";
             axios

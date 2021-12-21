@@ -22,6 +22,9 @@
                         Cliente
                     </th>
                     <th>
+                        Cajero
+                    </th>
+                    <th>
                         Estado
                     </th>
                     <th>
@@ -54,6 +57,9 @@
                     </td>
                     <td>
                         @{{factura.nombre_per}}  @{{factura.apel_per}}
+                    </td>
+                    <td>
+                        @{{factura.nombre_empl}}  @{{factura.apellido_empl}}
                     </td>
                     <td>
                         <div v-if="factura.estado_fact == 'PA'">

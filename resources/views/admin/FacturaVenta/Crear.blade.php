@@ -21,6 +21,8 @@
                     <div class="box-body">
                              <input class="form-control" name="tipo_factura" placeholder="Buscar" type="hidden" value="Venta">
                             </input>
+                            <input class="form-control" name="id_usu" placeholder="Buscar" type="hidden" value="{{Auth::user()->id_usu}}">
+                            </input>
                         <div class="form-group">
                             <label>
                                 Cliente

@@ -32,6 +32,7 @@ Route::get('Param_Docs', 'Param_DocsController@Param_Docs');
 Route::get('Param_Porc', 'Param_PorcController@Param_Porc');
 Route::get('Dashboard_Ventas', 'FacturaController@dashboard_ventas');
 Route::get('Dashboard_Compras', 'FacturaController@dashboard_compras');
+Route::get('Cajeros', 'FacturaController@asignar_cajero');
 //Configuracion
 Route::get('Categoria', 'CategoriaController@Categoria')->middleware('auth');
 Route::get('Marca', 'MarcaController@Marca')->middleware('auth');
@@ -74,7 +75,16 @@ Route::get('DVentas', 'FacturaController@getVentas');
 Route::get('DCompras', 'FacturaController@getCompras');
 Route::get('ObtenerFactura', 'FacturaController@leer_xml');
 Route::get('DescargaFactura/{id_fact}', 'FacturaController@download_factura');
+Route::get('DescargaRCompra/{mes}', 'ReportesController@download_rCompra');
+Route::get('DescargaRVenta/{mes}', 'ReportesController@download_rVentas');
 Route::get('getProforma', 'FacturaController@getProforma');
+Route::get('getEmpleado', 'EmpleadoController@getEmpleados');
+Route::get('getReporteVenta', 'ReportesController@reporte_ventas');
+Route::get('getReporteCompra', 'ReportesController@reporte_compras');
+Route::get('ReporteCompra', 'ReportesController@index');
+Route::get('ReporteVenta', 'ReportesController@index_venta');
+Route::get('getUltimoUsuario', 'EmpleadoController@ultimo_usuario');
+
 
 
 //Ruta Guardar
@@ -86,6 +96,8 @@ Route::post('storeProveedor', 'ProveedorController@guardarProveedor');
 Route::post('storePersona', 'PersonaController@guardarPersona');
 Route::post('storeTipoContribuyente', 'TipoContribuyenteController@guardarTipoContribuyente');
 Route::post('storeIdentificaciones', 'IdentificacionesController@guardarIdentificacion');
+Route::post('storeEmpleado', 'EmpleadoController@guardarEmpleado');
+Route::post('storeUsuarioEmpleado', 'EmpleadoController@guardarUsuarioEmpleado');
 Route::post('/storeProducto', [App\Http\Controllers\ProductoController::class, 'guardarProducto']);
 
 Route::post('storeBodega', 'BodegaController@guardarBodega');
@@ -129,6 +141,7 @@ Route::post('updateParam_Docs/{id}', 'Param_DocsController@modificarParam_Docs')
 Route::post('updateParam_Porc/{id}', 'Param_PorcController@modificarParam_Porc');
 Route::post('updatePeriodo/{id}', 'PeriodoController@modificarPeriodo');
 Route::post('updateTipoDocumento/{id}', 'TipoDocumentoController@modificarTipoDocumento');
+Route::post('updateEmpleado/{id}', 'EmpleadoController@modificarEmpleado');
 Route::post('updateUsuaurio/{id}', 'UserController@modificarUsuario');
 //Ruta Eliminar
 Route::post('deleteMarca/{id}', 'MarcaController@eliminarMarca');
@@ -138,6 +151,7 @@ Route::post('deleteTipoContribuyente/{id}', 'TipoContribuyenteController@elimina
 Route::post('deleteCategoria/{id}', 'CategoriaController@eliminarCategoria');
 Route::post('deleteProducto/{id}', 'ProductoController@eliminarProducto');
 Route::post('deletePersona/{id}', 'PersonaController@eliminarPersona');
+Route::post('deleteEmpleado/{id}', 'EmpleadoController@eliminarEmpleado');
 Route::post('deleteProveedor/{id}', 'ProveedorController@eliminarProveedor');
 Route::post('deleteBodega/{id}', 'BodegaController@eliminarBodega');
 Route::post('deletePais/{id}', 'PaisController@eliminarPais');

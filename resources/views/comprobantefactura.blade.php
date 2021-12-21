@@ -94,11 +94,13 @@
         @endif
         <h5>Fecha de Emision</h5>
         <h5>Fecha de vencimiento</h5>
+        <h5>Emitido por:</h5>
     </td>
      <td>
          <h5>{{$num_fact}}</h5>
         <p>{{$fecha_emision_fact}}</p>
         <p>{{$vencimiento_fact}}</p>
+        <p>{{$nombre_empl}} {{$apellido_empl}}</p>
      </td>
 
   </tr>

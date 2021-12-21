@@ -15,13 +15,13 @@
                     Facturas
                 </a>
             </li>
-            <li>
+            <!--<li>
                 <a data-toggle="tab" href="#nav-guiaRem">
                     <i class="fa fa-truck">
                     </i>
                     Guias de Remision
                 </a>
-            </li>
+            </li>-->
             <li>
                 <a data-toggle="tab" href="#nav-proveedor">
                     <i class="fa fa-user">

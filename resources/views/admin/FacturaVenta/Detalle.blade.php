@@ -58,6 +58,7 @@
     window.App = {
         errors: {!! json_encode($errors->toArray()) !!},
         id_persona: {!! json_encode($factura->id_per) !!},
-        tipo_factura: '{!! $tipo_factura !!}'
+        tipo_factura: '{!! $tipo_factura !!}',
+        id_usuario: {!! $id_usu !!},
     }
 </script>

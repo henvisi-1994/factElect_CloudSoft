@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class FacturaController extends Controller
 {
@@ -36,11 +37,14 @@ class FacturaController extends Controller
     }
     public function guardarFacturaVenta(Request $request)
     {
+        $id_usuario=$request->input('id_usu');
         $v = $this->validate(request(), [
             'num_fact' => ['required', 'string'],
             'id_formapago' => ['required'],
         ]);
         if ($v) {
+            $cajero = DB::select(
+            'SELECT id_empleado FROM v_empleado WHERE id_usu=? AND (nomb_rol="Cajero" OR nomb_rol="Administrador")',[$id_usuario])[0]->id_empleado;
             $factura = new Factura();
             $factura->id_formapago = $request->input('id_formapago');
             $factura->id_per = $request->input('id_per');
@@ -57,6 +61,7 @@ class FacturaController extends Controller
             $factura->subiva_fact = $request->input('subiva_fact');
             $factura->subice_fact = $request->input('subice_fact');
             $factura->total_fact = $request->input('total_fact');
+            $factura->id_empl=$cajero;
             $factura->save();
             return;
         } else {
@@ -65,17 +70,7 @@ class FacturaController extends Controller
     }
     public function getFacturaVenta()
     {
-        $facturas = DB::table('factura as fac')
-            ->join(
-                'formapago',
-                'fac.id_formapago',
-                '=',
-                'formapago.id_formapago'
-            )
-            ->join('persona', 'fac.id_per', '=', 'persona.id_per')
-            ->where('tipo_fact', '=', 'Venta')
-            ->orderBy('fac.id_fact', 'des')
-            ->get();
+        $facturas = DB::select('SELECT *FROM v_factura');
         return $facturas;
     }
         public function getProforma()
@@ -96,6 +91,7 @@ class FacturaController extends Controller
     public function preguardarFacturaVenta(Request $request)
     {
         $tipo_factura=$request->input('tipo_factura');
+        $id_usu=$request->input('id_usu');
         $id = $request->input('buscar_cli');
         $factura = DB::table('cliente as c')
             ->join('empresa', 'c.id_emp', '=', 'empresa.id_emp')
@@ -110,7 +106,7 @@ class FacturaController extends Controller
         $formas_pago = FormaPago::get();
         return view(
             'admin.FacturaVenta.Detalle',
-            compact('factura', 'categorias', 'marcas', 'formas_pago','tipo_factura')
+            compact('factura', 'categorias', 'marcas', 'formas_pago','tipo_factura','id_usu')
         );
     }
     public function ultimonumFactVenta()
@@ -216,6 +212,7 @@ class FacturaController extends Controller
     }
     public function guardarFacturaCompra(Request $request)
     {
+        $id_usuario=Auth::user()->id_usu;
         /*if($request->hasFile('facturaC')){
        //archivo
         $archivo = $request->file('facturaC');
@@ -246,6 +243,8 @@ class FacturaController extends Controller
             $xmlContent->comprobante->factura->infotributaria->ptoEmi[0] .
             ' - ' .
             $xmlContent->comprobante->factura->infotributaria->secuencial[0];
+            $cajero = DB::select(
+            'SELECT id_empleado FROM v_empleado WHERE id_usu=? AND (nomb_rol="Cajero" OR nomb_rol="Administrador")',[$id_usuario])[0]->id_empleado;
         $factura = new Factura();
         $factura->id_formapago = $this->formaPago(
             $xmlContent->comprobante->factura->infoFactura->pagos->pago
@@ -258,6 +257,7 @@ class FacturaController extends Controller
         $factura->fecha_emision_fact =date('Y-m-d', strtotime( $xmlContent->comprobante->factura->infoFactura->fechaEmision[0]));
         $factura->hora_emision_fact = $horaAutorizacion;
         $factura->estado_fact = 'PA';
+        $factura->id_empl = $cajero;
         $factura->tipo_fact = 'Compra';
         $factura->observ_fact = '';
         $factura->subtotal_fact =
@@ -393,9 +393,9 @@ class FacturaController extends Controller
         DATE_FORMAT(fecha_emision_fact,"%Y-%m")');
              return $compras;
     }
+
     public function download_factura($id_fact)
     {
-
         $factura = DB::select(
             'SELECT *FROM v_factura WHERE id_fact=?',
             [$id_fact]
@@ -416,12 +416,19 @@ class FacturaController extends Controller
         'vencimiento_fact'=>$factura->vencimiento_fact,
         'nomb_formapago'=>$factura->nomb_formapago,
         'total_fact'=>$factura->total_fact,
-        'tipo_fact'=>$factura->tipo_fact
+        'tipo_fact'=>$factura->tipo_fact,
+        'nombre_empl'=>$factura->nombre_empl,
+        'apellido_empl'=>$factura->apellido_empl,
     ];
 
     $pdf = PDF::loadView('comprobantefactura', $data);
 
     return $pdf->download($nombre_archivo);
+    }
+    public function asignar_cajero(){
+         $cajero = DB::select(
+            'SELECT id_empleado FROM v_empleado WHERE id_usu=? AND (nomb_rol="Cajero" OR nomb_rol="Administrador")',[7])[0]->id_empleado;
+            return $cajero;
     }
 
 }

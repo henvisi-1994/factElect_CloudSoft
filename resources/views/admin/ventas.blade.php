@@ -4,12 +4,22 @@
    <div class="panel-heading">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#nav-ventas">Ventas</a></li>
-            <li><a  data-toggle="tab" href="#nav-producto" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa fa-archive"></i> Productos</a></li>
+            @if (Auth::user()->id_rol==1||Auth::user()->id_rol==3||Auth::user()->id_rol==4)
+                        <li><a  data-toggle="tab" href="#nav-producto" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa fa-archive"></i> Productos</a></li>
+            @endif
+            @if (Auth::user()->id_rol==1||Auth::user()->id_rol==2||Auth::user()->id_rol==3)
             <li><a  data-toggle="tab" href="#nav-cliente"><i class="fa fa-group "></i>Clientes</a></li>
+            @endif
+            @if (Auth::user()->id_rol==1||Auth::user()->id_rol==2||Auth::user()->id_rol==3)
             <li><a  data-toggle="tab" href="#nav-factura"><i class="fa fa-file-o"></i> Facturas</a></li>
-            <li><a  data-toggle="tab" href="#nav-guiaRem"><i class="fa fa-truck"></i> Guia de Remision</a></li>
-             <li><a  data-toggle="tab" href="#nav-proforma"><i class="fa fa-file-o"></i> Proforma</a></li>
-
+            @endif
+            <!--<li><a  data-toggle="tab" href="#nav-guiaRem"><i class="fa fa-truck"></i> Guia de Remision</a></li>-->
+            @if (Auth::user()->id_rol==1||Auth::user()->id_rol==2||Auth::user()->id_rol==3)
+            <li><a  data-toggle="tab" href="#nav-proforma"><i class="fa fa-file-o"></i> Proforma</a></li>
+            @endif
+            @if (Auth::user()->id_rol==1||Auth::user()->id_rol==3||Auth::user()->id_rol==4)
+            <li><a  data-toggle="tab" href="#nav-inventario"><i class="fa fa-cubes"></i> Inventario</a></li>
+            @endif
         </ul>
     </div>
 <div class="tab-content" id="nav-tabContent">
@@ -31,6 +41,9 @@
     </div>
     <div class="tab-pane fade" id="nav-proforma">
         @include('admin.Proforma.index')
+    </div>
+        <div class="tab-pane fade" id="nav-inventario">
+        @include('admin.Inventario.index')
     </div>
 </div>
 @endsection

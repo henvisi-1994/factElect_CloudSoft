@@ -11,6 +11,10 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\Roles;
+use App\Persona;
+use App\TipoContribuyente;
+use App\Identificaciones;
+use App\Ciudad;
 
 class UserController extends Controller
 {
@@ -19,8 +23,14 @@ class UserController extends Controller
         $empresas = Empresa::get();
         $fechas = Fecha_periodo::get();
         $roles = Roles::get();
-        return view('admin.usuarios', compact('empresas', 'fechas', 'roles'));
+        $personas = Persona::get();
+        $usuarios = User::get();
+        $tipoContribuyentes = TipoContribuyente::get();
+        $identificaciones = Identificaciones::get();
+        $ciudades = Ciudad::get();
+        return view('admin.usuarios', compact('empresas', 'fechas', 'roles','personas','usuarios','tipoContribuyentes', 'identificaciones', 'ciudades'));
     }
+
     //Usuario
     public function getUsuario()
     {
@@ -47,6 +57,7 @@ class UserController extends Controller
             $usuario->password =  Hash::make($request->input('clave_usu'));
             $usuario->observ_usu =  $request->input('observ_usu');
             $usuario->estado_usu =  $request->input('estado_usu');
+            $usuario->email =  $request->input('email');
             $usuario->fechaini_usu =  $request->input('fechaini_usu');
             $usuario->fechafin_usu =  $request->input('fechafin_usu');
             $usuario->save();
