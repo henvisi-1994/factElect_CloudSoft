@@ -23,6 +23,11 @@ Vue.component(
 const app = new Vue({
     el: "#crud",
     created: function() {
+        this.getTotalUsuarios();
+        this.getTotalCompras();
+        this.getTotalVentas();
+        this.getTotalUtilidades();
+        this.getReporte_Inventario();
         this.getReporte_Compras();
         this.getReporte_Venta();
         this.get_ultimo_usuario();
@@ -53,6 +58,7 @@ const app = new Vue({
         this.getFacturaVenta();
         this.getProforma();
         this.getIva();
+        this.getInventario();
         this.getNumfactV();
 
         this.existeDF = "False";
@@ -120,6 +126,29 @@ const app = new Vue({
             id_emp: "",
             id_fec: ""
         },
+        inventarios: [],
+        newInventario: {
+            id_prod: "",
+            id_emp: "",
+            id_fec: "",
+            numprod_inv: "",
+            observ_inv: "",
+            estado_inv: "",
+            fechafin_inv: ""
+        },
+        fillInventario: {
+            id_usu: "",
+            id_prod: "",
+            id_emp: "",
+            id_fec: "",
+            descripcion_inv: "",
+            numprod_inv: "",
+            numexist_inv: "",
+            observ_inv: "",
+            estado_inv: "",
+            fechafin_inv: ""
+        },
+
         fillDescuento: {
             id_desc: "",
             nomb_desc: "",
@@ -672,6 +701,7 @@ const app = new Vue({
         },
         r_ventas: [],
         r_compras: [],
+        r_inventarios: [],
         numregistros: 10,
         src: "",
         subtotal: "",
@@ -680,7 +710,11 @@ const app = new Vue({
         file: null,
         series: "",
         id_usu: 0,
-        id_usuario: 0
+        id_usuario: 0,
+        total_usuarios: 0,
+        total_compras: 0,
+        total_ventas: 0,
+        total_utilidades: 0
     },
     computed: {
         buscarCategoria: function() {
@@ -747,16 +781,38 @@ const app = new Vue({
                 this.personas = response.data;
             });
         },
+        getTotalUsuarios: function() {
+            var urlTotalUsuarios = "getTotalUsuarios";
+            axios.get(urlTotalUsuarios).then(response => {
+                this.total_usuarios = response.data;
+            });
+        },
+        getTotalCompras: function() {
+            var id_usu = document.getElementById("id_usu").value;
+            this.id_usu = id_usu;
+            var urlTotalCompras = "getTotalCompras/" + this.id_usu;
+            axios.get(urlTotalCompras).then(response => {
+                this.total_compras = response.data;
+                localStorage.setItem("total_compras", response.data);
+            });
+        },
+        getTotalVentas: function() {
+            this.id_usu = document.getElementById("id_usu").value;
+            var urlTotalventas = "getTotalVentas/" + this.id_usu;
+            axios.get(urlTotalventas).then(response => {
+                this.total_ventas = response.data;
+                localStorage.setItem("total_ventas", response.data);
+            });
+        },
+        getTotalUtilidades: function() {
+            this.total_utilidades =
+                localStorage.getItem("total_ventas") -
+                localStorage.getItem("total_compras");
+        },
         getEmpleados: function() {
             var urlEmpleados = "getEmpleado";
             axios.get(urlEmpleados).then(response => {
                 this.empleados = response.data;
-            });
-        },
-        getCategorias: function() {
-            var urlCategorias = "getCategorias";
-            axios.get(urlCategorias).then(response => {
-                this.categorias = response.data;
             });
         },
         getReporte_Venta: function() {
@@ -771,6 +827,20 @@ const app = new Vue({
                 this.r_compras = response.data;
             });
         },
+        getReporte_Inventario: function() {
+            var urlRepInventario = "getReporteInventario";
+            axios.get(urlRepInventario).then(response => {
+                this.r_inventarios = response.data;
+                console.log(response.data);
+            });
+        },
+        getCategorias: function() {
+            var urlCategorias = "getCategorias";
+            axios.get(urlCategorias).then(response => {
+                this.categorias = response.data;
+            });
+        },
+
         createCategoria: function() {
             var urlGuardarCategoria = "storeCategoria";
             axios
@@ -3006,6 +3076,85 @@ const app = new Vue({
                 .catch(error => {
                     this.errors = error.response.data;
                 });
+        },
+        //Metodos de Inventario
+        getInventario: function() {
+            var urlInventario = "getInventario";
+            axios.get(urlInventario).then(response => {
+                this.inventarios = response.data;
+            });
+        },
+
+        createInventario: function() {
+            var urlGuardarInventario = "storeInventario";
+            axios
+                .post(urlGuardarInventario, this.newInventario)
+                .then(response => {
+                    this.getInventario();
+                    newInventario = {
+                        id_prod: "",
+                        id_emp: "",
+                        id_fec: "",
+                        numprod_inv: "",
+                        observ_inv: "",
+                        estado_inv: "",
+                        fechafin_inv: ""
+                    };
+                    this.errors = [];
+                    $("#crearInventario").modal("hide");
+                    toastr.success("Se añadido un nuevo Inventario");
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
+        },
+        editInventario: function(inventario) {
+            this.fillInventario.id_inv = inventario.id_inv;
+            this.fillInventario.id_usu = inventario.id_usu;
+            this.fillInventario.id_prod = inventario.id_prod;
+            this.fillInventario.id_emp = inventario.id_emp;
+            this.fillInventario.id_fec = inventario.id_fec;
+            this.fillInventario.descripcion_inv = inventario.descripcion_inv;
+            this.fillInventario.numprod_inv = inventario.numprod_inv;
+            this.fillInventario.numexist_inv = inventario.numexist_inv;
+            this.fillInventario.observ_inv = inventario.observ_inv;
+            this.fillInventario.estado_inv = inventario.estado_inv;
+            this.fillInventario.fechafin_inv = inventario.fechafin_inv;
+
+            $("#editInventario").modal("show");
+        },
+        updateInventario: function(id) {
+            var url = "updateInventario/" + id;
+            axios
+                .post(url, this.fillInventario)
+                .then(response => {
+                    this.getInventario();
+                    this.fillInventario = {
+                        id_usu: "",
+                        id_prod: "",
+                        id_emp: "",
+                        id_fec: "",
+                        descrpcion_inv: "",
+                        numprod_inv: "",
+                        numexist_inv: "",
+                        observ_inv: "",
+                        estado_inv: "",
+                        fechafin_inv: ""
+                    };
+                    this.errors = [];
+                    $("#editInventario").modal("hide");
+                    toastr.success("Inventario actualizado con éxito");
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
+        },
+        deleteInventario: function(inventario) {
+            var url = "deleteInventario/" + inventario.id_inv;
+            axios.post(url).then(response => {
+                this.getInventario();
+                toastr.success("Inventario eliminada con éxito");
+            });
         }
     }
 });

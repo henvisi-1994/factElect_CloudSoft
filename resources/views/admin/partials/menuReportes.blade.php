@@ -12,7 +12,7 @@
         </a>
     </li>
     <li>
-        <a href="{{asset("Unidad")}}" >
+        <a href="{{asset("ReporteInventario")}}" >
         <img src="{{ asset("Administrador/dist/img/Iconos/inventario.png") }}">
 
             Reporte de Inventario

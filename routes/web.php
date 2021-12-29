@@ -53,6 +53,7 @@ Route::get('getCiudad', 'CiudadController@getCiudad');
 Route::get('getTipoContribuyente', 'TipoContribuyenteController@getTipoContribuyente');
 Route::get('getIdentificacion', 'IdentificacionesController@getIdentificacion');
 Route::get('getBodega', 'BodegaController@getBodega');
+Route::get('getInventario', 'InventarioController@getInventario');
 Route::get('getPais', 'PaisController@getPais');
 Route::get('getProvincia', 'ProvinciaController@getProvincia');
 Route::get('getEmpresa', 'EmpresaController@getEmpresa');
@@ -77,19 +78,29 @@ Route::get('ObtenerFactura', 'FacturaController@leer_xml');
 Route::get('DescargaFactura/{id_fact}', 'FacturaController@download_factura');
 Route::get('DescargaRCompra/{mes}', 'ReportesController@download_rCompra');
 Route::get('DescargaRVenta/{mes}', 'ReportesController@download_rVentas');
+Route::get('DescargaRInventario/{mes}', 'ReportesController@download_rInventario');
+
 Route::get('getProforma', 'FacturaController@getProforma');
 Route::get('getEmpleado', 'EmpleadoController@getEmpleados');
 Route::get('getReporteVenta', 'ReportesController@reporte_ventas');
+Route::get('getReporteInventario', 'ReportesController@reporteInventario');
 Route::get('getReporteCompra', 'ReportesController@reporte_compras');
 Route::get('ReporteCompra', 'ReportesController@index');
 Route::get('ReporteVenta', 'ReportesController@index_venta');
+Route::get('ReporteInventario', 'ReportesController@index_inventario');
 Route::get('getUltimoUsuario', 'EmpleadoController@ultimo_usuario');
+Route::get('getTotalUsuarios', 'ConteoController@conteo_usuarios');
+Route::get('getTotalCompras/{id_usu}', 'ConteoController@conteo_total_compras');
+Route::get('getTotalVentas/{id_usu}', 'ConteoController@conteo_total_ventas');
+
+
 
 
 
 //Ruta Guardar
 Route::post('storeCategoria', 'CategoriaController@guardarCategoria');
 Route::post('storeMarca', 'MarcaController@guardarMarca');
+Route::post('storeInventario', 'InventarioController@guardarInventario');
 Route::post('storeUnidad', 'UnidadController@guardarUnidad');
 Route::post('storeCiudad', 'CiudadController@guardarCiudad');
 Route::post('storeProveedor', 'ProveedorController@guardarProveedor');
@@ -121,6 +132,7 @@ Route::post('storeFacturaDetalle/{num_fact}', 'DetalleFacturaController@guardarD
 Route::post('preguardarFacturaVenta', 'FacturaController@preguardarFacturaVenta');
 Route::post('updateCategoria/{id}', 'CategoriaController@modificarCategoria');
 Route::post('updateMarca/{id}', 'MarcaController@modificarMarca');
+Route::post('updateInventario/{id}', 'InventarioController@modificarIdentificacion');
 Route::post('updateUnidad/{id}', 'UnidadController@modificarUnidad');
 Route::post('updateCiudad/{id}', 'CiudadController@modificarCiudad');
 Route::post('updateProveedor/{id}', 'ProveedorController@modificarProveedor');
@@ -146,6 +158,7 @@ Route::post('updateUsuaurio/{id}', 'UserController@modificarUsuario');
 //Ruta Eliminar
 Route::post('deleteMarca/{id}', 'MarcaController@eliminarMarca');
 Route::post('deleteUnidad/{id}', 'UnidadController@eliminarUnidad');
+Route::post('deleteInventario/{id}', 'InventarioController@eliminarInventario');
 Route::post('deleteIdentificacion/{id}', 'IdentificacionesController@eliminarIdentificacion');
 Route::post('deleteTipoContribuyente/{id}', 'TipoContribuyenteController@eliminarTipoContribuyente');
 Route::post('deleteCategoria/{id}', 'CategoriaController@eliminarCategoria');

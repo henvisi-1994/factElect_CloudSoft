@@ -5,6 +5,7 @@
         Dashboard
         <small>Control panel</small>
       </h1>
+      <input type="hidden"value="{{ Auth::user()->id_usu }}"id="id_usu">
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
@@ -20,9 +21,9 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3>$@{{total_compras}}</h3>
 
-              <p>New Orders</p>
+              <p>Compras</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
@@ -34,9 +35,8 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-              <p>Bounce Rate</p>
+              <h3>$@{{total_ventas}}</h3>
+              <p>Ventas </p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
@@ -48,9 +48,9 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3>@{{total_usuarios}}</h3>
 
-              <p>User Registrations</p>
+              <p>Usuarios Registrados</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -62,9 +62,9 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3>@{{total_utilidades}}</h3>
 
-              <p>Unique Visitors</p>
+              <p>Utilidad</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>

@@ -21,19 +21,12 @@ class InventarioController extends Controller
      public function  guardarInventario(Request $request)
     {
         $v =$this->validate(request(), [
-            'id_usu' => 'required',
             'id_emp' => 'required',
             'id_fec' => 'required',
-            'descrpcion_inv' => 'required',
-            'fecha_inv' => 'required',
             'numprod_inv' => 'required',
-            'numexist_inv' => 'required',
             'observ_inv' => 'required',
             'estado_inv' => 'required',
-            'numexist_inv' => 'required',
-            'fechaini_inv' => 'required',
             'fechafin_inv' => 'required',
-            'control_fecha' => 'required',
             'id_prod' => 'required',
         ]);
         if ($v)
@@ -41,6 +34,7 @@ class InventarioController extends Controller
             $id_prod=$request->input('id_prod');
             $producto=DB::select('SELECT producto.id_bod,producto.descripcion_prod,producto.stockmax_prod,producto.precio_prod,producto.comision_prod
             FROM producto WHERE id_prod=?',[$id_prod])[0];
+            $desc_prod=$producto->descripcion_prod;
             $id_bod=$producto->id_bod;
             $id_usuario=Auth::user()->id_usu;
             $carbon = new \Carbon\Carbon();
@@ -49,17 +43,17 @@ class InventarioController extends Controller
             $precio_prod=$producto->precio_prod;
             $cap_neto=$cant_prod*$precio_prod;
             $comision=$producto->comision_prod;
-            $pvp=$precio_prod+($precio_prod*$comision);
+            $pvp=($precio_prod+($precio_prod*$comision))*$request->input('numprod_inv');
             $utilidad=$pvp-$cap_neto;
             $inventarios= new Inventario();
             $inventarios->id_usu=$id_usuario;
             $inventarios->id_bod=$id_bod;
             $inventarios->id_emp=$request->input('id_emp');
             $inventarios->id_fec=$request->input('id_fec');
-            $inventarios->descrpcion_inv=$request->input('descrpcion_inv');
+            $inventarios->descripcion_inv=$desc_prod;
             $inventarios->fecha_inv=$date;
             $inventarios->numprod_inv=$request->input('numprod_inv');
-            $inventarios->numexist_inv=$request->input('numexist_inv');
+            $inventarios->numexist_inv=$cant_prod;
             $inventarios->capneto_inv=$cap_neto;
             $inventarios->cappvp_inv=$pvp;
             $inventarios->util_inv=$utilidad;
@@ -80,19 +74,12 @@ class InventarioController extends Controller
     public function  modificarIdentificacion(Request $request,$id)
     {
       $v =$this->validate(request(), [
-            'id_usu' => 'required',
             'id_emp' => 'required',
             'id_fec' => 'required',
-            'descrpcion_inv' => 'required',
-            'fecha_inv' => 'required',
             'numprod_inv' => 'required',
-            'numexist_inv' => 'required',
             'observ_inv' => 'required',
             'estado_inv' => 'required',
-            'numexist_inv' => 'required',
-            'fechaini_inv' => 'required',
             'fechafin_inv' => 'required',
-            'control_fecha' => 'required',
             'id_prod' => 'required',
         ]);
         if ($v)
@@ -100,6 +87,7 @@ class InventarioController extends Controller
             $id_prod=$request->input('id_prod');
             $producto=DB::select('SELECT producto.id_bod,producto.descripcion_prod,producto.stockmax_prod,producto.precio_prod,producto.comision_prod
             FROM producto WHERE id_prod=?',[$id_prod])[0];
+            $desc_prod=$producto->descripcion_prod;
             $id_bod=$producto->id_bod;
             $id_usuario=Auth::user()->id_usu;
             $carbon = new \Carbon\Carbon();
@@ -108,17 +96,17 @@ class InventarioController extends Controller
             $precio_prod=$producto->precio_prod;
             $cap_neto=$cant_prod*$precio_prod;
             $comision=$producto->comision_prod;
-            $pvp=$precio_prod+($precio_prod*$comision);
+            $pvp=($precio_prod+($precio_prod*$comision))*$request->input('numprod_inv');
             $utilidad=$pvp-$cap_neto;
             $inventarios= new Inventario();
             $id_usu=$id_usuario;
             $id_bod=$id_bod;
             $id_emp=$request->input('id_emp');
             $id_fec=$request->input('id_fec');
-            $descrpcion_inv=$request->input('descrpcion_inv');
+            $descripcion_inv=$desc_prod;
             $fecha_inv=$date;
             $numprod_inv=$request->input('numprod_inv');
-            $numexist_inv=$request->input('numexist_inv');
+            $numexist_inv=$cant_prod;
             $capneto_inv=$cap_neto;
             $cappvp_inv=$pvp;
             $util_inv=$utilidad;
@@ -130,7 +118,7 @@ class InventarioController extends Controller
             DB::table('inventario')
             ->where('id_inv', $id)
             ->update(['id_usu' => $id_usu, 'id_emp' => $id_emp , 'id_fec' => $id_fec,
-            'descrpcion_inv' => $descrpcion_inv,'fecha_inv'=> $fecha_inv,'numprod_inv'=> $numprod_inv
+            'descripcion_inv' => $descripcion_inv,'fecha_inv'=> $fecha_inv,'numprod_inv'=> $numprod_inv
             ,'numexist_inv'=> $numexist_inv,'capneto_inv'=> $capneto_inv,'cappvp_inv'=> $cappvp_inv
             ,'util_inv'=> $util_inv,'observ_inv'=> $observ_inv,'estado_inv'=> $estado_inv
             ,'fechaini_inv'=> $fechaini_inv,'fechafin_inv'=> $fechafin_inv,'control_fecha'=> $control_fecha]
@@ -154,7 +142,7 @@ class InventarioController extends Controller
     }
     public function getInventario()
     {
-        $inventarios=DB::select('SELECT *FROM v_inventario');
+        $inventarios=DB::select('SELECT *FROM v_inventario INNER JOIN producto ON (SELECT id_prod FROM producto WHERE descripcion_prod=descripcion_inv)=producto.id_prod');
         return $inventarios;
 
     }

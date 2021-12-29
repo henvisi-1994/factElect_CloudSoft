@@ -38,6 +38,10 @@ class ReportesController extends Controller
     {
     return view('Reportes.rventas');
     }
+        public function index_inventario()
+    {
+    return view('Reportes.rinventario');
+    }
 
 
     public function download_rCompra($mes)
@@ -82,6 +86,36 @@ class ReportesController extends Controller
     $pdf = PDF::loadView('Reportes.pdf_venta', $data);
 
     return $pdf->download($nombre_archivo);
+    }
+        public function download_rInventario($mes)
+    {
+        $id_usuario=Auth::user()->id_usu;
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+         $nom_usuario=Auth::user()->nomb_usu;
+        $inventarios = DB::select('SELECT DATE_FORMAT(fechafin_inv,"%Y-%m") AS mes, v_inventario.descripcion_inv,SUM(numprod_inv) AS numprod_inv,SUM(capneto_inv) AS capneto_inv
+        ,SUM(cappvp_inv) AS cappvp_inv,SUM(util_inv) AS util_inv FROM v_inventario LEFT JOIN empresa ON
+        (SELECT usuario.id_emp FROM usuario WHERE id_usu=?)=empresa.id_emp WHERE DATE_FORMAT(fechafin_inv,"%Y-%m")=?
+        GROUP BY DATE_FORMAT(fechafin_inv,"%Y-%m"),descripcion_inv ',[$id_usuario,$mes]);
+         $nombre_archivo=$date.$nom_usuario.".pdf";
+    $data = [
+        'inventarios'=>$inventarios,
+    ];
+
+    $pdf = PDF::loadView('Reportes.pdf_inventarios', $data);
+
+    return $pdf->download($nombre_archivo);
+    }
+
+    public function reporteInventario()
+    {
+        $id_usuario=Auth::user()->id_usu;
+        $r_inventarios = DB::select('SELECT DATE_FORMAT(fechafin_inv,"%Y-%m") AS mes, v_inventario.descripcion_inv,SUM(numprod_inv) AS numprod_inv,SUM(capneto_inv) AS capneto_inv
+        ,SUM(cappvp_inv) AS cappvp_inv,SUM(util_inv) AS util_inv FROM v_inventario LEFT JOIN empresa ON
+        (SELECT usuario.id_emp FROM usuario WHERE id_usu=?)=empresa.id_emp
+        GROUP BY
+        DATE_FORMAT(fechafin_inv,"%Y-%m"),descripcion_inv',[$id_usuario]);
+        return $r_inventarios;
     }
     //
 }

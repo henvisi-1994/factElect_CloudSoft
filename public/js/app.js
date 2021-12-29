@@ -49030,6 +49030,11 @@ Vue.component("example-component", __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: "#crud",
   created: function created() {
+    this.getTotalUsuarios();
+    this.getTotalCompras();
+    this.getTotalVentas();
+    this.getTotalUtilidades();
+    this.getReporte_Inventario();
     this.getReporte_Compras();
     this.getReporte_Venta();
     this.get_ultimo_usuario();
@@ -49060,6 +49065,7 @@ var app = new Vue({
     this.getFacturaVenta();
     this.getProforma();
     this.getIva();
+    this.getInventario();
     this.getNumfactV();
     this.existeDF = "False";
 
@@ -49127,6 +49133,28 @@ var app = new Vue({
       fechafin_desc: "",
       id_emp: "",
       id_fec: ""
+    },
+    inventarios: [],
+    newInventario: {
+      id_prod: "",
+      id_emp: "",
+      id_fec: "",
+      numprod_inv: "",
+      observ_inv: "",
+      estado_inv: "",
+      fechafin_inv: ""
+    },
+    fillInventario: {
+      id_usu: "",
+      id_prod: "",
+      id_emp: "",
+      id_fec: "",
+      descripcion_inv: "",
+      numprod_inv: "",
+      numexist_inv: "",
+      observ_inv: "",
+      estado_inv: "",
+      fechafin_inv: ""
     },
     fillDescuento: {
       id_desc: "",
@@ -49679,6 +49707,7 @@ var app = new Vue({
     },
     r_ventas: [],
     r_compras: [],
+    r_inventarios: [],
     numregistros: 10,
     src: "",
     subtotal: "",
@@ -49687,7 +49716,11 @@ var app = new Vue({
     file: null,
     series: "",
     id_usu: 0,
-    id_usuario: 0
+    id_usuario: 0,
+    total_usuarios: 0,
+    total_compras: 0,
+    total_ventas: 0,
+    total_utilidades: 0
   },
   computed: {
     buscarCategoria: function buscarCategoria() {
@@ -49757,44 +49790,85 @@ var app = new Vue({
         _this4.personas = response.data;
       });
     },
-    getEmpleados: function getEmpleados() {
+    getTotalUsuarios: function getTotalUsuarios() {
       var _this5 = this;
+
+      var urlTotalUsuarios = "getTotalUsuarios";
+      axios.get(urlTotalUsuarios).then(function (response) {
+        _this5.total_usuarios = response.data;
+      });
+    },
+    getTotalCompras: function getTotalCompras() {
+      var _this6 = this;
+
+      var id_usu = document.getElementById("id_usu").value;
+      this.id_usu = id_usu;
+      var urlTotalCompras = "getTotalCompras/" + this.id_usu;
+      axios.get(urlTotalCompras).then(function (response) {
+        _this6.total_compras = response.data;
+        localStorage.setItem("total_compras", response.data);
+      });
+    },
+    getTotalVentas: function getTotalVentas() {
+      var _this7 = this;
+
+      this.id_usu = document.getElementById("id_usu").value;
+      var urlTotalventas = "getTotalVentas/" + this.id_usu;
+      axios.get(urlTotalventas).then(function (response) {
+        _this7.total_ventas = response.data;
+        localStorage.setItem("total_ventas", response.data);
+      });
+    },
+    getTotalUtilidades: function getTotalUtilidades() {
+      this.total_utilidades = localStorage.getItem("total_ventas") - localStorage.getItem("total_compras");
+    },
+    getEmpleados: function getEmpleados() {
+      var _this8 = this;
 
       var urlEmpleados = "getEmpleado";
       axios.get(urlEmpleados).then(function (response) {
-        _this5.empleados = response.data;
-      });
-    },
-    getCategorias: function getCategorias() {
-      var _this6 = this;
-
-      var urlCategorias = "getCategorias";
-      axios.get(urlCategorias).then(function (response) {
-        _this6.categorias = response.data;
+        _this8.empleados = response.data;
       });
     },
     getReporte_Venta: function getReporte_Venta() {
-      var _this7 = this;
+      var _this9 = this;
 
       var urlRepVenta = "getReporteVenta";
       axios.get(urlRepVenta).then(function (response) {
-        _this7.r_ventas = response.data;
+        _this9.r_ventas = response.data;
       });
     },
     getReporte_Compras: function getReporte_Compras() {
-      var _this8 = this;
+      var _this10 = this;
 
       var urlRepCompra = "getReporteCompra";
       axios.get(urlRepCompra).then(function (response) {
-        _this8.r_compras = response.data;
+        _this10.r_compras = response.data;
+      });
+    },
+    getReporte_Inventario: function getReporte_Inventario() {
+      var _this11 = this;
+
+      var urlRepInventario = "getReporteInventario";
+      axios.get(urlRepInventario).then(function (response) {
+        _this11.r_inventarios = response.data;
+        console.log(response.data);
+      });
+    },
+    getCategorias: function getCategorias() {
+      var _this12 = this;
+
+      var urlCategorias = "getCategorias";
+      axios.get(urlCategorias).then(function (response) {
+        _this12.categorias = response.data;
       });
     },
     createCategoria: function createCategoria() {
-      var _this9 = this;
+      var _this13 = this;
 
       var urlGuardarCategoria = "storeCategoria";
       axios.post(urlGuardarCategoria, this.newcategoria).then(function (response) {
-        _this9.getCategorias();
+        _this13.getCategorias();
 
         newcategoria = {
           nomb_cat: "",
@@ -49805,11 +49879,11 @@ var app = new Vue({
           id_emp: "",
           id_fec: ""
         };
-        _this9.errors = [];
+        _this13.errors = [];
         $("#crearCategoria").modal("hide");
         toastr.success("Se añadido una nueva categoria");
       })["catch"](function (error) {
-        _this9.errors = error.response.data;
+        _this13.errors = error.response.data;
       });
     },
     editCategoria: function editCategoria(categoria) {
@@ -49824,13 +49898,13 @@ var app = new Vue({
       $("#editCategoria").modal("show");
     },
     updateCategoria: function updateCategoria(id) {
-      var _this10 = this;
+      var _this14 = this;
 
       var url = "updateCategoria/" + id;
       axios.post(url, this.fillCategoria).then(function (response) {
-        _this10.getCategorias();
+        _this14.getCategorias();
 
-        _this10.fillCategoria = {
+        _this14.fillCategoria = {
           id_cat: "",
           nomb_cat: "",
           observ_cat: "",
@@ -49840,50 +49914,50 @@ var app = new Vue({
           id_emp: "",
           id_fec: ""
         };
-        _this10.errors = [];
+        _this14.errors = [];
         $("#editCategoria").modal("hide");
         toastr.success("Categoria actualizada con éxito");
       })["catch"](function (error) {
-        _this10.errors = error.response.data;
+        _this14.errors = error.response.data;
       });
     },
     deleteCategoria: function deleteCategoria(categoria) {
-      var _this11 = this;
+      var _this15 = this;
 
       var url = "deleteCategoria/" + categoria.id_cat;
       axios.post(url).then(function (response) {
-        _this11.getCategorias();
+        _this15.getCategorias();
 
         toastr.success("Categoria eliminada con éxito");
       });
     },
     //MEtodos de Identificacion
     getIdentificacion: function getIdentificacion() {
-      var _this12 = this;
+      var _this16 = this;
 
       var urlIdentificacion = "getIdentificacion";
       axios.get(urlIdentificacion).then(function (response) {
-        _this12.identificaciones = response.data;
+        _this16.identificaciones = response.data;
       });
     },
     createIdentificacion: function createIdentificacion() {
-      var _this13 = this;
+      var _this17 = this;
 
       var urlGuardarIdentificacion = "storeIdentificaciones";
       axios.post(urlGuardarIdentificacion, this.newIdentificacion).then(function (response) {
-        _this13.getIdentificacion();
+        _this17.getIdentificacion();
 
-        _this13.newIdentificacion.sri_ident = "";
-        _this13.newIdentificacion.descrip_ident = "";
-        _this13.newIdentificacion.observ_ident = "";
-        _this13.newIdentificacion.estado_ident = "";
-        _this13.newIdentificacion.fechaini_ident = "";
-        _this13.newIdentificacion.fechafin_ident = "";
-        _this13.errors = [];
+        _this17.newIdentificacion.sri_ident = "";
+        _this17.newIdentificacion.descrip_ident = "";
+        _this17.newIdentificacion.observ_ident = "";
+        _this17.newIdentificacion.estado_ident = "";
+        _this17.newIdentificacion.fechaini_ident = "";
+        _this17.newIdentificacion.fechafin_ident = "";
+        _this17.errors = [];
         $("#crearIdentificaciones").modal("hide");
         toastr.success("Se añadido una nueva Identificacion");
       })["catch"](function (error) {
-        _this13.errors = error.response.data;
+        _this17.errors = error.response.data;
       });
     },
     editIdentificacion: function editIdentificacion(identificacion) {
@@ -49897,57 +49971,57 @@ var app = new Vue({
       $("#editIdentificacion").modal("show");
     },
     updateIdentificacion: function updateIdentificacion(id) {
-      var _this14 = this;
+      var _this18 = this;
 
       var url = "updateIdentificacion/" + id;
       axios.post(url, this.fillIdentificacion).then(function (response) {
-        _this14.getIdentificacion();
+        _this18.getIdentificacion();
 
-        _this14.fillIdentificacion.sri_ident = "";
-        _this14.fillIdentificacion.descrip_ident = "";
-        _this14.fillIdentificacion.observ_ident = "";
-        _this14.fillIdentificacion.estado_ident = "";
-        _this14.fillIdentificacion.fechaini_ident = "";
-        _this14.fillIdentificacion.fechaini_ident = "";
-        _this14.errors = [];
+        _this18.fillIdentificacion.sri_ident = "";
+        _this18.fillIdentificacion.descrip_ident = "";
+        _this18.fillIdentificacion.observ_ident = "";
+        _this18.fillIdentificacion.estado_ident = "";
+        _this18.fillIdentificacion.fechaini_ident = "";
+        _this18.fillIdentificacion.fechaini_ident = "";
+        _this18.errors = [];
         $("#editIdentificacion").modal("hide");
         toastr.success("Identficación actualizada con éxito");
       })["catch"](function (error) {
-        _this14.errors = error.response.data;
+        _this18.errors = error.response.data;
       });
     },
     deleteIdentificacion: function deleteIdentificacion(identificacion) {
-      var _this15 = this;
+      var _this19 = this;
 
       var url = "deleteIdentificacion/" + identificacion.id_ident;
       axios.post(url).then(function (response) {
-        _this15.getIdentificacion();
+        _this19.getIdentificacion();
 
         toastr.success("Identficación eliminada con éxito");
       });
     },
     //MEtodos de Marca
     getMarcas: function getMarcas() {
-      var _this16 = this;
+      var _this20 = this;
 
       var urlMarca = "getMarca";
       axios.get(urlMarca).then(function (response) {
-        _this16.marcas = response.data;
+        _this20.marcas = response.data;
       });
     },
     createMarca: function createMarca() {
-      var _this17 = this;
+      var _this21 = this;
 
       var urlGuardarMarca = "storeMarca";
       axios.post(urlGuardarMarca, this.newMarca).then(function (response) {
-        _this17.getMarcas();
+        _this21.getMarcas();
 
-        _this17.newMarca.nomb_marca = "";
-        _this17.newMarca.observ_marca = "";
-        _this17.newMarca.estado_marca = "";
-        _this17.newMarca.fechaini_marca = "";
-        _this17.newMarca.fechafin_marca = "";
-        _this17.errors = [];
+        _this21.newMarca.nomb_marca = "";
+        _this21.newMarca.observ_marca = "";
+        _this21.newMarca.estado_marca = "";
+        _this21.newMarca.fechaini_marca = "";
+        _this21.newMarca.fechafin_marca = "";
+        _this21.errors = [];
         $("#crearMarca").modal("hide");
         toastr.success("Se ha añadido una nueva Marca");
       })["catch"](function (error) {}); //$("#crearMarca").modal("hide");
@@ -49964,13 +50038,13 @@ var app = new Vue({
       $("#editMarca").modal("show");
     },
     updateMarca: function updateMarca(id) {
-      var _this18 = this;
+      var _this22 = this;
 
       var url = "updateMarca/" + id;
       axios.post(url, this.fillMarca).then(function (response) {
-        _this18.getMarcas();
+        _this22.getMarcas();
 
-        _this18.fillMarca = {
+        _this22.fillMarca = {
           id_marca: "",
           nomb_marca: "",
           observ_marca: "",
@@ -49978,49 +50052,49 @@ var app = new Vue({
           fechaini_marca: "",
           fechafin_marca: ""
         };
-        _this18.errors = [];
+        _this22.errors = [];
         $("#editMarca").modal("hide");
         toastr.success("Marca actualizada con éxito");
       })["catch"](function (error) {
-        _this18.errors = error.response.data;
+        _this22.errors = error.response.data;
       });
     },
     deleteMarca: function deleteMarca(marca) {
-      var _this19 = this;
+      var _this23 = this;
 
       var url = "deleteMarca/" + marca.id_marca;
       axios.post(url).then(function (response) {
-        _this19.getMarcas();
+        _this23.getMarcas();
 
         toastr.success("Marca eliminada con éxito");
       });
     },
     //MEtodos de Unidad
     getUnidad: function getUnidad() {
-      var _this20 = this;
+      var _this24 = this;
 
       var urlUnidad = "getUnidad";
       axios.get(urlUnidad).then(function (response) {
-        _this20.unidades = response.data;
+        _this24.unidades = response.data;
       });
     },
     createUnidad: function createUnidad() {
-      var _this21 = this;
+      var _this25 = this;
 
       var urlGuardarUnidad = "storeUnidad";
       axios.post(urlGuardarUnidad, this.newUnidad).then(function (response) {
-        _this21.getUnidad();
+        _this25.getUnidad();
 
-        _this21.newUnidad.nomb_unidad = "";
-        _this21.newUnidad.observ_unidad = "";
-        _this21.newUnidad.estado_unidad = "";
-        _this21.newUnidad.fechaini_unidad = "";
-        _this21.newUnidad.fechafin_unidad = "";
-        _this21.errors = [];
+        _this25.newUnidad.nomb_unidad = "";
+        _this25.newUnidad.observ_unidad = "";
+        _this25.newUnidad.estado_unidad = "";
+        _this25.newUnidad.fechaini_unidad = "";
+        _this25.newUnidad.fechafin_unidad = "";
+        _this25.errors = [];
         $("#crearUnidad").modal("hide");
         toastr.success("Se ha añadido una nueva Unidad");
       })["catch"](function (error) {
-        _this21.errors = error.response.data;
+        _this25.errors = error.response.data;
       });
     },
     editUnidad: function editUnidad(unidades) {
@@ -50033,60 +50107,60 @@ var app = new Vue({
       $("#editUnidad").modal("show");
     },
     updateUnidad: function updateUnidad(id) {
-      var _this22 = this;
+      var _this26 = this;
 
       var urlEditarUnidad = "updateUnidad/" + id;
       axios.post(urlEditarUnidad, this.fillUnidad).then(function (response) {
-        _this22.getUnidad();
+        _this26.getUnidad();
 
-        _this22.fillUnidad.nomb_unidad = "";
-        _this22.fillUnidad.observ_unidad = "";
-        _this22.fillUnidad.estado_unidad = "";
-        _this22.fillUnidad.fechaini_unidad = "";
-        _this22.fillUnidad.fechafin_unidad = "";
-        _this22.errors = [];
+        _this26.fillUnidad.nomb_unidad = "";
+        _this26.fillUnidad.observ_unidad = "";
+        _this26.fillUnidad.estado_unidad = "";
+        _this26.fillUnidad.fechaini_unidad = "";
+        _this26.fillUnidad.fechafin_unidad = "";
+        _this26.errors = [];
         $("#editUnidad").modal("hide");
         toastr.success("Unidad actualizada con éxito");
       })["catch"](function (error) {
-        _this22.errors = error.response.data;
+        _this26.errors = error.response.data;
       });
     },
     deleteUnidad: function deleteUnidad(unidades) {
-      var _this23 = this;
+      var _this27 = this;
 
       var url = "deleteUnidad/" + unidades.id_unidad;
       axios.post(url).then(function (response) {
-        _this23.getUnidad();
+        _this27.getUnidad();
 
         toastr.success("Unidad eliminada con éxito");
       });
     },
     //MEtodos de TipoContribuyente
     getTipoContribuyente: function getTipoContribuyente() {
-      var _this24 = this;
+      var _this28 = this;
 
       var urlContribuyente = "getTipoContribuyente";
       axios.get(urlContribuyente).then(function (response) {
-        _this24.tipoContribuyentes = response.data;
+        _this28.tipoContribuyentes = response.data;
       });
     },
     createTipoContribuyente: function createTipoContribuyente() {
-      var _this25 = this;
+      var _this29 = this;
 
       var urlGuardarContribuyente = "storeTipoContribuyente";
       axios.post(urlGuardarContribuyente, this.newTipoContribuyente).then(function (response) {
-        _this25.getTipoContribuyente();
+        _this29.getTipoContribuyente();
 
-        _this25.newTipoContribuyente.nomb_contrib = "";
-        _this25.newTipoContribuyente.obser_contrib = "";
-        _this25.newTipoContribuyente.estado_contrib = "";
-        _this25.newTipoContribuyente.fechaini_contrib = "";
-        _this25.newTipoContribuyente.fechafin_contrib = "";
-        _this25.errors = [];
+        _this29.newTipoContribuyente.nomb_contrib = "";
+        _this29.newTipoContribuyente.obser_contrib = "";
+        _this29.newTipoContribuyente.estado_contrib = "";
+        _this29.newTipoContribuyente.fechaini_contrib = "";
+        _this29.newTipoContribuyente.fechafin_contrib = "";
+        _this29.errors = [];
         $("#crearTipoContribuyente").modal("hide");
         toastr.success("Se ha añadido un Nuevo Tipo de Contribuyente");
       })["catch"](function (error) {
-        _this25.errors = error.response.data;
+        _this29.errors = error.response.data;
       });
     },
     editTipoContribuyente: function editTipoContribuyente(tipoContribuyentes) {
@@ -50099,59 +50173,59 @@ var app = new Vue({
       $("#editTipoContribuyente").modal("show");
     },
     updateTipoContribuyente: function updateTipoContribuyente(id) {
-      var _this26 = this;
+      var _this30 = this;
 
       var url = "updateTipoContribuyente/" + id;
       axios.post(url, this.fillTipoContribuyente).then(function (response) {
-        _this26.getTipoContribuyente();
+        _this30.getTipoContribuyente();
 
-        _this26.fillTipoContribuyente.nomb_contrib = "";
-        _this26.fillTipoContribuyente.obser_contrib = "";
-        _this26.fillTipoContribuyente.estado_contrib = "";
-        _this26.fillTipoContribuyente.fechaini_contrib = "";
-        _this26.fillTipoContribuyente.fechafin_contrib = "";
-        _this26.errors = [];
+        _this30.fillTipoContribuyente.nomb_contrib = "";
+        _this30.fillTipoContribuyente.obser_contrib = "";
+        _this30.fillTipoContribuyente.estado_contrib = "";
+        _this30.fillTipoContribuyente.fechaini_contrib = "";
+        _this30.fillTipoContribuyente.fechafin_contrib = "";
+        _this30.errors = [];
         $("#editTipoContribuyente").modal("hide");
         toastr.success("Tipo de Contribuyente actualizado con éxito");
       })["catch"](function (error) {
-        _this26.errors = error.response.data;
+        _this30.errors = error.response.data;
       });
     },
     deleteTipoContribuyente: function deleteTipoContribuyente(tipoContribuyentes) {
-      var _this27 = this;
+      var _this31 = this;
 
       var url = "deleteTipoContribuyente/" + tipoContribuyentes.id_contrib;
       axios.post(url).then(function (response) {
-        _this27.getTipoContribuyente();
+        _this31.getTipoContribuyente();
 
         toastr.success("Tipo de Contribuyente eliminado con éxito");
       });
     },
     //MEtodos de Ciudad
     getCiudad: function getCiudad() {
-      var _this28 = this;
+      var _this32 = this;
 
       var urlCiudad = "getCiudad";
       axios.get(urlCiudad).then(function (response) {
-        _this28.ciudades = response.data;
+        _this32.ciudades = response.data;
       });
     },
     createCiudad: function createCiudad() {
-      var _this29 = this;
+      var _this33 = this;
 
       var urlGuardarCiudad = "storeCiudad";
       axios.post(urlGuardarCiudad, this.newCiudad).then(function (response) {
-        _this29.getCiudad();
+        _this33.getCiudad();
 
-        _this29.newciudad.nomb_ciu = "";
-        _this29.newciudad.estado_ciu = "";
-        _this29.newciudad.fechaini_ciu = "";
-        _this29.newciudad.fechafin_ciu = "";
-        _this29.newciudad.observ_ciu = "";
-        _this29.newciudad.id_emp = "";
-        _this29.newciudad.id_prov = "";
-        _this29.newciudad.id_fec = "";
-        _this29.errors = [];
+        _this33.newciudad.nomb_ciu = "";
+        _this33.newciudad.estado_ciu = "";
+        _this33.newciudad.fechaini_ciu = "";
+        _this33.newciudad.fechafin_ciu = "";
+        _this33.newciudad.observ_ciu = "";
+        _this33.newciudad.id_emp = "";
+        _this33.newciudad.id_prov = "";
+        _this33.newciudad.id_fec = "";
+        _this33.errors = [];
         toastr.success("Se ha añadido una Nueva Ciudad");
       })["catch"](function (error) {});
       $("#crearCiudad").modal("hide");
@@ -50169,32 +50243,32 @@ var app = new Vue({
       $("#editCiudad").modal("show");
     },
     updateCiudad: function updateCiudad(id) {
-      var _this30 = this;
+      var _this34 = this;
 
       var url = "updateCiudad/" + id;
       axios.post(url, this.fillCiudad).then(function (response) {
-        _this30.getCiudad();
+        _this34.getCiudad();
 
-        _this30.fillCiudad.nomb_ciu = "";
-        _this30.fillCiudad.estado_ciu = "";
-        _this30.fillCiudad.fechaini_ciu = "";
-        _this30.fillCiudad.fechafin_ciu = "";
-        _this30.fillCiudad.observ_ciu = "";
-        _this30.fillCiudad.id_emp = "";
-        _this30.fillCiudad.id_fec = "";
-        _this30.errors = [];
+        _this34.fillCiudad.nomb_ciu = "";
+        _this34.fillCiudad.estado_ciu = "";
+        _this34.fillCiudad.fechaini_ciu = "";
+        _this34.fillCiudad.fechafin_ciu = "";
+        _this34.fillCiudad.observ_ciu = "";
+        _this34.fillCiudad.id_emp = "";
+        _this34.fillCiudad.id_fec = "";
+        _this34.errors = [];
         $("#editCiudad").modal("hide");
         toastr.success("Ciudad actualizada con éxito");
       })["catch"](function (error) {
-        _this30.errors = error.response.data;
+        _this34.errors = error.response.data;
       });
     },
     deleteCiudad: function deleteCiudad(ciudades) {
-      var _this31 = this;
+      var _this35 = this;
 
       var url = "deleteCiudad/" + ciudades.id_ciu;
       axios.post(url).then(function (response) {
-        _this31.getCiudad();
+        _this35.getCiudad();
 
         toastr.success("Ciudad eliminada con éxito");
       });
@@ -50221,15 +50295,15 @@ var app = new Vue({
       this.image = "";
     },
     getProductos: function getProductos() {
-      var _this32 = this;
+      var _this36 = this;
 
       var urlProducto = "getProductos";
       axios.get(urlProducto).then(function (response) {
-        _this32.productos = response.data;
+        _this36.productos = response.data;
       });
     },
     createProducto: function createProducto() {
-      var _this33 = this;
+      var _this37 = this;
 
       var urlGuardarProducto = "storeProducto";
       var image = new Image();
@@ -50242,38 +50316,38 @@ var app = new Vue({
 
       this.newProducto.imagen_prod = vm.image;
       axios.post(urlGuardarProducto, this.newProducto).then(function (response) {
-        _this33.getProductos();
+        _this37.getProductos();
 
-        _this33.newProducto.id_emp = "";
-        _this33.newProducto.id_fec = "";
-        _this33.newProducto.id_bod = "";
-        _this33.newProducto.codigo_prod = "";
-        _this33.newProducto.codbarra_prod = "";
-        _this33.newProducto.descripcion_prod = "";
-        _this33.newProducto.id_marca = "";
-        _this33.newProducto.id_cat = "";
-        _this33.newProducto.present_prod = "";
-        _this33.newProducto.precio_prod = "";
-        _this33.newProducto.ubicacion_prod = "";
-        _this33.newProducto.stockmin_prod = "";
-        _this33.newProducto.stockmax_prod = "";
-        _this33.newProducto.fechaing_prod = "";
-        _this33.newProducto.fechaelab_prod = "";
-        _this33.newProducto.fechacad_prod = "";
-        _this33.newProducto.aplicaiva_prod = "";
-        _this33.newProducto.aplicaice_prod = "";
-        _this33.newProducto.util_prod = "";
-        _this33.newProducto.comision_prod = "";
-        _this33.newProducto.imagen_prod = "";
-        _this33.newProducto.observ_prod = "";
-        _this33.newProducto.estado_prod = "";
-        _this33.newProducto.fechaini_prod = "";
-        _this33.newProducto.fechafin_prod = "";
-        _this33.errors = [];
+        _this37.newProducto.id_emp = "";
+        _this37.newProducto.id_fec = "";
+        _this37.newProducto.id_bod = "";
+        _this37.newProducto.codigo_prod = "";
+        _this37.newProducto.codbarra_prod = "";
+        _this37.newProducto.descripcion_prod = "";
+        _this37.newProducto.id_marca = "";
+        _this37.newProducto.id_cat = "";
+        _this37.newProducto.present_prod = "";
+        _this37.newProducto.precio_prod = "";
+        _this37.newProducto.ubicacion_prod = "";
+        _this37.newProducto.stockmin_prod = "";
+        _this37.newProducto.stockmax_prod = "";
+        _this37.newProducto.fechaing_prod = "";
+        _this37.newProducto.fechaelab_prod = "";
+        _this37.newProducto.fechacad_prod = "";
+        _this37.newProducto.aplicaiva_prod = "";
+        _this37.newProducto.aplicaice_prod = "";
+        _this37.newProducto.util_prod = "";
+        _this37.newProducto.comision_prod = "";
+        _this37.newProducto.imagen_prod = "";
+        _this37.newProducto.observ_prod = "";
+        _this37.newProducto.estado_prod = "";
+        _this37.newProducto.fechaini_prod = "";
+        _this37.newProducto.fechafin_prod = "";
+        _this37.errors = [];
         $("#crearProducto").modal("hide");
         toastr.success("Se añadido una nueva producto");
       })["catch"](function (error) {
-        _this33.errors = error.response.data;
+        _this37.errors = error.response.data;
       });
     },
     editProducto: function editProducto(producto) {
@@ -50333,7 +50407,7 @@ var app = new Vue({
       $("#viewProducto").modal("show");
     },
     updateProducto: function updateProducto(id) {
-      var _this34 = this;
+      var _this38 = this;
 
       var url = "updateProducto/" + id;
       var image = new Image();
@@ -50346,118 +50420,118 @@ var app = new Vue({
 
       this.fillProducto.imagen_prod = vm.image;
       axios.post(url, this.fillProducto).then(function (response) {
-        _this34.getProductos();
+        _this38.getProductos();
 
-        _this34.fillProducto.id_emp = "";
-        _this34.fillProducto.id_fec = "";
-        _this34.fillProducto.codigo_prod = "";
-        _this34.fillProducto.codbarra_prod = "";
-        _this34.fillProducto.descripcion_prod = "";
-        _this34.fillProducto.id_marca = "";
-        _this34.fillProducto.present_prod = "";
-        _this34.fillProducto.precio_prod = "";
-        _this34.fillProducto.ubicacion_prod = "";
-        _this34.fillProducto.stockmin_prod = "";
-        _this34.fillProducto.stockmax_prod = "";
-        _this34.fillProducto.fechaing_prod = "";
-        _this34.fillProducto.fechaelab_prod = "";
-        _this34.fillProducto.fechacad_prod = "";
-        _this34.fillProducto.aplicaiva_prod = "";
-        _this34.fillProducto.aplicaice_prod = "";
-        _this34.fillProducto.util_prod = "";
-        _this34.fillProducto.comision_prod = "";
-        _this34.fillProducto.imagen_prod = "";
-        _this34.fillProducto.observ_prod = "";
-        _this34.fillProducto.estado_prod = "";
-        _this34.fillProducto.fechaini_prod = "";
-        _this34.fillProducto.fechafin_prod = "";
-        _this34.errors = [];
+        _this38.fillProducto.id_emp = "";
+        _this38.fillProducto.id_fec = "";
+        _this38.fillProducto.codigo_prod = "";
+        _this38.fillProducto.codbarra_prod = "";
+        _this38.fillProducto.descripcion_prod = "";
+        _this38.fillProducto.id_marca = "";
+        _this38.fillProducto.present_prod = "";
+        _this38.fillProducto.precio_prod = "";
+        _this38.fillProducto.ubicacion_prod = "";
+        _this38.fillProducto.stockmin_prod = "";
+        _this38.fillProducto.stockmax_prod = "";
+        _this38.fillProducto.fechaing_prod = "";
+        _this38.fillProducto.fechaelab_prod = "";
+        _this38.fillProducto.fechacad_prod = "";
+        _this38.fillProducto.aplicaiva_prod = "";
+        _this38.fillProducto.aplicaice_prod = "";
+        _this38.fillProducto.util_prod = "";
+        _this38.fillProducto.comision_prod = "";
+        _this38.fillProducto.imagen_prod = "";
+        _this38.fillProducto.observ_prod = "";
+        _this38.fillProducto.estado_prod = "";
+        _this38.fillProducto.fechaini_prod = "";
+        _this38.fillProducto.fechafin_prod = "";
+        _this38.errors = [];
         $("#editProducto").modal("hide");
         toastr.success("Producto actualizado con éxito");
       })["catch"](function (error) {
-        _this34.errors = error.response.data;
+        _this38.errors = error.response.data;
       });
     },
     deleteProducto: function deleteProducto(producto) {
-      var _this35 = this;
+      var _this39 = this;
 
       var url = "deleteProducto/" + producto.id_prod;
       axios.post(url).then(function (response) {
-        _this35.getProductos();
+        _this39.getProductos();
 
         toastr.success("Producto eliminado con éxito");
       });
     }
   }, _defineProperty(_methods, "getPersonas", function getPersonas() {
-    var _this36 = this;
+    var _this40 = this;
 
     var urlPersona = "getProductos";
     axios.get(urlPersona).then(function (response) {
-      _this36.productos = response.data;
+      _this40.productos = response.data;
     });
   }), _defineProperty(_methods, "createPersonaProveedor", function createPersonaProveedor() {
-    var _this37 = this;
+    var _this41 = this;
 
     var urlGuardarPersona = "storePersona";
     axios.post(urlGuardarPersona, this.newPersona).then(function (response) {
-      _this37.newPersona.id_contrib = "";
-      _this37.newPersona.id_ident = "";
-      _this37.newPersona.id_ciu = "";
-      _this37.newProveedor.doc_per = "";
-      _this37.newPersona.organiz_per = "";
-      _this37.newPersona.nombre_per = "";
-      _this37.newPersona.apel_per = "";
-      _this37.newPersona.direc_per = "";
-      _this37.newPersona.fono1_per = "";
-      _this37.newPersona.fono2_per = "";
-      _this37.newPersona.cel1_per = "";
-      _this37.newPersona.cel2_per = "";
-      _this37.newPersona.fecnac_per = "";
-      _this37.newPersona.correo_per = "";
-      _this37.newPersona.estado_per = "";
-      _this37.newPersona.fechaini_per = "";
-      _this37.newPersona.fechafin_per = "";
-      _this37.errors = [];
-      _this37.newProveedor.id_per = response.data;
+      _this41.newPersona.id_contrib = "";
+      _this41.newPersona.id_ident = "";
+      _this41.newPersona.id_ciu = "";
+      _this41.newProveedor.doc_per = "";
+      _this41.newPersona.organiz_per = "";
+      _this41.newPersona.nombre_per = "";
+      _this41.newPersona.apel_per = "";
+      _this41.newPersona.direc_per = "";
+      _this41.newPersona.fono1_per = "";
+      _this41.newPersona.fono2_per = "";
+      _this41.newPersona.cel1_per = "";
+      _this41.newPersona.cel2_per = "";
+      _this41.newPersona.fecnac_per = "";
+      _this41.newPersona.correo_per = "";
+      _this41.newPersona.estado_per = "";
+      _this41.newPersona.fechaini_per = "";
+      _this41.newPersona.fechafin_per = "";
+      _this41.errors = [];
+      _this41.newProveedor.id_per = response.data;
 
-      _this37.createProveedor();
+      _this41.createProveedor();
     })["catch"](function (error) {
-      _this37.errors = error.response.data;
+      _this41.errors = error.response.data;
     });
   }), _defineProperty(_methods, "createPersonaEmpleado", function createPersonaEmpleado() {
-    var _this38 = this;
+    var _this42 = this;
 
     var urlGuardarPersona = "storePersona";
     axios.post(urlGuardarPersona, this.newPersona).then(function (response) {
-      _this38.newPersona.id_contrib = "";
-      _this38.newPersona.id_ident = "";
-      _this38.newPersona.id_ciu = "";
-      _this38.newPersona.organiz_per = "";
-      _this38.newPersona.direc_per = "";
-      _this38.newPersona.fono1_per = "";
-      _this38.newPersona.fono2_per = "";
-      _this38.newPersona.cel1_per = "";
-      _this38.newPersona.cel2_per = "";
-      _this38.newPersona.fecnac_per = "";
-      _this38.newUsuario.id_rol = _this38.newEmpleado.id_rol;
-      _this38.newUsuario.id_emp = _this38.newEmpleado.id_emp;
-      _this38.newUsuario.id_fec = _this38.newEmpleado.id_fec;
-      _this38.newUsuario.email = _this38.newPersona.correo_per;
-      _this38.newUsuario.nomb_usu = _this38.newPersona.nombre_per.charAt(0) + _this38.newPersona.apel_per;
-      _this38.newUsuario.clave_usu = _this38.newPersona.doc_per;
-      _this38.newUsuario.observ_usu = "Creacion de Empleado";
-      _this38.newUsuario.estado_usu = "A";
-      _this38.newUsuario.fechaini_usu = _this38.newPersona.fechaini_per;
-      _this38.newUsuario.fechafin_usu = _this38.newPersona.fechafin_per;
-      _this38.errors = [];
-      _this38.newEmpleado.id_per = response.data;
-      _this38.newEmpleado.estado_empl = _this38.newPersona.estado_per; //this.createUsuario();
+      _this42.newPersona.id_contrib = "";
+      _this42.newPersona.id_ident = "";
+      _this42.newPersona.id_ciu = "";
+      _this42.newPersona.organiz_per = "";
+      _this42.newPersona.direc_per = "";
+      _this42.newPersona.fono1_per = "";
+      _this42.newPersona.fono2_per = "";
+      _this42.newPersona.cel1_per = "";
+      _this42.newPersona.cel2_per = "";
+      _this42.newPersona.fecnac_per = "";
+      _this42.newUsuario.id_rol = _this42.newEmpleado.id_rol;
+      _this42.newUsuario.id_emp = _this42.newEmpleado.id_emp;
+      _this42.newUsuario.id_fec = _this42.newEmpleado.id_fec;
+      _this42.newUsuario.email = _this42.newPersona.correo_per;
+      _this42.newUsuario.nomb_usu = _this42.newPersona.nombre_per.charAt(0) + _this42.newPersona.apel_per;
+      _this42.newUsuario.clave_usu = _this42.newPersona.doc_per;
+      _this42.newUsuario.observ_usu = "Creacion de Empleado";
+      _this42.newUsuario.estado_usu = "A";
+      _this42.newUsuario.fechaini_usu = _this42.newPersona.fechaini_per;
+      _this42.newUsuario.fechafin_usu = _this42.newPersona.fechafin_per;
+      _this42.errors = [];
+      _this42.newEmpleado.id_per = response.data;
+      _this42.newEmpleado.estado_empl = _this42.newPersona.estado_per; //this.createUsuario();
 
-      _this38.createUsuarioEmpleado(); //this.createEmpleado();
+      _this42.createUsuarioEmpleado(); //this.createEmpleado();
       //localStorage.removeItem("id_usuario");
 
     })["catch"](function (error) {
-      _this38.errors = error.response.data;
+      _this42.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editPersona", function editPersona(persona) {
     this.fillPersona.id_contrib = persona.id_contrib;
@@ -50479,172 +50553,172 @@ var app = new Vue({
     this.fillPersona.fechafin_per = persona.fechafin_per;
     $("#editPersona").modal("show");
   }), _defineProperty(_methods, "updatePersona", function updatePersona(id) {
-    var _this39 = this;
+    var _this43 = this;
 
     var url = "updatePersona/" + id;
     axios.post(url, this.fillPersona).then(function (response) {
-      _this39.fillPersona.id_contrib = "";
-      _this39.fillPersona.id_ident = "";
-      _this39.fillPersona.id_ciu = "";
-      _this39.fillPersona.doc_per = "";
-      _this39.fillPersona.organiz_per = "";
-      _this39.fillPersona.nombre_per = "";
-      _this39.fillPersona.apel_per = "";
-      _this39.fillPersona.direc_per = "";
-      _this39.fillPersona.fono1_per = "";
-      _this39.fillPersona.fono2_per = "";
-      _this39.fillPersona.cel1_per = "";
-      _this39.fillPersona.cel2_per = "";
-      _this39.fillPersona.fecnac_per = "";
-      _this39.fillPersona.correo_per = "";
-      _this39.fillPersona.estado_per = "";
-      _this39.fillPersona.fechaini_per = "";
-      _this39.fillPersona.fechafin_per = "";
-      _this39.errors = [];
+      _this43.fillPersona.id_contrib = "";
+      _this43.fillPersona.id_ident = "";
+      _this43.fillPersona.id_ciu = "";
+      _this43.fillPersona.doc_per = "";
+      _this43.fillPersona.organiz_per = "";
+      _this43.fillPersona.nombre_per = "";
+      _this43.fillPersona.apel_per = "";
+      _this43.fillPersona.direc_per = "";
+      _this43.fillPersona.fono1_per = "";
+      _this43.fillPersona.fono2_per = "";
+      _this43.fillPersona.cel1_per = "";
+      _this43.fillPersona.cel2_per = "";
+      _this43.fillPersona.fecnac_per = "";
+      _this43.fillPersona.correo_per = "";
+      _this43.fillPersona.estado_per = "";
+      _this43.fillPersona.fechaini_per = "";
+      _this43.fillPersona.fechafin_per = "";
+      _this43.errors = [];
       $("#editPersona").modal("hide");
       $("#editProveedor").modal("show");
       $("#editCliente").modal("show");
     })["catch"](function (error) {
-      _this39.errors = error.response.data;
+      _this43.errors = error.response.data;
     });
   }), _defineProperty(_methods, "updatePersonaEmpleado", function updatePersonaEmpleado(id) {
-    var _this40 = this;
+    var _this44 = this;
 
     var url = "updatePersona/" + id;
     axios.post(url, this.fillPersona).then(function (response) {
-      _this40.fillPersona.id_contrib = "";
-      _this40.fillPersona.id_ident = "";
-      _this40.fillPersona.id_ciu = "";
-      _this40.fillPersona.doc_per = "";
-      _this40.fillPersona.organiz_per = "";
-      _this40.fillPersona.nombre_per = "";
-      _this40.fillPersona.apel_per = "";
-      _this40.fillPersona.direc_per = "";
-      _this40.fillPersona.fono1_per = "";
-      _this40.fillPersona.fono2_per = "";
-      _this40.fillPersona.cel1_per = "";
-      _this40.fillPersona.cel2_per = "";
-      _this40.fillPersona.fecnac_per = "";
-      _this40.fillPersona.correo_per = "";
-      _this40.fillPersona.fechaini_per = "";
-      _this40.fillPersona.fechafin_per = "";
-      _this40.errors = [];
-      _this40.fillEmpleado.estado_empl = _this40.fillPersona.estado_per;
+      _this44.fillPersona.id_contrib = "";
+      _this44.fillPersona.id_ident = "";
+      _this44.fillPersona.id_ciu = "";
+      _this44.fillPersona.doc_per = "";
+      _this44.fillPersona.organiz_per = "";
+      _this44.fillPersona.nombre_per = "";
+      _this44.fillPersona.apel_per = "";
+      _this44.fillPersona.direc_per = "";
+      _this44.fillPersona.fono1_per = "";
+      _this44.fillPersona.fono2_per = "";
+      _this44.fillPersona.cel1_per = "";
+      _this44.fillPersona.cel2_per = "";
+      _this44.fillPersona.fecnac_per = "";
+      _this44.fillPersona.correo_per = "";
+      _this44.fillPersona.fechaini_per = "";
+      _this44.fillPersona.fechafin_per = "";
+      _this44.errors = [];
+      _this44.fillEmpleado.estado_empl = _this44.fillPersona.estado_per;
 
-      _this40.updateEmpleado();
+      _this44.updateEmpleado();
     })["catch"](function (error) {
-      _this40.errors = error.response.data;
+      _this44.errors = error.response.data;
     });
   }), _defineProperty(_methods, "updateEmpleado", function updateEmpleado() {
-    var _this41 = this;
+    var _this45 = this;
 
     var url = "updateEmpleado/" + this.fillEmpleado.id_empleado;
     axios.post(url, this.fillEmpleado).then(function (response) {
-      _this41.fillEmpleado.id_per = "";
-      _this41.fillEmpleado.id_usu = "";
-      _this41.fillEmpleado.id_emp = "";
-      _this41.fillPersona.estado_per = "";
-      _this41.errors = [];
+      _this45.fillEmpleado.id_per = "";
+      _this45.fillEmpleado.id_usu = "";
+      _this45.fillEmpleado.id_emp = "";
+      _this45.fillPersona.estado_per = "";
+      _this45.errors = [];
 
-      _this41.getEmpleados();
+      _this45.getEmpleados();
 
       $("#editPersona").modal("hide");
     })["catch"](function (error) {
-      _this41.errors = error.response.data;
+      _this45.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deletePersona", function deletePersona(persona) {
-    var _this42 = this;
+    var _this46 = this;
 
     var url = "deletePersona/" + persona.id_per;
     axios.post(url).then(function (response) {
-      _this42.getProductos();
+      _this46.getProductos();
 
       toastr.success("Persona eliminado con éxito");
     });
   }), _defineProperty(_methods, "getProveedores", function getProveedores() {
-    var _this43 = this;
+    var _this47 = this;
 
     var urlProveedor = "getProveedor";
     axios.get(urlProveedor).then(function (response) {
-      _this43.proveedores = response.data;
+      _this47.proveedores = response.data;
     });
   }), _defineProperty(_methods, "createProveedor", function createProveedor() {
-    var _this44 = this;
+    var _this48 = this;
 
     var urlGuardarProveedor = "storeProveedor";
     axios.post(urlGuardarProveedor, this.newProveedor).then(function (response) {
-      _this44.getProveedores();
+      _this48.getProveedores();
 
-      _this44.newProveedor.id_emp = "";
-      _this44.newProveedor.id_fec = "";
-      _this44.newProveedor.cod_prov = "";
-      _this44.newProveedor.obser_prov = "";
-      _this44.newProveedor.estado_prov = "";
-      _this44.newProveedor.fechaini_prov = "";
-      _this44.newProveedor.fechafin_prov = "";
-      _this44.errors = [];
+      _this48.newProveedor.id_emp = "";
+      _this48.newProveedor.id_fec = "";
+      _this48.newProveedor.cod_prov = "";
+      _this48.newProveedor.obser_prov = "";
+      _this48.newProveedor.estado_prov = "";
+      _this48.newProveedor.fechaini_prov = "";
+      _this48.newProveedor.fechafin_prov = "";
+      _this48.errors = [];
       $("#crearPersona").modal("hide");
       $("#crearProveedor").modal("hide");
       toastr.success("Se añadido una nuevo Proveedor");
     })["catch"](function (error) {
-      _this44.errors = error.response.data;
+      _this48.errors = error.response.data;
     });
   }), _defineProperty(_methods, "createEmpleado", function createEmpleado() {
-    var _this45 = this;
+    var _this49 = this;
 
     var urlGuardarEmpleado = "storeEmpleado";
     this.get_ultimo_usuario();
     this.newEmpleado.id_usu = localStorage.getItem("id_usuario");
     axios.post(urlGuardarEmpleado, this.newEmpleado).then(function (response) {
-      _this45.getEmpleados();
+      _this49.getEmpleados();
 
-      _this45.newEmpleado.id_emp = "";
-      _this45.newEmpleado.id_usu = "";
-      _this45.newEmpleado.id_per = "";
-      _this45.newPersona.estado_per = "";
-      _this45.errors = [];
+      _this49.newEmpleado.id_emp = "";
+      _this49.newEmpleado.id_usu = "";
+      _this49.newEmpleado.id_per = "";
+      _this49.newPersona.estado_per = "";
+      _this49.errors = [];
       $("#crearEmpleado").modal("hide");
       toastr.success("Se añadido una nuevo Empleado");
     })["catch"](function (error) {
-      _this45.errors = error.response.data;
+      _this49.errors = error.response.data;
     });
   }), _defineProperty(_methods, "updateProveedor", function updateProveedor(id) {
-    var _this46 = this;
+    var _this50 = this;
 
     var url = "updateProveedor/" + id;
     axios.post(url, this.fillProveedor).then(function (response) {
-      _this46.getProveedores();
+      _this50.getProveedores();
 
-      _this46.fillPersona.id_contrib = "";
-      _this46.fillPersona.id_ident = "";
-      _this46.fillPersona.id_ciu = "";
-      _this46.fillPersona.doc_per = "";
-      _this46.fillPersona.organiz_per = "";
-      _this46.fillPersona.nombre_per = "";
-      _this46.fillPersona.apel_per = "";
-      _this46.fillPersona.direc_per = "";
-      _this46.fillPersona.fono1_per = "";
-      _this46.fillPersona.fono2_per = "";
-      _this46.fillPersona.cel1_per = "";
-      _this46.fillPersona.cel2_per = "";
-      _this46.fillPersona.fecnac_per = "";
-      _this46.fillPersona.correo_per = "";
-      _this46.fillPersona.estado_per = "";
-      _this46.fillPersona.fechaini_per = "";
-      _this46.fillPersona.fechafin_per = "";
-      _this46.fillProveedor.id_emp = "";
-      _this46.fillProveedor.id_fec = "";
-      _this46.fillProveedor.cod_prov = "";
-      _this46.fillProveedor.id_per = id;
-      _this46.fillProveedor.obser_prov = "";
-      _this46.fillProveedor.estado_prov = "";
-      _this46.fillProveedor.fechaini_prov = "";
-      _this46.fillProveedor.fechafin_prov = "";
-      _this46.errors = [];
+      _this50.fillPersona.id_contrib = "";
+      _this50.fillPersona.id_ident = "";
+      _this50.fillPersona.id_ciu = "";
+      _this50.fillPersona.doc_per = "";
+      _this50.fillPersona.organiz_per = "";
+      _this50.fillPersona.nombre_per = "";
+      _this50.fillPersona.apel_per = "";
+      _this50.fillPersona.direc_per = "";
+      _this50.fillPersona.fono1_per = "";
+      _this50.fillPersona.fono2_per = "";
+      _this50.fillPersona.cel1_per = "";
+      _this50.fillPersona.cel2_per = "";
+      _this50.fillPersona.fecnac_per = "";
+      _this50.fillPersona.correo_per = "";
+      _this50.fillPersona.estado_per = "";
+      _this50.fillPersona.fechaini_per = "";
+      _this50.fillPersona.fechafin_per = "";
+      _this50.fillProveedor.id_emp = "";
+      _this50.fillProveedor.id_fec = "";
+      _this50.fillProveedor.cod_prov = "";
+      _this50.fillProveedor.id_per = id;
+      _this50.fillProveedor.obser_prov = "";
+      _this50.fillProveedor.estado_prov = "";
+      _this50.fillProveedor.fechaini_prov = "";
+      _this50.fillProveedor.fechafin_prov = "";
+      _this50.errors = [];
       $("#editProveedor").modal("hide");
       toastr.success("Proveedor actualizado con éxito");
     })["catch"](function (error) {
-      _this46.errors = error.response.data;
+      _this50.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editProveedor", function editProveedor(proveedor) {
     this.fillProveedor.id_prov = proveedor.id_prov;
@@ -50703,55 +50777,55 @@ var app = new Vue({
     this.fillPersona.fechafin_per = empleado.fechafin_per;
     $("#editPersona").modal("show");
   }), _defineProperty(_methods, "deleteProveedor", function deleteProveedor(proveedor) {
-    var _this47 = this;
+    var _this51 = this;
 
     var url = "deleteProveedor/" + proveedor.id_prov;
     this.deletePersona(proveedor);
     axios.post(url).then(function (response) {
-      _this47.getProveedores();
+      _this51.getProveedores();
 
       toastr.success("Proveedor eliminado con éxito");
     });
   }), _defineProperty(_methods, "deleteEmpleado", function deleteEmpleado(empleado) {
-    var _this48 = this;
+    var _this52 = this;
 
     var url = "deleteEmpleado/" + empleado.id_empleado;
     this.deletePersona(empleado);
     axios.post(url).then(function (response) {
-      _this48.getEmpleados();
+      _this52.getEmpleados();
 
       toastr.success("Empleado eliminado con éxito");
     });
   }), _defineProperty(_methods, "getBodega", function getBodega() {
-    var _this49 = this;
+    var _this53 = this;
 
     var urlBodega = "getBodega";
     axios.get(urlBodega).then(function (response) {
-      _this49.bodegas = response.data;
+      _this53.bodegas = response.data;
     });
   }), _defineProperty(_methods, "createBodega", function createBodega() {
-    var _this50 = this;
+    var _this54 = this;
 
     var urlGuardarBodega = "storeBodega";
     axios.post(urlGuardarBodega, this.newbodega).then(function (response) {
-      _this50.getBodega();
+      _this54.getBodega();
 
-      _this50.nombre_bod = "";
-      _this50.direcc_bod = "";
-      _this50.telef_bod = "";
-      _this50.cel_bod = "";
-      _this50.nomb_contac_bod = "";
-      _this50.estado_bod = "";
-      _this50.fechaini_bod = "";
-      _this50.fechafin_bod = "";
-      _this50.id_ciu = "";
-      _this50.id_pais = "";
-      _this50.id_prov = "";
-      _this50.errors = [];
+      _this54.nombre_bod = "";
+      _this54.direcc_bod = "";
+      _this54.telef_bod = "";
+      _this54.cel_bod = "";
+      _this54.nomb_contac_bod = "";
+      _this54.estado_bod = "";
+      _this54.fechaini_bod = "";
+      _this54.fechafin_bod = "";
+      _this54.id_ciu = "";
+      _this54.id_pais = "";
+      _this54.id_prov = "";
+      _this54.errors = [];
       $("#crearBodega").modal("hide");
       toastr.success("Se ha añadido una nueva Bodega");
     })["catch"](function (error) {
-      _this50.errors = error.response.data;
+      _this54.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editBodega", function editBodega(bodegas) {
     this.fillBodega.id_bod = bodegas.id_bod;
@@ -50768,59 +50842,59 @@ var app = new Vue({
     this.fillBodega.id_prov = bodegas.id_prov;
     $("#editBodega").modal("show");
   }), _defineProperty(_methods, "updateBodega", function updateBodega(id) {
-    var _this51 = this;
+    var _this55 = this;
 
     var url = "updateBodega/" + id;
     axios.post(url, this.fillBodega).then(function (response) {
-      _this51.getBodega();
+      _this55.getBodega();
 
-      _this51.nombre_bod = "";
-      _this51.direcc_bod = "";
-      _this51.telef_bod = "";
-      _this51.cel_bod = "";
-      _this51.nomb_contac_bod = "";
-      _this51.estado_bod = "";
-      _this51.fechaini_bod = "";
-      _this51.fechafin_bod = "";
-      _this51.id_ciu = "";
-      _this51.id_pais = "";
-      _this51.id_prov = "";
-      _this51.errors = [];
+      _this55.nombre_bod = "";
+      _this55.direcc_bod = "";
+      _this55.telef_bod = "";
+      _this55.cel_bod = "";
+      _this55.nomb_contac_bod = "";
+      _this55.estado_bod = "";
+      _this55.fechaini_bod = "";
+      _this55.fechafin_bod = "";
+      _this55.id_ciu = "";
+      _this55.id_pais = "";
+      _this55.id_prov = "";
+      _this55.errors = [];
       $("#editBodega").modal("hide");
       toastr.success("Bodega actualizada con éxito");
     })["catch"](function (error) {
-      _this51.errors = error.response.data;
+      _this55.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteBodega", function deleteBodega(bodegas) {
-    var _this52 = this;
+    var _this56 = this;
 
     var url = "deleteBodega/" + bodegas.id_bod;
     axios.post(url).then(function (response) {
-      _this52.getBodega();
+      _this56.getBodega();
 
       toastr.success("Bodega eliminada con éxito");
     });
   }), _defineProperty(_methods, "getPais", function getPais() {
-    var _this53 = this;
+    var _this57 = this;
 
     var urlPais = "getPais";
     axios.get(urlPais).then(function (response) {
-      _this53.paises = response.data;
+      _this57.paises = response.data;
     });
   }), _defineProperty(_methods, "createPais", function createPais() {
-    var _this54 = this;
+    var _this58 = this;
 
     var urlGuardarPais = "storePais";
     axios.post(urlGuardarPais, this.newPais).then(function (response) {
-      _this54.getPais();
+      _this58.getPais();
 
-      _this54.nomb_pais = "";
-      _this54.estado_pais = "";
-      _this54.errors = [];
+      _this58.nomb_pais = "";
+      _this58.estado_pais = "";
+      _this58.errors = [];
       $("#crearPais").modal("hide");
       toastr.success("Se ha añadido un nuevo Pais");
     })["catch"](function (error) {
-      _this54.errors = error.response.data;
+      _this58.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editPais", function editPais(paises) {
     this.fillPais.id_pais = paises.id_pais;
@@ -50828,50 +50902,50 @@ var app = new Vue({
     this.fillPais.estado_pais = paises.estado_pais;
     $("#editPais").modal("show");
   }), _defineProperty(_methods, "updatePais", function updatePais(id) {
-    var _this55 = this;
+    var _this59 = this;
 
     var url = "updatePais/" + id;
     axios.post(url, this.fillPais).then(function (response) {
-      _this55.getPais();
+      _this59.getPais();
 
-      _this55.nomb_pais = "";
-      _this55.estado_pais = "";
-      _this55.errors = [];
+      _this59.nomb_pais = "";
+      _this59.estado_pais = "";
+      _this59.errors = [];
       $("#editPais").modal("hide");
       toastr.success("Pais actualizado con éxito");
     })["catch"](function (error) {
-      _this55.errors = error.response.data;
+      _this59.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deletePais", function deletePais(paises) {
-    var _this56 = this;
+    var _this60 = this;
 
     var url = "deletePais/" + paises.id_pais;
     axios.post(url).then(function (response) {
-      _this56.getPais();
+      _this60.getPais();
 
       toastr.success("Pais eliminado con éxito");
     });
   }), _defineProperty(_methods, "getProvincia", function getProvincia() {
-    var _this57 = this;
+    var _this61 = this;
 
     var urlProvincia = "getProvincia";
     axios.get(urlProvincia).then(function (response) {
-      _this57.provincias = response.data;
+      _this61.provincias = response.data;
     });
   }), _defineProperty(_methods, "createProvincia", function createProvincia() {
-    var _this58 = this;
+    var _this62 = this;
 
     var urlGuardarProvincia = "storeProvincia";
     axios.post(urlGuardarProvincia, this.newProvincia).then(function (response) {
-      _this58.getProvincia();
+      _this62.getProvincia();
 
-      _this58.nomb_prov = "";
-      _this58.estado_prov = "";
-      _this58.errors = [];
+      _this62.nomb_prov = "";
+      _this62.estado_prov = "";
+      _this62.errors = [];
       $("#crearProvincia").modal("hide");
       toastr.success("Se ha añadido una nueva Provincia");
     })["catch"](function (error) {
-      _this58.errors = error.response.data;
+      _this62.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editProvincia", function editProvincia(provincias) {
     this.fillProvincia.id_prov = provincias.id_prov;
@@ -50880,66 +50954,66 @@ var app = new Vue({
     this.fillProvincia.estado_prov = provincias.estado_prov;
     $("#editProvincia").modal("show");
   }), _defineProperty(_methods, "updateProvincia", function updateProvincia(id) {
-    var _this59 = this;
+    var _this63 = this;
 
     var url = "updateProvincia/" + id;
     axios.post(url, this.fillProvincia).then(function (response) {
-      _this59.getProvincia();
+      _this63.getProvincia();
 
-      _this59.id_pais = "";
-      _this59.nomb_prov = "";
-      _this59.estado_prov = "";
-      _this59.errors = [];
+      _this63.id_pais = "";
+      _this63.nomb_prov = "";
+      _this63.estado_prov = "";
+      _this63.errors = [];
       $("#editProvincia").modal("hide");
       toastr.success("Provincia actualizada con éxito");
     })["catch"](function (error) {
-      _this59.errors = error.response.data;
+      _this63.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteProvincia", function deleteProvincia(provincias) {
-    var _this60 = this;
+    var _this64 = this;
 
     var url = "deleteProvincia/" + provincias.id_prov;
     axios.post(url).then(function (response) {
-      _this60.getProvincia();
+      _this64.getProvincia();
 
       toastr.success("Provincia eliminada con éxito");
     });
   }), _defineProperty(_methods, "getEmpresa", function getEmpresa() {
-    var _this61 = this;
+    var _this65 = this;
 
     var urlEmpresa = "getEmpresa";
     axios.get(urlEmpresa).then(function (response) {
-      _this61.empresas = response.data;
+      _this65.empresas = response.data;
     });
   }), _defineProperty(_methods, "createEmpresa", function createEmpresa() {
-    var _this62 = this;
+    var _this66 = this;
 
     var urlGuardarEmpresa = "storeEmpresa";
     axios.post(urlGuardarEmpresa, this.newEmpresa).then(function (response) {
-      _this62.getEmpresa();
+      _this66.getEmpresa();
 
-      _this62.newEmpresa.id_ciu = "";
-      _this62.newEmpresa.totestab_emp = "";
-      _this62.newEmpresa.rucempresa_emp = "";
-      _this62.newEmpresa.razon_emp = "";
-      _this62.newEmpresa.nombre_emp = "";
-      _this62.newEmpresa.apellido_emp = "";
-      _this62.newEmpresa.contacto_emp = "";
-      _this62.newEmpresa.direcc_emp = "";
-      _this62.newEmpresa.telefono_emp = "";
-      _this62.newEmpresa.celular_emp = "";
-      _this62.newEmpresa.fax_emp = "";
-      _this62.newEmpresa.email_emp = "";
-      _this62.newEmpresa.estado_emp = "";
-      _this62.newEmpresa.contador_emp = "";
-      _this62.newEmpresa.tipcontrib_emp = "";
-      _this62.newEmpresa.fechaini_emp = "";
-      _this62.newEmpresa.fechafin_emp = "";
-      _this62.errors = [];
+      _this66.newEmpresa.id_ciu = "";
+      _this66.newEmpresa.totestab_emp = "";
+      _this66.newEmpresa.rucempresa_emp = "";
+      _this66.newEmpresa.razon_emp = "";
+      _this66.newEmpresa.nombre_emp = "";
+      _this66.newEmpresa.apellido_emp = "";
+      _this66.newEmpresa.contacto_emp = "";
+      _this66.newEmpresa.direcc_emp = "";
+      _this66.newEmpresa.telefono_emp = "";
+      _this66.newEmpresa.celular_emp = "";
+      _this66.newEmpresa.fax_emp = "";
+      _this66.newEmpresa.email_emp = "";
+      _this66.newEmpresa.estado_emp = "";
+      _this66.newEmpresa.contador_emp = "";
+      _this66.newEmpresa.tipcontrib_emp = "";
+      _this66.newEmpresa.fechaini_emp = "";
+      _this66.newEmpresa.fechafin_emp = "";
+      _this66.errors = [];
       $("#crearEmpresa").modal("hide");
       toastr.success("Se añadido una nueva empresa");
     })["catch"](function (error) {
-      _this62.errors = error.response.data;
+      _this66.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editEmpresa", function editEmpresa(empresa) {
     this.fillEmpresa.id_emp = empresa.id_emp;
@@ -50962,71 +51036,71 @@ var app = new Vue({
     this.fillEmpresa.fechafin_emp = empresa.fechafin_emp;
     $("#editEmpresa").modal("show");
   }), _defineProperty(_methods, "updateEmpresa", function updateEmpresa(id) {
-    var _this63 = this;
+    var _this67 = this;
 
     var url = "updateEmpresa/" + id;
     axios.post(url, this.fillEmpresa).then(function (response) {
-      _this63.getEmpresa();
+      _this67.getEmpresa();
 
-      _this63.fillEmpresa.id_ciu = "";
-      _this63.fillEmpresa.totestab_emp = "";
-      _this63.fillEmpresa.rucempresa_emp = "";
-      _this63.fillEmpresa.razon_emp = "";
-      _this63.fillEmpresa.nombre_emp = "";
-      _this63.fillEmpresa.apellido_emp = "";
-      _this63.fillEmpresa.contacto_emp = "";
-      _this63.fillEmpresa.direcc_emp = "";
-      _this63.fillEmpresa.telefono_emp = "";
-      _this63.fillEmpresa.celular_emp = "";
-      _this63.fillEmpresa.fax_emp = "";
-      _this63.fillEmpresa.email_emp = "";
-      _this63.fillEmpresa.estado_emp = "";
-      _this63.fillEmpresa.contador_emp = "";
-      _this63.fillEmpresa.tipcontrib_emp = "";
-      _this63.newProducto.fechaini_emp = "";
-      _this63.fillEmpresa.fechafin_emp = "";
-      _this63.errors = [];
+      _this67.fillEmpresa.id_ciu = "";
+      _this67.fillEmpresa.totestab_emp = "";
+      _this67.fillEmpresa.rucempresa_emp = "";
+      _this67.fillEmpresa.razon_emp = "";
+      _this67.fillEmpresa.nombre_emp = "";
+      _this67.fillEmpresa.apellido_emp = "";
+      _this67.fillEmpresa.contacto_emp = "";
+      _this67.fillEmpresa.direcc_emp = "";
+      _this67.fillEmpresa.telefono_emp = "";
+      _this67.fillEmpresa.celular_emp = "";
+      _this67.fillEmpresa.fax_emp = "";
+      _this67.fillEmpresa.email_emp = "";
+      _this67.fillEmpresa.estado_emp = "";
+      _this67.fillEmpresa.contador_emp = "";
+      _this67.fillEmpresa.tipcontrib_emp = "";
+      _this67.newProducto.fechaini_emp = "";
+      _this67.fillEmpresa.fechafin_emp = "";
+      _this67.errors = [];
       console.log(response);
       $("#editEmpresa").modal("hide");
       toastr.success("Empresa actualizada con éxito");
     })["catch"](function (error) {
-      _this63.errors = error.response.data;
+      _this67.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteEmpresa", function deleteEmpresa(empresa) {
-    var _this64 = this;
+    var _this68 = this;
 
     var url = "deleteEmpresa/" + empresa.id_emp;
     axios.post(url).then(function (response) {
-      _this64.getEmpresa();
+      _this68.getEmpresa();
 
       toastr.success("Empresaa eliminada con éxito");
     });
   }), _defineProperty(_methods, "getRoles", function getRoles() {
-    var _this65 = this;
+    var _this69 = this;
 
     var urlEmpresa = "getRol";
     axios.get(urlEmpresa).then(function (response) {
-      _this65.roles = response.data;
+      _this69.roles = response.data;
     });
   }), _defineProperty(_methods, "createRol", function createRol() {
-    var _this66 = this;
+    var _this70 = this;
 
     var urlGuardarRol = "storeRol";
     axios.post(urlGuardarRol, this.newRol).then(function (response) {
-      _this66.getRoles();
+      _this70.getRoles();
 
-      _this66.newRol.id_emp = "";
-      _this66.newRol.id_fec = "";
-      _this66.newRol.nomb_rol = "";
-      _this66.newRol.observ_rol = "";
-      _this66.newRol.estado_rol = "";
-      _this66.newRol.fechaini_rol = "";
-      _this66.newRol.fechafin_rol = "";
-      _this66.errors = [];
+      _this70.newRol.id_emp = "";
+      _this70.newRol.id_fec = "";
+      _this70.newRol.nomb_rol = "";
+      _this70.newRol.observ_rol = "";
+      _this70.newRol.estado_rol = "";
+      _this70.newRol.fechaini_rol = "";
+      _this70.newRol.fechafin_rol = "";
+      _this70.errors = [];
       $("#crearRol").modal("hide");
       toastr.success("Se añadido una nuevo rol");
     })["catch"](function (error) {
-      _this66.errors = error.response.data;
+      _this70.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editRol", function editRol(rol) {
     this.fillRol.id_rol = rol.id_rol;
@@ -51039,60 +51113,60 @@ var app = new Vue({
     this.fillRol.fechafin_rol = rol.fechafin_rol;
     $("#editRol").modal("show");
   }), _defineProperty(_methods, "updateRol", function updateRol(id) {
-    var _this67 = this;
+    var _this71 = this;
 
     var url = "updateRol/" + id;
     axios.post(url, this.fillRol).then(function (response) {
-      _this67.getRoles();
+      _this71.getRoles();
 
-      _this67.fillRol.id_emp = "";
-      _this67.fillRol.id_fec = "";
-      _this67.fillRol.nomb_rol = "";
-      _this67.fillRol.observ_rol = "";
-      _this67.fillRol.estado_rol = "";
-      _this67.fillRol.fechaini_rol = "";
-      _this67.fillRol.fechafin_rol = "";
-      _this67.errors = [];
+      _this71.fillRol.id_emp = "";
+      _this71.fillRol.id_fec = "";
+      _this71.fillRol.nomb_rol = "";
+      _this71.fillRol.observ_rol = "";
+      _this71.fillRol.estado_rol = "";
+      _this71.fillRol.fechaini_rol = "";
+      _this71.fillRol.fechafin_rol = "";
+      _this71.errors = [];
       $("#editRol").modal("hide");
       toastr.success("Rol actualizado con éxito");
     })["catch"](function (error) {
-      _this67.errors = error.response.data;
+      _this71.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteRol", function deleteRol(rol) {
-    var _this68 = this;
+    var _this72 = this;
 
     var url = "deleteRol/" + rol.id_rol;
     axios.post(url).then(function (response) {
-      _this68.getRoles();
+      _this72.getRoles();
 
       toastr.success("Rol eliminado con éxito");
     });
   }), _defineProperty(_methods, "getCliente", function getCliente() {
-    var _this69 = this;
+    var _this73 = this;
 
     var urlCliente = "getCliente";
     axios.get(urlCliente).then(function (response) {
-      _this69.clientes = response.data;
+      _this73.clientes = response.data;
     });
   }), _defineProperty(_methods, "createCliente", function createCliente() {
-    var _this70 = this;
+    var _this74 = this;
 
     var urlGuardarCliente = "storeCliente";
     axios.post(urlGuardarCliente, this.newCliente).then(function (response) {
-      _this70.getCliente();
+      _this74.getCliente();
 
-      _this70.cod_cli = "";
-      _this70.observ_cli = "";
-      _this70.estado_cli = "";
-      _this70.fechaini_cli = "";
-      _this70.fechafin_cli = "";
-      _this70.id_emp = "";
-      _this70.id_fec = "";
-      _this70.errors = [];
+      _this74.cod_cli = "";
+      _this74.observ_cli = "";
+      _this74.estado_cli = "";
+      _this74.fechaini_cli = "";
+      _this74.fechafin_cli = "";
+      _this74.id_emp = "";
+      _this74.id_fec = "";
+      _this74.errors = [];
       $("#crearPersonaCli").modal("hide");
       toastr.success("Se ha añadido un nuevo Cliente");
     })["catch"](function (error) {
-      _this70.errors = error.response.data;
+      _this74.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editCliente", function editCliente(cliente) {
     this.fillCliente.id_cli = cliente.id_cli;
@@ -51126,109 +51200,109 @@ var app = new Vue({
     this.fillPersona.fechafin_per = cliente.fechafin_per;
     $("#editPersonaCli").modal("show");
   }), _defineProperty(_methods, "updateCliente", function updateCliente(id) {
-    var _this71 = this;
+    var _this75 = this;
 
     var url = "updateCliente/" + id;
     axios.post(url, this.fillCliente).then(function (response) {
-      _this71.getCliente(); //persona
+      _this75.getCliente(); //persona
 
 
-      _this71.fillPersona.id_per = "";
-      _this71.fillPersona.id_contrib = "";
-      _this71.fillPersona.id_ident = "";
-      _this71.fillPersona.id_ciu = "";
-      _this71.fillPersona.doc_per = "";
-      _this71.fillPersona.organiz_per = "";
-      _this71.fillPersona.nombre_per = "";
-      _this71.fillPersona.apel_per = "";
-      _this71.fillPersona.direc_per = "";
-      _this71.fillPersona.fono1_per = "";
-      _this71.fillPersona.fono2_per = "";
-      _this71.fillPersona.cel1_per = "";
-      _this71.fillPersona.cel2_per = "";
-      _this71.fillPersona.fecnac_per = "";
-      _this71.fillPersona.correo_per = "";
-      _this71.fillPersona.estado_per = "";
-      _this71.fillPersona.fechaini_per = "";
-      _this71.fillPersona.fechafin_per = "";
-      _this71.cod_cli = "";
-      _this71.observ_cli = "";
-      _this71.estado_cli = "";
-      _this71.fechaini_cli = "";
-      _this71.fechafin_cli = "";
-      _this71.id_emp = "";
-      _this71.id_fec = "";
-      _this71.id_per = "";
-      _this71.errors = [];
+      _this75.fillPersona.id_per = "";
+      _this75.fillPersona.id_contrib = "";
+      _this75.fillPersona.id_ident = "";
+      _this75.fillPersona.id_ciu = "";
+      _this75.fillPersona.doc_per = "";
+      _this75.fillPersona.organiz_per = "";
+      _this75.fillPersona.nombre_per = "";
+      _this75.fillPersona.apel_per = "";
+      _this75.fillPersona.direc_per = "";
+      _this75.fillPersona.fono1_per = "";
+      _this75.fillPersona.fono2_per = "";
+      _this75.fillPersona.cel1_per = "";
+      _this75.fillPersona.cel2_per = "";
+      _this75.fillPersona.fecnac_per = "";
+      _this75.fillPersona.correo_per = "";
+      _this75.fillPersona.estado_per = "";
+      _this75.fillPersona.fechaini_per = "";
+      _this75.fillPersona.fechafin_per = "";
+      _this75.cod_cli = "";
+      _this75.observ_cli = "";
+      _this75.estado_cli = "";
+      _this75.fechaini_cli = "";
+      _this75.fechafin_cli = "";
+      _this75.id_emp = "";
+      _this75.id_fec = "";
+      _this75.id_per = "";
+      _this75.errors = [];
       $("#editCliente").modal("hide");
       toastr.success("Cliente actualizado con éxito");
     })["catch"](function (error) {
-      _this71.errors = error.response.data;
+      _this75.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteCliente", function deleteCliente(clientes) {
-    var _this72 = this;
+    var _this76 = this;
 
     var url = "deleteCliente/" + clientes.id_cli;
     axios.post(url).then(function (response) {
-      _this72.getCliente();
+      _this76.getCliente();
 
       toastr.success("Cliente eliminado con éxito");
     });
   }), _defineProperty(_methods, "createPersonaCliente", function createPersonaCliente() {
-    var _this73 = this;
+    var _this77 = this;
 
     var urlGuardarPersona = "storePersona";
     axios.post(urlGuardarPersona, this.newPersona).then(function (response) {
-      _this73.newPersona.id_contrib = "";
-      _this73.newPersona.id_ident = "";
-      _this73.newPersona.id_ciu = "";
-      _this73.newCliente.doc_per = "";
-      _this73.newPersona.organiz_per = "";
-      _this73.newPersona.nombre_per = "";
-      _this73.newPersona.apel_per = "";
-      _this73.newPersona.direc_per = "";
-      _this73.newPersona.fono1_per = "";
-      _this73.newPersona.fono2_per = "";
-      _this73.newPersona.cel1_per = "";
-      _this73.newPersona.cel2_per = "";
-      _this73.newPersona.fecnac_per = "";
-      _this73.newPersona.correo_per = "";
-      _this73.newPersona.estado_per = "";
-      _this73.newPersona.fechaini_per = "";
-      _this73.newPersona.fechafin_per = "";
-      _this73.errors = [];
-      _this73.newCliente.id_per = response.data;
+      _this77.newPersona.id_contrib = "";
+      _this77.newPersona.id_ident = "";
+      _this77.newPersona.id_ciu = "";
+      _this77.newCliente.doc_per = "";
+      _this77.newPersona.organiz_per = "";
+      _this77.newPersona.nombre_per = "";
+      _this77.newPersona.apel_per = "";
+      _this77.newPersona.direc_per = "";
+      _this77.newPersona.fono1_per = "";
+      _this77.newPersona.fono2_per = "";
+      _this77.newPersona.cel1_per = "";
+      _this77.newPersona.cel2_per = "";
+      _this77.newPersona.fecnac_per = "";
+      _this77.newPersona.correo_per = "";
+      _this77.newPersona.estado_per = "";
+      _this77.newPersona.fechaini_per = "";
+      _this77.newPersona.fechafin_per = "";
+      _this77.errors = [];
+      _this77.newCliente.id_per = response.data;
 
-      _this73.createCliente();
+      _this77.createCliente();
     })["catch"](function (error) {
-      _this73.errors = error.response.data;
+      _this77.errors = error.response.data;
     });
   }), _defineProperty(_methods, "getDescuento", function getDescuento() {
-    var _this74 = this;
+    var _this78 = this;
 
     var urlDescuento = "getDescuento";
     axios.get(urlDescuento).then(function (response) {
-      _this74.descuentos = response.data;
+      _this78.descuentos = response.data;
     });
   }), _defineProperty(_methods, "createDescuento", function createDescuento() {
-    var _this75 = this;
+    var _this79 = this;
 
     var urlGuardarDescuento = "storeDescuento";
     axios.post(urlGuardarDescuento, this.newDescuento).then(function (response) {
-      _this75.getDescuento();
+      _this79.getDescuento();
 
-      _this75.nomb_desc = "";
-      _this75.observ_desc = "";
-      _this75.estado_desc = "";
-      _this75.fechaini_desc = "";
-      _this75.fechafin_desc = "";
-      _this75.id_emp = "";
-      _this75.id_fec = "";
-      _this75.errors = [];
+      _this79.nomb_desc = "";
+      _this79.observ_desc = "";
+      _this79.estado_desc = "";
+      _this79.fechaini_desc = "";
+      _this79.fechafin_desc = "";
+      _this79.id_emp = "";
+      _this79.id_fec = "";
+      _this79.errors = [];
       $("#crearDescuento").modal("hide");
       toastr.success("Se ha añadido un nuevo Descuento");
     })["catch"](function (error) {
-      _this75.errors = error.response.data;
+      _this79.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editDescuento", function editDescuento(descuentos) {
     this.fillDescuento.id_desc = descuentos.id_desc;
@@ -51241,61 +51315,61 @@ var app = new Vue({
     this.fillDescuento.id_fec = descuentos.id_fec;
     $("#editDescuento").modal("show");
   }), _defineProperty(_methods, "updateDescuento", function updateDescuento(id) {
-    var _this76 = this;
+    var _this80 = this;
 
     var url = "updateDescuento/" + id;
     axios.post(url, this.fillDescuento).then(function (response) {
-      _this76.getDescuento();
+      _this80.getDescuento();
 
-      _this76.nomb_desc = "";
-      _this76.observ_desc = "";
-      _this76.estado_desc = "";
-      _this76.fechaini_desc = "";
-      _this76.fechafin_desc = "";
-      _this76.id_emp = "";
-      _this76.id_fec = "";
-      _this76.errors = [];
+      _this80.nomb_desc = "";
+      _this80.observ_desc = "";
+      _this80.estado_desc = "";
+      _this80.fechaini_desc = "";
+      _this80.fechafin_desc = "";
+      _this80.id_emp = "";
+      _this80.id_fec = "";
+      _this80.errors = [];
       $("#editDescuento").modal("hide");
       toastr.success("Descuento actualizado con éxito");
     })["catch"](function (error) {
-      _this76.errors = error.response.data;
+      _this80.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteDescuento", function deleteDescuento(descuentos) {
-    var _this77 = this;
+    var _this81 = this;
 
     var url = "deleteDescuento/" + descuentos.id_desc;
     axios.post(url).then(function (response) {
-      _this77.getDescuento();
+      _this81.getDescuento();
 
       toastr.success("Descuento eliminado con éxito");
     });
   }), _defineProperty(_methods, "getFormulario", function getFormulario() {
-    var _this78 = this;
+    var _this82 = this;
 
     var urlFormulario = "getFormulario";
     axios.get(urlFormulario).then(function (response) {
-      _this78.formularios = response.data;
+      _this82.formularios = response.data;
     });
   }), _defineProperty(_methods, "createFormulario", function createFormulario() {
-    var _this79 = this;
+    var _this83 = this;
 
     var urlGuardarFormulario = "storeFormulario";
     axios.post(urlGuardarFormulario, this.newFormulario).then(function (response) {
-      _this79.getFormulario();
+      _this83.getFormulario();
 
-      _this79.newFormulario.id_padcodform = "";
-      _this79.newFormulario.id_emp = "";
-      _this79.newFormulario.id_fec = "";
-      _this79.newFormulario.nomb_codform = "";
-      _this79.newFormulario.observ_codform = "";
-      _this79.newFormulario.estado_codform = "";
-      _this79.newFormulario.fechaini_codform = "";
-      _this79.newFormulario.fechafin_codform = "";
-      _this79.errors = [];
+      _this83.newFormulario.id_padcodform = "";
+      _this83.newFormulario.id_emp = "";
+      _this83.newFormulario.id_fec = "";
+      _this83.newFormulario.nomb_codform = "";
+      _this83.newFormulario.observ_codform = "";
+      _this83.newFormulario.estado_codform = "";
+      _this83.newFormulario.fechaini_codform = "";
+      _this83.newFormulario.fechafin_codform = "";
+      _this83.errors = [];
       $("#crearFormulario").modal("hide");
       toastr.success("Se añadido una nuevo formulario");
     })["catch"](function (error) {
-      _this79.errors = error.response.data;
+      _this83.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editFormulario", function editFormulario(formulario) {
     this.fillFormulario.id_padcodform = formulario.id_padcodform;
@@ -51308,61 +51382,61 @@ var app = new Vue({
     this.fillFormulario.fechafin_codform = formulario.fechafin_codform;
     $("#editFormulario").modal("show");
   }), _defineProperty(_methods, "updateFormulario", function updateFormulario(id) {
-    var _this80 = this;
+    var _this84 = this;
 
     var url = "updateFormulario/" + id;
     axios.post(url, this.fillFormulario).then(function (response) {
-      _this80.getFormulario();
+      _this84.getFormulario();
 
-      _this80.fillFormulario.id_padcodform = "";
-      _this80.fillFormulario.id_emp = "";
-      _this80.fillFormulario.id_fec = "";
-      _this80.fillFormulario.nomb_codform = "";
-      _this80.fillFormulario.observ_codform = "";
-      _this80.fillFormulario.estado_codform = "";
-      _this80.fillFormulario.fechaini_codform = "";
-      _this80.fillFormulario.fechafin_codform = "";
-      _this80.errors = [];
+      _this84.fillFormulario.id_padcodform = "";
+      _this84.fillFormulario.id_emp = "";
+      _this84.fillFormulario.id_fec = "";
+      _this84.fillFormulario.nomb_codform = "";
+      _this84.fillFormulario.observ_codform = "";
+      _this84.fillFormulario.estado_codform = "";
+      _this84.fillFormulario.fechaini_codform = "";
+      _this84.fillFormulario.fechafin_codform = "";
+      _this84.errors = [];
       $("#editFormulario").modal("hide");
       toastr.success("Formulario actualizado con éxito");
     })["catch"](function (error) {
-      _this80.errors = error.response.data;
+      _this84.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteFormulario", function deleteFormulario(formulario) {
-    var _this81 = this;
+    var _this85 = this;
 
     var url = "deleteFormulario/" + formulario.id_codform;
     axios.post(url).then(function (response) {
-      _this81.getFormulario();
+      _this85.getFormulario();
 
       toastr.success("Formulario eliminado con éxito");
     });
   }), _defineProperty(_methods, "getFormaPago", function getFormaPago() {
-    var _this82 = this;
+    var _this86 = this;
 
     var urlFormaPago = "getFormaPago";
     axios.get(urlFormaPago).then(function (response) {
-      _this82.formaPago = response.data;
+      _this86.formaPago = response.data;
     });
   }), _defineProperty(_methods, "createFormaPago", function createFormaPago() {
-    var _this83 = this;
+    var _this87 = this;
 
     var urlGuardarFormaPago = "storeFormaPago";
     axios.post(urlGuardarFormaPago, this.newFormaPago).then(function (response) {
-      _this83.getFormaPago();
+      _this87.getFormaPago();
 
-      _this83.newFormaPago.id_emp = "";
-      _this83.newFormaPago.id_fec = "";
-      _this83.newFormaPago.nomb_formapago = "";
-      _this83.newFormaPago.observ_formapago = "";
-      _this83.newFormaPago.estado_formapago = "";
-      _this83.newFormaPago.fechaini_formapago = "";
-      _this83.newFormaPago.fechafin_formapago = "";
-      _this83.errors = [];
+      _this87.newFormaPago.id_emp = "";
+      _this87.newFormaPago.id_fec = "";
+      _this87.newFormaPago.nomb_formapago = "";
+      _this87.newFormaPago.observ_formapago = "";
+      _this87.newFormaPago.estado_formapago = "";
+      _this87.newFormaPago.fechaini_formapago = "";
+      _this87.newFormaPago.fechafin_formapago = "";
+      _this87.errors = [];
       $("#crearFormaPago").modal("hide");
       toastr.success("Se añadido una nueva forma de pago");
     })["catch"](function (error) {
-      _this83.errors = error.response.data;
+      _this87.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editFormaPago", function editFormaPago(formaPago) {
     this.fillFormaPago.id_formapago = formaPago.id_formapago;
@@ -51375,60 +51449,60 @@ var app = new Vue({
     this.fillFormaPago.fechafin_formapago = formaPago.fechafin_formapago;
     $("#editFormaPago").modal("show");
   }), _defineProperty(_methods, "updateFormaPago", function updateFormaPago(id) {
-    var _this84 = this;
+    var _this88 = this;
 
     var url = "updateFormaPago/" + id;
     axios.post(url, this.fillFormaPago).then(function (response) {
-      _this84.getFormaPago();
+      _this88.getFormaPago();
 
-      _this84.fillFormaPago.id_emp = "";
-      _this84.fillFormaPago.id_fec = "";
-      _this84.fillFormaPago.nomb_formapago = "";
-      _this84.fillFormaPago.observ_formapago = "";
-      _this84.fillFormaPago.estado_formapago = "";
-      _this84.fillFormaPago.fechaini_formapago = "";
-      _this84.fillFormaPago.fechafin_formapago = "";
-      _this84.errors = [];
+      _this88.fillFormaPago.id_emp = "";
+      _this88.fillFormaPago.id_fec = "";
+      _this88.fillFormaPago.nomb_formapago = "";
+      _this88.fillFormaPago.observ_formapago = "";
+      _this88.fillFormaPago.estado_formapago = "";
+      _this88.fillFormaPago.fechaini_formapago = "";
+      _this88.fillFormaPago.fechafin_formapago = "";
+      _this88.errors = [];
       $("#editFormaPago").modal("hide");
       toastr.success("Forma de pago actualizada con éxito");
     })["catch"](function (error) {
-      _this84.errors = error.response.data;
+      _this88.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteFormaPago", function deleteFormaPago(formaPago) {
-    var _this85 = this;
+    var _this89 = this;
 
     var url = "deleteFormaPago/" + formaPago.id_formapago;
     axios.post(url).then(function (response) {
-      _this85.getFormaPago();
+      _this89.getFormaPago();
 
       toastr.success("Forma de Pago eliminada con éxito");
     });
   }), _defineProperty(_methods, "getParam_Docs", function getParam_Docs() {
-    var _this86 = this;
+    var _this90 = this;
 
     var urlParam_Docs = "getParam_Docs";
     axios.get(urlParam_Docs).then(function (response) {
-      _this86.param_docs = response.data;
+      _this90.param_docs = response.data;
     });
   }), _defineProperty(_methods, "createParam_Docs", function createParam_Docs() {
-    var _this87 = this;
+    var _this91 = this;
 
     var urlGuardarParam_Docs = "storeParam_Docs";
     axios.post(urlGuardarParam_Docs, this.newParam_Docs).then(function (response) {
-      _this87.getParam_Docs();
+      _this91.getParam_Docs();
 
-      _this87.nomb_param_docs = "";
-      _this87.observ_param_docs = "";
-      _this87.estado_param_docs = "";
-      _this87.fechaini_param_docs = "";
-      _this87.fechafin_param_docs = "";
-      _this87.id_emp = "";
-      _this87.id_fec = "";
-      _this87.errors = [];
+      _this91.nomb_param_docs = "";
+      _this91.observ_param_docs = "";
+      _this91.estado_param_docs = "";
+      _this91.fechaini_param_docs = "";
+      _this91.fechafin_param_docs = "";
+      _this91.id_emp = "";
+      _this91.id_fec = "";
+      _this91.errors = [];
       $("#crearParam_Docs").modal("hide");
       toastr.success("Se ha añadido un nuevo Parámetro de Documento");
     })["catch"](function (error) {
-      _this87.errors = error.response.data;
+      _this91.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editParam_Docs", function editParam_Docs(param_docs) {
     this.fillParam_Docs.id_param_docs = param_docs.id_param_docs;
@@ -51441,60 +51515,60 @@ var app = new Vue({
     this.fillParam_Docs.id_fec = param_docs.id_fec;
     $("#editParam_Docs").modal("show");
   }), _defineProperty(_methods, "updateParam_Docs", function updateParam_Docs(id) {
-    var _this88 = this;
+    var _this92 = this;
 
     var url = "updateParam_Docs/" + id;
     axios.post(url, this.fillParam_Docs).then(function (response) {
-      _this88.getParam_Docs();
+      _this92.getParam_Docs();
 
-      _this88.nomb_param_docs = "";
-      _this88.observ_param_docs = "";
-      _this88.estado_param_docs = "";
-      _this88.fechaini_param_docs = "";
-      _this88.fechafin_param_docs = "";
-      _this88.id_emp = "";
-      _this88.id_fec = "";
-      _this88.errors = [];
+      _this92.nomb_param_docs = "";
+      _this92.observ_param_docs = "";
+      _this92.estado_param_docs = "";
+      _this92.fechaini_param_docs = "";
+      _this92.fechafin_param_docs = "";
+      _this92.id_emp = "";
+      _this92.id_fec = "";
+      _this92.errors = [];
       $("#editParam_Docs").modal("hide");
       toastr.success("Parámetro de Documento actualizado con éxito");
     })["catch"](function (error) {
-      _this88.errors = error.response.data;
+      _this92.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteParam_Docs", function deleteParam_Docs(param_docs) {
-    var _this89 = this;
+    var _this93 = this;
 
     var url = "deleteParam_Docs/" + param_docs.id_param_docs;
     axios.post(url).then(function (response) {
-      _this89.getParam_Docs();
+      _this93.getParam_Docs();
 
       toastr.success("Parámetro de Documento eliminado con éxito");
     });
   }), _defineProperty(_methods, "getParam_Porc", function getParam_Porc() {
-    var _this90 = this;
+    var _this94 = this;
 
     var urlParam_Porc = "getParam_Porc";
     axios.get(urlParam_Porc).then(function (response) {
-      _this90.param_porc = response.data;
+      _this94.param_porc = response.data;
     });
   }), _defineProperty(_methods, "createParam_Porc", function createParam_Porc() {
-    var _this91 = this;
+    var _this95 = this;
 
     var urlGuardarParam_Porc = "storeParam_Porc";
     axios.post(urlGuardarParam_Porc, this.newParam_Porc).then(function (response) {
-      _this91.getParam_Porc();
+      _this95.getParam_Porc();
 
-      _this91.nomb_param_porc = "";
-      _this91.observ_param_porc = "";
-      _this91.estado_param_porc = "";
-      _this91.fechaini_param_porc = "";
-      _this91.fechafin_param_porc = "";
-      _this91.id_emp = "";
-      _this91.id_fec = "";
-      _this91.errors = [];
+      _this95.nomb_param_porc = "";
+      _this95.observ_param_porc = "";
+      _this95.estado_param_porc = "";
+      _this95.fechaini_param_porc = "";
+      _this95.fechafin_param_porc = "";
+      _this95.id_emp = "";
+      _this95.id_fec = "";
+      _this95.errors = [];
       $("#crearParam_Porc").modal("hide");
       toastr.success("Se ha añadido un nuevo Parámetro de Porcentaje");
     })["catch"](function (error) {
-      _this91.errors = error.response.data;
+      _this95.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editParam_Porc", function editParam_Porc(param_porc) {
     this.fillParam_Porc.id_param_porc = param_docs.id_param_porc;
@@ -51507,59 +51581,59 @@ var app = new Vue({
     this.fillParam_Porc.id_fec = param_porc.id_fec;
     $("#editParam_Porc").modal("show");
   }), _defineProperty(_methods, "updateParam_Porc", function updateParam_Porc(id) {
-    var _this92 = this;
+    var _this96 = this;
 
     var url = "updateParam_Porc/" + id;
     axios.post(url, this.fillParam_Porc).then(function (response) {
-      _this92.getParam_Porc();
+      _this96.getParam_Porc();
 
-      _this92.nomb_param_porc = "";
-      _this92.observ_param_porc = "";
-      _this92.estado_param_porc = "";
-      _this92.fechaini_param_porc = "";
-      _this92.fechafin_param_porc = "";
-      _this92.id_emp = "";
-      _this92.id_fec = "";
-      _this92.errors = [];
+      _this96.nomb_param_porc = "";
+      _this96.observ_param_porc = "";
+      _this96.estado_param_porc = "";
+      _this96.fechaini_param_porc = "";
+      _this96.fechafin_param_porc = "";
+      _this96.id_emp = "";
+      _this96.id_fec = "";
+      _this96.errors = [];
       $("#editParam_Porc").modal("hide");
       toastr.success("Parámetro de Porcentaje actualizado con éxito");
     })["catch"](function (error) {
-      _this92.errors = error.response.data;
+      _this96.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteParam_Porc", function deleteParam_Porc(param_porc) {
-    var _this93 = this;
+    var _this97 = this;
 
     var url = "deleteParam_Porc/" + param_porc.id_param_porc;
     axios.post(url).then(function (response) {
-      _this93.getParam_Porc();
+      _this97.getParam_Porc();
 
       toastr.success("Parámetro de Porcentaje eliminado con éxito");
     });
   }), _defineProperty(_methods, "getPeriodo", function getPeriodo() {
-    var _this94 = this;
+    var _this98 = this;
 
     var urlPeriodo = "getPeriodo";
     axios.get(urlPeriodo).then(function (response) {
-      _this94.periodos = response.data;
+      _this98.periodos = response.data;
     });
   }), _defineProperty(_methods, "createPeriodo", function createPeriodo() {
-    var _this95 = this;
+    var _this99 = this;
 
     var urlPeriodo = "storePeriodo";
     axios.post(urlPeriodo, this.newPeriodo).then(function (response) {
-      _this95.getPeriodo();
+      _this99.getPeriodo();
 
-      _this95.newPeriodo.nomb_fec = "";
-      _this95.newPeriodo.mesidentif_fec = "";
-      _this95.newPeriodo.observ_fec = "";
-      _this95.newPeriodo.estado_fec = "";
-      _this95.newPeriodo.fechaini_fec = "";
-      _this95.newPeriodo.fechafin_fec = "";
-      _this95.errors = [];
+      _this99.newPeriodo.nomb_fec = "";
+      _this99.newPeriodo.mesidentif_fec = "";
+      _this99.newPeriodo.observ_fec = "";
+      _this99.newPeriodo.estado_fec = "";
+      _this99.newPeriodo.fechaini_fec = "";
+      _this99.newPeriodo.fechafin_fec = "";
+      _this99.errors = [];
       $("#crearPeriodo").modal("hide");
       toastr.success("Se añadido una nuevo periodo");
     })["catch"](function (error) {
-      _this95.errors = error.response.data;
+      _this99.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editPeriodo", function editPeriodo(periodo) {
     this.fillPeriodo.id_fec = periodo.id_fec;
@@ -51571,59 +51645,59 @@ var app = new Vue({
     this.fillPeriodo.fechafin_fec = periodo.fechafin_fec;
     $("#editPeriodo").modal("show");
   }), _defineProperty(_methods, "updatePeriodo", function updatePeriodo(id) {
-    var _this96 = this;
+    var _this100 = this;
 
     var url = "updatePeriodo/" + id;
     axios.post(url, this.fillPeriodo).then(function (response) {
-      _this96.getPeriodo();
+      _this100.getPeriodo();
 
-      _this96.fillPeriodo.id_fec = "";
-      _this96.fillPeriodo.nomb_fec = "";
-      _this96.fillPeriodo.mesidentif_fec = "";
-      _this96.fillPeriodo.observ_fec = "";
-      _this96.fillPeriodo.estado_fec = "";
-      _this96.fillPeriodo.fechaini_fec = "";
-      _this96.fillPeriodo.fechafin_fec = "";
-      _this96.errors = [];
+      _this100.fillPeriodo.id_fec = "";
+      _this100.fillPeriodo.nomb_fec = "";
+      _this100.fillPeriodo.mesidentif_fec = "";
+      _this100.fillPeriodo.observ_fec = "";
+      _this100.fillPeriodo.estado_fec = "";
+      _this100.fillPeriodo.fechaini_fec = "";
+      _this100.fillPeriodo.fechafin_fec = "";
+      _this100.errors = [];
       $("#editPeriodo").modal("hide");
       toastr.success("Periodo actualizado con éxito");
     })["catch"](function (error) {
-      _this96.errors = error.response.data;
+      _this100.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deletePeriodo", function deletePeriodo(periodo) {
-    var _this97 = this;
+    var _this101 = this;
 
     var url = "deletePeriodo/" + periodo.id_fec;
     axios.post(url).then(function (response) {
-      _this97.getPeriodo();
+      _this101.getPeriodo();
 
       toastr.success("Periodo eliminado con éxito");
     });
   }), _defineProperty(_methods, "getTipoDocumento", function getTipoDocumento() {
-    var _this98 = this;
+    var _this102 = this;
 
     var urlTipoDocumento = "getTipoDocumento";
     axios.get(urlTipoDocumento).then(function (response) {
-      _this98.tipoDocumento = response.data;
+      _this102.tipoDocumento = response.data;
     });
   }), _defineProperty(_methods, "createTipoDocumento", function createTipoDocumento() {
-    var _this99 = this;
+    var _this103 = this;
 
     var urlPeriodo = "storeTipoDocumento";
     axios.post(urlPeriodo, this.newTipoDocumento).then(function (response) {
-      _this99.getTipoDocumento();
+      _this103.getTipoDocumento();
 
-      _this99.newTipoDocumento.id_emp = "";
-      _this99.newTipoDocumento.id_fec = "";
-      _this99.newTipoDocumento.nomb_doc = "";
-      _this99.newTipoDocumento.estado_doc = "";
-      _this99.newTipoDocumento.fechaini_doc = "";
-      _this99.newTipoDocumento.fechafin_doc = "";
-      _this99.errors = [];
+      _this103.newTipoDocumento.id_emp = "";
+      _this103.newTipoDocumento.id_fec = "";
+      _this103.newTipoDocumento.nomb_doc = "";
+      _this103.newTipoDocumento.estado_doc = "";
+      _this103.newTipoDocumento.fechaini_doc = "";
+      _this103.newTipoDocumento.fechafin_doc = "";
+      _this103.errors = [];
       $("#crearTipoDocumento").modal("hide");
       toastr.success("Se añadido un nuevo Tipo de Documento");
     })["catch"](function (error) {
-      _this99.errors = error.response.data;
+      _this103.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editTipoDocumento", function editTipoDocumento(tipoDocumento) {
     this.fillTipoDocumento.id_doc = tipoDocumento.id_doc;
@@ -51636,100 +51710,100 @@ var app = new Vue({
     this.fillTipoDocumento.fechafin_doc = tipoDocumento.fechafin_doc;
     $("#editTipoDocumento").modal("show");
   }), _defineProperty(_methods, "updateTipoDocumento", function updateTipoDocumento(id) {
-    var _this100 = this;
+    var _this104 = this;
 
     var url = "updateTipoDocumento/" + id;
     axios.post(url, this.fillTipoDocumento).then(function (response) {
-      _this100.getTipoDocumento();
+      _this104.getTipoDocumento();
 
-      _this100.fillTipoDocumento.id_emp = "";
-      _this100.fillTipoDocumento.id_fec = "";
-      _this100.fillTipoDocumento.nomb_doc = "";
-      _this100.fillTipoDocumento.estado_doc = "";
-      _this100.fillTipoDocumento.fechaini_doc = "";
-      _this100.fillTipoDocumento.fechafin_doc = "";
-      _this100.errors = [];
+      _this104.fillTipoDocumento.id_emp = "";
+      _this104.fillTipoDocumento.id_fec = "";
+      _this104.fillTipoDocumento.nomb_doc = "";
+      _this104.fillTipoDocumento.estado_doc = "";
+      _this104.fillTipoDocumento.fechaini_doc = "";
+      _this104.fillTipoDocumento.fechafin_doc = "";
+      _this104.errors = [];
       $("#editTipoDocumento").modal("hide");
       toastr.success("Tipo de documento actualizado con éxito");
     })["catch"](function (error) {
-      _this100.errors = error.response.data;
+      _this104.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteTipoDocumento", function deleteTipoDocumento(tipoDocumento) {
-    var _this101 = this;
+    var _this105 = this;
 
     var url = "deleteTipoDocumento/" + tipoDocumento.id_doc;
     axios.post(url).then(function (response) {
-      _this101.getTipoDocumento();
+      _this105.getTipoDocumento();
 
       toastr.success("Tipo de documento eliminado con éxito");
     });
   }), _defineProperty(_methods, "getUsuario", function getUsuario() {
-    var _this102 = this;
+    var _this106 = this;
 
     var urlUsuario = "getUsuario";
     axios.get(urlUsuario).then(function (response) {
-      _this102.usuarios = response.data;
+      _this106.usuarios = response.data;
     });
   }), _defineProperty(_methods, "createUsuario", function createUsuario() {
-    var _this103 = this;
+    var _this107 = this;
 
     var urlUsuario = "storeUsuario";
     axios.post(urlUsuario, this.newUsuario).then(function (response) {
-      _this103.getUsuario();
+      _this107.getUsuario();
 
-      _this103.newUsuario.id_rol = "";
-      _this103.newUsuario.id_emp = "";
-      _this103.newUsuario.id_fec = "";
-      _this103.newUsuario.nomb_usu = "";
-      _this103.newUsuario.clave_usu = "";
-      _this103.newUsuario.observ_usu = "";
-      _this103.newUsuario.estado_usu = "";
-      _this103.newUsuario.fechaini_usu = "";
-      _this103.newUsuario.fechafin_usu = "";
-      _this103.newUsuario.email = "";
-      _this103.newPersona.nombre_per = "";
-      _this103.newPersona.apel_per = "";
-      _this103.newPersona.doc_per = "";
-      _this103.newPersona.correo_per = "";
-      _this103.newPersona.fechaini_per = "";
-      _this103.newPersona.fechafin_per = "";
-      _this103.errors = [];
+      _this107.newUsuario.id_rol = "";
+      _this107.newUsuario.id_emp = "";
+      _this107.newUsuario.id_fec = "";
+      _this107.newUsuario.nomb_usu = "";
+      _this107.newUsuario.clave_usu = "";
+      _this107.newUsuario.observ_usu = "";
+      _this107.newUsuario.estado_usu = "";
+      _this107.newUsuario.fechaini_usu = "";
+      _this107.newUsuario.fechafin_usu = "";
+      _this107.newUsuario.email = "";
+      _this107.newPersona.nombre_per = "";
+      _this107.newPersona.apel_per = "";
+      _this107.newPersona.doc_per = "";
+      _this107.newPersona.correo_per = "";
+      _this107.newPersona.fechaini_per = "";
+      _this107.newPersona.fechafin_per = "";
+      _this107.errors = [];
       $("#crearUsuario").modal("hide");
       toastr.success("Se añadido un nuevo Usuario");
     })["catch"](function (error) {
-      _this103.errors = error.response.data;
+      _this107.errors = error.response.data;
     });
   }), _defineProperty(_methods, "createUsuarioEmpleado", function createUsuarioEmpleado() {
-    var _this104 = this;
+    var _this108 = this;
 
     var urlUsuario = "storeUsuarioEmpleado";
     axios.post(urlUsuario, this.newUsuario).then(function (response) {
-      _this104.getUsuario();
+      _this108.getUsuario();
 
-      _this104.newUsuario.id_rol = "";
-      _this104.newUsuario.id_emp = "";
-      _this104.newUsuario.id_fec = "";
-      _this104.newUsuario.nomb_usu = "";
-      _this104.newUsuario.clave_usu = "";
-      _this104.newUsuario.observ_usu = "";
-      _this104.newUsuario.estado_usu = "";
-      _this104.newUsuario.fechaini_usu = "";
-      _this104.newUsuario.fechafin_usu = "";
-      _this104.newUsuario.email = "";
-      _this104.newPersona.nombre_per = "";
-      _this104.newPersona.apel_per = "";
-      _this104.newPersona.doc_per = "";
-      _this104.newPersona.correo_per = "";
-      _this104.newPersona.fechaini_per = "";
-      _this104.newPersona.fechafin_per = "";
-      _this104.errors = [];
-      _this104.newEmpleado.id_usu = response.data;
+      _this108.newUsuario.id_rol = "";
+      _this108.newUsuario.id_emp = "";
+      _this108.newUsuario.id_fec = "";
+      _this108.newUsuario.nomb_usu = "";
+      _this108.newUsuario.clave_usu = "";
+      _this108.newUsuario.observ_usu = "";
+      _this108.newUsuario.estado_usu = "";
+      _this108.newUsuario.fechaini_usu = "";
+      _this108.newUsuario.fechafin_usu = "";
+      _this108.newUsuario.email = "";
+      _this108.newPersona.nombre_per = "";
+      _this108.newPersona.apel_per = "";
+      _this108.newPersona.doc_per = "";
+      _this108.newPersona.correo_per = "";
+      _this108.newPersona.fechaini_per = "";
+      _this108.newPersona.fechafin_per = "";
+      _this108.errors = [];
+      _this108.newEmpleado.id_usu = response.data;
 
-      _this104.createEmpleado();
+      _this108.createEmpleado();
 
       toastr.success("Se añadido un nuevo Usuario");
     })["catch"](function (error) {
-      _this104.errors = error.response.data;
+      _this108.errors = error.response.data;
     });
   }), _defineProperty(_methods, "editUsuario", function editUsuario(usuario) {
     this.fillUsuario.id_rol = usuario.id_rol;
@@ -51743,32 +51817,32 @@ var app = new Vue({
     this.fillUsuario.fechafin_usu = usuario.fechafin_usu;
     $("#editUsuario").modal("show");
   }), _defineProperty(_methods, "updateUsuario", function updateUsuario(id) {
-    var _this105 = this;
+    var _this109 = this;
 
     var url = "updateUsuaurio/" + id;
     axios.post(url, this.fillUsuario).then(function (response) {
-      _this105.getUsuario();
+      _this109.getUsuario();
 
-      _this105.fillUsuario.id_rol = "";
-      _this105.fillUsuario.id_emp = "";
-      _this105.fillUsuario.id_fec = "";
-      _this105.fillUsuario.nomb_usu = "";
-      _this105.fillUsuario.observ_usu = "";
-      _this105.fillUsuario.estado_usu = "";
-      _this105.fillUsuario.fechaini_usu = "";
-      _this105.fillUsuario.fechafin_usu = "";
-      _this105.errors = [];
+      _this109.fillUsuario.id_rol = "";
+      _this109.fillUsuario.id_emp = "";
+      _this109.fillUsuario.id_fec = "";
+      _this109.fillUsuario.nomb_usu = "";
+      _this109.fillUsuario.observ_usu = "";
+      _this109.fillUsuario.estado_usu = "";
+      _this109.fillUsuario.fechaini_usu = "";
+      _this109.fillUsuario.fechafin_usu = "";
+      _this109.errors = [];
       $("#editUsuario").modal("hide");
       toastr.success("Usuario actualizado con éxito");
     })["catch"](function (error) {
-      _this105.errors = error.response.data;
+      _this109.errors = error.response.data;
     });
   }), _defineProperty(_methods, "deleteUsuario", function deleteUsuario(usuario) {
-    var _this106 = this;
+    var _this110 = this;
 
     var url = "deleteUsuario/" + usuario.id_usu;
     axios.post(url).then(function (response) {
-      _this106.getUsuario();
+      _this110.getUsuario();
 
       toastr.success("Usuario eliminado con éxito");
     });
@@ -51780,41 +51854,41 @@ var app = new Vue({
     this.pagination.per_page = this.numregistros;
     this.getCategorias(page);
   }), _defineProperty(_methods, "getFacturaCompra", function getFacturaCompra() {
-    var _this107 = this;
+    var _this111 = this;
 
     var urlFactura = "getFacturaCompra";
     axios.get(urlFactura).then(function (response) {
-      _this107.facturasCompra = response.data;
+      _this111.facturasCompra = response.data;
     });
   }), _defineProperty(_methods, "getFacturaVenta", function getFacturaVenta() {
-    var _this108 = this;
+    var _this112 = this;
 
     var urlFactura = "getFacturaVenta";
     axios.get(urlFactura).then(function (response) {
-      _this108.facturasVenta = response.data;
+      _this112.facturasVenta = response.data;
     });
   }), _defineProperty(_methods, "getProforma", function getProforma() {
-    var _this109 = this;
+    var _this113 = this;
 
     var urlProforma = "getProforma";
     axios.get(urlProforma).then(function (response) {
-      _this109.proformas = response.data;
+      _this113.proformas = response.data;
     });
   }), _defineProperty(_methods, "cargarFacturaVenta", function cargarFacturaVenta() {
-    var _this110 = this;
+    var _this114 = this;
 
     var urlFactura = "preguardarFacturaVenta/";
     axios.post(urlFactura, this.buscarCli).then(function (response) {
-      _this110.existeDF = "True";
-      _this110.factura = response.data;
+      _this114.existeDF = "True";
+      _this114.factura = response.data;
       $("#crearFacturaVenta").modal("hide");
     });
   }), _defineProperty(_methods, "getIva", function getIva() {
-    var _this111 = this;
+    var _this115 = this;
 
     var urlIva = "getIvaActual";
     axios.get(urlIva).then(function (response) {
-      _this111.iva = response.data;
+      _this115.iva = response.data;
     });
   }), _defineProperty(_methods, "deletedetalleFact", function deletedetalleFact(detalle) {
     var index = this.detallefactura.indexOf(detalle);
@@ -51884,7 +51958,7 @@ var app = new Vue({
     this.detallefactura[index].total = this.calcularItem(producto, cantidad, IVA)[0].total;
     this.calcularTotalesFact();
   }), _defineProperty(_methods, "getNumfactV", function getNumfactV() {
-    var _this112 = this;
+    var _this116 = this;
 
     var url = "";
 
@@ -51895,7 +51969,7 @@ var app = new Vue({
     }
 
     axios.get(url).then(function (response) {
-      _this112.numFactv = response.data;
+      _this116.numFactv = response.data;
     });
   }), _defineProperty(_methods, "get_ultimo_usuario", function get_ultimo_usuario() {
     var url = "getUltimoUsuario"; //localStorage.removeItem("id_usuario");
@@ -51940,25 +52014,25 @@ var app = new Vue({
     this.buscarCli.organiz_per = persona.organiz_per;
     this.buscar_cli = this.buscarCli.ruc_cli;
   }), _defineProperty(_methods, "createFacturaVenta", function createFacturaVenta() {
-    var _this113 = this;
+    var _this117 = this;
 
     this.factura.id_usu = this.id_usu;
     this.CalcularFacturaVenta();
     var urlFactV = "storeFactura";
     axios.post(urlFactV, this.factura).then(function (response) {
-      _this113.guardaritem(_this113.factura.num_fact);
+      _this117.guardaritem(_this117.factura.num_fact);
 
       window.location = "/Ventas";
     })["catch"](function (error) {
-      _this113.errors = error.response.data;
+      _this117.errors = error.response.data;
     });
   }), _defineProperty(_methods, "guardaritem", function guardaritem(id_fact) {
-    var _this114 = this;
+    var _this118 = this;
 
     var urlFacturaDetalle = "storeFacturaDetalle/" + id_fact;
     this.detallefactura.reduce(function (total, item) {
       axios.post(urlFacturaDetalle, item).then(function (response) {})["catch"](function (error) {
-        _this114.errors = error.response.data;
+        _this118.errors = error.response.data;
       });
     }, 0);
   }), _defineProperty(_methods, "onFileChange", function onFileChange(event) {
@@ -51975,18 +52049,94 @@ var app = new Vue({
       this.file = file;
     }
   }), _defineProperty(_methods, "obtener_archivo", function obtener_archivo(file) {
-    var _this115 = this;
+    var _this119 = this;
 
     var urlGuardarArchFact = "storeFacturaCompra";
     this.file_Factura.facturaC = file;
     axios.post(urlGuardarArchFact, this.file_Factura).then(function (response) {
-      _this115.getFacturaCompra();
+      _this119.getFacturaCompra();
 
-      _this115.errors = [];
+      _this119.errors = [];
       $("#crearProducto").modal("hide");
       toastr.success("Se ha registrado la Compra");
     })["catch"](function (error) {
-      _this115.errors = error.response.data;
+      _this119.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "getInventario", function getInventario() {
+    var _this120 = this;
+
+    var urlInventario = "getInventario";
+    axios.get(urlInventario).then(function (response) {
+      _this120.inventarios = response.data;
+    });
+  }), _defineProperty(_methods, "createInventario", function createInventario() {
+    var _this121 = this;
+
+    var urlGuardarInventario = "storeInventario";
+    axios.post(urlGuardarInventario, this.newInventario).then(function (response) {
+      _this121.getInventario();
+
+      newInventario = {
+        id_prod: "",
+        id_emp: "",
+        id_fec: "",
+        numprod_inv: "",
+        observ_inv: "",
+        estado_inv: "",
+        fechafin_inv: ""
+      };
+      _this121.errors = [];
+      $("#crearInventario").modal("hide");
+      toastr.success("Se añadido un nuevo Inventario");
+    })["catch"](function (error) {
+      _this121.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "editInventario", function editInventario(inventario) {
+    this.fillInventario.id_inv = inventario.id_inv;
+    this.fillInventario.id_usu = inventario.id_usu;
+    this.fillInventario.id_prod = inventario.id_prod;
+    this.fillInventario.id_emp = inventario.id_emp;
+    this.fillInventario.id_fec = inventario.id_fec;
+    this.fillInventario.descripcion_inv = inventario.descripcion_inv;
+    this.fillInventario.numprod_inv = inventario.numprod_inv;
+    this.fillInventario.numexist_inv = inventario.numexist_inv;
+    this.fillInventario.observ_inv = inventario.observ_inv;
+    this.fillInventario.estado_inv = inventario.estado_inv;
+    this.fillInventario.fechafin_inv = inventario.fechafin_inv;
+    $("#editInventario").modal("show");
+  }), _defineProperty(_methods, "updateInventario", function updateInventario(id) {
+    var _this122 = this;
+
+    var url = "updateInventario/" + id;
+    axios.post(url, this.fillInventario).then(function (response) {
+      _this122.getInventario();
+
+      _this122.fillInventario = {
+        id_usu: "",
+        id_prod: "",
+        id_emp: "",
+        id_fec: "",
+        descrpcion_inv: "",
+        numprod_inv: "",
+        numexist_inv: "",
+        observ_inv: "",
+        estado_inv: "",
+        fechafin_inv: ""
+      };
+      _this122.errors = [];
+      $("#editInventario").modal("hide");
+      toastr.success("Inventario actualizado con éxito");
+    })["catch"](function (error) {
+      _this122.errors = error.response.data;
+    });
+  }), _defineProperty(_methods, "deleteInventario", function deleteInventario(inventario) {
+    var _this123 = this;
+
+    var url = "deleteInventario/" + inventario.id_inv;
+    axios.post(url).then(function (response) {
+      _this123.getInventario();
+
+      toastr.success("Inventario eliminada con éxito");
     });
   }), _methods)
 });
