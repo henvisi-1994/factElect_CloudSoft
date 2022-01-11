@@ -36,21 +36,7 @@
                     @endforeach
                 </select>
             </div>
-             <div class="col-xs-2 col-md-2 form-group">
-                <label>
-                    Categoria
-                </label>
-                <select class="form-control" name="id_marca" v-model="buscar_categoria">
-                    <option disabled="" selected="" value="none">
-                        Selecione una Marca
-                    </option>
-                    @foreach($categorias as $categoria)
-                    <option value="{{$categoria->nomb_cat}}">
-                        {{$categoria->nomb_cat}}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
+
         </div>
         <table class="table table-bordered table-striped">
             <thead>

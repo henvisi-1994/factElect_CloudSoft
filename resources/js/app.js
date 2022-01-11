@@ -788,21 +788,26 @@ const app = new Vue({
             });
         },
         getTotalCompras: function() {
-            var id_usu = document.getElementById("id_usu").value;
-            this.id_usu = id_usu;
-            var urlTotalCompras = "getTotalCompras/" + this.id_usu;
-            axios.get(urlTotalCompras).then(response => {
-                this.total_compras = response.data;
-                localStorage.setItem("total_compras", response.data);
-            });
+            var id_usu = document.getElementById("id_usu");
+            if (typeof id_usu !== "undefined" && id_usu !== null) {
+                this.id_usu = id_usu.value;
+                var urlTotalCompras = "getTotalCompras/" + this.id_usu;
+                axios.get(urlTotalCompras).then(response => {
+                    this.total_compras = response.data;
+                    localStorage.setItem("total_compras", response.data);
+                });
+            }
         },
         getTotalVentas: function() {
-            this.id_usu = document.getElementById("id_usu").value;
-            var urlTotalventas = "getTotalVentas/" + this.id_usu;
-            axios.get(urlTotalventas).then(response => {
-                this.total_ventas = response.data;
-                localStorage.setItem("total_ventas", response.data);
-            });
+            var id_usu = document.getElementById("id_usu");
+            if (typeof id_usu !== "undefined" && id_usu !== null) {
+                this.id_usu = id_usu.value;
+                var urlTotalventas = "getTotalVentas/" + this.id_usu;
+                axios.get(urlTotalventas).then(response => {
+                    this.total_ventas = response.data;
+                    localStorage.setItem("total_ventas", response.data);
+                });
+            }
         },
         getTotalUtilidades: function() {
             this.total_utilidades =

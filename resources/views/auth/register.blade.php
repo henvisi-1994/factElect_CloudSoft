@@ -60,17 +60,12 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-                             <div class="form-group">
-                            <label>
-                                Observacion
-                            </label>
-                            <textarea class="form-control" name="observ_usu" placeholder="Ingrese Observación" rows="3">
-                            </textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>
+
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">
                                 Estado
                             </label>
+                            <div class="col-md-6">
                             <select class="form-control" name="estado_usu">
                                 <option disabled="" selected="" value="none">
                                     Selecione Estado
@@ -85,25 +80,31 @@
                                     Inactivo
                                 </option>
                             </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">
                                 Fecha Inicial:
                             </label>
+                            <div class="col-md-6">
                             <input class="form-control" name="fechaini_usu" type="date">
                             </input>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">
                                 Fecha Final:
                             </label>
+                            <div class="col-md-6">
                             <input class="form-control" name="fechafin_usu" type="date">
                             </input>
+                            </div>
                         </div>
-                         <div class="form-group">
-                            <label>
+                         <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">
                                 Rol
                             </label>
+                            <div class="col-md-6">
                             <select class="form-control" name="id_rol">
                                 <option disabled="" selected="" value="none">
                                     Selecione un Rol
@@ -114,11 +115,13 @@
                                 </option>
                                 @endforeach
                             </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">
                                 Empresa
                             </label>
+                            <div class="col-md-6">
                             <select class="form-control" name="id_emp">
                                 <option disabled="" selected="" value="none">
                                     Selecione una Empresa
@@ -129,11 +132,13 @@
                                 </option>
                                 @endforeach
                             </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">
                                 Periodo
                             </label>
+                            <div class="col-md-6">
                             <select class="form-control" name="id_fec">
                                 <option disabled="" selected="" value="none">
                                     Selecione una Periodo
@@ -144,8 +149,15 @@
                                 </option>
                                 @endforeach
                             </select>
+                            </div>
                         </div>
-
+                             <div class="form-group">
+                            <label>
+                                Observacion
+                            </label>
+                            <textarea class="form-control" name="observ_usu" placeholder="Ingrese Observación" rows="3">
+                            </textarea>
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
