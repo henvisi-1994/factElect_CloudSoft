@@ -43,10 +43,10 @@
         </ul>
     </div>
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade in active" id="nav-formulario">
+        <div class="tab-pane fade" id="nav-formulario">
             @include('admin.Formulario.index')
         </div>
-        <div class="tab-pane fade" id="nav-periodo">
+        <div class="tab-pane fade in active" id="nav-periodo">
             @include('admin.Periodo.index')
         </div>
         <div class="tab-pane fade" id="nav-formPago">

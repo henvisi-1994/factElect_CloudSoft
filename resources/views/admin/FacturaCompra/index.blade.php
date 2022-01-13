@@ -51,9 +51,6 @@
                             <th>
                             	Total
                             </th>
-                            <th>
-                                Configuración
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
