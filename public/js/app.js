@@ -49068,8 +49068,9 @@ var app = new Vue({
     this.getInventario();
     this.getNumfactV();
     this.existeDF = "False";
+    var tipo_factura = document.getElementsByName("tipo_factura")[0].value;
 
-    if (App.tipo_factura == "Venta") {
+    if (tipo_factura == "Venta") {
       this.series = "001-001-";
     } else {
       this.series = "001-002-";
@@ -49859,7 +49860,6 @@ var app = new Vue({
       var urlRepInventario = "getReporteInventario";
       axios.get(urlRepInventario).then(function (response) {
         _this11.r_inventarios = response.data;
-        console.log(response.data);
       });
     },
     getCategorias: function getCategorias() {
@@ -51067,7 +51067,6 @@ var app = new Vue({
       _this67.newProducto.fechaini_emp = "";
       _this67.fillEmpresa.fechafin_emp = "";
       _this67.errors = [];
-      console.log(response);
       $("#editEmpresa").modal("hide");
       toastr.success("Empresa actualizada con éxito");
     })["catch"](function (error) {
@@ -51968,8 +51967,9 @@ var app = new Vue({
     var _this116 = this;
 
     var url = "";
+    var tipo_factura = document.getElementsByName("tipo_factura")[0].value;
 
-    if (App.tipo_factura == "Venta") {
+    if (tipo_factura == "Venta") {
       url = "getNumFactVent";
     } else {
       url = "getNumProfVenta";
@@ -51999,11 +51999,13 @@ var app = new Vue({
     this.factura.subiva_fact = this.subtotalIva;
     this.factura.subice_fact = 0;
     this.factura.total_fact = this.total;
-    this.factura.id_per = App.id_persona;
+    var id_persona = document.getElementsByName("id_persona")[0].value;
+    this.factura.id_per = id_persona;
     this.factura.fecha_emision_fact = this.fecha_act;
     this.factura.hora_emision_fact = hours + ":" + minutes + ":" + seconds;
     this.factura.vencimiento_fact = yyyy + "-" + mm + "-" + dd;
-    this.factura.tipo_fact = App.tipo_factura;
+    var tipo_factura = document.getElementsByName("tipo_factura")[0].value;
+    this.factura.tipo_fact = tipo_factura;
     this.factura.estado_fact = "PA";
 
     if (this.numFactv) {
@@ -52072,9 +52074,11 @@ var app = new Vue({
   }), _defineProperty(_methods, "getInventario", function getInventario() {
     var _this120 = this;
 
+    console.log("Entro a Inventario");
     var urlInventario = "getInventario";
     axios.get(urlInventario).then(function (response) {
       _this120.inventarios = response.data;
+      console.log(response.data);
     });
   }), _defineProperty(_methods, "createInventario", function createInventario() {
     var _this121 = this;

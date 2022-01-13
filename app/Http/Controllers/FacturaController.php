@@ -37,7 +37,7 @@ class FacturaController extends Controller
     }
     public function guardarFacturaVenta(Request $request)
     {
-        $id_usuario=$request->input('id_usu');
+        $id_usuario=Auth::user()->id_usu;
         $v = $this->validate(request(), [
             'num_fact' => ['required', 'string'],
             'id_formapago' => ['required'],

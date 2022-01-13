@@ -142,7 +142,7 @@ class InventarioController extends Controller
     }
     public function getInventario()
     {
-        $inventarios=DB::select('SELECT *FROM v_inventario INNER JOIN producto ON (SELECT id_prod FROM producto WHERE descripcion_prod=descripcion_inv)=producto.id_prod');
+        $inventarios=DB::select('SELECT *FROM v_inventario');
         return $inventarios;
 
     }

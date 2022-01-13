@@ -1,6 +1,10 @@
 @extends('admin.layouts.app')
 @section('content')
 <form method="POST" v-on:submit.prevent="createFacturaVenta">
+            <input name="tipo_factura" type="hidden" value="{{$tipo_factura}}">
+            </input>
+                        <input name="id_persona" type="hidden" value="{{$factura->id_per}}">
+            </input>
     <div class="box">
         <div class="box-header">
             <h1 class="box-title">
