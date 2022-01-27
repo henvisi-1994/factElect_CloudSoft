@@ -490,6 +490,12 @@ const app = new Vue({
             fechaini_emp: "",
             fechafin_emp: ""
         },
+        kardexs: [],
+        newKardex: {
+            id_prod: 0,
+            fecha_inicio_k: "",
+            fecha_fin_k: ""
+        },
         roles: [],
         newRol: {
             id_emp: "",
@@ -2895,22 +2901,28 @@ const app = new Vue({
         adddetalleFact: function(producto) {
             var IVA = this.PorcentajeIVA(producto);
             var cantidad = this.cantidadP;
-            this.detallefactura.push({
-                id_prod: producto.id_prod,
-                codigo_prod: producto.codigo_prod,
-                cantidad: cantidad,
-                descripcion: producto.descripcion_prod,
-                precio_prod: producto.precio_prod,
-                descuento: this.calcularItem(producto, cantidad, IVA)[0]
-                    .descuento,
-                aplicaiva_prod: producto.aplicaiva_prod,
-                neto: this.calcularItem(producto, cantidad, IVA)[0].neto,
-                iva: this.calcularItem(producto, cantidad, IVA)[0].subiva,
-                total: this.calcularItem(producto, cantidad, IVA)[0].total
-            });
-            $("#addProducto").modal("hide");
-            this.buscar_prod = "";
-            this.calcularTotalesFact();
+            if (producto.stockmax_prod > 0) {
+                this.detallefactura.push({
+                    id_prod: producto.id_prod,
+                    codigo_prod: producto.codigo_prod,
+                    cantidad: cantidad,
+                    descripcion: producto.descripcion_prod,
+                    precio_prod: producto.precio_prod,
+                    descuento: this.calcularItem(producto, cantidad, IVA)[0]
+                        .descuento,
+                    aplicaiva_prod: producto.aplicaiva_prod,
+                    neto: this.calcularItem(producto, cantidad, IVA)[0].neto,
+                    iva: this.calcularItem(producto, cantidad, IVA)[0].subiva,
+                    total: this.calcularItem(producto, cantidad, IVA)[0].total
+                });
+                $("#addProducto").modal("hide");
+                this.buscar_prod = "";
+                this.calcularTotalesFact();
+            } else {
+                toastr.error("Producto no Disponible por el momento");
+            }
+
+            console.log(producto.stockmax_prod);
         },
         PorcentajeIVA: function(producto) {
             var IVA = 0;
@@ -3089,11 +3101,9 @@ const app = new Vue({
         },
         //Metodos de Inventario
         getInventario: function() {
-            console.log("Entro a Inventario");
             var urlInventario = "getInventario";
             axios.get(urlInventario).then(response => {
                 this.inventarios = response.data;
-                console.log(response.data);
             });
         },
 
@@ -3166,6 +3176,18 @@ const app = new Vue({
             axios.post(url).then(response => {
                 this.getInventario();
                 toastr.success("Inventario eliminada con éxito");
+            });
+        },
+        buscar_kardex: function() {
+            var urlKardex =
+                "getKardex/" +
+                this.newKardex.id_prod +
+                "/" +
+                this.newKardex.fecha_inicio_k +
+                "/" +
+                this.newKardex.fecha_fin_k;
+            axios.get(urlKardex).then(response => {
+                this.kardexs = response.data;
             });
         }
     }

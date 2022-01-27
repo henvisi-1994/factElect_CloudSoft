@@ -92,6 +92,8 @@ Route::get('getUltimoUsuario', 'EmpleadoController@ultimo_usuario');
 Route::get('getTotalUsuarios', 'ConteoController@conteo_usuarios');
 Route::get('getTotalCompras/{id_usu}', 'ConteoController@conteo_total_compras');
 Route::get('getTotalVentas/{id_usu}', 'ConteoController@conteo_total_ventas');
+Route::get('getKardex/{id_prod}/{fecha_inicio_k}/{fecha_fin_k}', 'KardexController@getKardex');
+Route::get('Kardex', 'KardexController@kardex');
 
 
 

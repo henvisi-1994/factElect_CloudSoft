@@ -18,4 +18,11 @@
             Reporte de Inventario
         </a>
     </li>
+    <li>
+        <a href="{{asset("Kardex")}}" >
+        <img src="{{ asset("Administrador/dist/img/Iconos/kardex.png") }}">
+
+            Kardex
+        </a>
+    </li>
 </ul>

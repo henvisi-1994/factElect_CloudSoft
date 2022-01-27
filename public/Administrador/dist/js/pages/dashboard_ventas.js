@@ -147,13 +147,13 @@ $(function() {
         { y: "2010-03", ventas: 4912 },
         { y: "2010-04", ventas: 3767 }
     ];
-    /*fetch("http://factelect_cloudsoft.net/Dashboard_Ventas")
+    fetch("http://factelect_cloudsoft.net/Dashboard_Ventas")
         .then(response => response.json())
         .then(data => {
             localStorage.removeItem("l_ventas");
             localStorage.setItem("l_ventas", JSON.stringify(data));
-        });*/
-    //ventas = JSON.parse(localStorage.getItem("l_ventas"));
+        });
+    ventas = JSON.parse(localStorage.getItem("l_ventas"));
     var area_ventas = new Morris.Area({
         element: "revenue-chart",
         resize: true,

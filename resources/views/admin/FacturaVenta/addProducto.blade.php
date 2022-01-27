@@ -68,6 +68,9 @@
                                         <th>
                                             Cantidad
                                         </th>
+                                       <th>
+                                            Stock
+                                        </th>
                                         <th>
                                             Descripción
                                         </th>
@@ -89,6 +92,9 @@
                                         </td>
                                         <td>
                                             <input class="form-control" type="number" value="1" id="example-number-input" v-model="cantidadP">
+                                        </td>
+                                        <td>
+                                            @{{producto.stockmax_prod}}
                                         </td>
                                         <td>
                                             @{{producto.descripcion_prod}}
